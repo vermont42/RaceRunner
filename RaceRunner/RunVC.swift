@@ -160,9 +160,14 @@ class RunVC: ChildVC, RunDelegate {
     }
     
     func receiveProgress(distance: Double, time: Int) {
-        timeLabel.text = "Time: \(Stringifier.stringifySecondCount(time, useLongFormat: true))"
-        distanceLabel.text = "Distance: \(Stringifier.stringifyDistance(distance))"
-        paceLabel.text = "Pace: \(Stringifier.stringifyAveragePaceFromDistance(distance, seconds: time))"
+        timeLabel.text = "Time: \(Converter.stringifySecondCount(time, useLongFormat: true))"
+        distanceLabel.text = "Distance: \(Converter.stringifyDistance(distance))"
+        paceLabel.text = "Pace: \(Converter.stringifyAveragePaceFromDistance(distance, seconds: time))"
+        let stopAfter = SettingsManager.getStopAfter()
+        if (stopAfter != RunVC.never) && (distance >= stopAfter) {
+            SoundManager.play("chime")
+            stop()
+        }
     }
     
     @IBAction func showMenu(sender: UIButton) {

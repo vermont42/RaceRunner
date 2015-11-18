@@ -55,24 +55,24 @@ class SettingsVC: ChildVC {
         else {
             toggle.on = true
             if interval < 1.0 {
-                buttonTitle = String(format: "%@ %.2f %@", prefix, interval, Stringifier.getCurrentLongUnitName())
+                buttonTitle = String(format: "%@ %.2f %@", prefix, interval, Converter.getCurrentLongUnitName())
             }
             else if interval == 1.0 {
-                buttonTitle = "\(prefix) 1 \(Stringifier.getCurrentLongUnitName())"
+                buttonTitle = "\(prefix) 1 \(Converter.getCurrentLongUnitName())"
             }
             else { // interval > 1.0
-                buttonTitle = String(format: "%@ %.2f %@", prefix, interval, Stringifier.getCurrentPluralLongUnitName())
+                buttonTitle = String(format: "%@ %.2f %@", prefix, interval, Converter.getCurrentPluralLongUnitName())
             }
         }
         button.setTitle(buttonTitle, forState: .Normal)
     }
     
     func updateSplitsWidgets() {
-        updateDistanceWidgets(SettingsManager.getReportEvery(), button: splitsButton, toggle: splitsToggle, prefix: "Every")
+        updateDistanceWidgets(Converter.convertMetersToLongDistance(SettingsManager.getReportEvery()), button: splitsButton, toggle: splitsToggle, prefix: "Every")
     }
 
     func updateAutoStopWidgets() {
-        updateDistanceWidgets(SettingsManager.getStopAfter(), button: autoStopButton, toggle: autoStopToggle, prefix: "After")
+        updateDistanceWidgets(Converter.convertMetersToLongDistance(SettingsManager.getStopAfter()), button: autoStopButton, toggle: autoStopToggle, prefix: "After")
     }
     
     @IBAction func toggleUnitType(sender: UISwitch) {
@@ -124,9 +124,9 @@ class SettingsVC: ChildVC {
     }
     
     func setAutoStop() {
-        getDistanceInterval("How many \(Stringifier.getCurrentPluralLongUnitName()) would you like to stop the run after?")
+        getDistanceInterval("How many \(Converter.getCurrentPluralLongUnitName()) would you like to stop the run after?")
         { newValue in
-            SettingsManager.setStopAfter(newValue)
+            SettingsManager.setStopAfter(Converter.convertLongDistanceToMeters(newValue))
             self.updateAutoStopWidgets()
         }
     }
@@ -140,9 +140,9 @@ class SettingsVC: ChildVC {
     }
 
     func setSplits() {
-        getDistanceInterval("How far in \(Stringifier.getCurrentPluralLongUnitName()) would you like to run between audible reports of your progress?")
+        getDistanceInterval("How far in \(Converter.getCurrentPluralLongUnitName()) would you like to run between audible reports of your progress?")
         { newValue in
-            SettingsManager.setReportEvery(newValue)
+            SettingsManager.setReportEvery(Converter.convertLongDistanceToMeters(newValue))
             self.updateSplitsWidgets()
         }
     }
@@ -162,6 +162,13 @@ class SettingsVC: ChildVC {
         presentViewController(alertController, animated: true, completion: nil)
     }
     
+    @IBAction func changeSplits() {
+        setSplits()
+    }
+    
+    @IBAction func changeStopAfter() {
+        setAutoStop()
+    }
     @IBAction func multiplierChanged(sender: UISlider) {
         SettingsManager.setMultiplier(round(Double(sender.value)))
         updateMultiplierLabel()

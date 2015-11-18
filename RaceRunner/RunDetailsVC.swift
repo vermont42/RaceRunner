@@ -62,13 +62,13 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate {
         dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
         dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
         date.text = dateFormatter.stringFromDate(run.timestamp)
-        distance.text = "Dist: \(Stringifier.stringifyDistance(run.distance.doubleValue))"
-        time.text = "Time: \(Stringifier.stringifySecondCount(run.duration.integerValue, useLongFormat: false))"
-        pace.text = "Pace: \(Stringifier.stringifyAveragePaceFromDistance(run.distance.doubleValue, seconds: run.duration.integerValue))"
-        self.minAlt.text = "Min Alt: \(Stringifier.stringifyAltitude(run.minAltitude.doubleValue))"
-        self.maxAlt.text = "Max Alt: \(Stringifier.stringifyAltitude(run.maxAltitude.doubleValue))"
-        self.gain.text = "Gained: \(Stringifier.stringifyAltitude(run.altitudeGained.doubleValue))"
-        self.loss.text = "Lost: \(Stringifier.stringifyAltitude(run.altitudeLost.doubleValue))"
+        distance.text = "Dist: \(Converter.stringifyDistance(run.distance.doubleValue))"
+        time.text = "Time: \(Converter.stringifySecondCount(run.duration.integerValue, useLongFormat: false))"
+        pace.text = "Pace: \(Converter.stringifyAveragePaceFromDistance(run.distance.doubleValue, seconds: run.duration.integerValue))"
+        self.minAlt.text = "Min Alt: \(Converter.stringifyAltitude(run.minAltitude.doubleValue))"
+        self.maxAlt.text = "Max Alt: \(Converter.stringifyAltitude(run.maxAltitude.doubleValue))"
+        self.gain.text = "Gained: \(Converter.stringifyAltitude(run.altitudeGained.doubleValue))"
+        self.loss.text = "Lost: \(Converter.stringifyAltitude(run.altitudeLost.doubleValue))"
         if run.weather as String == DarkSky.weatherError {
             self.weather.text = "Unknown Weather"
         }
@@ -79,7 +79,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate {
             self.temp.text = "Unknown Temp"
         }
         else {
-            self.temp.text = "Temp: \(Stringifier.stringifyTemperature(run.temperature.floatValue))"
+            self.temp.text = "Temp: \(Converter.stringifyTemperature(run.temperature.floatValue))"
         }
         if run.customName == "" {
             if self.run.autoName == RunModel.noStreetNameDetected {

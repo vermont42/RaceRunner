@@ -121,6 +121,9 @@
                                 <state key="normal" title="3.1 Miles">
                                     <color key="titleColor" red="0.87058823529999996" green="0.85882352939999995" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="changeStopAfter" destination="owB-CJ-77e" eventType="touchUpInside" id="lGM-3i-Q3x"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Swq-ep-Iw8">
                                 <rect key="frame" x="66" y="178" width="48" height="36"/>
@@ -138,6 +141,9 @@
                                 <state key="normal" title="Every Mile">
                                     <color key="titleColor" red="0.87058823529999996" green="0.85882352939999995" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="changeSplits" destination="owB-CJ-77e" eventType="touchUpInside" id="yt5-oW-EOU"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KBV-HH-UbC">
                                 <rect key="frame" x="73" y="218" width="44" height="36"/>

@@ -133,7 +133,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                             self.weather = DarkSky.weatherError
                         case .Success(_, let dictionary):
                             if dictionary != nil {
-                                self.temperature = Stringifier.convertFahrenheitToCelsius(dictionary["currently"]!["apparentTemperature"] as! Float)
+                                self.temperature = Converter.convertFahrenheitToCelsius(dictionary["currently"]!["apparentTemperature"] as! Float)
                                 self.weather = dictionary["currently"]!["summary"] as! String
                                 //let synth = AVSpeechSynthesizer()
                                 //var utterance = AVSpeechUtterance(string: self.weather)

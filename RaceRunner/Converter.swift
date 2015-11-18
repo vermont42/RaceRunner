@@ -1,5 +1,5 @@
 //
-//  Stringifier.swift
+//  Converter.swift
 //  RaceRunner
 //
 //  Created by Joshua Adams on 3/17/15.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-class Stringifier {
+class Converter {
     private static let metersInKilometer: Double = 1000.0
-    private static let  metersInMile: Double = 1609.344
+    private static let metersInMile: Double = 1609.344
     private static let feetInMeter: Double = 3.281
     private static let fahrenheitMultiplier: Float = 9.0 / 5.0
     private static let celsiusFraction: Float = 5.0 / 9.0
@@ -23,6 +23,24 @@ class Stringifier {
     private static let metricLongUnitName: String = "km"
     private static let imperialShortUnitName: String = "ft"
     private static let metricShortUnitName: String = "m"
+    
+    class func convertLongDistanceToMeters(longDistance: Double) -> Double {
+        switch SettingsManager.getUnitType() {
+        case .Imperial:
+            return longDistance * metersInMile
+        case .Metric:
+            return longDistance * metersInKilometer
+        }
+    }
+
+    class func convertMetersToLongDistance(meters: Double) -> Double {
+        switch SettingsManager.getUnitType() {
+        case .Imperial:
+            return meters / metersInMile
+        case .Metric:
+            return meters / metersInKilometer
+        }
+    }
     
     class func getCurrentLongUnitName() -> String {
         return SettingsManager.getUnitType() == .Imperial ? "mile" : "kilometer"
