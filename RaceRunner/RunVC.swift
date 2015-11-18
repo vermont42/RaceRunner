@@ -95,7 +95,7 @@ class RunVC: ChildVC, RunDelegate {
     
     override func viewDidDisappear(animated: Bool) {
         RunModel.runModel.runDelegate = nil
-        if runToSimulate != nil || gpxFile != nil {
+        if (runToSimulate != nil || gpxFile != nil) && (RunModel.runModel.status != .PreRun)  {
           RunModel.runModel.stop()
         }
     }
