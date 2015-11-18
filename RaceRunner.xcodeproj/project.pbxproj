@@ -15,7 +15,7 @@
 		E13B48B51B911BDA001C997A /* UiConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B48B41B911BDA001C997A /* UiConstants.swift */; };
 		E13B48B71B921A9F001C997A /* UiHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B48B61B921A9F001C997A /* UiHelpers.swift */; };
 		E13E30571BFD28F1009CDE60 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13E30561BFD28F1009CDE60 /* SoundManager.swift */; };
-		E13E30591BFD2E0F009CDE60 /* chime.wav in Resources */ = {isa = PBXBuildFile; fileRef = E13E30581BFD2E0F009CDE60 /* chime.wav */; };
+		E13E305B1BFD30BF009CDE60 /* chime.wav in Resources */ = {isa = PBXBuildFile; fileRef = E13E305A1BFD30BF009CDE60 /* chime.wav */; };
 		E14360C31AE4AAA4003F27B4 /* GpxLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */; };
 		E159C2541AAB8304007C6EA1 /* RaceRunner.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E159C2521AAB8304007C6EA1 /* RaceRunner.xcdatamodeld */; };
 		E16F35761B8EBC4100C88426 /* UIViewController+NoOp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16F35751B8EBC4100C88426 /* UIViewController+NoOp.swift */; };
@@ -61,7 +61,7 @@
 		E13B48B41B911BDA001C997A /* UiConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UiConstants.swift; sourceTree = "<group>"; };
 		E13B48B61B921A9F001C997A /* UiHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UiHelpers.swift; sourceTree = "<group>"; };
 		E13E30561BFD28F1009CDE60 /* SoundManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
-		E13E30581BFD2E0F009CDE60 /* chime.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = chime.wav; path = ../../Immigration/Immigration/chime.wav; sourceTree = "<group>"; };
+		E13E305A1BFD30BF009CDE60 /* chime.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = chime.wav; sourceTree = "<group>"; };
 		E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxLocationManager.swift; sourceTree = "<group>"; };
 		E159C2531AAB8304007C6EA1 /* RaceRunner.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RaceRunner.xcdatamodel; sourceTree = "<group>"; };
 		E16F35751B8EBC4100C88426 /* UIViewController+NoOp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+NoOp.swift"; sourceTree = "<group>"; };
@@ -162,8 +162,8 @@
 			isa = PBXGroup;
 			children = (
 				E1E8B9451AAB742E00D04E38 /* CDManager.swift */,
+				E13E305A1BFD30BF009CDE60 /* chime.wav */,
 				E1E8B9471AAB742E00D04E38 /* ChildVC.swift */,
-				E13E30581BFD2E0F009CDE60 /* chime.wav */,
 				E1FCB00D1AB8F43100B1D803 /* Converter.swift */,
 				E13B39921ABA705E007F61ED /* DarkSky.swift */,
 				E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */,
@@ -281,7 +281,7 @@
 				E1D38F491B9E6AFE00380643 /* Runmeter.gpx in Resources */,
 				E1E8B92E1AAB73F000D04E38 /* LaunchScreen.xib in Resources */,
 				E1E8B92B1AAB73F000D04E38 /* Images.xcassets in Resources */,
-				E13E30591BFD2E0F009CDE60 /* chime.wav in Resources */,
+				E13E305B1BFD30BF009CDE60 /* chime.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
