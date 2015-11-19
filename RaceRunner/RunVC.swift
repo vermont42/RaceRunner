@@ -165,7 +165,6 @@ class RunVC: ChildVC, RunDelegate {
         paceLabel.text = "Pace: \(Converter.stringifyAveragePaceFromDistance(distance, seconds: time))"
         let stopAfter = SettingsManager.getStopAfter()
         if (stopAfter != RunVC.never) && (distance >= stopAfter) {
-            SoundManager.play("chime")
             stop()
         }
     }
@@ -183,6 +182,7 @@ class RunVC: ChildVC, RunDelegate {
             pauseResume.hidden = false
             pauseResume.setTitle("  Pause  ", forState: UIControlState.Normal)
             RunModel.runModel.start()
+            SoundManager.play("gun")
         case .InProgress:
             stop()
         case .Paused:
@@ -191,6 +191,7 @@ class RunVC: ChildVC, RunDelegate {
     }
     
     func stop() {
+        SoundManager.play("applause")
         runnerIcons.direction = .Stationary
         startStopButton.backgroundColor = UiConstants.intermediate3Color
         startStopButton.setTitle("  Start  ", forState: UIControlState.Normal)
@@ -220,6 +221,7 @@ class RunVC: ChildVC, RunDelegate {
     }
     
     @IBAction func pauseResume(sender: UIButton) {
+        SoundManager.play("click")
         let runModel = RunModel.runModel
         switch runModel.status {
         case .PreRun:

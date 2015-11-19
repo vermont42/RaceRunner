@@ -47,6 +47,9 @@
 		E1E8B9571AAB742E00D04E38 /* SpectateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E8B94C1AAB742E00D04E38 /* SpectateVC.swift */; };
 		E1E8B9581AAB742E00D04E38 /* UnwindPanSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E8B94D1AAB742E00D04E38 /* UnwindPanSegue.swift */; };
 		E1FCB00E1AB8F43100B1D803 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FCB00D1AB8F43100B1D803 /* Converter.swift */; };
+		E1FCD2571BFE2D8200757B69 /* applause.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1FCD2561BFE2D8200757B69 /* applause.wav */; };
+		E1FCD2591BFE2D9D00757B69 /* gun.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1FCD2581BFE2D9D00757B69 /* gun.wav */; };
+		E1FCD25B1BFE30F500757B69 /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1FCD25A1BFE30F500757B69 /* click.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -97,6 +100,9 @@
 		E1E8B94C1AAB742E00D04E38 /* SpectateVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpectateVC.swift; sourceTree = "<group>"; };
 		E1E8B94D1AAB742E00D04E38 /* UnwindPanSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnwindPanSegue.swift; sourceTree = "<group>"; };
 		E1FCB00D1AB8F43100B1D803 /* Converter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
+		E1FCD2561BFE2D8200757B69 /* applause.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = applause.wav; sourceTree = "<group>"; };
+		E1FCD2581BFE2D9D00757B69 /* gun.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gun.wav; sourceTree = "<group>"; };
+		E1FCD25A1BFE30F500757B69 /* click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,13 +167,16 @@
 		E1E8B9201AAB73F000D04E38 /* RaceRunner */ = {
 			isa = PBXGroup;
 			children = (
+				E1FCD2561BFE2D8200757B69 /* applause.wav */,
 				E1E8B9451AAB742E00D04E38 /* CDManager.swift */,
 				E13E305A1BFD30BF009CDE60 /* chime.wav */,
 				E1E8B9471AAB742E00D04E38 /* ChildVC.swift */,
+				E1FCD25A1BFE30F500757B69 /* click.wav */,
 				E1FCB00D1AB8F43100B1D803 /* Converter.swift */,
 				E13B39921ABA705E007F61ED /* DarkSky.swift */,
 				E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */,
 				E1DA7D6C1B9B8BA2006BC362 /* GpxParser.swift */,
+				E1FCD2581BFE2D9D00757B69 /* gun.wav */,
 				E1E8B9481AAB742E00D04E38 /* HelpVC.swift */,
 				E1B45F061AE96EFC00AF73AB /* LocationManager.swift */,
 				E1E8B9491AAB742E00D04E38 /* LogVC.swift */,
@@ -278,6 +287,9 @@
 				E1E8B9291AAB73F000D04E38 /* Main.storyboard in Resources */,
 				E138E8CE1BA0A0FB00BA20E5 /* iSmoothRun.gpx in Resources */,
 				E1E027831B9A34FE00700DE1 /* Runkeeper.gpx in Resources */,
+				E1FCD2591BFE2D9D00757B69 /* gun.wav in Resources */,
+				E1FCD2571BFE2D8200757B69 /* applause.wav in Resources */,
+				E1FCD25B1BFE30F500757B69 /* click.wav in Resources */,
 				E1D38F491B9E6AFE00380643 /* Runmeter.gpx in Resources */,
 				E1E8B92E1AAB73F000D04E38 /* LaunchScreen.xib in Resources */,
 				E1E8B92B1AAB73F000D04E38 /* Images.xcassets in Resources */,
