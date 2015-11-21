@@ -60,8 +60,11 @@ class SettingsVC: ChildVC {
             else if interval == 1.0 {
                 buttonTitle = "\(prefix) 1 \(Converter.getCurrentLongUnitName())"
             }
-            else { // interval > 1.0
+            else if interval > 1.0 && interval < 100.00 {
                 buttonTitle = String(format: "%@ %.2f %@", prefix, interval, Converter.getCurrentPluralLongUnitName())
+            }
+            else { // interval >= 100
+                buttonTitle = String(format: "%@ %.1f %@", prefix, interval, Converter.getCurrentPluralLongUnitName())
             }
         }
         button.setTitle(buttonTitle, forState: .Normal)
@@ -147,12 +150,21 @@ class SettingsVC: ChildVC {
         }
     }
     
-    func getDistanceInterval(prompt: String, closure: (Double) -> Void) {
-        let alertController = UIAlertController(title: "👟", message: prompt + " To begin inputting, tap \"123\" on the bottom-left corner of your virtual keyboard.", preferredStyle: UIAlertControllerStyle.Alert)
+    func getDistanceInterval(prompt: String, invalidValue: Bool? = nil, closure: (Double) -> Void) {
+        var fullPrompt = prompt
+        if invalidValue != nil && invalidValue == true {
+            fullPrompt = "That is an invalid value. " + fullPrompt
+        }
+        let alertController = UIAlertController(title: "👟", message: fullPrompt + " To begin inputting, tap \"123\" on the bottom-left corner of your virtual keyboard.", preferredStyle: UIAlertControllerStyle.Alert)
         alertController.view.tintColor = UiConstants.darkColor
         let setAction = UIAlertAction(title: "Set", style: UIAlertActionStyle.Default, handler: { (action) in
             let textFields = alertController.textFields!
-            closure(Double(textFields[0].text!)!)
+            if let text = textFields[0].text, numericValue = Double(text) where numericValue >= RunVC.minNumericInterval && numericValue <= RunVC.maxNumericInterval {
+                closure(numericValue)
+            }
+            else {
+                self.getDistanceInterval(prompt, invalidValue: true, closure: closure)
+            }
         })
         alertController.addAction(setAction)
         alertController.addTextFieldWithConfigurationHandler { (textField) in

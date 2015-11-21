@@ -30,6 +30,8 @@ class RunVC: ChildVC, RunDelegate {
     private static let stopTitle = " Stop "
     private static let resumeTitle = " Resume "
     static let never: Double = 0.0
+    static let minNumericInterval: Double = 0.1
+    static let maxNumericInterval: Double = 500
     static let reportEveryDefault: Double = 1.0
     private var runnerIcons = RunnerIcons()
     private var lastDirection: RunnerIcons.Direction = .Stationary
