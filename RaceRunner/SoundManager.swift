@@ -25,7 +25,7 @@ class SoundManager {
     
     static func play(sound: String) {
         if soundManager.sounds[sound] == nil {
-            if let audioUrl = NSBundle.mainBundle().URLForResource(sound, withExtension: "wav") {
+            if let audioUrl = NSBundle.mainBundle().URLForResource(sound, withExtension: "mp3") {
                 do {
                     try soundManager.sounds[sound] = AVAudioPlayer.init(contentsOfURL: audioUrl)
                 } catch let error as NSError {

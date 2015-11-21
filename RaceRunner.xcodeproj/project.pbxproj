@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		7333C6D291F714851431A2E3 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E91D4B24A52C1C5D97BD0CF /* Pods.framework */; };
+		E1103F231C00DADF00E18D2E /* click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1103F201C00DADF00E18D2E /* click.mp3 */; };
+		E1103F241C00DADF00E18D2E /* gun.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1103F211C00DADF00E18D2E /* gun.mp3 */; };
+		E1103F251C00DADF00E18D2E /* applause.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1103F221C00DADF00E18D2E /* applause.mp3 */; };
 		E11655AC1AEAFB5200633C16 /* RunModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11655AB1AEAFB5200633C16 /* RunModel.swift */; };
 		E138E8CE1BA0A0FB00BA20E5 /* iSmoothRun.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */; };
 		E13AE5921AAD12280074F933 /* MulticolorPolyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13AE5911AAD12280074F933 /* MulticolorPolyline.swift */; };
@@ -15,7 +18,6 @@
 		E13B48B51B911BDA001C997A /* UiConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B48B41B911BDA001C997A /* UiConstants.swift */; };
 		E13B48B71B921A9F001C997A /* UiHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B48B61B921A9F001C997A /* UiHelpers.swift */; };
 		E13E30571BFD28F1009CDE60 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13E30561BFD28F1009CDE60 /* SoundManager.swift */; };
-		E13E305B1BFD30BF009CDE60 /* chime.wav in Resources */ = {isa = PBXBuildFile; fileRef = E13E305A1BFD30BF009CDE60 /* chime.wav */; };
 		E14360C31AE4AAA4003F27B4 /* GpxLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */; };
 		E159C2541AAB8304007C6EA1 /* RaceRunner.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E159C2521AAB8304007C6EA1 /* RaceRunner.xcdatamodeld */; };
 		E16F35761B8EBC4100C88426 /* UIViewController+NoOp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16F35751B8EBC4100C88426 /* UIViewController+NoOp.swift */; };
@@ -47,9 +49,6 @@
 		E1E8B9571AAB742E00D04E38 /* SpectateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E8B94C1AAB742E00D04E38 /* SpectateVC.swift */; };
 		E1E8B9581AAB742E00D04E38 /* UnwindPanSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E8B94D1AAB742E00D04E38 /* UnwindPanSegue.swift */; };
 		E1FCB00E1AB8F43100B1D803 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FCB00D1AB8F43100B1D803 /* Converter.swift */; };
-		E1FCD2571BFE2D8200757B69 /* applause.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1FCD2561BFE2D8200757B69 /* applause.wav */; };
-		E1FCD2591BFE2D9D00757B69 /* gun.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1FCD2581BFE2D9D00757B69 /* gun.wav */; };
-		E1FCD25B1BFE30F500757B69 /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1FCD25A1BFE30F500757B69 /* click.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +56,9 @@
 		3E91D4B24A52C1C5D97BD0CF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BAE29B09F03FADB483809E0 /* SuggestedColors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = SuggestedColors.plist; sourceTree = "<group>"; };
 		B007871155F27C6F21413ECF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		E1103F201C00DADF00E18D2E /* click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = click.mp3; sourceTree = "<group>"; };
+		E1103F211C00DADF00E18D2E /* gun.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gun.mp3; sourceTree = "<group>"; };
+		E1103F221C00DADF00E18D2E /* applause.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = applause.mp3; sourceTree = "<group>"; };
 		E11655AB1AEAFB5200633C16 /* RunModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunModel.swift; sourceTree = "<group>"; };
 		E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = iSmoothRun.gpx; sourceTree = "<group>"; };
 		E13AE5911AAD12280074F933 /* MulticolorPolyline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MulticolorPolyline.swift; sourceTree = "<group>"; };
@@ -64,7 +66,6 @@
 		E13B48B41B911BDA001C997A /* UiConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UiConstants.swift; sourceTree = "<group>"; };
 		E13B48B61B921A9F001C997A /* UiHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UiHelpers.swift; sourceTree = "<group>"; };
 		E13E30561BFD28F1009CDE60 /* SoundManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
-		E13E305A1BFD30BF009CDE60 /* chime.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = chime.wav; sourceTree = "<group>"; };
 		E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxLocationManager.swift; sourceTree = "<group>"; };
 		E159C2531AAB8304007C6EA1 /* RaceRunner.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RaceRunner.xcdatamodel; sourceTree = "<group>"; };
 		E16F35751B8EBC4100C88426 /* UIViewController+NoOp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+NoOp.swift"; sourceTree = "<group>"; };
@@ -100,9 +101,6 @@
 		E1E8B94C1AAB742E00D04E38 /* SpectateVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpectateVC.swift; sourceTree = "<group>"; };
 		E1E8B94D1AAB742E00D04E38 /* UnwindPanSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnwindPanSegue.swift; sourceTree = "<group>"; };
 		E1FCB00D1AB8F43100B1D803 /* Converter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
-		E1FCD2561BFE2D8200757B69 /* applause.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = applause.wav; sourceTree = "<group>"; };
-		E1FCD2581BFE2D9D00757B69 /* gun.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gun.wav; sourceTree = "<group>"; };
-		E1FCD25A1BFE30F500757B69 /* click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +131,26 @@
 				1E75B6B8819120E7009CF8E0 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		E1103F261C00DB0D00E18D2E /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				E1103F221C00DADF00E18D2E /* applause.mp3 */,
+				E1103F201C00DADF00E18D2E /* click.mp3 */,
+				E1103F211C00DADF00E18D2E /* gun.mp3 */,
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
+		E1103F271C00DB1D00E18D2E /* GPX */ = {
+			isa = PBXGroup;
+			children = (
+				E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */,
+				E1E027821B9A34FE00700DE1 /* Runkeeper.gpx */,
+				E1D38F481B9E6AFE00380643 /* Runmeter.gpx */,
+			);
+			name = GPX;
 			sourceTree = "<group>";
 		};
 		E159C2591AAB84A7007C6EA1 /* CoreData */ = {
@@ -167,16 +185,13 @@
 		E1E8B9201AAB73F000D04E38 /* RaceRunner */ = {
 			isa = PBXGroup;
 			children = (
-				E1FCD2561BFE2D8200757B69 /* applause.wav */,
+				E1E8B9231AAB73F000D04E38 /* AppDelegate.swift */,
 				E1E8B9451AAB742E00D04E38 /* CDManager.swift */,
-				E13E305A1BFD30BF009CDE60 /* chime.wav */,
 				E1E8B9471AAB742E00D04E38 /* ChildVC.swift */,
-				E1FCD25A1BFE30F500757B69 /* click.wav */,
 				E1FCB00D1AB8F43100B1D803 /* Converter.swift */,
 				E13B39921ABA705E007F61ED /* DarkSky.swift */,
 				E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */,
 				E1DA7D6C1B9B8BA2006BC362 /* GpxParser.swift */,
-				E1FCD2581BFE2D9D00757B69 /* gun.wav */,
 				E1E8B9481AAB742E00D04E38 /* HelpVC.swift */,
 				E1B45F061AE96EFC00AF73AB /* LocationManager.swift */,
 				E1E8B9491AAB742E00D04E38 /* LogVC.swift */,
@@ -210,14 +225,12 @@
 		E1E8B9211AAB73F000D04E38 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E1E8B9231AAB73F000D04E38 /* AppDelegate.swift */,
+				E159C2591AAB84A7007C6EA1 /* CoreData */,
+				E1103F271C00DB1D00E18D2E /* GPX */,
 				E1E8B92A1AAB73F000D04E38 /* Images.xcassets */,
 				E1E8B9221AAB73F000D04E38 /* Info.plist */,
-				E159C2591AAB84A7007C6EA1 /* CoreData */,
 				E1E8B92C1AAB73F000D04E38 /* LaunchScreen.xib */,
-				E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */,
-				E1D38F481B9E6AFE00380643 /* Runmeter.gpx */,
-				E1E027821B9A34FE00700DE1 /* Runkeeper.gpx */,
+				E1103F261C00DB0D00E18D2E /* Sounds */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -285,15 +298,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1E8B9291AAB73F000D04E38 /* Main.storyboard in Resources */,
+				E1103F251C00DADF00E18D2E /* applause.mp3 in Resources */,
 				E138E8CE1BA0A0FB00BA20E5 /* iSmoothRun.gpx in Resources */,
 				E1E027831B9A34FE00700DE1 /* Runkeeper.gpx in Resources */,
-				E1FCD2591BFE2D9D00757B69 /* gun.wav in Resources */,
-				E1FCD2571BFE2D8200757B69 /* applause.wav in Resources */,
-				E1FCD25B1BFE30F500757B69 /* click.wav in Resources */,
+				E1103F231C00DADF00E18D2E /* click.mp3 in Resources */,
 				E1D38F491B9E6AFE00380643 /* Runmeter.gpx in Resources */,
 				E1E8B92E1AAB73F000D04E38 /* LaunchScreen.xib in Resources */,
+				E1103F241C00DADF00E18D2E /* gun.mp3 in Resources */,
 				E1E8B92B1AAB73F000D04E38 /* Images.xcassets in Resources */,
-				E13E305B1BFD30BF009CDE60 /* chime.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
