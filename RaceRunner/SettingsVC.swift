@@ -48,7 +48,7 @@ class SettingsVC: ChildVC {
     
     func updateDistanceWidgets(interval: Double, button: UIButton, toggle: UISwitch, prefix: String) {
         let buttonTitle: String
-        if interval == RunVC.never {
+        if interval == SettingsManager.never {
             toggle.on = false
             buttonTitle = ""
         }
@@ -103,7 +103,7 @@ class SettingsVC: ChildVC {
             setAutoStop()
         }
         else {
-            SettingsManager.setStopAfter(RunVC.never)
+            SettingsManager.setStopAfter(SettingsManager.never)
             updateAutoStopWidgets()
         }
     }
@@ -113,7 +113,7 @@ class SettingsVC: ChildVC {
             setSplits()
         }
         else {
-            SettingsManager.setReportEvery(RunVC.never)
+            SettingsManager.setReportEvery(SettingsManager.never)
         }
         updateSplitsWidgets()
     }
@@ -122,7 +122,7 @@ class SettingsVC: ChildVC {
         if autoStopToggle.on {
             autoStopToggle.on = false
             autoStopButton.setTitle("", forState: .Normal)
-            SettingsManager.setStopAfter(RunVC.never)
+            SettingsManager.setStopAfter(SettingsManager.never)
         }
     }
     
@@ -138,7 +138,7 @@ class SettingsVC: ChildVC {
         if splitsToggle.on {
             splitsToggle.on = false
             splitsButton.setTitle("", forState: .Normal)
-            SettingsManager.setReportEvery(RunVC.never)
+            SettingsManager.setReportEvery(SettingsManager.never)
         }
     }
 
@@ -159,7 +159,7 @@ class SettingsVC: ChildVC {
         alertController.view.tintColor = UiConstants.darkColor
         let setAction = UIAlertAction(title: "Set", style: UIAlertActionStyle.Default, handler: { (action) in
             let textFields = alertController.textFields!
-            if let text = textFields[0].text, numericValue = Double(text) where numericValue >= RunVC.minStopAfter && numericValue <= RunVC.maxStopAfter {
+            if let text = textFields[0].text, numericValue = Double(text) where numericValue >= SettingsManager.minStopAfter && numericValue <= SettingsManager.maxStopAfter {
                 closure(numericValue)
             }
             else {

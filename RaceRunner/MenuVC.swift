@@ -10,11 +10,11 @@ import UIKit
 
 class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet var menuTable: UITableView!
-    
     var controllerLabels = ["Device GPS", "CLLocations", "GPX File", "History", "Spectate", "Settings"]
     var panSegues = ["pan run", "pan log", "pan GPX run", "pan log", "pan spectate", "pan settings"]
     var selectedMenuItem: Int = 0
     var logTypeToShow: LogVC.LogType!
+
     private static let rowHeight: CGFloat = 50.0
     private static let realRunMessage = "There is a real run in progress. Please click the Run menu item and stop the run before attempting to simulate a run."
     private static let okButtonText = "OK"

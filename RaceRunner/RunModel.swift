@@ -26,8 +26,6 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     var realRunInProgress = false
     
     static let altFudge: Double = 0.1
-    static let multiplierDefault: Double = 5.0
-    static let never: Double = 0.0
     static let noStreetNameDetected: String = "no street name detected"
     static let reportEveryDefault: Double = 1.0
     
@@ -38,7 +36,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     private var lastSeconds = 0
     private var paceString = ""
     private var splitsCompleted = 0
-    private var reportEvery = RunModel.never
+    private var reportEvery = SettingsManager.never
     private var temperature: Float = 0.0
     private var weather = ""
     private var timer: NSTimer!
@@ -248,7 +246,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                 lastSeconds = totalSeconds
                 // do audio feedback
             }
-            if reportEvery == RunModel.never || splitsCompleted == 0 {
+            if reportEvery == SettingsManager.never || splitsCompleted == 0 {
                 paceString = Converter.stringifyPace(totalDistance, seconds: totalSeconds)
             }
             runDelegate?.receiveProgress(totalDistance, time: totalSeconds, paceString: paceString)

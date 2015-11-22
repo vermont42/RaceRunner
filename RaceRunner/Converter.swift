@@ -15,9 +15,12 @@ class Converter {
     private static let fahrenheitMultiplier: Float = 9.0 / 5.0
     private static let celsiusFraction: Float = 5.0 / 9.0
     private static let fahrenheitAmountToAdd: Float = 32.0
-    private static let fahrenheitUnitName: String = "F"
     private static let celsiusMultiplier: Float = 1.0
     private static let celsiusAmountToAdd: Float = 0.0
+    private static let secondsPerMinute: Int = 60
+    private static let minutesPerHour: Int = 60
+    private static let secondsPerHour: Int = 3600
+    private static let fahrenheitUnitName: String = "F"
     private static let celsiusUnitName: String = "C"
     private static let imperialLongUnitName: String = "mi"
     private static let metricLongUnitName: String = "km"
@@ -74,10 +77,10 @@ class Converter {
     
     class func stringifySecondCount(seconds: Int, useLongFormat: Bool) -> String {
         var remainingSeconds = seconds
-        let hours = remainingSeconds / 3600
-        remainingSeconds -= hours * 3600
-        let minutes = remainingSeconds / 60
-        remainingSeconds -= minutes * 60
+        let hours = remainingSeconds / secondsPerHour
+        remainingSeconds -= hours * secondsPerHour
+        let minutes = remainingSeconds / secondsPerMinute
+        remainingSeconds -= minutes * secondsPerMinute
         if useLongFormat {
             if hours > 0 {
                 return NSString(format: "%d hr %d min %d sec", hours, minutes, remainingSeconds) as String
@@ -114,8 +117,8 @@ class Converter {
             unitName = "min/" + imperialLongUnitName
             unitMultiplier = metersInMile
         }
-        let paceMin = Int((avgPaceSecMeters * unitMultiplier) / 60)
-        let paceSec = Int(avgPaceSecMeters * unitMultiplier - Double((paceMin * 60)))
+        let paceMin = Int((avgPaceSecMeters * unitMultiplier) / Double(secondsPerMinute))
+        let paceSec = Int(avgPaceSecMeters * unitMultiplier - Double((paceMin * secondsPerMinute)))
         return NSString(format: "%d:%02d %@", paceMin, paceSec, unitName) as String
     }
 

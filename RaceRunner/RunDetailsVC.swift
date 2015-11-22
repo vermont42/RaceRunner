@@ -24,12 +24,11 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate {
     @IBOutlet var paceOrAltitude: UISegmentedControl!
     @IBOutlet var route: MarqueeLabel!
     @IBOutlet var customTitleButton: UIButton!
-    
-    var alertView: UIAlertView!
-    var colorPaceSegments: [GMSPolyline] = []
-    var colorAltitudeSegments: [GMSPolyline] = []
     var run: Run!
     var logType: LogVC.LogType!
+    private var alertView: UIAlertView!
+    private var colorPaceSegments: [GMSPolyline] = []
+    private var colorAltitudeSegments: [GMSPolyline] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()

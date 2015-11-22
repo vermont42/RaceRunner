@@ -8,7 +8,6 @@
 
 import UIKit
 import GoogleMaps
-import PubNub
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

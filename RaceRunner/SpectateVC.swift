@@ -40,9 +40,6 @@ class SpectateVC: ChildVC, PubNubSubscriber {
         let latitude = Double(progressArray[2])!
         let longitude = Double(progressArray[3])!
         map.camera = GMSCameraPosition.cameraWithLatitude(latitude, longitude: longitude, zoom: UiConstants.cameraZoom)
-        //let altitude = Double(progressArray[4])
-        //let distance = Double(progressArray[5])
-        //let seconds = Int(progressArray[6])
         if let previousLongitude = previousLongitude {
             if previousLongitude > longitude {
                 runnerIcons.direction = .West

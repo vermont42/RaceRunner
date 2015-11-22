@@ -34,10 +34,6 @@ class RunVC: ChildVC, RunDelegate {
     private static let stopTitle = " Stop "
     private static let resumeTitle = " Resume "
     
-    static let never: Double = 0.0
-    static let minStopAfter: Double = 0.1
-    static let maxStopAfter: Double = 500
-
     var runToSimulate: Run?
     var gpxFile: String?
     
@@ -169,7 +165,7 @@ class RunVC: ChildVC, RunDelegate {
         distanceLabel.text = "Distance: \(Converter.stringifyDistance(distance))"
         paceLabel.text = "Pace: " + paceString
         let stopAfter = SettingsManager.getStopAfter()
-        if (stopAfter != RunVC.never) && (distance >= stopAfter) {
+        if (stopAfter != SettingsManager.never) && (distance >= stopAfter) {
             stop()
         }
     }

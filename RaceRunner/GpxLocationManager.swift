@@ -22,17 +22,6 @@ public class GpxLocationManager {
     public var heading: CLHeading! { get { return nil } }
     public var allowsBackgroundLocationUpdates = true
     public var secondLength = 1.0
-    private var locations: [CLLocation] = []
-    private var lastLocation = 0
-    private var hasStarted = false
-    private var isPaused = false
-    private var callerQueue: dispatch_queue_t!
-    private var updateQueue: dispatch_queue_t!
-    private var dateFormatter = NSDateFormatter()
-    static let dateFudge: NSTimeInterval = 1.0
-    private static let dateFormat = "yyyy-MM-dd HH:mm:ss"
-    private var dummyCLLocationManager: CLLocationManager!
-    
     public func requestWhenInUseAuthorization() {}
     public func requestAlwaysAuthorization() {}
     public func startMonitoringSignificantLocationChanges() {}
@@ -59,6 +48,16 @@ public class GpxLocationManager {
     public var location: CLLocation! { get { return locations[lastLocation] } }
     public weak var delegate: CLLocationManagerDelegate!
     public var shouldKill = false
+    private var locations: [CLLocation] = []
+    private var lastLocation = 0
+    private var hasStarted = false
+    private var isPaused = false
+    private var callerQueue: dispatch_queue_t!
+    private var updateQueue: dispatch_queue_t!
+    private var dateFormatter = NSDateFormatter()
+    static let dateFudge: NSTimeInterval = 1.0
+    private static let dateFormat = "yyyy-MM-dd HH:mm:ss"
+    private var dummyCLLocationManager: CLLocationManager!
     
     public func startUpdatingLocation() {
         if !hasStarted {

@@ -12,6 +12,7 @@ import CoreLocation
 public class LocationManager {
     private var gpxLocationManager: GpxLocationManager!
     private var cLLocationManager: CLLocationManager!
+    
     public enum LocationManagerType {
         case Gpx, CoreLocation
         init() {
@@ -215,5 +216,4 @@ public class LocationManager {
             cLLocationManager.startUpdatingLocation()
         }
     }
-    
 }

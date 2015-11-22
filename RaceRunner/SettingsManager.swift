@@ -28,11 +28,14 @@ class SettingsManager {
   
     private var multiplier: Double
     private static let multiplierKey = "Multiplier"
-    private static let multiplierDefault = RunModel.multiplierDefault
+    private static let multiplierDefault = 5.0
   
     private var stopAfter: Double
+    static let never: Double = 0.0
+    static let minStopAfter: Double = 0.1
+    static let maxStopAfter: Double = 500
     private static let stopAfterKey = "stopAfter"
-    private static let stopAfterDefault = RunVC.never
+    private static let stopAfterDefault = SettingsManager.never
 
     private var reportEvery: Double
     private static let reportEveryKey = "reportEvery"
