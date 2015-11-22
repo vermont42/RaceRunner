@@ -36,7 +36,7 @@ class SettingsManager {
 
     private var reportEvery: Double
     private static let reportEveryKey = "reportEvery"
-    private static let reportEveryDefault = RunVC.reportEveryDefault
+    private static let reportEveryDefault = RunModel.reportEveryDefault
     
     private var alreadyMadeSampleRun: Bool
     private static let alreadyMadeSampleRunKey = "alreadyMadeSampleRun"

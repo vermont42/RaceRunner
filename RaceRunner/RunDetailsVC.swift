@@ -64,7 +64,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate {
         date.text = dateFormatter.stringFromDate(run.timestamp)
         distance.text = "Dist: \(Converter.stringifyDistance(run.distance.doubleValue))"
         time.text = "Time: \(Converter.stringifySecondCount(run.duration.integerValue, useLongFormat: false))"
-        pace.text = "Pace: \(Converter.stringifyAveragePaceFromDistance(run.distance.doubleValue, seconds: run.duration.integerValue))"
+        pace.text = "Pace: \(Converter.stringifyPace(run.distance.doubleValue, seconds: run.duration.integerValue))"
         self.minAlt.text = "Min Alt: \(Converter.stringifyAltitude(run.minAltitude.doubleValue))"
         self.maxAlt.text = "Max Alt: \(Converter.stringifyAltitude(run.maxAltitude.doubleValue))"
         self.gain.text = "Gained: \(Converter.stringifyAltitude(run.altitudeGained.doubleValue))"

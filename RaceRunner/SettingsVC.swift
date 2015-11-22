@@ -55,10 +55,10 @@ class SettingsVC: ChildVC {
         else {
             toggle.on = true
             if interval < 1.0 {
-                buttonTitle = String(format: "%@ %.2f %@", prefix, interval, Converter.getCurrentLongUnitName())
+                buttonTitle = String(format: "%@ %.2f %@", prefix, interval, Converter.getCurrentAbbreviatedLongUnitName())
             }
             else if interval == 1.0 {
-                buttonTitle = "\(prefix) 1 \(Converter.getCurrentLongUnitName())"
+                buttonTitle = "\(prefix) 1 \(Converter.getCurrentAbbreviatedLongUnitName())"
             }
             else if interval > 1.0 && interval < 100.00 {
                 buttonTitle = String(format: "%@ %.2f %@", prefix, interval, Converter.getCurrentPluralLongUnitName())
@@ -159,7 +159,7 @@ class SettingsVC: ChildVC {
         alertController.view.tintColor = UiConstants.darkColor
         let setAction = UIAlertAction(title: "Set", style: UIAlertActionStyle.Default, handler: { (action) in
             let textFields = alertController.textFields!
-            if let text = textFields[0].text, numericValue = Double(text) where numericValue >= RunVC.minNumericInterval && numericValue <= RunVC.maxNumericInterval {
+            if let text = textFields[0].text, numericValue = Double(text) where numericValue >= RunVC.minStopAfter && numericValue <= RunVC.maxStopAfter {
                 closure(numericValue)
             }
             else {

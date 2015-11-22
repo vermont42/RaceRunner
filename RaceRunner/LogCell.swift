@@ -22,7 +22,7 @@ class LogCell: UITableViewCell {
         dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
         dateTime.text = dateFormatter.stringFromDate(run.timestamp)
         duration.text = Converter.stringifySecondCount(run.duration.integerValue, useLongFormat: false)
-        pace.text = Converter.stringifyAveragePaceFromDistance(run.distance.doubleValue, seconds: run.duration.integerValue)
+        pace.text = Converter.stringifyPace(run.distance.doubleValue, seconds: run.duration.integerValue)
         distance.text = Converter.stringifyDistance(run.distance.doubleValue)
         if run.customName == "" {
             route.text = run.autoName as String

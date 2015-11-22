@@ -45,6 +45,10 @@ class Converter {
     class func getCurrentLongUnitName() -> String {
         return SettingsManager.getUnitType() == .Imperial ? "mile" : "kilometer"
     }
+
+    class func getCurrentAbbreviatedLongUnitName() -> String {
+        return SettingsManager.getUnitType() == .Imperial ? "mile" : "km"
+    }
     
     class func getCurrentPluralLongUnitName() -> String {
         return SettingsManager.getUnitType() == .Imperial ? "miles" : "kms"
@@ -67,7 +71,7 @@ class Converter {
         }
         return NSString(format: "%.2f %@", meters / unitDivider, unitName) as String
     }
-
+    
     class func stringifySecondCount(seconds: Int, useLongFormat: Bool) -> String {
         var remainingSeconds = seconds
         let hours = remainingSeconds / 3600
@@ -94,7 +98,7 @@ class Converter {
         }
     }
     
-    class func stringifyAveragePaceFromDistance(meters: Double, seconds:(Int)) -> String {
+    class func stringifyPace(meters: Double, seconds:(Int)) -> String {
         if seconds == 0 || meters == 0.0 {
             return "0"
         }

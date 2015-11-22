@@ -19,8 +19,12 @@ class RunVC: ChildVC, RunDelegate {
     @IBOutlet var showMenuButton: UIButton!
     @IBOutlet var pauseResume: UIButton!
     @IBOutlet var map: GMSMapView!
-    var currentCoordinate: CLLocationCoordinate2D!
-    var pin: GMSMarker!
+    
+    private var currentCoordinate: CLLocationCoordinate2D!
+    private var pin: GMSMarker!
+    private var runnerIcons = RunnerIcons()
+    private var lastDirection: RunnerIcons.Direction = .Stationary
+    
     private static let gpxTitle = "GPX File"
     private static let couldNotSaveMessage = "RaceRunner did not save this run because RaceRunner did not detect any locations using your device's GPS sensor."
     private static let bummerButtonTitle = "Bummer"
@@ -29,12 +33,11 @@ class RunVC: ChildVC, RunDelegate {
     private static let pauseTitle = " Pause "
     private static let stopTitle = " Stop "
     private static let resumeTitle = " Resume "
+    
     static let never: Double = 0.0
-    static let minNumericInterval: Double = 0.1
-    static let maxNumericInterval: Double = 500
-    static let reportEveryDefault: Double = 1.0
-    private var runnerIcons = RunnerIcons()
-    private var lastDirection: RunnerIcons.Direction = .Stationary
+    static let minStopAfter: Double = 0.1
+    static let maxStopAfter: Double = 500
+
     var runToSimulate: Run?
     var gpxFile: String?
     
@@ -161,10 +164,10 @@ class RunVC: ChildVC, RunDelegate {
         }
     }
     
-    func receiveProgress(distance: Double, time: Int) {
+    func receiveProgress(distance: Double, time: Int, paceString: String) {
         timeLabel.text = "Time: \(Converter.stringifySecondCount(time, useLongFormat: true))"
         distanceLabel.text = "Distance: \(Converter.stringifyDistance(distance))"
-        paceLabel.text = "Pace: \(Converter.stringifyAveragePaceFromDistance(distance, seconds: time))"
+        paceLabel.text = "Pace: " + paceString
         let stopAfter = SettingsManager.getStopAfter()
         if (stopAfter != RunVC.never) && (distance >= stopAfter) {
             stop()

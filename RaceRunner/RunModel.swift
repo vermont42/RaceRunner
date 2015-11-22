@@ -15,45 +15,56 @@ import CoreData
 protocol RunDelegate {
     func showInitialCoordinate(coordinate: CLLocationCoordinate2D)
     func plotToCoordinate(coordinate: CLLocationCoordinate2D)
-    func receiveProgress(distance: Double, time: Int)
+    func receiveProgress(distance: Double, time: Int, paceString: String)
 }
 
 class RunModel: NSObject, CLLocationManagerDelegate {
-    var distance = 0.0
-    var seconds = 0
-    var temperature: Float = 0.0
-    var weather = ""
-    var timer: NSTimer!
     var locations: [CLLocation]! = []
-    var initialLocation: CLLocation!
-    var locationManager: LocationManager!
     var status : Status = .PreRun
     var runDelegate: RunDelegate?
-    var autoName = RunModel.noStreetNameDetected
-    var didSetAutoNameAndFirstLoc = false
-    var altGained  = 0.0
-    var altLost = 0.0
-    var minLong = 0.0
-    var maxLong = 0.0
-    var minLat = 0.0
-    var maxLat = 0.0
-    var minAlt = 0.0
-    var maxAlt = 0.0
-    var curAlt = 0.0
-    var runToSimulate: Run!
-    var gpxFile: String!
     var run: Run!
     var realRunInProgress = false
-    private var secondLength = 1.0
+    
     static let altFudge: Double = 0.1
     static let multiplierDefault: Double = 5.0
+    static let never: Double = 0.0
+    static let noStreetNameDetected: String = "no street name detected"
+    static let reportEveryDefault: Double = 1.0
+    
+    private var totalDistance = 0.0
+    private var lastDistance = 0.0
+    private var currentSplitDistance = 0.0
+    private var totalSeconds = 0
+    private var lastSeconds = 0
+    private var paceString = ""
+    private var splitsCompleted = 0
+    private var reportEvery = RunModel.never
+    private var temperature: Float = 0.0
+    private var weather = ""
+    private var timer: NSTimer!
+    private var initialLocation: CLLocation!
+    private var locationManager: LocationManager!
+    private var autoName = RunModel.noStreetNameDetected
+    private var didSetAutoNameAndFirstLoc = false
+    private var altGained  = 0.0
+    private var altLost = 0.0
+    private var minLong = 0.0
+    private var maxLong = 0.0
+    private var minLat = 0.0
+    private var maxLat = 0.0
+    private var minAlt = 0.0
+    private var maxAlt = 0.0
+    private var curAlt = 0.0
+    private var runToSimulate: Run!
+    private var gpxFile: String!
+    private var secondLength = 1.0
+    
     private static let distanceTolerance: Double = 0.05
     private static let coordinateTolerance: Double = 0.0000050
     private static let unknownRoute: String = "unknown route"
     private static let minAccuracy: CLLocationDistance = 20.0
     private static let distanceFilter: CLLocationDistance = 10.0
     private static let freezeDriedAccuracy: CLLocationAccuracy = 5.0
-    static let noStreetNameDetected: String = "no street name detected"
     private static let defaultTemperature: Float = 25.0
     private static let defaultWeather = "sunny"
     
@@ -152,7 +163,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                 let newLocation: CLLocation = location 
                 if abs(newLocation.horizontalAccuracy) < RunModel.minAccuracy {
                     if self.locations.count > 0 {
-                        distance += newLocation.distanceFromLocation(self.locations.last!)
+                        totalDistance += newLocation.distanceFromLocation(self.locations.last!)
                         runDelegate?.plotToCoordinate(newLocation.coordinate)
                     }
                     else {
@@ -223,15 +234,36 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     }
     
     func eachSecond() {
-        seconds++
-        runDelegate?.receiveProgress(distance, time: seconds)
-        if SettingsManager.getPublishRun() && locations.count > 0 {
-            PubNubManager.pubishLocation(locations[locations.count - 1], distance: distance, seconds: seconds)
+        if status == .InProgress {
+            totalSeconds++
+            if SettingsManager.getPublishRun() && locations.count > 0 {
+                PubNubManager.pubishLocation(locations[locations.count - 1], distance: totalDistance, seconds: totalSeconds)
+            }
+            currentSplitDistance = totalDistance - lastDistance
+            if currentSplitDistance >= reportEvery {
+                splitsCompleted++
+                paceString = Converter.stringifyPace((totalDistance - lastDistance), seconds: (totalSeconds - lastSeconds))
+                currentSplitDistance -= reportEvery
+                lastDistance = totalDistance
+                lastSeconds = totalSeconds
+                // do audio feedback
+            }
+            if reportEvery == RunModel.never || splitsCompleted == 0 {
+                paceString = Converter.stringifyPace(totalDistance, seconds: totalSeconds)
+            }
+            runDelegate?.receiveProgress(totalDistance, time: totalSeconds, paceString: paceString)
         }
     }
     
     func start() {
         status = .InProgress
+        reportEvery = SettingsManager.getReportEvery()
+        lastSeconds = 0
+        totalDistance = 0.0
+        lastDistance = 0.0
+        currentSplitDistance = 0.0
+        splitsCompleted = 0
+        paceString = ""
         locationManager.startUpdatingLocation()
         startTimer()
         if runToSimulate == nil && gpxFile == nil {
@@ -326,7 +358,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
             let pastRuns = (try! context.executeFetchRequest(fetchRequest)) as! [Run]
             for pastRun in pastRuns {
                 if pastRun.customName != "" {
-                    if (!RunModel.matchMeasurement(pastRun.distance.doubleValue, measurement2: distance, tolerance: RunModel.distanceTolerance)) ||
+                    if (!RunModel.matchMeasurement(pastRun.distance.doubleValue, measurement2: totalDistance, tolerance: RunModel.distanceTolerance)) ||
                         (!RunModel.matchMeasurement(pastRun.maxLatitude.doubleValue, measurement2: maxLat, tolerance: RunModel.coordinateTolerance)) ||
                         (!RunModel.matchMeasurement(pastRun.minLatitude.doubleValue, measurement2: minLat, tolerance: RunModel.coordinateTolerance)) ||
                         (!RunModel.matchMeasurement(pastRun.maxLongitude.doubleValue, measurement2: maxLong, tolerance: RunModel.coordinateTolerance)) ||
@@ -337,7 +369,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                     break
                 }
             }
-            run = RunModel.addRun(locations, customName: customName, autoName: autoName, timestamp: NSDate(), weather: weather, temperature: temperature, distance: distance, maxAltitude: maxAlt, minAltitude: minAlt, maxLongitude: maxLong, minLongitude: minLong, maxLatitude: maxLat, minLatitude: minLat, altitudeGained: altGained, altitudeLost: altLost)
+            run = RunModel.addRun(locations, customName: customName, autoName: autoName, timestamp: NSDate(), weather: weather, temperature: temperature, distance: totalDistance, maxAltitude: maxAlt, minAltitude: minAlt, maxLongitude: maxLong, minLongitude: minLong, maxLatitude: maxLat, minLatitude: minLat, altitudeGained: altGained, altitudeLost: altLost)
         }
         else {
             // I don't consider this a magic number because the unadjusted length of a second will never change.
@@ -345,8 +377,9 @@ class RunModel: NSObject, CLLocationManagerDelegate {
             locationManager.kill()
             locationManager = nil
         }
-        seconds = 0
-        distance = 0.0
+        totalSeconds = 0
+        totalDistance = 0.0
+        currentSplitDistance = 0.0
         status = .PreRun
         locations = []
         didSetAutoNameAndFirstLoc = false
