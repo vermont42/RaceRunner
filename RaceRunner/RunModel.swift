@@ -15,7 +15,7 @@ import CoreData
 protocol RunDelegate {
     func showInitialCoordinate(coordinate: CLLocationCoordinate2D)
     func plotToCoordinate(coordinate: CLLocationCoordinate2D)
-    func receiveProgress(distance: Double, time: Int, paceString: String)
+    func receiveProgress(distance: Double, time: Int, paceString: String, altitude: Double)
 }
 
 class RunModel: NSObject, CLLocationManagerDelegate {
@@ -34,6 +34,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     private var currentSplitDistance = 0.0
     private var totalSeconds = 0
     private var lastSeconds = 0
+    private var lastAltitude = 0.0
     private var paceString = ""
     private var splitsCompleted = 0
     private var reportEvery = SettingsManager.never
@@ -168,6 +169,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                         runDelegate?.showInitialCoordinate(newLocation.coordinate)
                     }
                     self.locations.append(newLocation)
+                    lastAltitude = newLocation.altitude
                 }
                 
                 if !didSetAutoNameAndFirstLoc {
@@ -249,13 +251,14 @@ class RunModel: NSObject, CLLocationManagerDelegate {
             if reportEvery == SettingsManager.never || splitsCompleted == 0 {
                 paceString = Converter.stringifyPace(totalDistance, seconds: totalSeconds)
             }
-            runDelegate?.receiveProgress(totalDistance, time: totalSeconds, paceString: paceString)
+            runDelegate?.receiveProgress(totalDistance, time: totalSeconds, paceString: paceString, altitude: lastAltitude)
         }
     }
     
     func start() {
         status = .InProgress
         reportEvery = SettingsManager.getReportEvery()
+        lastAltitude = 0.0
         lastSeconds = 0
         totalDistance = 0.0
         lastDistance = 0.0
