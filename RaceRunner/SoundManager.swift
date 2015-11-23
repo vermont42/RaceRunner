@@ -13,6 +13,7 @@ import AVFoundation.AVAudioSession
 class SoundManager {
     private static let soundManager = SoundManager()
     private var sounds: [String: AVAudioPlayer]
+    static let applauseCount: UInt32 = 3
     
     private init () {
         sounds = Dictionary()

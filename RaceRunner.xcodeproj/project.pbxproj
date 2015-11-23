@@ -8,9 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		7333C6D291F714851431A2E3 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E91D4B24A52C1C5D97BD0CF /* Pods.framework */; };
+		E10356451C02A1CB006E8FEC /* applause2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E10356441C02A1CB006E8FEC /* applause2.mp3 */; };
+		E10356471C02A1EB006E8FEC /* applause3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E10356461C02A1EB006E8FEC /* applause3.mp3 */; };
 		E1103F231C00DADF00E18D2E /* click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1103F201C00DADF00E18D2E /* click.mp3 */; };
 		E1103F241C00DADF00E18D2E /* gun.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1103F211C00DADF00E18D2E /* gun.mp3 */; };
-		E1103F251C00DADF00E18D2E /* applause.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1103F221C00DADF00E18D2E /* applause.mp3 */; };
+		E1103F251C00DADF00E18D2E /* applause1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1103F221C00DADF00E18D2E /* applause1.mp3 */; };
 		E11655AC1AEAFB5200633C16 /* RunModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11655AB1AEAFB5200633C16 /* RunModel.swift */; };
 		E138E8CE1BA0A0FB00BA20E5 /* iSmoothRun.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */; };
 		E13B39931ABA705E007F61ED /* DarkSky.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B39921ABA705E007F61ED /* DarkSky.swift */; };
@@ -55,9 +57,11 @@
 		3E91D4B24A52C1C5D97BD0CF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BAE29B09F03FADB483809E0 /* SuggestedColors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = SuggestedColors.plist; sourceTree = "<group>"; };
 		B007871155F27C6F21413ECF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		E10356441C02A1CB006E8FEC /* applause2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = applause2.mp3; sourceTree = "<group>"; };
+		E10356461C02A1EB006E8FEC /* applause3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = applause3.mp3; sourceTree = "<group>"; };
 		E1103F201C00DADF00E18D2E /* click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = click.mp3; sourceTree = "<group>"; };
 		E1103F211C00DADF00E18D2E /* gun.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gun.mp3; sourceTree = "<group>"; };
-		E1103F221C00DADF00E18D2E /* applause.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = applause.mp3; sourceTree = "<group>"; };
+		E1103F221C00DADF00E18D2E /* applause1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = applause1.mp3; sourceTree = "<group>"; };
 		E11655AB1AEAFB5200633C16 /* RunModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunModel.swift; sourceTree = "<group>"; };
 		E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = iSmoothRun.gpx; sourceTree = "<group>"; };
 		E13B39921ABA705E007F61ED /* DarkSky.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DarkSky.swift; sourceTree = "<group>"; };
@@ -134,7 +138,9 @@
 		E1103F261C00DB0D00E18D2E /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				E1103F221C00DADF00E18D2E /* applause.mp3 */,
+				E1103F221C00DADF00E18D2E /* applause1.mp3 */,
+				E10356461C02A1EB006E8FEC /* applause3.mp3 */,
+				E10356441C02A1CB006E8FEC /* applause2.mp3 */,
 				E1103F201C00DADF00E18D2E /* click.mp3 */,
 				E1103F211C00DADF00E18D2E /* gun.mp3 */,
 			);
@@ -295,13 +301,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1E8B9291AAB73F000D04E38 /* Main.storyboard in Resources */,
-				E1103F251C00DADF00E18D2E /* applause.mp3 in Resources */,
+				E10356471C02A1EB006E8FEC /* applause3.mp3 in Resources */,
+				E1103F251C00DADF00E18D2E /* applause1.mp3 in Resources */,
 				E138E8CE1BA0A0FB00BA20E5 /* iSmoothRun.gpx in Resources */,
 				E1E027831B9A34FE00700DE1 /* Runkeeper.gpx in Resources */,
 				E1103F231C00DADF00E18D2E /* click.mp3 in Resources */,
 				E1D38F491B9E6AFE00380643 /* Runmeter.gpx in Resources */,
 				E1E8B92E1AAB73F000D04E38 /* LaunchScreen.xib in Resources */,
 				E1103F241C00DADF00E18D2E /* gun.mp3 in Resources */,
+				E10356451C02A1CB006E8FEC /* applause2.mp3 in Resources */,
 				E1E8B92B1AAB73F000D04E38 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

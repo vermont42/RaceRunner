@@ -194,7 +194,8 @@ class RunVC: ChildVC, RunDelegate {
     }
     
     func stop() {
-        SoundManager.play("applause")
+        arc4random_uniform(3) + 1
+        SoundManager.play("applause\(arc4random_uniform(SoundManager.applauseCount) + 1)")
         runnerIcons.direction = .Stationary
         startStopButton.backgroundColor = UiConstants.intermediate3Color
         startStopButton.setTitle("  Start  ", forState: UIControlState.Normal)
