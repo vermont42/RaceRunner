@@ -102,7 +102,7 @@
                                 <color key="textColor" red="0.96862745100000003" green="0.88235294119999996" blue="0.84313725490000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="oFN-hr-16i">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oFN-hr-16i">
                                 <rect key="frame" x="125" y="221" width="51" height="31"/>
                                 <color key="onTintColor" red="0.96862745100000003" green="0.88235294119999996" blue="0.84313725490000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -155,14 +155,37 @@
                                     <action selector="dontReportSplits" destination="owB-CJ-77e" eventType="touchUpInside" id="L8e-Zq-dTc"/>
                                 </connections>
                             </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a5z-kQ-OU0">
+                                <rect key="frame" x="167" y="261" width="51" height="31"/>
+                                <color key="onTintColor" red="0.96862745100000003" green="0.88235294119999996" blue="0.84313725490000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="toggleAudibleSplits:" destination="owB-CJ-77e" eventType="valueChanged" id="Zdn-xM-IoH"/>
+                                    <action selector="togglePublishRun:" destination="owB-CJ-77e" eventType="valueChanged" id="xZo-Vf-ZFK"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audible Splits: No" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xWn-fU-aIh">
+                                <rect key="frame" x="16" y="264" width="143" height="24"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
+                                <color key="textColor" red="0.96862745100000003" green="0.88235294119999996" blue="0.84313725490000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAQ-iS-OHx">
+                                <rect key="frame" x="224" y="264" width="27" height="24"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
+                                <color key="textColor" red="0.96862745100000003" green="0.88235294119999996" blue="0.84313725490000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.29019607843137257" green="0.3411764705882353" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Llt-nU-ZO0" secondAttribute="trailing" constant="16" id="0t9-Yp-l20"/>
+                            <constraint firstItem="kAQ-iS-OHx" firstAttribute="leading" secondItem="a5z-kQ-OU0" secondAttribute="trailing" constant="8" id="2AO-Cm-cqJ"/>
                             <constraint firstItem="9a9-Ud-iYG" firstAttribute="leading" secondItem="ydG-1M-nYi" secondAttribute="leading" constant="16" id="3V1-27-1QN"/>
                             <constraint firstItem="G21-ev-B5m" firstAttribute="leading" secondItem="Swq-ep-Iw8" secondAttribute="trailing" constant="8" id="40a-jm-ZSg"/>
+                            <constraint firstItem="a5z-kQ-OU0" firstAttribute="leading" secondItem="xWn-fU-aIh" secondAttribute="trailing" constant="8" id="51c-fl-vKg"/>
                             <constraint firstItem="9a9-Ud-iYG" firstAttribute="top" secondItem="ydG-1M-nYi" secondAttribute="top" constant="20" id="5t1-wD-7rl"/>
                             <constraint firstItem="QB5-kU-cye" firstAttribute="leading" secondItem="ydG-1M-nYi" secondAttribute="leading" constant="16" id="7xv-bX-dZW"/>
+                            <constraint firstItem="xWn-fU-aIh" firstAttribute="top" secondItem="KBV-HH-UbC" secondAttribute="bottom" constant="10" id="9OV-WE-TDX"/>
                             <constraint firstItem="QB5-kU-cye" firstAttribute="leading" secondItem="ydG-1M-nYi" secondAttribute="leading" constant="16" id="9df-jt-OGC"/>
                             <constraint firstItem="Llt-nU-ZO0" firstAttribute="centerY" secondItem="ZB3-ZU-4ib" secondAttribute="centerY" id="AYK-WS-Cp1"/>
                             <constraint firstItem="14G-rd-jtz" firstAttribute="centerY" secondItem="3JI-Yn-9cK" secondAttribute="centerY" id="Bl9-my-cPp"/>
@@ -174,11 +197,13 @@
                             <constraint firstItem="NLB-qd-e41" firstAttribute="top" secondItem="3JI-Yn-9cK" secondAttribute="bottom" constant="16" id="Ikm-gF-Pcf"/>
                             <constraint firstItem="G21-ev-B5m" firstAttribute="centerY" secondItem="YP5-Ir-314" secondAttribute="centerY" id="JFD-cG-h9Z"/>
                             <constraint firstItem="Z6y-Cg-Nkg" firstAttribute="centerY" secondItem="YP5-Ir-314" secondAttribute="centerY" id="Jam-xb-PAj"/>
+                            <constraint firstItem="xWn-fU-aIh" firstAttribute="leading" secondItem="ydG-1M-nYi" secondAttribute="leading" constant="16" id="Kjo-9j-4PM"/>
                             <constraint firstItem="6W8-1L-KZa" firstAttribute="leading" secondItem="HJf-9i-6b7" secondAttribute="trailing" constant="8" id="LJU-Ac-0Dh"/>
                             <constraint firstItem="qdk-tc-BR2" firstAttribute="leading" secondItem="ydG-1M-nYi" secondAttribute="leading" constant="16" id="PUM-wO-uIh"/>
                             <constraint firstItem="14G-rd-jtz" firstAttribute="leading" secondItem="3JI-Yn-9cK" secondAttribute="trailing" constant="8" id="QqP-2K-dfY"/>
                             <constraint firstItem="3JI-Yn-9cK" firstAttribute="leading" secondItem="ydG-1M-nYi" secondAttribute="leading" constant="16" id="RGf-Fo-IzB"/>
                             <constraint firstItem="QB5-kU-cye" firstAttribute="top" secondItem="NLB-qd-e41" secondAttribute="bottom" constant="16" id="T70-cZ-H7I"/>
+                            <constraint firstItem="kAQ-iS-OHx" firstAttribute="centerY" secondItem="xWn-fU-aIh" secondAttribute="centerY" id="T9L-ah-hJQ"/>
                             <constraint firstItem="nKu-u1-D8O" firstAttribute="leading" secondItem="14G-rd-jtz" secondAttribute="trailing" constant="8" id="X6Q-nF-tJv"/>
                             <constraint firstItem="qdk-tc-BR2" firstAttribute="top" secondItem="YP5-Ir-314" secondAttribute="bottom" constant="16" id="YFz-g2-vE3"/>
                             <constraint firstItem="Llt-nU-ZO0" firstAttribute="leading" secondItem="ZB3-ZU-4ib" secondAttribute="trailing" constant="8" id="YNs-LT-rXD"/>
@@ -188,6 +213,7 @@
                             <constraint firstItem="Eag-e0-E7j" firstAttribute="leading" secondItem="oFN-hr-16i" secondAttribute="trailing" constant="8" id="irE-sj-a5V"/>
                             <constraint firstItem="ZB3-ZU-4ib" firstAttribute="leading" secondItem="QB5-kU-cye" secondAttribute="trailing" constant="8" id="jMC-YE-82U"/>
                             <constraint firstAttribute="centerX" secondItem="f2o-gb-om4" secondAttribute="centerX" id="jpH-Mo-now"/>
+                            <constraint firstItem="a5z-kQ-OU0" firstAttribute="centerY" secondItem="xWn-fU-aIh" secondAttribute="centerY" id="kHC-z2-W7a"/>
                             <constraint firstItem="YP5-Ir-314" firstAttribute="top" secondItem="QB5-kU-cye" secondAttribute="bottom" constant="16" id="kWI-sp-L2V"/>
                             <constraint firstItem="f2o-gb-om4" firstAttribute="top" secondItem="ydG-1M-nYi" secondAttribute="top" constant="20" id="lqe-2N-rb4"/>
                             <constraint firstItem="HJf-9i-6b7" firstAttribute="leading" secondItem="NLB-qd-e41" secondAttribute="trailing" constant="8" id="o4T-0E-n0Y"/>
@@ -201,6 +227,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="audibleSplitsToggle" destination="a5z-kQ-OU0" id="HAe-FF-dky"/>
                         <outlet property="autoStopButton" destination="Z6y-Cg-Nkg" id="K5R-NZ-SZi"/>
                         <outlet property="autoStopToggle" destination="G21-ev-B5m" id="ePq-sV-5Ow"/>
                         <outlet property="multiplierLabel" destination="Llt-nU-ZO0" id="gc8-jS-u21"/>

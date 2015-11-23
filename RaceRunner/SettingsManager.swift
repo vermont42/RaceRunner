@@ -25,7 +25,11 @@ class SettingsManager {
     private var publishRun: Bool
     private static let publishRunKey = "PublishRun"
     private static let publishRunDefault = false
-  
+
+    private var audibleSplits: Bool
+    private static let audibleSplitsKey = "AudibleSplits"
+    private static let audibleSplitsDefault = true
+    
     private var multiplier: Double
     private static let multiplierKey = "Multiplier"
     private static let multiplierDefault = 5.0
@@ -63,6 +67,15 @@ class SettingsManager {
         else {
             publishRun = SettingsManager.publishRunDefault
             userDefaults.setObject("\(publishRun)", forKey: SettingsManager.publishRunKey)
+            userDefaults.synchronize()
+        }
+
+        if let storedAudibleSplitsString = userDefaults.stringForKey(SettingsManager.audibleSplitsKey) {
+            audibleSplits = (storedAudibleSplitsString as NSString).boolValue
+        }
+        else {
+            audibleSplits = SettingsManager.audibleSplitsDefault
+            userDefaults.setObject("\(audibleSplits)", forKey: SettingsManager.audibleSplitsKey)
             userDefaults.synchronize()
         }
         
@@ -135,6 +148,18 @@ class SettingsManager {
         if publishRun != settingsManager.publishRun {
             settingsManager.publishRun = publishRun
             settingsManager.userDefaults.setObject("\(publishRun)", forKey: SettingsManager.publishRunKey)
+            settingsManager.userDefaults.synchronize()
+        }
+    }
+
+    class func getAudibleSplits() -> Bool {
+        return settingsManager.audibleSplits
+    }
+    
+    class func setAudibleSplits(audibleSplits: Bool) {
+        if audibleSplits != settingsManager.audibleSplits {
+            settingsManager.audibleSplits = audibleSplits
+            settingsManager.userDefaults.setObject("\(audibleSplits)", forKey: SettingsManager.audibleSplitsKey)
             settingsManager.userDefaults.synchronize()
         }
     }

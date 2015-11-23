@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AVFoundation
 
 class Converter {
     private static let metersInKilometer: Double = 1000.0
@@ -26,7 +27,29 @@ class Converter {
     private static let metricLongUnitName: String = "km"
     private static let imperialShortUnitName: String = "ft"
     private static let metricShortUnitName: String = "m"
+    private static let synth = AVSpeechSynthesizer()
     
+    //                    Converter.announceProgress(totalSeconds, lastSeconds: lastSeconds, totalDistance: totalDistance, lastDistance: lastDistance, newAltitude: curAlt, oldAltitude: oldSplitAltitude)
+
+    
+    class func announceProgress(totalSeconds: Int, lastSeconds: Int, totalDistance: Double, lastDistance: Double, newAltitude: Double, oldAltitude: Double) {
+        let roundedTotalDistance = Int(totalDistance)
+        var progressString = "total distance \(roundedTotalDistance) meters, total time \(totalSeconds) seconds"
+        let altitudeDelta = Int(newAltitude - oldAltitude)
+        if altitudeDelta > 0 {
+            progressString += ", gained \(altitudeDelta)meters"
+        }
+        else if altitudeDelta < 0 {
+            progressString += ", lost \(-altitudeDelta))meters"
+        }
+        else {
+            progressString += ", no altitude change"
+        }
+        let utterance = AVSpeechUtterance(string: progressString)
+        utterance.rate = 0.5
+        synth.speakUtterance(utterance)
+    }
+
     class func convertLongDistanceToMeters(longDistance: Double) -> Double {
         switch SettingsManager.getUnitType() {
         case .Imperial:

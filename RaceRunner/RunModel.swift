@@ -10,7 +10,6 @@ import Foundation
 import MapKit
 import CoreLocation
 import CoreData
-//import AVFoundation   // necessary for utterances
 
 protocol RunDelegate {
     func showInitialCoordinate(coordinate: CLLocationCoordinate2D)
@@ -31,6 +30,8 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     
     private var totalDistance = 0.0
     private var lastDistance = 0.0
+    private var currentAltitude = 0.0
+    private var oldSplitAltitude = 0.0
     private var currentSplitDistance = 0.0
     private var totalSeconds = 0
     private var lastSeconds = 0
@@ -193,6 +194,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                                 }
                         })
                     }
+                    oldSplitAltitude = newLocation.altitude
                     minAlt = newLocation.altitude
                     maxAlt = newLocation.altitude
                     minLong = newLocation.coordinate.longitude
@@ -246,7 +248,11 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                 currentSplitDistance -= reportEvery
                 lastDistance = totalDistance
                 lastSeconds = totalSeconds
-                // do audio feedback
+                if (SettingsManager.getAudibleSplits()) {
+                    Converter.announceProgress(totalSeconds, lastSeconds: lastSeconds, totalDistance: totalDistance, lastDistance: lastDistance, newAltitude: curAlt, oldAltitude: oldSplitAltitude)
+                    
+                }
+                oldSplitAltitude = curAlt
             }
             if reportEvery == SettingsManager.never || splitsCompleted == 0 {
                 paceString = Converter.stringifyPace(totalDistance, seconds: totalSeconds)
@@ -259,9 +265,12 @@ class RunModel: NSObject, CLLocationManagerDelegate {
         status = .InProgress
         reportEvery = SettingsManager.getReportEvery()
         lastAltitude = 0.0
+        oldSplitAltitude = 0.0
         lastSeconds = 0
         totalDistance = 0.0
         lastDistance = 0.0
+        currentAltitude = 0.0
+        lastAltitude = 0.0
         currentSplitDistance = 0.0
         splitsCompleted = 0
         paceString = ""

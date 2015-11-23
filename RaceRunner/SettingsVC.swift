@@ -21,6 +21,8 @@ class SettingsVC: ChildVC {
     @IBOutlet var splitsButton: UIButton!
     @IBOutlet var neverButton: UIButton!
     @IBOutlet var noneButton: UIButton!
+    @IBOutlet var audibleSplitsToggle: UISwitch!
+    
     @IBAction func showMenu(sender: UIButton) {
         showMenu()
     }
@@ -38,6 +40,13 @@ class SettingsVC: ChildVC {
         else {
             publishRunToggle.on = false
         }
+        if SettingsManager.getAudibleSplits() == true {
+            audibleSplitsToggle.on = true
+        }
+        else {
+            audibleSplitsToggle.on = false
+        }
+        
         updateSplitsWidgets()
         updateAutoStopWidgets()
         updateMultiplierLabel()
@@ -181,6 +190,16 @@ class SettingsVC: ChildVC {
     @IBAction func changeStopAfter() {
         setAutoStop()
     }
+    
+    @IBAction func toggleAudibleSplits(sender: UISwitch) {
+        if sender.on {
+            SettingsManager.setAudibleSplits(true)
+        }
+        else {
+            SettingsManager.setAudibleSplits(false)
+        }
+    }
+    
     @IBAction func multiplierChanged(sender: UISlider) {
         SettingsManager.setMultiplier(round(Double(sender.value)))
         updateMultiplierLabel()
