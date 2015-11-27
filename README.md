@@ -5,7 +5,7 @@ RaceRunner
 
 Because `RaceRunner` is under development, refactoring will occur.
 
-`RaceRunner` will not run unless you put API keys for Google Maps, Dark Sky, and PubNub in Config.swift.
+`RaceRunner` requires API keys for Google Maps, Dark Sky, and PubNub in `Config.swift`.
 
 ![RaceRunner](RaceRunner2.png "Screenshot")
 
