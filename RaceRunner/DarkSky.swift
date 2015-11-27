@@ -12,7 +12,7 @@ public class DarkSky {
     static let temperatureError: Float = -1000.0
     static let weatherError = "weather error"
     static let basePath = "https://api.forecast.io/forecast/"
-    static let apiKey = "51e9be2653fc075c805c92db32a50432"
+    static let apiKey = Config.darkSkyKey
     
     public enum Result {
         case Success(NSURLResponse!, NSDictionary!)

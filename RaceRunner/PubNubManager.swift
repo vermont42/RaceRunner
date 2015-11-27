@@ -21,7 +21,7 @@ class PubNubManager: NSObject, PNObjectEventListener {
     static let publicChannel = "RaceRunner Channel"
   
     override init() {
-        pubNub = PubNub.clientWithConfiguration(PNConfiguration(publishKey: "pub-c-0d826075-d0b1-4788-a7b6-40cdffc0414d", subscribeKey: "sub-c-8da5fcec-8aee-11e5-a04a-0619f8945a4f"))
+        pubNub = PubNub.clientWithConfiguration(PNConfiguration(publishKey: Config.pubNubPublishKey, subscribeKey: Config.pubNubSubscribeKey))
         super.init()
         pubNub?.addListener(self)
     }
