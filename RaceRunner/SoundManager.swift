@@ -18,7 +18,7 @@ class SoundManager {
     private init () {
         sounds = Dictionary()
         do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback) // was ambient
         } catch let error as NSError {
             print("\(error.localizedDescription)")
         }

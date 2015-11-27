@@ -11,13 +11,14 @@ import AVFoundation
 
 class Converter {
     private static let metersInKilometer: Double = 1000.0
-    private static let metersInMile: Double = 1609.344
+    static let metersInMile: Double = 1609.344
     private static let feetInMeter: Double = 3.281
     private static let fahrenheitMultiplier: Float = 9.0 / 5.0
     private static let celsiusFraction: Float = 5.0 / 9.0
     private static let fahrenheitAmountToAdd: Float = 32.0
     private static let celsiusMultiplier: Float = 1.0
     private static let celsiusAmountToAdd: Float = 0.0
+    private static let altitudeFudge: Double = 5.0
     private static let secondsPerMinute: Int = 60
     private static let minutesPerHour: Int = 60
     private static let secondsPerHour: Int = 3600
@@ -27,27 +28,52 @@ class Converter {
     private static let metricLongUnitName: String = "km"
     private static let imperialShortUnitName: String = "ft"
     private static let metricShortUnitName: String = "m"
+    private static let imperialShortUnitUnabbreviatedName: String = "feet"
+    private static let metricShortUnitUnabbreviatedName: String = "meters"
+    
     private static let synth = AVSpeechSynthesizer()
     
-    //                    Converter.announceProgress(totalSeconds, lastSeconds: lastSeconds, totalDistance: totalDistance, lastDistance: lastDistance, newAltitude: curAlt, oldAltitude: oldSplitAltitude)
-
-    
     class func announceProgress(totalSeconds: Int, lastSeconds: Int, totalDistance: Double, lastDistance: Double, newAltitude: Double, oldAltitude: Double) {
-        let roundedTotalDistance = Int(totalDistance)
-        var progressString = "total distance \(roundedTotalDistance) meters, total time \(totalSeconds) seconds"
-        let altitudeDelta = Int(newAltitude - oldAltitude)
-        if altitudeDelta > 0 {
-            progressString += ", gained \(altitudeDelta)meters"
+        let totalLongDistance = convertMetersToLongDistance(totalDistance)
+        let roundedDistance = NSString(format: "%.1f", totalLongDistance) as String
+        var progressString = "total distance \(roundedDistance) \(pluralizedCurrentLongUnit(totalLongDistance)), total time \(stringifySecondCount(totalSeconds, useLongFormat: true)), split pace"
+        let distanceDelta = totalDistance - lastDistance
+        let secondsDelta = totalSeconds - lastSeconds
+        progressString += stringifyPace(distanceDelta, seconds: secondsDelta, forSpeaking: true)
+        let altitudeDelta = newAltitude - oldAltitude
+        if altitudeDelta > 0.0 + altitudeFudge {
+            progressString += ", gained \(stringifyAltitude(altitudeDelta, unabbreviated: true))"
         }
-        else if altitudeDelta < 0 {
-            progressString += ", lost \(-altitudeDelta))meters"
+        else if altitudeDelta < 0.0 - altitudeFudge {
+            progressString += ", lost \(stringifyAltitude(-altitudeDelta, unabbreviated: true)))"
         }
         else {
             progressString += ", no altitude change"
         }
         let utterance = AVSpeechUtterance(string: progressString)
         utterance.rate = 0.5
+        utterance.voice = AVSpeechSynthesisVoice(language: "en-\(SettingsManager.getAccent().languageCode())")        
+        utterance.pitchMultiplier = 0.8
         synth.speakUtterance(utterance)
+    }
+    
+    class func pluralizedCurrentLongUnit(value: Double) -> String {
+        switch SettingsManager.getUnitType() {
+        case .Imperial:
+            if value <= 1.0 {
+                return "mile"
+            }
+            else {
+                return "miles"
+            }
+        case .Metric:
+            if value <= 1.0 {
+                return "kilometer"
+            }
+            else {
+                return "kilometers"
+            }
+        }
     }
 
     class func convertLongDistanceToMeters(longDistance: Double) -> Double {
@@ -98,19 +124,30 @@ class Converter {
         return NSString(format: "%.2f %@", meters / unitDivider, unitName) as String
     }
     
-    class func stringifySecondCount(seconds: Int, useLongFormat: Bool) -> String {
+    class func stringifySecondCount(seconds: Int, useLongFormat: Bool, useLongUnits: Bool = false) -> String {
         var remainingSeconds = seconds
         let hours = remainingSeconds / secondsPerHour
         remainingSeconds -= hours * secondsPerHour
         let minutes = remainingSeconds / secondsPerMinute
         remainingSeconds -= minutes * secondsPerMinute
         if useLongFormat {
-            if hours > 0 {
-                return NSString(format: "%d hr %d min %d sec", hours, minutes, remainingSeconds) as String
-            } else if minutes > 0 {
-                return NSString(format: "%d min %d sec", minutes, remainingSeconds) as String
-            } else {
-                return NSString(format: "%d sec", remainingSeconds) as String
+            if useLongUnits {
+                if hours > 0 {
+                    return NSString(format: "%d hour %d minutes %d seconds", hours, minutes, remainingSeconds) as String
+                } else if minutes > 0 {
+                    return NSString(format: "%d minutes %d seconds", minutes, remainingSeconds) as String
+                } else {
+                    return NSString(format: "%d seconds", remainingSeconds) as String
+                }
+            }
+            else {
+                if hours > 0 {
+                    return NSString(format: "%d hr %d min %d sec", hours, minutes, remainingSeconds) as String
+                } else if minutes > 0 {
+                    return NSString(format: "%d min %d sec", minutes, remainingSeconds) as String
+                } else {
+                    return NSString(format: "%d sec", remainingSeconds) as String
+                }
             }
         }
         else {
@@ -124,7 +161,7 @@ class Converter {
         }
     }
     
-    class func stringifyPace(meters: Double, seconds:(Int)) -> String {
+    class func stringifyPace(meters: Double, seconds:Int, forSpeaking:Bool = false) -> String {
         if seconds == 0 || meters == 0.0 {
             return "0"
         }
@@ -132,31 +169,58 @@ class Converter {
         let avgPaceSecMeters = Double(seconds) / meters
         var unitMultiplier: Double
         var unitName: String
-        if SettingsManager.getUnitType() == .Metric {
-            unitName = "min/" + metricLongUnitName
-            unitMultiplier = metersInKilometer
+        if forSpeaking {
+            if SettingsManager.getUnitType() == .Metric {
+                unitName = getCurrentLongUnitName()
+                unitMultiplier = metersInKilometer
+            }
+            else {
+                unitName = getCurrentLongUnitName()
+                unitMultiplier = metersInMile
+            }
         }
         else {
-            unitName = "min/" + imperialLongUnitName
-            unitMultiplier = metersInMile
+            if SettingsManager.getUnitType() == .Metric {
+                unitName = "min/" + metricLongUnitName
+                unitMultiplier = metersInKilometer
+            }
+            else {
+                unitName = "min/" + imperialLongUnitName
+                unitMultiplier = metersInMile
+            }
         }
         let paceMin = Int((avgPaceSecMeters * unitMultiplier) / Double(secondsPerMinute))
         let paceSec = Int(avgPaceSecMeters * unitMultiplier - Double((paceMin * secondsPerMinute)))
-        return NSString(format: "%d:%02d %@", paceMin, paceSec, unitName) as String
+        if forSpeaking {
+            return NSString(format: "%d minutes %02d seconds per %@", paceMin, paceSec, unitName) as String
+        }
+        else {
+            return NSString(format: "%d:%02d %@", paceMin, paceSec, unitName) as String
+        }
     }
 
-    class func stringifyAltitude(meters: Double) -> String {
+    class func stringifyAltitude(meters: Double, unabbreviated: Bool = false) -> String {
         var unitMultiplier: Double
         var unitName: String
         if SettingsManager.getUnitType() == .Metric {
             unitMultiplier = 1.0
-            unitName = metricShortUnitName
+            if !unabbreviated {
+                unitName = metricShortUnitName
+            }
+            else {
+                unitName = metricShortUnitUnabbreviatedName
+            }
         }
         else {
             unitMultiplier = feetInMeter
-            unitName = imperialShortUnitName
+            if !unabbreviated {
+                unitName = imperialShortUnitName
+            }
+            else {
+                unitName = imperialShortUnitUnabbreviatedName
+            }
         }
-        return NSString(format: "%.1f %@", meters * unitMultiplier, unitName) as String
+        return NSString(format: "%.0f %@", meters * unitMultiplier, unitName) as String
     }
     
     class func stringifyTemperature(temperature: Float) -> String {

@@ -35,6 +35,7 @@
 		E1D5A01C1AC5170F008A3806 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1D5A01B1AC5170E008A3806 /* AVFoundation.framework */; };
 		E1DA7D6D1B9B8BA2006BC362 /* GpxParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DA7D6C1B9B8BA2006BC362 /* GpxParser.swift */; };
 		E1E027831B9A34FE00700DE1 /* Runkeeper.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E1E027821B9A34FE00700DE1 /* Runkeeper.gpx */; };
+		E1E7F7D61C03F8E500F108B6 /* Double+roundToPlaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E7F7D51C03F8E500F108B6 /* Double+roundToPlaces.swift */; };
 		E1E8B9241AAB73F000D04E38 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E8B9231AAB73F000D04E38 /* AppDelegate.swift */; };
 		E1E8B9291AAB73F000D04E38 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1E8B9271AAB73F000D04E38 /* Main.storyboard */; };
 		E1E8B92B1AAB73F000D04E38 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1E8B92A1AAB73F000D04E38 /* Images.xcassets */; };
@@ -86,6 +87,7 @@
 		E1D5A01B1AC5170E008A3806 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		E1DA7D6C1B9B8BA2006BC362 /* GpxParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxParser.swift; sourceTree = "<group>"; };
 		E1E027821B9A34FE00700DE1 /* Runkeeper.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Runkeeper.gpx; sourceTree = "<group>"; };
+		E1E7F7D51C03F8E500F108B6 /* Double+roundToPlaces.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+roundToPlaces.swift"; sourceTree = "<group>"; };
 		E1E8B91E1AAB73F000D04E38 /* RaceRunner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RaceRunner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1E8B9221AAB73F000D04E38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1E8B9231AAB73F000D04E38 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 				E1E8B9471AAB742E00D04E38 /* ChildVC.swift */,
 				E1FCB00D1AB8F43100B1D803 /* Converter.swift */,
 				E13B39921ABA705E007F61ED /* DarkSky.swift */,
+				E1E7F7D51C03F8E500F108B6 /* Double+roundToPlaces.swift */,
 				E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */,
 				E1DA7D6C1B9B8BA2006BC362 /* GpxParser.swift */,
 				E1E8B9481AAB742E00D04E38 /* HelpVC.swift */,
@@ -395,6 +398,7 @@
 				E1E8B9581AAB742E00D04E38 /* UnwindPanSegue.swift in Sources */,
 				E1E8B9571AAB742E00D04E38 /* SpectateVC.swift in Sources */,
 				E1D521691ABA93CD00B46300 /* Run.swift in Sources */,
+				E1E7F7D61C03F8E500F108B6 /* Double+roundToPlaces.swift in Sources */,
 				E1B45F071AE96EFC00AF73AB /* LocationManager.swift in Sources */,
 				E1CBD2D71AC4D616006F0B85 /* SettingsManager.swift in Sources */,
 				E1E8B94E1AAB742E00D04E38 /* MenuVC.swift in Sources */,

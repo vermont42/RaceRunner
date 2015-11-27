@@ -13,7 +13,7 @@ class SettingsManager {
     private var userDefaults: NSUserDefaults
     
     private var unitType: UnitType
-    private static let unitTypeKey = "UnitType"
+    private static let unitTypeKey = "unitType"
     enum UnitType: String {
         case Imperial = "Imperial"
         case Metric = "Metric"
@@ -22,16 +22,70 @@ class SettingsManager {
         }
     }
     
+    private var accent: Accent
+    private static let accentKey = "accent"
+    enum Accent: String {
+        case 🇺🇸 = "🇺🇸"
+        case 🇮🇪 = "🇮🇪"
+        case 🇬🇧 = "🇬🇧"
+        case 🇦🇺 = "🇦🇺"
+        
+        init() {
+            self = .🇺🇸
+        }
+        
+        func languageCode() -> String {
+            switch self {
+            case .🇺🇸:
+                return "US"
+            case .🇮🇪:
+                return "IE"
+            case .🇬🇧:
+                return "GB"
+            case .🇦🇺:
+                return "AU"
+            }
+        }
+        
+        func radioButtonPosition() -> Int {
+            switch self {
+            case .🇺🇸:
+                return 0
+            case .🇮🇪:
+                return 1
+            case .🇬🇧:
+                return 2
+            case .🇦🇺:
+                return 3
+            }
+        }
+        
+        static func stringToAccent(accent: String) -> Accent {
+            switch accent {
+            case "🇺🇸":
+                return .🇺🇸
+            case "🇮🇪":
+                return .🇮🇪
+            case "🇬🇧":
+                return .🇬🇧
+            case "🇦🇺":
+                return .🇦🇺
+            default:
+                return .🇺🇸
+            }
+        }
+    }
+    
     private var publishRun: Bool
-    private static let publishRunKey = "PublishRun"
+    private static let publishRunKey = "publishRun"
     private static let publishRunDefault = false
 
     private var audibleSplits: Bool
-    private static let audibleSplitsKey = "AudibleSplits"
+    private static let audibleSplitsKey = "audibleSplits"
     private static let audibleSplitsDefault = true
     
     private var multiplier: Double
-    private static let multiplierKey = "Multiplier"
+    private static let multiplierKey = "multiplier"
     private static let multiplierDefault = 5.0
   
     private var stopAfter: Double
@@ -43,7 +97,7 @@ class SettingsManager {
 
     private var reportEvery: Double
     private static let reportEveryKey = "reportEvery"
-    private static let reportEveryDefault = RunModel.reportEveryDefault
+    private static let reportEveryDefault = Converter.metersInMile
     
     private var alreadyMadeSampleRun: Bool
     private static let alreadyMadeSampleRunKey = "alreadyMadeSampleRun"
@@ -58,6 +112,15 @@ class SettingsManager {
         else {
             unitType = UnitType()
             userDefaults.setObject(unitType.rawValue, forKey: SettingsManager.unitTypeKey)
+            userDefaults.synchronize()
+        }
+        
+        if let storedAccentString = userDefaults.stringForKey(SettingsManager.accentKey) {
+            accent = Accent(rawValue: storedAccentString)!
+        }
+        else {
+            accent = Accent()
+            userDefaults.setObject(accent.rawValue, forKey: SettingsManager.accentKey)
             userDefaults.synchronize()
         }
         
@@ -126,6 +189,22 @@ class SettingsManager {
             settingsManager.userDefaults.setObject(unitType.rawValue, forKey: SettingsManager.unitTypeKey)
             settingsManager.userDefaults.synchronize()
         }
+    }
+    
+    class func getAccent() -> Accent {
+        return settingsManager.accent
+    }
+    
+    class func setAccent(accent: Accent) {
+        if accent != settingsManager.accent {
+            settingsManager.accent = accent
+            settingsManager.userDefaults.setObject(accent.rawValue, forKey: SettingsManager.accentKey)
+            settingsManager.userDefaults.synchronize()
+        }
+    }
+    
+    class func setAccent(accent: String) {
+        SettingsManager.setAccent(Accent.stringToAccent(accent))
     }
     
     class func getAlreadyMadeSampleRun() -> Bool {

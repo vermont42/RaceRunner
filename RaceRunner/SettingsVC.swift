@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DLRadioButton
 
 class SettingsVC: ChildVC {
     @IBOutlet var unitsToggle: UISwitch!
@@ -22,6 +23,7 @@ class SettingsVC: ChildVC {
     @IBOutlet var neverButton: UIButton!
     @IBOutlet var noneButton: UIButton!
     @IBOutlet var audibleSplitsToggle: UISwitch!
+    @IBOutlet var accentButtons: [DLRadioButton]!
     
     @IBAction func showMenu(sender: UIButton) {
         showMenu()
@@ -50,6 +52,7 @@ class SettingsVC: ChildVC {
         updateSplitsWidgets()
         updateAutoStopWidgets()
         updateMultiplierLabel()
+        accentButtons[SettingsManager.getAccent().radioButtonPosition()].sendActionsForControlEvents(UIControlEvents.TouchUpInside)
         multiplierSlider.value = Float(SettingsManager.getMultiplier())
         viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
         showMenuButton.setImage(UiHelpers.maskedImageNamed("menu", color: UiConstants.lightColor), forState: .Normal)
@@ -197,6 +200,13 @@ class SettingsVC: ChildVC {
         }
         else {
             SettingsManager.setAudibleSplits(false)
+        }
+    }
+    
+    @IBAction func changeAccent(sender: DLRadioButton) {
+        let selectedFlag = sender.selectedButton().titleLabel?.text
+        if let selectedFlag = selectedFlag {
+            SettingsManager.setAccent(selectedFlag)
         }
     }
     

@@ -23,11 +23,8 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     var runDelegate: RunDelegate?
     var run: Run!
     var realRunInProgress = false
-    
     static let altFudge: Double = 0.1
     static let noStreetNameDetected: String = "no street name detected"
-    static let reportEveryDefault: Double = 1.0
-    
     private var totalDistance = 0.0
     private var lastDistance = 0.0
     private var currentAltitude = 0.0
@@ -246,12 +243,11 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                 splitsCompleted++
                 paceString = Converter.stringifyPace((totalDistance - lastDistance), seconds: (totalSeconds - lastSeconds))
                 currentSplitDistance -= reportEvery
-                lastDistance = totalDistance
-                lastSeconds = totalSeconds
                 if (SettingsManager.getAudibleSplits()) {
                     Converter.announceProgress(totalSeconds, lastSeconds: lastSeconds, totalDistance: totalDistance, lastDistance: lastDistance, newAltitude: curAlt, oldAltitude: oldSplitAltitude)
-                    
                 }
+                lastDistance = totalDistance
+                lastSeconds = totalSeconds
                 oldSplitAltitude = curAlt
             }
             if reportEvery == SettingsManager.never || splitsCompleted == 0 {
