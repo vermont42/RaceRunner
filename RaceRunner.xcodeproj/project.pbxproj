@@ -16,6 +16,7 @@
 		E11655AC1AEAFB5200633C16 /* RunModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11655AB1AEAFB5200633C16 /* RunModel.swift */; };
 		E11E22BF1C08C71200488399 /* UnitType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E22BE1C08C71200488399 /* UnitType.swift */; };
 		E11E22C11C08C76E00488399 /* Accent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E22C01C08C76E00488399 /* Accent.swift */; };
+		E11E22C31C08CDC000488399 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E22C21C08CDC000488399 /* Config.swift */; };
 		E138E8CE1BA0A0FB00BA20E5 /* iSmoothRun.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */; };
 		E13B39931ABA705E007F61ED /* DarkSky.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B39921ABA705E007F61ED /* DarkSky.swift */; };
 		E13B48B51B911BDA001C997A /* UiConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B48B41B911BDA001C997A /* UiConstants.swift */; };
@@ -68,6 +69,7 @@
 		E11655AB1AEAFB5200633C16 /* RunModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunModel.swift; sourceTree = "<group>"; };
 		E11E22BE1C08C71200488399 /* UnitType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitType.swift; sourceTree = "<group>"; };
 		E11E22C01C08C76E00488399 /* Accent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accent.swift; sourceTree = "<group>"; };
+		E11E22C21C08CDC000488399 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = iSmoothRun.gpx; sourceTree = "<group>"; };
 		E13B39921ABA705E007F61ED /* DarkSky.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DarkSky.swift; sourceTree = "<group>"; };
 		E13B48B41B911BDA001C997A /* UiConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UiConstants.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				E1E8B9231AAB73F000D04E38 /* AppDelegate.swift */,
 				E1E8B9451AAB742E00D04E38 /* CDManager.swift */,
 				E1E8B9471AAB742E00D04E38 /* ChildVC.swift */,
+				E11E22C21C08CDC000488399 /* Config.swift */,
 				E1FCB00D1AB8F43100B1D803 /* Converter.swift */,
 				E13B39921ABA705E007F61ED /* DarkSky.swift */,
 				E1E7F7D51C03F8E500F108B6 /* Double+roundToPlaces.swift */,
@@ -399,6 +402,7 @@
 				E1804DB61ABBA0D300625188 /* RunDetailsVC.swift in Sources */,
 				E1E8B9551AAB742E00D04E38 /* RunVC.swift in Sources */,
 				E13E30571BFD28F1009CDE60 /* SoundManager.swift in Sources */,
+				E11E22C31C08CDC000488399 /* Config.swift in Sources */,
 				E1E8B9521AAB742E00D04E38 /* ChildVC.swift in Sources */,
 				E1E8B9501AAB742E00D04E38 /* CDManager.swift in Sources */,
 				E1E8B9241AAB73F000D04E38 /* AppDelegate.swift in Sources */,
