@@ -14,67 +14,9 @@ class SettingsManager {
     
     private var unitType: UnitType
     private static let unitTypeKey = "unitType"
-    enum UnitType: String {
-        case Imperial = "Imperial"
-        case Metric = "Metric"
-        init() {
-            self = .Imperial
-        }
-    }
     
     private var accent: Accent
     private static let accentKey = "accent"
-    enum Accent: String {
-        case 🇺🇸 = "🇺🇸"
-        case 🇮🇪 = "🇮🇪"
-        case 🇬🇧 = "🇬🇧"
-        case 🇦🇺 = "🇦🇺"
-        
-        init() {
-            self = .🇺🇸
-        }
-        
-        func languageCode() -> String {
-            switch self {
-            case .🇺🇸:
-                return "US"
-            case .🇮🇪:
-                return "IE"
-            case .🇬🇧:
-                return "GB"
-            case .🇦🇺:
-                return "AU"
-            }
-        }
-        
-        func radioButtonPosition() -> Int {
-            switch self {
-            case .🇺🇸:
-                return 0
-            case .🇮🇪:
-                return 1
-            case .🇬🇧:
-                return 2
-            case .🇦🇺:
-                return 3
-            }
-        }
-        
-        static func stringToAccent(accent: String) -> Accent {
-            switch accent {
-            case "🇺🇸":
-                return .🇺🇸
-            case "🇮🇪":
-                return .🇮🇪
-            case "🇬🇧":
-                return .🇬🇧
-            case "🇦🇺":
-                return .🇦🇺
-            default:
-                return .🇺🇸
-            }
-        }
-    }
     
     private var publishRun: Bool
     private static let publishRunKey = "publishRun"
