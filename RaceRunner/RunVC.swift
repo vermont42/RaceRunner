@@ -16,6 +16,8 @@ class RunVC: ChildVC, RunDelegate {
     @IBOutlet var timeLabel: UILabel!
     @IBOutlet var paceLabel: UILabel!
     @IBOutlet var altLabel: UILabel!
+    @IBOutlet var altGainedLabel: UILabel!
+    @IBOutlet var altLostLabel: UILabel!
     @IBOutlet var startStopButton: UIButton!
     @IBOutlet var showMenuButton: UIButton!
     @IBOutlet var pauseResume: UIButton!
@@ -161,11 +163,13 @@ class RunVC: ChildVC, RunDelegate {
         }
     }
     
-    func receiveProgress(distance: Double, time: Int, paceString: String, altitude: Double) {
-        timeLabel.text = "Time: \(Converter.stringifySecondCount(time, useLongFormat: true))"
+    func receiveProgress(distance: Double, time: Int, paceString: String, altitude: Double, altGainedString: String, altLostString: String) {
+        timeLabel.text = "Time: \(Converter.stringifySecondCount(time, useLongFormat: false))"
         distanceLabel.text = "Dist.: \(Converter.stringifyDistance(distance))"
         paceLabel.text = "Pace: " + paceString
         altLabel.text = "Alt.: " + Converter.stringifyAltitude(altitude)
+        altGainedLabel.text = "+: " + altGainedString
+        altLostLabel.text = "-: " + altLostString
         let stopAfter = SettingsManager.getStopAfter()
         if (stopAfter != SettingsManager.never) && (distance >= stopAfter) {
             stop()

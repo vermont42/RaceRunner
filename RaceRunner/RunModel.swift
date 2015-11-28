@@ -14,7 +14,7 @@ import CoreData
 protocol RunDelegate {
     func showInitialCoordinate(coordinate: CLLocationCoordinate2D)
     func plotToCoordinate(coordinate: CLLocationCoordinate2D)
-    func receiveProgress(distance: Double, time: Int, paceString: String, altitude: Double)
+    func receiveProgress(distance: Double, time: Int, paceString: String, altitude: Double, altGainedString: String, altLostString: String)
 }
 
 class RunModel: NSObject, CLLocationManagerDelegate {
@@ -33,7 +33,11 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     private var totalSeconds = 0
     private var lastSeconds = 0
     private var lastAltitude = 0.0
+    private var curAltGained = 0.0
+    private var curAltLost = 0.0
     private var paceString = ""
+    private var altGainedString = ""
+    private var altLostString = ""
     private var splitsCompleted = 0
     private var reportEvery = SettingsManager.never
     private var temperature: Float = 0.0
@@ -55,6 +59,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     private var runToSimulate: Run!
     private var gpxFile: String!
     private var secondLength = 1.0
+    private var shouldReportSplits = false
     
     private static let distanceTolerance: Double = 0.05
     private static let coordinateTolerance: Double = 0.0000050
@@ -220,9 +225,11 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                     }
                     if newLocation.altitude > curAlt + RunModel.altFudge {
                         altGained += newLocation.altitude - curAlt
+                        curAltGained += newLocation.altitude - curAlt
                     }
                     if newLocation.altitude < curAlt - RunModel.altFudge {
                         altLost += curAlt - newLocation.altitude
+                        curAltLost += curAlt - newLocation.altitude
                     }
                 }
                 curAlt = newLocation.altitude
@@ -239,9 +246,13 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                 PubNubManager.pubishLocation(locations[locations.count - 1], distance: totalDistance, seconds: totalSeconds)
             }
             currentSplitDistance = totalDistance - lastDistance
-            if currentSplitDistance >= reportEvery {
+            if shouldReportSplits && currentSplitDistance >= reportEvery {
                 splitsCompleted++
                 paceString = Converter.stringifyPace((totalDistance - lastDistance), seconds: (totalSeconds - lastSeconds))
+                altGainedString = Converter.stringifyAltitude(curAltGained)
+                curAltGained = 0.0
+                altLostString = Converter.stringifyAltitude(curAltLost)
+                curAltLost = 0.0
                 currentSplitDistance -= reportEvery
                 if (SettingsManager.getAudibleSplits()) {
                     Converter.announceProgress(totalSeconds, lastSeconds: lastSeconds, totalDistance: totalDistance, lastDistance: lastDistance, newAltitude: curAlt, oldAltitude: oldSplitAltitude)
@@ -250,25 +261,38 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                 lastSeconds = totalSeconds
                 oldSplitAltitude = curAlt
             }
-            if reportEvery == SettingsManager.never || splitsCompleted == 0 {
+            if !shouldReportSplits || splitsCompleted == 0 {
                 paceString = Converter.stringifyPace(totalDistance, seconds: totalSeconds)
+                altGainedString = Converter.stringifyAltitude(altGained)
+                altLostString = Converter.stringifyAltitude(altLost)
             }
-            runDelegate?.receiveProgress(totalDistance, time: totalSeconds, paceString: paceString, altitude: lastAltitude)
+            runDelegate?.receiveProgress(totalDistance, time: totalSeconds, paceString: paceString, altitude: lastAltitude, altGainedString: altGainedString, altLostString: altLostString)
         }
     }
     
     func start() {
         status = .InProgress
         reportEvery = SettingsManager.getReportEvery()
-        lastAltitude = 0.0
+        if reportEvery == SettingsManager.never {
+            shouldReportSplits = false
+        }
+        else {
+            shouldReportSplits = true
+        }
+        
+            
         oldSplitAltitude = 0.0
         lastSeconds = 0
         totalDistance = 0.0
         lastDistance = 0.0
         currentAltitude = 0.0
         lastAltitude = 0.0
+        curAltGained = 0.0
+        curAltLost = 0.0
         currentSplitDistance = 0.0
         splitsCompleted = 0
+        altGained = 0.0
+        altLost = 0.0
         paceString = ""
         locationManager.startUpdatingLocation()
         startTimer()
