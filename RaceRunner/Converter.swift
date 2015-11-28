@@ -22,15 +22,18 @@ class Converter {
     private static let secondsPerMinute: Int = 60
     private static let minutesPerHour: Int = 60
     private static let secondsPerHour: Int = 3600
-    private static let fahrenheitUnitName: String = "F"
-    private static let celsiusUnitName: String = "C"
-    private static let imperialLongUnitName: String = "mi"
-    private static let metricLongUnitName: String = "km"
-    private static let imperialShortUnitName: String = "ft"
-    private static let metricShortUnitName: String = "m"
-    private static let imperialShortUnitUnabbreviatedName: String = "feet"
-    private static let metricShortUnitUnabbreviatedName: String = "meters"
-    
+    private static let fahrenheitAbbr: String = "F"
+    private static let celsiusAbbr: String = "C"
+    private static let mileAbbr: String = "mi"
+    private static let kilometerAbbr: String = "km"
+    private static let feetAbbr: String = "ft"
+    private static let metersAbbr: String = "m"
+    private static let feet: String = "feet"
+    private static let meters: String = "meters"
+    private static let mile: String = "mile"
+    private static let kilometer: String = "kilometer"
+    private static let miles: String = "miles"
+    private static let kilometers: String = "kilometers"
     private static let synth = AVSpeechSynthesizer()
     
     class func announceProgress(totalSeconds: Int, lastSeconds: Int, totalDistance: Double, lastDistance: Double, newAltitude: Double, oldAltitude: Double) {
@@ -61,17 +64,17 @@ class Converter {
         switch SettingsManager.getUnitType() {
         case .Imperial:
             if value <= 1.0 {
-                return "mile"
+                return mile
             }
             else {
-                return "miles"
+                return miles
             }
         case .Metric:
             if value <= 1.0 {
-                return "kilometer"
+                return kilometer
             }
             else {
-                return "kilometers"
+                return kilometers
             }
         }
     }
@@ -114,11 +117,11 @@ class Converter {
         var unitDivider: Double
         var unitName: String
         if SettingsManager.getUnitType() == .Metric {
-            unitName = metricLongUnitName
+            unitName = kilometerAbbr
             unitDivider = metersInKilometer
         }
         else {
-            unitName = imperialLongUnitName
+            unitName = mileAbbr
             unitDivider = metersInMile
         }
         return NSString(format: "%.2f %@", meters / unitDivider, unitName) as String
@@ -181,11 +184,11 @@ class Converter {
         }
         else {
             if SettingsManager.getUnitType() == .Metric {
-                unitName = "min/" + metricLongUnitName
+                unitName = "min/" + kilometerAbbr
                 unitMultiplier = metersInKilometer
             }
             else {
-                unitName = "min/" + imperialLongUnitName
+                unitName = "min/" + mileAbbr
                 unitMultiplier = metersInMile
             }
         }
@@ -205,19 +208,19 @@ class Converter {
         if SettingsManager.getUnitType() == .Metric {
             unitMultiplier = 1.0
             if !unabbreviated {
-                unitName = metricShortUnitName
+                unitName = metersAbbr
             }
             else {
-                unitName = metricShortUnitUnabbreviatedName
+                unitName = Converter.meters
             }
         }
         else {
             unitMultiplier = feetInMeter
             if !unabbreviated {
-                unitName = imperialShortUnitName
+                unitName = feetAbbr
             }
             else {
-                unitName = imperialShortUnitUnabbreviatedName
+                unitName = feet
             }
         }
         return NSString(format: "%.0f %@", meters * unitMultiplier, unitName) as String
@@ -228,12 +231,12 @@ class Converter {
         var multiplier: Float
         var amountToAdd: Float
         if SettingsManager.getUnitType() == .Metric {
-            unitName = celsiusUnitName
+            unitName = celsiusAbbr
             multiplier = celsiusMultiplier
             amountToAdd = celsiusAmountToAdd
         }
         else {
-            unitName = fahrenheitUnitName
+            unitName = fahrenheitAbbr
             multiplier = fahrenheitMultiplier
             amountToAdd = fahrenheitAmountToAdd
         }
