@@ -43,6 +43,7 @@ class RunVC: ChildVC, RunDelegate {
     override func viewDidLoad() {
         showMenuButton.setImage(UiHelpers.maskedImageNamed("menu", color: UiConstants.lightColor), forState: .Normal)
         map.mapType = kGMSTypeTerrain
+        map.hidden = true
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -85,6 +86,7 @@ class RunVC: ChildVC, RunDelegate {
             startStopButton.hidden = false
             pauseResume.setTitle(RunVC.pauseTitle, forState: UIControlState.Normal)
             addOverlays()
+            map.hidden = false
         case .Paused:
             showLabels()
             pauseResume.hidden = false
@@ -94,6 +96,7 @@ class RunVC: ChildVC, RunDelegate {
             pauseResume.setTitle(RunVC.resumeTitle, forState: UIControlState.Normal)
             addOverlays()
             map.camera = GMSCameraPosition.cameraWithLatitude(currentCoordinate.latitude, longitude: currentCoordinate.longitude, zoom: UiConstants.cameraZoom)
+            map.hidden = false
         }
     }
     
@@ -190,10 +193,13 @@ class RunVC: ChildVC, RunDelegate {
             pauseResume.setTitle("  Pause  ", forState: UIControlState.Normal)
             RunModel.runModel.start()
             SoundManager.play("gun")
+            map.hidden = false
         case .InProgress:
             stop()
+            map.hidden = true
         case .Paused:
             stop()
+            map.hidden = true
         }
     }
     

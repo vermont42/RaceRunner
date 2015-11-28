@@ -235,7 +235,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                 curAlt = newLocation.altitude
             }
         case .Paused:
-            fatalError("Received location while paused.")
+            break // ignore
         }
     }
     
