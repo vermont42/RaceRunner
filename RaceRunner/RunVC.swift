@@ -229,7 +229,7 @@ class RunVC: ChildVC, RunDelegate {
         let runModel = RunModel.runModel
         switch runModel.status {
         case .PreRun:
-            abort()
+            fatalError("Attempted to pause before run started.")
         case .InProgress:
             pauseResume.setTitle(RunVC.resumeTitle, forState: UIControlState.Normal)
             runModel.pause()

@@ -36,7 +36,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate {
             configureView()
         }
         else {
-            abort() // No need for graceful error handling because no run without locations is ever saved or displayed.
+            fatalError("Attempted to display details of run with zero locations.")
         }
         customTitleButton.setImage(UiHelpers.maskedImageNamed("edit", color: UiConstants.intermediate2Color), forState: UIControlState.Normal)
         map.mapType = kGMSTypeTerrain

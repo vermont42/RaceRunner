@@ -37,4 +37,14 @@ class SoundManager {
         }
         soundManager.sounds[sound]?.play()
     }
+    
+    static func enableBackgroundAudio() {
+        let session = AVAudioSession.sharedInstance()
+        do {
+            try session.setCategory(AVAudioSessionCategoryPlayback, withOptions: AVAudioSessionCategoryOptions.MixWithOthers)
+        }
+        catch let error as NSError {
+            fatalError(error.localizedDescription)
+        }
+    }
 }

@@ -83,7 +83,7 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate {
                 SettingsManager.setAlreadyMadeSampleRun(true)
             }
             else {
-                abort()
+                fatalError("Could not parse GPX file.")
             }
             return 1
         }

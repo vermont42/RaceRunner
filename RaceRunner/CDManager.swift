@@ -21,8 +21,7 @@ class CDManager {
             try coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: nil)
         }
         catch let error as NSError {
-            print("\(error.localizedDescription)")
-            abort()
+            fatalError(error.localizedDescription)
         }
         context = NSManagedObjectContext()
         context.persistentStoreCoordinator = coordinator
@@ -38,8 +37,7 @@ class CDManager {
                 do {
                     try context.save()
                 } catch let error as NSError {
-                    print("\(error.localizedDescription)")
-                    abort()
+                    fatalError(error.localizedDescription)
                 }
             }
         }

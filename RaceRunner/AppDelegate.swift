@@ -8,29 +8,31 @@
 
 import UIKit
 import GoogleMaps
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-  var window: UIWindow?
+    var window: UIWindow?
   
-  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    Config.checkKeys()
-    GMSServices.provideAPIKey(Config.googleMapsKey)
-    return true
-  }
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        Config.checkKeys()
+        GMSServices.provideAPIKey(Config.googleMapsKey)
+        SoundManager.enableBackgroundAudio()
+        return true
+    }
 
-  func applicationWillResignActive(application: UIApplication) {
-    CDManager.saveContext()
-  }
+    func applicationWillResignActive(application: UIApplication) {
+        CDManager.saveContext()
+    }
 
-  func applicationDidEnterBackground(application: UIApplication) {}
+    func applicationDidEnterBackground(application: UIApplication) {}
 
-  func applicationWillEnterForeground(application: UIApplication) {}
+    func applicationWillEnterForeground(application: UIApplication) {}
 
-  func applicationDidBecomeActive(application: UIApplication) {}
+    func applicationDidBecomeActive(application: UIApplication) {}
 
-  func applicationWillTerminate(application: UIApplication) {
-    CDManager.saveContext()
-  }
+    func applicationWillTerminate(application: UIApplication) {
+        CDManager.saveContext()
+    }
 }
 
