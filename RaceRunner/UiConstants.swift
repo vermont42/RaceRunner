@@ -23,4 +23,5 @@ class UiConstants {
     static let longitudeCushion: Double = 0.00851970939493185
     static let bigStrideZoomThreshhold: Float = 13.0
     static let bigStride: Int = 10
+    static let applauseSampleCount: UInt32 = 3
 }

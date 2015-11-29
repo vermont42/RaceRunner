@@ -204,7 +204,7 @@ class RunVC: ChildVC, RunDelegate {
     }
     
     func stop() {
-        arc4random_uniform(3) + 1
+        arc4random_uniform(UiConstants.applauseSampleCount) + 1
         SoundManager.play("applause\(arc4random_uniform(SoundManager.applauseCount) + 1)")
         runnerIcons.direction = .Stationary
         startStopButton.backgroundColor = UiConstants.intermediate3Color
@@ -284,6 +284,8 @@ class RunVC: ChildVC, RunDelegate {
         timeLabel.hidden = true
         paceLabel.hidden = true
         altLabel.hidden = true
+        altGainedLabel.hidden = true
+        altLostLabel.hidden = true
     }
     
     func showLabels() {
@@ -291,5 +293,7 @@ class RunVC: ChildVC, RunDelegate {
         timeLabel.hidden = false
         paceLabel.hidden = false
         altLabel.hidden = false
+        altGainedLabel.hidden = false
+        altLostLabel.hidden = false
     }
 }
