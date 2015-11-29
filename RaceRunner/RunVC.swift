@@ -28,7 +28,7 @@ class RunVC: ChildVC, RunDelegate {
     private var runnerIcons = RunnerIcons()
     private var lastDirection: RunnerIcons.Direction = .Stationary
     
-    private static let gpxTitle = "GPX File"
+    private static let gpxTitle = "Berkeley Hills"
     private static let couldNotSaveMessage = "RaceRunner did not save this run because RaceRunner did not detect any locations using your device's GPS sensor."
     private static let bummerButtonTitle = "Bummer"
     private static let sadFaceTitle = "😢"
