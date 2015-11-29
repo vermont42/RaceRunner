@@ -9,7 +9,7 @@
 import UIKit
 import GoogleMaps
 
-class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate {
+class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, GMSMapViewDelegate {
     @IBOutlet var map: GMSMapView!
     @IBOutlet var date: UILabel!
     @IBOutlet var distance: UILabel!
@@ -29,6 +29,14 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate {
     private var alertView: UIAlertView!
     private var colorPaceSegments: [GMSPolyline] = []
     private var colorAltitudeSegments: [GMSPolyline] = []
+    private var addedOverlays: Bool = false
+    
+    func mapView(mapView:GMSMapView!,idleAtCameraPosition position:GMSCameraPosition!) {
+        if !addedOverlays {
+            addOverlays()
+            addedOverlays = true
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +48,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate {
         }
         customTitleButton.setImage(UiHelpers.maskedImageNamed("edit", color: UiConstants.intermediate2Color), forState: UIControlState.Normal)
         map.mapType = kGMSTypeTerrain
+        map.delegate = self
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -52,7 +61,6 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate {
         northeast.longitude += UiConstants.longitudeCushion
         southwest.longitude -= UiConstants.longitudeCushion
         map.animateWithCameraUpdate(GMSCameraUpdate.fitBounds(GMSCoordinateBounds(coordinate: northeast, coordinate: southwest)))
-        addOverlays()
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
         dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
@@ -152,9 +160,16 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate {
                     let g_green: CGFloat = 146.0 / 255.0
                     let g_blue: CGFloat = 78.0 / 255.0
                     var colorSegments: [GMSPolyline] = []
-                    for var i = 1; i < run.locations.count; i++ {
+                    let stride: Int // https://en.wikipedia.org/wiki/Stride_of_an_array
+                    if map.camera.zoom < UiConstants.bigStrideZoomThreshhold {
+                        stride = UiConstants.bigStride
+                    }
+                    else {
+                        stride = 1
+                    }
+                    for var i = 1; i < run.locations.count - stride + 1; i += stride {
                         let firstLoc = run.locations[i - 1] as! Location
-                        let secondLoc = run.locations[i] as! Location
+                        let secondLoc = run.locations[i + stride - 1] as! Location
                         let firstLocCL = CLLocation(latitude: firstLoc.latitude.doubleValue, longitude: firstLoc.longitude.doubleValue)
                         let secondLocCL = CLLocation(latitude: secondLoc.latitude.doubleValue, longitude: secondLoc.longitude.doubleValue)
                         var coords = [firstLocCL.coordinate, secondLocCL.coordinate]
