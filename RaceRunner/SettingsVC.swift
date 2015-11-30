@@ -24,7 +24,6 @@ class SettingsVC: ChildVC {
     @IBOutlet var noneButton: UIButton!
     @IBOutlet var audibleSplitsToggle: UISwitch!
     @IBOutlet var accentButtons: [DLRadioButton]!
-    @IBOutlet var caloriesToggle: UISwitch!
     @IBOutlet var weightLabel: UILabel!
     @IBOutlet var weightStepper: UIStepper!
     
@@ -38,12 +37,6 @@ class SettingsVC: ChildVC {
         }
         else {
             unitsToggle.on = true
-        }
-        if SettingsManager.getCalorieType() == .Net {
-            caloriesToggle.on = false
-        }
-        else {
-            caloriesToggle.on = true
         }
         if SettingsManager.getPublishRun() == true {
             publishRunToggle.on = true
@@ -246,15 +239,6 @@ class SettingsVC: ChildVC {
     
     func updateMultiplierLabel() {
         multiplierLabel.text = String(format: "%.0f%%", SettingsManager.getMultiplier() * 100.0)
-    }
-    
-    @IBAction func toggleCalories(sender: UISwitch) {
-        if sender.on {
-            SettingsManager.setCalorieType(.Total)
-        }
-        else {
-            SettingsManager.setCalorieType(.Net)
-        }
     }
     
     @IBAction func weightChanged(sender: UIStepper) {

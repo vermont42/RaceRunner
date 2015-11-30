@@ -21,7 +21,11 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     @IBOutlet var loss: UILabel!
     @IBOutlet var temp: UILabel!
     @IBOutlet var weather: UILabel!
+    @IBOutlet var weight: UILabel!
+    @IBOutlet var calories: UILabel!
     @IBOutlet var paceOrAltitude: UISegmentedControl!
+    @IBOutlet var netOrTotalCals: UISegmentedControl!
+    
     @IBOutlet var route: MarqueeLabel!
     @IBOutlet var customTitleButton: UIButton!
     var run: Run!
@@ -94,6 +98,17 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
         }
         else {
             self.route.text = "Name: \(run.customName as String)"
+        }
+        self.weight.text = HumanWeight.weightAsString(run.weight.doubleValue, unitType: SettingsManager.getUnitType())
+        updateCalories()
+    }
+    
+    func updateCalories() {
+        if netOrTotalCals.selectedSegmentIndex == 0 { // total
+            self.calories.text = Converter.totalCaloriesAsString(run.distance.doubleValue, weight: run.weight.doubleValue)
+        }
+        else { // net
+            self.calories.text = Converter.netCaloriesAsString(run.distance.doubleValue, weight: run.weight.doubleValue)
         }
     }
     
@@ -237,8 +252,13 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
         }
         presentViewController(alertController, animated: true, completion: nil)
     }
+    
     @IBAction func changeOverlay(sender: UISegmentedControl) {
         addOverlays()
+    }
+    
+    @IBAction func changeCalorieType(sender: UISegmentedControl) {
+        updateCalories()
     }
     
     @IBAction func back(sender: UIButton) {

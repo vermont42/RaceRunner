@@ -16,11 +16,15 @@ struct HumanWeight {
     static let defaultWeight = 68.0
     
     static func weightAsString() -> String {
-        switch SettingsManager.getUnitType() {
+        return weightAsString(SettingsManager.getWeight(), unitType: SettingsManager.getUnitType())
+    }
+    
+    static func weightAsString(weight: Double, unitType: UnitType) -> String {
+        switch unitType {
         case .Metric:
-            return String(format: "%.0f kg", SettingsManager.getWeight())
+            return String(format: "%.0f kg", weight)
         case .Imperial:
-            return String(format: "%.0f lb", SettingsManager.getWeight() * Converter.poundsPerKilogram)
+            return String(format: "%.0f lb", weight * Converter.poundsPerKilogram)
         }
     }
 }

@@ -26,4 +26,5 @@ class Run: NSManagedObject {
     @NSManaged var minAltitude: NSNumber
     @NSManaged var altitudeGained: NSNumber
     @NSManaged var altitudeLost: NSNumber
+    @NSManaged var weight: NSNumber
 }

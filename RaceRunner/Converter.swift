@@ -21,6 +21,8 @@ class Converter {
     private static let secondsPerMinute: Int = 60
     private static let minutesPerHour: Int = 60
     private static let secondsPerHour: Int = 3600
+    private static let netCaloriesPerKiloPerMeter = 0.00086139598517
+    private static let totalCaloriesPerKiloPerMeter = 0.00102547141092
     private static let fahrenheitAbbr: String = "F"
     private static let celsiusAbbr: String = "C"
     private static let mileAbbr: String = "mi"
@@ -36,6 +38,14 @@ class Converter {
     private static let synth = AVSpeechSynthesizer()
     static let metersInMile: Double = 1609.344
     static let poundsPerKilogram = 2.2
+    
+    class func netCaloriesAsString(distance: Double, weight: Double) -> String {
+        return String(format: "%.0f Cal", weight * distance * netCaloriesPerKiloPerMeter)
+    }
+    
+    class func totalCaloriesAsString(distance: Double, weight: Double) -> String {
+        return String(format: "%.0f Cal", weight * distance * totalCaloriesPerKiloPerMeter)
+    }
     
     class func announceProgress(totalSeconds: Int, lastSeconds: Int, totalDistance: Double, lastDistance: Double, newAltitude: Double, oldAltitude: Double) {
         let totalLongDistance = convertMetersToLongDistance(totalDistance)

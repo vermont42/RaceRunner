@@ -301,7 +301,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
         }
     }
     
-    private class func addRun(coordinates: [CLLocation], customName: String, autoName: String, timestamp: NSDate, weather: String, temperature: Float, distance: Double, maxAltitude: Double, minAltitude: Double, maxLongitude: Double, minLongitude: Double, maxLatitude: Double, minLatitude: Double, altitudeGained: Double, altitudeLost: Double) -> Run {
+    private class func addRun(coordinates: [CLLocation], customName: String, autoName: String, timestamp: NSDate, weather: String, temperature: Float, distance: Double, maxAltitude: Double, minAltitude: Double, maxLongitude: Double, minLongitude: Double, maxLatitude: Double, minLatitude: Double, altitudeGained: Double, altitudeLost: Double, weight: Double) -> Run {
         let newRun: Run = NSEntityDescription.insertNewObjectForEntityForName("Run", inManagedObjectContext: CDManager.sharedCDManager.context) as! Run
         newRun.distance = distance
         newRun.duration = coordinates[coordinates.count - 1].timestamp.timeIntervalSinceDate(coordinates[0].timestamp)
@@ -318,6 +318,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
         newRun.minLongitude = minLongitude
         newRun.altitudeGained = altitudeGained
         newRun.altitudeLost = altitudeLost
+        newRun.weight = weight
         var locationArray: [Location] = []
         for location in coordinates {
             let locationObject: Location = NSEntityDescription.insertNewObjectForEntityForName("Location", inManagedObjectContext: CDManager.sharedCDManager.context) as! Location
@@ -373,7 +374,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
             }
             curAlt = coordinates[i].altitude
         }
-        return RunModel.addRun(coordinates, customName: customName, autoName: customName, timestamp: timestamp, weather: RunModel.defaultWeather, temperature: RunModel.defaultTemperature, distance: distance, maxAltitude: maxAlt, minAltitude: minAlt, maxLongitude: maxLong, minLongitude: minLong, maxLatitude: maxLat, minLatitude: minLat, altitudeGained: altGained, altitudeLost: altLost)
+        return RunModel.addRun(coordinates, customName: customName, autoName: customName, timestamp: timestamp, weather: RunModel.defaultWeather, temperature: RunModel.defaultTemperature, distance: distance, maxAltitude: maxAlt, minAltitude: minAlt, maxLongitude: maxLong, minLongitude: minLong, maxLatitude: maxLat, minLatitude: minLat, altitudeGained: altGained, altitudeLost: altLost, weight: HumanWeight.defaultWeight)
     }
     
     func stop() {
@@ -399,7 +400,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                     break
                 }
             }
-            run = RunModel.addRun(locations, customName: customName, autoName: autoName, timestamp: NSDate(), weather: weather, temperature: temperature, distance: totalDistance, maxAltitude: maxAlt, minAltitude: minAlt, maxLongitude: maxLong, minLongitude: minLong, maxLatitude: maxLat, minLatitude: minLat, altitudeGained: altGained, altitudeLost: altLost)
+            run = RunModel.addRun(locations, customName: customName, autoName: autoName, timestamp: NSDate(), weather: weather, temperature: temperature, distance: totalDistance, maxAltitude: maxAlt, minAltitude: minAlt, maxLongitude: maxLong, minLongitude: minLong, maxLatitude: maxLat, minLatitude: minLat, altitudeGained: altGained, altitudeLost: altLost, weight: SettingsManager.getWeight())
         }
         else {
             // I don't consider this a magic number because the unadjusted length of a second will never change.
