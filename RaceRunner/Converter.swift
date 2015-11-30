@@ -11,7 +11,6 @@ import AVFoundation
 
 class Converter {
     private static let metersInKilometer: Double = 1000.0
-    static let metersInMile: Double = 1609.344
     private static let feetInMeter: Double = 3.281
     private static let fahrenheitMultiplier: Float = 9.0 / 5.0
     private static let celsiusFraction: Float = 5.0 / 9.0
@@ -35,6 +34,8 @@ class Converter {
     private static let miles: String = "miles"
     private static let kilometers: String = "kilometers"
     private static let synth = AVSpeechSynthesizer()
+    static let metersInMile: Double = 1609.344
+    static let poundsPerKilogram = 2.2
     
     class func announceProgress(totalSeconds: Int, lastSeconds: Int, totalDistance: Double, lastDistance: Double, newAltitude: Double, oldAltitude: Double) {
         let totalLongDistance = convertMetersToLongDistance(totalDistance)

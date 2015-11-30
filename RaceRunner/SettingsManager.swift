@@ -44,7 +44,14 @@ class SettingsManager {
     private var alreadyMadeSampleRun: Bool
     private static let alreadyMadeSampleRunKey = "alreadyMadeSampleRun"
     private static let alreadyMadeSampleRunDefault = false
-  
+    
+    private var calorieType: CalorieType
+    private static let calorieTypeKey = "calorieType"
+    
+    private var weight: Double
+    static let weightDefault: Double = HumanWeight.defaultWeight
+    private static let weightKey = "weight"
+    
     private init() {
         userDefaults = NSUserDefaults.standardUserDefaults()
         
@@ -63,6 +70,24 @@ class SettingsManager {
         else {
             accent = Accent()
             userDefaults.setObject(accent.rawValue, forKey: SettingsManager.accentKey)
+            userDefaults.synchronize()
+        }
+
+        if let storedCalorieTypeString = userDefaults.stringForKey(SettingsManager.calorieTypeKey) {
+            calorieType = CalorieType(rawValue: storedCalorieTypeString)!
+        }
+        else {
+            calorieType = CalorieType()
+            userDefaults.setObject(calorieType.rawValue, forKey: SettingsManager.calorieTypeKey)
+            userDefaults.synchronize()
+        }
+        
+        if let storedWeightString = userDefaults.stringForKey(SettingsManager.weightKey) {
+            weight = (storedWeightString as NSString).doubleValue
+        }
+        else {
+            weight = SettingsManager.weightDefault
+            userDefaults.setObject(String(format:"%f", weight), forKey: SettingsManager.weightKey)
             userDefaults.synchronize()
         }
         
@@ -129,6 +154,30 @@ class SettingsManager {
         if unitType != settingsManager.unitType {
             settingsManager.unitType = unitType
             settingsManager.userDefaults.setObject(unitType.rawValue, forKey: SettingsManager.unitTypeKey)
+            settingsManager.userDefaults.synchronize()
+        }
+    }
+
+    class func getCalorieType() -> CalorieType {
+        return settingsManager.calorieType
+    }
+    
+    class func setCalorieType(calorieType: CalorieType) {
+        if calorieType != settingsManager.calorieType {
+            settingsManager.calorieType = calorieType
+            settingsManager.userDefaults.setObject(calorieType.rawValue, forKey: SettingsManager.calorieTypeKey)
+            settingsManager.userDefaults.synchronize()
+        }
+    }
+    
+    class func getWeight() -> Double {
+        return settingsManager.weight
+    }
+    
+    class func setWeight(weight: Double) {
+        if weight != settingsManager.weight {
+            settingsManager.weight = weight
+            settingsManager.userDefaults.setObject(String(format:"%f", weight), forKey: SettingsManager.weightKey)
             settingsManager.userDefaults.synchronize()
         }
     }

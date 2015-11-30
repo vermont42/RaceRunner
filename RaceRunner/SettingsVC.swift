@@ -24,6 +24,9 @@ class SettingsVC: ChildVC {
     @IBOutlet var noneButton: UIButton!
     @IBOutlet var audibleSplitsToggle: UISwitch!
     @IBOutlet var accentButtons: [DLRadioButton]!
+    @IBOutlet var caloriesToggle: UISwitch!
+    @IBOutlet var weightLabel: UILabel!
+    @IBOutlet var weightStepper: UIStepper!
     
     @IBAction func showMenu(sender: UIButton) {
         showMenu()
@@ -35,6 +38,12 @@ class SettingsVC: ChildVC {
         }
         else {
             unitsToggle.on = true
+        }
+        if SettingsManager.getCalorieType() == .Net {
+            caloriesToggle.on = false
+        }
+        else {
+            caloriesToggle.on = true
         }
         if SettingsManager.getPublishRun() == true {
             publishRunToggle.on = true
@@ -48,14 +57,32 @@ class SettingsVC: ChildVC {
         else {
             audibleSplitsToggle.on = false
         }
-        
         updateSplitsWidgets()
         updateAutoStopWidgets()
         updateMultiplierLabel()
+        updateWeightStepper()
+        updateWeightLabel()
         accentButtons[SettingsManager.getAccent().radioButtonPosition()].sendActionsForControlEvents(UIControlEvents.TouchUpInside)
         multiplierSlider.value = Float(SettingsManager.getMultiplier())
         viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
         showMenuButton.setImage(UiHelpers.maskedImageNamed("menu", color: UiConstants.lightColor), forState: .Normal)
+    }
+    
+    func updateWeightStepper() {
+        switch SettingsManager.getUnitType() {
+        case .Imperial:
+            weightStepper.maximumValue = HumanWeight.maxImperial
+            weightStepper.minimumValue = HumanWeight.minImperial
+            weightStepper.value = SettingsManager.getWeight() * Converter.poundsPerKilogram
+        case .Metric:
+            weightStepper.maximumValue = HumanWeight.maxMetric
+            weightStepper.minimumValue = HumanWeight.minMetric
+            weightStepper.value = SettingsManager.getWeight()
+        }
+    }
+    
+    func updateWeightLabel() {
+        weightLabel.text = "Weight: " + HumanWeight.weightAsString()
     }
     
     func updateDistanceWidgets(interval: Double, button: UIButton, toggle: UISwitch, prefix: String) {
@@ -99,6 +126,8 @@ class SettingsVC: ChildVC {
         }
         updateSplitsWidgets()
         updateAutoStopWidgets()
+        updateWeightStepper()
+        updateWeightLabel()
     }
 
     @IBAction func togglePublishRun(sender: UISwitch) {
@@ -217,5 +246,24 @@ class SettingsVC: ChildVC {
     
     func updateMultiplierLabel() {
         multiplierLabel.text = String(format: "%.0f%%", SettingsManager.getMultiplier() * 100.0)
+    }
+    
+    @IBAction func toggleCalories(sender: UISwitch) {
+        if sender.on {
+            SettingsManager.setCalorieType(.Total)
+        }
+        else {
+            SettingsManager.setCalorieType(.Net)
+        }
+    }
+    
+    @IBAction func weightChanged(sender: UIStepper) {
+        switch SettingsManager.getUnitType() {
+        case .Imperial:
+            SettingsManager.setWeight(sender.value / Converter.poundsPerKilogram)
+        case .Metric:
+            SettingsManager.setWeight(sender.value)
+        }
+        updateWeightLabel()
     }
 }

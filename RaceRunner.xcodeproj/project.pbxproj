@@ -23,6 +23,8 @@
 		E13B48B71B921A9F001C997A /* UiHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B48B61B921A9F001C997A /* UiHelpers.swift */; };
 		E13E30571BFD28F1009CDE60 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13E30561BFD28F1009CDE60 /* SoundManager.swift */; };
 		E14360C31AE4AAA4003F27B4 /* GpxLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */; };
+		E15195F61C0B7C7500BD52FB /* CalorieType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15195F51C0B7C7500BD52FB /* CalorieType.swift */; };
+		E15195F81C0BD41A00BD52FB /* HumanWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15195F71C0BD41A00BD52FB /* HumanWeight.swift */; };
 		E159C2541AAB8304007C6EA1 /* RaceRunner.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E159C2521AAB8304007C6EA1 /* RaceRunner.xcdatamodeld */; };
 		E16F35761B8EBC4100C88426 /* UIViewController+NoOp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16F35751B8EBC4100C88426 /* UIViewController+NoOp.swift */; };
 		E1804DB61ABBA0D300625188 /* RunDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */; };
@@ -76,6 +78,8 @@
 		E13B48B61B921A9F001C997A /* UiHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UiHelpers.swift; sourceTree = "<group>"; };
 		E13E30561BFD28F1009CDE60 /* SoundManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxLocationManager.swift; sourceTree = "<group>"; };
+		E15195F51C0B7C7500BD52FB /* CalorieType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalorieType.swift; sourceTree = "<group>"; };
+		E15195F71C0BD41A00BD52FB /* HumanWeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HumanWeight.swift; sourceTree = "<group>"; };
 		E159C2531AAB8304007C6EA1 /* RaceRunner.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RaceRunner.xcdatamodel; sourceTree = "<group>"; };
 		E16F35751B8EBC4100C88426 /* UIViewController+NoOp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+NoOp.swift"; sourceTree = "<group>"; };
 		E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunDetailsVC.swift; sourceTree = "<group>"; };
@@ -199,6 +203,7 @@
 			children = (
 				E11E22C01C08C76E00488399 /* Accent.swift */,
 				E1E8B9231AAB73F000D04E38 /* AppDelegate.swift */,
+				E15195F51C0B7C7500BD52FB /* CalorieType.swift */,
 				E1E8B9451AAB742E00D04E38 /* CDManager.swift */,
 				E1E8B9471AAB742E00D04E38 /* ChildVC.swift */,
 				E11E22C21C08CDC000488399 /* Config.swift */,
@@ -208,6 +213,7 @@
 				E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */,
 				E1DA7D6C1B9B8BA2006BC362 /* GpxParser.swift */,
 				E1E8B9481AAB742E00D04E38 /* HelpVC.swift */,
+				E15195F71C0BD41A00BD52FB /* HumanWeight.swift */,
 				E1B45F061AE96EFC00AF73AB /* LocationManager.swift */,
 				E1E8B9491AAB742E00D04E38 /* LogVC.swift */,
 				E1C2ED4F1AB63BE200A29728 /* LogCell.swift */,
@@ -286,6 +292,7 @@
 				TargetAttributes = {
 					E1E8B91D1AAB73F000D04E38 = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = V3L2PL4QC9;
 					};
 				};
 			};
@@ -382,6 +389,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E13B48B51B911BDA001C997A /* UiConstants.swift in Sources */,
+				E15195F81C0BD41A00BD52FB /* HumanWeight.swift in Sources */,
 				E1C22BCC1AF05DA1003A5712 /* MarqueeLabel.m in Sources */,
 				E13B48B71B921A9F001C997A /* UiHelpers.swift in Sources */,
 				E13B39931ABA705E007F61ED /* DarkSky.swift in Sources */,
@@ -402,6 +410,7 @@
 				E1804DB61ABBA0D300625188 /* RunDetailsVC.swift in Sources */,
 				E1E8B9551AAB742E00D04E38 /* RunVC.swift in Sources */,
 				E13E30571BFD28F1009CDE60 /* SoundManager.swift in Sources */,
+				E15195F61C0B7C7500BD52FB /* CalorieType.swift in Sources */,
 				E11E22C31C08CDC000488399 /* Config.swift in Sources */,
 				E1E8B9521AAB742E00D04E38 /* ChildVC.swift in Sources */,
 				E1E8B9501AAB742E00D04E38 /* CDManager.swift in Sources */,
@@ -528,11 +537,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = RaceRunner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "biz.joshadams.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "RaceRunner/RaceRunner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -545,11 +557,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = RaceRunner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "biz.joshadams.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "RaceRunner/RaceRunner-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
