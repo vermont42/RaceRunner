@@ -8,8 +8,9 @@
 
 import UIKit
 import GoogleMaps
+import MessageUI
 
-class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, GMSMapViewDelegate {
+class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, GMSMapViewDelegate, MFMailComposeViewControllerDelegate {
     @IBOutlet var map: GMSMapView!
     @IBOutlet var date: UILabel!
     @IBOutlet var distance: UILabel!
@@ -28,6 +29,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     
     @IBOutlet var route: MarqueeLabel!
     @IBOutlet var customTitleButton: UIButton!
+    @IBOutlet var exportButton: UIButton!
     var run: Run!
     var logType: LogVC.LogType!
     private var alertView: UIAlertView!
@@ -51,6 +53,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
             fatalError("Attempted to display details of run with zero locations.")
         }
         customTitleButton.setImage(UiHelpers.maskedImageNamed("edit", color: UiConstants.intermediate2Color), forState: UIControlState.Normal)
+        exportButton.setImage(UiHelpers.maskedImageNamed("export", color: UiConstants.intermediate2Color), forState: UIControlState.Normal)
         map.mapType = kGMSTypeTerrain
         map.delegate = self
     }
@@ -268,6 +271,39 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
         else if logType == LogVC.LogType.Simulate {
             self.performSegueWithIdentifier("unwind pan", sender: self)
         }
+    }
+    
+    @IBAction func export() {
+//        let someText:String = "foo"
+//        let google:NSURL = NSURL(string:"http://google.com/")!
+        
+        // let's add a String and an NSURL
+        let activityViewController = UIActivityViewController(
+            activityItems: [GpxActivityItemProvider(placeholderItem: NSData())],
+            applicationActivities: nil)
+        self.presentViewController(activityViewController, animated: true, completion: nil)
+        /*
+        let contents = "some text"
+        if(MFMailComposeViewController.canSendMail()) {
+            let mailComposer = MFMailComposeViewController()
+            mailComposer.mailComposeDelegate = self
+            mailComposer.setSubject("run exported from iSmoothRun")
+            mailComposer.setMessageBody("This run was recorded by iSmoothRun.", isHTML: false)
+            //let data = contents.dataUsingEncoding(NSUTF8StringEncoding)
+            //mailComposer.addAttachmentData(data!, mimeType: "text/xml", fileName: "run.gpx")
+            
+            if let filePath = NSBundle.mainBundle().pathForResource("iSmoothRun", ofType: "gpx") {
+                if let fileData = NSData(contentsOfFile: filePath) {
+                    mailComposer.addAttachmentData(fileData, mimeType: "audio/wav", fileName: "iSmoothRun.gpx")
+                }
+            }
+            self.presentViewController(mailComposer, animated: true, completion: nil)
+        }
+*/
+    }
+    
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     override func prefersStatusBarHidden() -> Bool {

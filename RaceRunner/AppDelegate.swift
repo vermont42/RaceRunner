@@ -20,19 +20,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SoundManager.enableBackgroundAudio()
         return true
     }
-
+    
     func applicationWillResignActive(application: UIApplication) {
         CDManager.saveContext()
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {}
-
-    func applicationWillEnterForeground(application: UIApplication) {}
-
-    func applicationDidBecomeActive(application: UIApplication) {}
-
     func applicationWillTerminate(application: UIApplication) {
         CDManager.saveContext()
+    }
+    
+//    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+//        print("url: \(url)")
+//        return true
+//    }
+    
+    func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+        print("options: \(options) url: \(url)")
+        // Try opening the file.
+        return true
     }
 }
 

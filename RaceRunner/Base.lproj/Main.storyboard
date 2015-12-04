@@ -774,7 +774,7 @@
                                     <action selector="back:" destination="NGd-Jn-waq" eventType="touchUpInside" id="Gzf-pb-BQ9"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Run Details" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wm2-v5-sFB">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Details" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wm2-v5-sFB">
                                 <rect key="frame" x="232" y="20" width="137" height="36"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="26"/>
                                 <color key="textColor" red="0.87058823529411766" green="0.85882352941176465" blue="0.82352941176470584" alpha="1" colorSpace="calibratedRGB"/>
@@ -900,6 +900,23 @@
                                     <action selector="changeOverlay:" destination="NGd-Jn-waq" eventType="valueChanged" id="yKO-NR-pOc"/>
                                 </connections>
                             </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ic-Y4-R6V">
+                                <rect key="frame" x="504" y="22" width="25" height="25"/>
+                                <color key="backgroundColor" red="0.2901960784" green="0.3411764706" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="7FR-tz-sKG"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="25" id="Th6-OZ-jG4"/>
+                                    <constraint firstAttribute="height" constant="25" id="Tzl-ng-KRC"/>
+                                    <constraint firstAttribute="width" constant="25" id="qvN-cO-eTC"/>
+                                </constraints>
+                                <color key="tintColor" red="0.2901960784" green="0.3411764706" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="export">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="export" destination="NGd-Jn-waq" eventType="touchUpInside" id="qRH-8J-VSH"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.29019607843137257" green="0.3411764705882353" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -909,6 +926,7 @@
                             <constraint firstAttribute="trailing" secondItem="CeQ-Te-tXq" secondAttribute="trailing" constant="16" id="1Lg-xB-4T7"/>
                             <constraint firstAttribute="trailing" secondItem="Kgs-bw-2Rn" secondAttribute="trailing" constant="16" id="5mc-0T-qJv"/>
                             <constraint firstAttribute="bottom" secondItem="7Gt-4V-LZu" secondAttribute="bottom" constant="12" id="5nH-fy-dHq"/>
+                            <constraint firstItem="CeQ-Te-tXq" firstAttribute="leading" secondItem="3ic-Y4-R6V" secondAttribute="trailing" constant="8" id="6ch-GQ-k5H"/>
                             <constraint firstItem="rQm-WK-h1h" firstAttribute="top" secondItem="Wm2-v5-sFB" secondAttribute="bottom" constant="8" id="7VB-5c-iYg"/>
                             <constraint firstItem="Wm2-v5-sFB" firstAttribute="top" secondItem="me9-oz-F92" secondAttribute="top" constant="20" id="8RF-7Z-hqD"/>
                             <constraint firstAttribute="trailing" secondItem="rQm-WK-h1h" secondAttribute="trailing" constant="16" id="9Gx-6x-ACU"/>
@@ -933,6 +951,7 @@
                             <constraint firstAttribute="trailing" secondItem="mih-UK-KfT" secondAttribute="trailing" constant="16" id="aen-00-CDt"/>
                             <constraint firstItem="plB-0i-CMv" firstAttribute="centerY" secondItem="UMB-Uy-9VN" secondAttribute="centerY" id="bvX-Jw-eE2"/>
                             <constraint firstItem="HO9-u1-nUA" firstAttribute="leading" secondItem="me9-oz-F92" secondAttribute="leading" constant="16" id="djN-xD-bxe"/>
+                            <constraint firstItem="CeQ-Te-tXq" firstAttribute="centerY" secondItem="3ic-Y4-R6V" secondAttribute="centerY" id="eA1-Jn-LvJ"/>
                             <constraint firstItem="plB-0i-CMv" firstAttribute="top" secondItem="yKW-im-Gd3" secondAttribute="bottom" constant="8" id="fC9-lz-mVJ"/>
                             <constraint firstAttribute="trailing" secondItem="Pub-IW-Sb2" secondAttribute="trailing" constant="16" id="hW1-4e-tCm"/>
                             <constraint firstItem="Jgg-zd-OU4" firstAttribute="top" secondItem="me9-oz-F92" secondAttribute="top" constant="20" id="lfa-yc-BWl"/>
@@ -951,6 +970,7 @@
                         <outlet property="customTitleButton" destination="lVR-zP-8JF" id="Uht-yp-MJy"/>
                         <outlet property="date" destination="UL1-9r-Yp6" id="KcY-uw-fQ9"/>
                         <outlet property="distance" destination="Pub-IW-Sb2" id="tgR-aw-WiV"/>
+                        <outlet property="exportButton" destination="3ic-Y4-R6V" id="r6V-UW-Nwo"/>
                         <outlet property="gain" destination="5bZ-DC-6Ky" id="oPa-Sd-Ise"/>
                         <outlet property="loss" destination="s8x-Om-Xsb" id="5ix-s4-371"/>
                         <outlet property="map" destination="rQm-WK-h1h" id="yPJ-ah-ZHi"/>
@@ -976,6 +996,7 @@
     </scenes>
     <resources>
         <image name="edit" width="80" height="80"/>
+        <image name="export" width="60" height="60"/>
         <image name="line" width="299" height="9"/>
         <image name="menu" width="22" height="22"/>
     </resources>
