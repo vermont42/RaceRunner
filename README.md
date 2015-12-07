@@ -14,3 +14,5 @@ Because **RaceRunner** is under development, refactoring will occur.
 ![RaceRunner](RaceRunner3.png "Yet Another Screenshot")
 
 ![RaceRunner](RaceRunner4.png "Spectating a Race in Germany from California")
+
+![RaceRunner](RaceRunner5.png "Spectating a Walk in Vermont from California")

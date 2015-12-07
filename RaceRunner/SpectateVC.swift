@@ -20,6 +20,7 @@ class SpectateVC: ChildVC, PubNubSubscriber {
     private var previousLongitude: Double?
     private var runnerIcons = RunnerIcons()
     private var pin: GMSMarker = GMSMarker()
+    private var foo = 0
     
     override func viewDidLoad() {
         viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
@@ -36,22 +37,25 @@ class SpectateVC: ChildVC, PubNubSubscriber {
 
     func receiveProgress(progress: String) {
         // If didReceiveMessage() is not called on the main thread, this needs GCD.
-        let progressArray = progress.componentsSeparatedByString(" ")
-        let latitude = Double(progressArray[2])!
-        let longitude = Double(progressArray[3])!
-        map.camera = GMSCameraPosition.cameraWithLatitude(latitude, longitude: longitude, zoom: UiConstants.cameraZoom)
-        if let previousLongitude = previousLongitude {
-            if previousLongitude > longitude {
-                runnerIcons.direction = .West
+        foo++
+        if foo % 5 == 0 {
+            let progressArray = progress.componentsSeparatedByString(" ")
+            let latitude = Double(progressArray[2])!
+            let longitude = Double(progressArray[3])!
+            map.camera = GMSCameraPosition.cameraWithLatitude(latitude, longitude: longitude, zoom: UiConstants.cameraZoom)
+            if let previousLongitude = previousLongitude {
+                if previousLongitude > longitude {
+                    runnerIcons.direction = .West
+                }
+                else if previousLongitude < longitude {
+                    runnerIcons.direction = .East
+                }
             }
-            else if previousLongitude < longitude {
-                runnerIcons.direction = .East
-            }
+            pin.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            pin.icon = runnerIcons.nextIcon()
+            pin.map = map
+            previousLongitude = longitude
         }
-        pin.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        pin.icon = runnerIcons.nextIcon()
-        pin.map = map
-        previousLongitude = longitude
     }
     
     @IBAction func subscribeUnsubscribe() {
