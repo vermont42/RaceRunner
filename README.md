@@ -9,19 +9,30 @@ Because **RaceRunner** is under development, refactoring will occur.
 
 
 ![RaceRunner](RaceRunner2.png "Run in Progress")
+
 **Run in Progress**
 
+
 ![RaceRunner](RaceRunner.png "Run Details")
+
 **Run Details**
 
+
 ![RaceRunner](RaceRunner3.png "Settings")
+
 **Settings**
 
+
 ![RaceRunner](RaceRunner4.png "Spectating a Race in Germany from California")
+
 **Spectating a Race in Germany from California**
 
+
 ![RaceRunner](RaceRunner5.png "Spectating a Walk in Vermont from California")
+
 **Spectating a Walk in Vermont from California**
 
+
 ![RaceRunner](RaceRunner6.png "Main Menu")
+
 **Main Menu**
