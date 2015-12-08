@@ -7,12 +7,15 @@ Because **RaceRunner** is under development, refactoring will occur.
 
 **RaceRunner** requires API keys for Google Maps, Dark Sky, and PubNub in `Config.swift`.
 
-![RaceRunner](RaceRunner2.png "Screenshot")
 
-![RaceRunner](RaceRunner.png "Another Screenshot")
+![RaceRunner](RaceRunner2.png "Run in Progress")
 
-![RaceRunner](RaceRunner3.png "Yet Another Screenshot")
+![RaceRunner](RaceRunner.png "Run Details")
+
+![RaceRunner](RaceRunner3.png "Settings")
 
 ![RaceRunner](RaceRunner4.png "Spectating a Race in Germany from California")
 
 ![RaceRunner](RaceRunner5.png "Spectating a Walk in Vermont from California")
+
+![RaceRunner](RaceRunner6.png "Main Menu")
