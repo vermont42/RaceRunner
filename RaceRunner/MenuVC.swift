@@ -10,7 +10,7 @@ import UIKit
 
 class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet var menuTable: UITableView!
-    var controllerLabels = ["Record Run", "Simulate", "Demo", "History", "Spectate", "Settings"]
+    var controllerLabels = ["Start Run", "Simulate", "Demo", "History", "Spectate", "Settings"]
     var panSegues = ["pan run", "pan log", "pan GPX run", "pan log", "pan spectate", "pan settings"]
     var selectedMenuItem: Int = 0
     var logTypeToShow: LogVC.LogType!
@@ -29,7 +29,12 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         menuTable.dataSource = self
         SettingsManager.getUnitType()
     }
-
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        menuTable.reloadData()
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -43,12 +48,24 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         if cell == nil {
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
             cell!.backgroundColor = UIColor.clearColor()
-            cell!.textLabel?.textColor = UiConstants.intermediate2Color
+            if indexPath.row % 2 == 0 {
+                cell!.textLabel?.textColor = UiConstants.intermediate2Color
+            }
+            else {
+                cell!.textLabel?.textColor = UiConstants.intermediate3Color
+            }
             let selectedBackgroundView = UIView(frame: CGRectMake(0, 0, cell!.frame.size.width, cell!.frame.size.height))
             selectedBackgroundView.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.2)
             cell!.textLabel?.textAlignment = NSTextAlignment.Center
             cell!.selectedBackgroundView = selectedBackgroundView
             cell!.textLabel?.font = UIFont(name: UiConstants.titleFont, size: UiConstants.titleFontSize)
+        }
+        if RunModel.runModel.status == .PreRun && controllerLabels[0] == "Continue"
+        {
+            controllerLabels[0] = "Start Run"
+        }
+        else if RunModel.runModel.status != .PreRun && controllerLabels[0] == "Start Run" {
+            controllerLabels[0] = "Continue"
         }
         cell!.textLabel?.text = controllerLabels[indexPath.row]
         cell!.textLabel?.attributedText = UiHelpers.letterPressedText(controllerLabels[indexPath.row])

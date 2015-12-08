@@ -123,10 +123,10 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     func addOverlays() {
         if run.locations.count > 1 {
             map.clear()
-            if (paceOrAltitude.selectedSegmentIndex == 0 && colorPaceSegments.count == 0) ||
-                (paceOrAltitude.selectedSegmentIndex == 1 && colorAltitudeSegments.count == 0) {
+            if (paceOrAltitude.selectedSegmentIndex == 1 && colorPaceSegments.count == 0) ||
+                (paceOrAltitude.selectedSegmentIndex == 0 && colorAltitudeSegments.count == 0) {
                     var rawValues: [Double] = []
-                    if paceOrAltitude.selectedSegmentIndex == 0 {
+                    if paceOrAltitude.selectedSegmentIndex == 1 {
                         for var i = 1; i < run.locations.count; i++ {
                             let firstLoc = run.locations[i - 1] as! Location
                             let secondLoc = run.locations[i] as! Location
@@ -228,7 +228,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
                     for segment in colorSegments {
                         segment.map = map
                     }
-                    if paceOrAltitude.selectedSegmentIndex == 0 {
+                    if paceOrAltitude.selectedSegmentIndex == 1 {
                         colorPaceSegments = colorSegments
                     }
                     else {
@@ -236,7 +236,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
                     }
             }
             else {
-                for segment in (paceOrAltitude.selectedSegmentIndex == 0 ? colorPaceSegments: colorAltitudeSegments) {
+                for segment in (paceOrAltitude.selectedSegmentIndex == 1 ? colorPaceSegments: colorAltitudeSegments) {
                     segment.map = map
                 }
             }

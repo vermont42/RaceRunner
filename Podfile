@@ -4,3 +4,4 @@ use_frameworks!
 pod 'GoogleMaps'
 pod 'PubNub'
 pod 'DLRadioButton'
+pod 'COBezierTableView'

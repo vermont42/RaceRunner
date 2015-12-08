@@ -1,4 +1,5 @@
 PODS:
+  - COBezierTableView (0.1.6)
   - CocoaLumberjack (2.2.0):
     - CocoaLumberjack/Default (= 2.2.0)
     - CocoaLumberjack/Extensions (= 2.2.0)
@@ -16,11 +17,13 @@ PODS:
     - CocoaLumberjack (= 2.2.0)
 
 DEPENDENCIES:
+  - COBezierTableView
   - DLRadioButton
   - GoogleMaps
   - PubNub
 
 SPEC CHECKSUMS:
+  COBezierTableView: e8fa8ac961f213fe0c4b3e8e9708478df04930de
   CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0
   DLRadioButton: 817c7cba2a630a658dea90f56d6d9740f544930d
   GoogleMaps: da51c62c338c2d9c47cdad470a0d1e0e4b8544e4

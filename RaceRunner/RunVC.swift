@@ -211,10 +211,10 @@ class RunVC: ChildVC, RunDelegate {
         startStopButton.setTitle("  Start  ", forState: UIControlState.Normal)
         pauseResume.hidden = true
         pin.map = nil
+        let totalDistance = RunModel.runModel.totalDistance
         RunModel.runModel.stop()
-        
         if runToSimulate == nil && gpxFile == nil {
-            if RunModel.runModel.totalDistance > RunModel.minDistance {
+            if totalDistance > RunModel.minDistance {
                 performSegueWithIdentifier("pan details from run", sender: self)
                 map.clear()
             }

@@ -61,7 +61,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     private var secondLength = 1.0
     private var shouldReportSplits = false
     
-    static let minDistance = 50.0
+    static let minDistance = 400.0
     private static let distanceTolerance: Double = 0.05
     private static let coordinateTolerance: Double = 0.0000050
     private static let unknownRoute: String = "unknown route"
