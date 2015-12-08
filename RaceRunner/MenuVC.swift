@@ -10,7 +10,7 @@ import UIKit
 
 class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet var menuTable: UITableView!
-    var controllerLabels = ["Device GPS", "CLLocations", "GPX File", "History", "Spectate", "Settings"]
+    var controllerLabels = ["Record Run", "Simulate", "Demo", "History", "Spectate", "Settings"]
     var panSegues = ["pan run", "pan log", "pan GPX run", "pan log", "pan spectate", "pan settings"]
     var selectedMenuItem: Int = 0
     var logTypeToShow: LogVC.LogType!
@@ -63,10 +63,10 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         if controllerLabels[indexPath.row] == "History" {
             logTypeToShow = .History
         }
-        else if controllerLabels[indexPath.row] == "CLLocations" || controllerLabels[indexPath.row] == "GPX File" {
+        else if controllerLabels[indexPath.row] == "Simulate" || controllerLabels[indexPath.row] == "Demo" {
             logTypeToShow = .Simulate
         }
-        if (controllerLabels[indexPath.row] == "CLLocations" || controllerLabels[indexPath.row] == "GPX File") && RunModel.runModel.realRunInProgress {
+        if (controllerLabels[indexPath.row] == "Simulate" || controllerLabels[indexPath.row] == "Demo") && RunModel.runModel.realRunInProgress {
             let alertController = UIAlertController(title: "😢", message: MenuVC.realRunMessage, preferredStyle: .Alert)
             let okAction: UIAlertAction = UIAlertAction(title: MenuVC.okButtonText, style: .Cancel, handler: nil)
             alertController.addAction(okAction)

@@ -102,7 +102,12 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
         else {
             self.route.text = "Name: \(run.customName as String)"
         }
-        self.weight.text = HumanWeight.weightAsString(run.weight.doubleValue, unitType: SettingsManager.getUnitType())
+        if SettingsManager.getShowWeight() {
+        self.weight.text = "Weight: \(HumanWeight.weightAsString(run.weight.doubleValue, unitType: SettingsManager.getUnitType()))"
+        }
+        else {
+            self.weight.text = " "
+        }
         updateCalories()
     }
     
@@ -278,10 +283,10 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
 //        let google:NSURL = NSURL(string:"http://google.com/")!
         
         // let's add a String and an NSURL
-        let activityViewController = UIActivityViewController(
-            activityItems: [GpxActivityItemProvider(placeholderItem: NSData())],
-            applicationActivities: nil)
-        self.presentViewController(activityViewController, animated: true, completion: nil)
+//        let activityViewController = UIActivityViewController(
+//            activityItems: [GpxActivityItemProvider(placeholderItem: NSData())],
+//            applicationActivities: nil)
+//        self.presentViewController(activityViewController, animated: true, completion: nil)
         /*
         let contents = "some text"
         if(MFMailComposeViewController.canSendMail()) {
@@ -300,6 +305,13 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
             self.presentViewController(mailComposer, animated: true, completion: nil)
         }
 */
+        let alertController = UIAlertController(title: "Coming Soon", message: "Share functionality has not yet been implemented.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let noProbAction = UIAlertAction(title: "No Prob", style: UIAlertActionStyle.Default, handler: { (action) in
+            SoundManager.play("sadTrombone")
+        })
+        alertController.addAction(noProbAction)
+        presentViewController(alertController, animated: true, completion: nil)
     }
     
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {

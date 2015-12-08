@@ -29,7 +29,7 @@ class RunVC: ChildVC, RunDelegate {
     private var lastDirection: RunnerIcons.Direction = .Stationary
     
     private static let gpxTitle = "Berkeley Hills"
-    private static let couldNotSaveMessage = "RaceRunner did not save this run because RaceRunner did not detect any locations using your device's GPS sensor."
+    private static let didNotSaveMessage = "RaceRunner did not save this run because it was so short. The run, not RaceRunner. As a collection of electrons on your phone, RaceRunner has no physical height."
     private static let bummerButtonTitle = "Bummer"
     private static let sadFaceTitle = "😢"
     private static let startTitle = " Start "
@@ -212,13 +212,14 @@ class RunVC: ChildVC, RunDelegate {
         pauseResume.hidden = true
         pin.map = nil
         RunModel.runModel.stop()
+        
         if runToSimulate == nil && gpxFile == nil {
-            if RunModel.runModel.run.locations.count > 0 {
+            if RunModel.runModel.totalDistance > RunModel.minDistance {
                 performSegueWithIdentifier("pan details from run", sender: self)
                 map.clear()
             }
             else {
-                let alertController = UIAlertController(title: RunVC.sadFaceTitle, message: RunVC.couldNotSaveMessage, preferredStyle: .Alert)
+                let alertController = UIAlertController(title: RunVC.sadFaceTitle, message: RunVC.didNotSaveMessage, preferredStyle: .Alert)
                 let bummerAction: UIAlertAction = UIAlertAction(title: RunVC.bummerButtonTitle, style: .Cancel) { action -> Void in
                     self.showMenu()
                 }

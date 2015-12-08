@@ -25,7 +25,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     var realRunInProgress = false
     static let altFudge: Double = 0.1
     static let noStreetNameDetected: String = "no street name detected"
-    private var totalDistance = 0.0
+    var totalDistance = 0.0
     private var lastDistance = 0.0
     private var currentAltitude = 0.0
     private var oldSplitAltitude = 0.0
@@ -61,6 +61,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     private var secondLength = 1.0
     private var shouldReportSplits = false
     
+    static let minDistance = 50.0
     private static let distanceTolerance: Double = 0.05
     private static let coordinateTolerance: Double = 0.0000050
     private static let unknownRoute: String = "unknown route"
@@ -380,8 +381,12 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     func stop() {
         timer.invalidate()
         locationManager.stopUpdatingLocation()
+        
         if runToSimulate == nil && gpxFile == nil {
             realRunInProgress = false
+        }
+        
+        if runToSimulate == nil && gpxFile == nil && totalDistance > RunModel.minDistance {
             var customName = ""
             let fetchRequest = NSFetchRequest()
             let context = CDManager.sharedCDManager.context

@@ -26,30 +26,14 @@ class SettingsVC: ChildVC {
     @IBOutlet var accentButtons: [DLRadioButton]!
     @IBOutlet var weightLabel: UILabel!
     @IBOutlet var weightStepper: UIStepper!
+    @IBOutlet var showWeightToggle: UISwitch!
     
     @IBAction func showMenu(sender: UIButton) {
         showMenu()
     }
     
     override func viewDidLoad() {
-        if SettingsManager.getUnitType() == .Imperial {
-            unitsToggle.on = false
-        }
-        else {
-            unitsToggle.on = true
-        }
-        if SettingsManager.getPublishRun() == true {
-            publishRunToggle.on = true
-        }
-        else {
-            publishRunToggle.on = false
-        }
-        if SettingsManager.getAudibleSplits() == true {
-            audibleSplitsToggle.on = true
-        }
-        else {
-            audibleSplitsToggle.on = false
-        }
+        updateToggles()
         updateSplitsWidgets()
         updateAutoStopWidgets()
         updateMultiplierLabel()
@@ -59,6 +43,18 @@ class SettingsVC: ChildVC {
         multiplierSlider.value = Float(SettingsManager.getMultiplier())
         viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
         showMenuButton.setImage(UiHelpers.maskedImageNamed("menu", color: UiConstants.lightColor), forState: .Normal)
+    }
+    
+    func updateToggles() {
+        if SettingsManager.getUnitType() == .Imperial {
+            unitsToggle.on = false
+        }
+        else {
+            unitsToggle.on = true
+        }
+        publishRunToggle.on = SettingsManager.getPublishRun()
+        showWeightToggle.on = SettingsManager.getShowWeight()
+        audibleSplitsToggle.on = SettingsManager.getAudibleSplits()
     }
     
     func updateWeightStepper() {
@@ -249,5 +245,14 @@ class SettingsVC: ChildVC {
             SettingsManager.setWeight(sender.value)
         }
         updateWeightLabel()
+    }
+    
+    @IBAction func toggleShowWeight(sender: UISwitch) {
+        if sender.on {
+            SettingsManager.setShowWeight(true)
+        }
+        else {
+            SettingsManager.setShowWeight(false)
+        }
     }
 }

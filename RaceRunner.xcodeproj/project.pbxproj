@@ -17,6 +17,7 @@
 		E11E22BF1C08C71200488399 /* UnitType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E22BE1C08C71200488399 /* UnitType.swift */; };
 		E11E22C11C08C76E00488399 /* Accent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E22C01C08C76E00488399 /* Accent.swift */; };
 		E11E22C31C08CDC000488399 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E22C21C08CDC000488399 /* Config.swift */; };
+		E12847731C1763320053ED96 /* sadTrombone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E12847721C1763320053ED96 /* sadTrombone.mp3 */; };
 		E138E8CE1BA0A0FB00BA20E5 /* iSmoothRun.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */; };
 		E13B39931ABA705E007F61ED /* DarkSky.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B39921ABA705E007F61ED /* DarkSky.swift */; };
 		E13B48B51B911BDA001C997A /* UiConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B48B41B911BDA001C997A /* UiConstants.swift */; };
@@ -72,6 +73,7 @@
 		E11E22BE1C08C71200488399 /* UnitType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitType.swift; sourceTree = "<group>"; };
 		E11E22C01C08C76E00488399 /* Accent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accent.swift; sourceTree = "<group>"; };
 		E11E22C21C08CDC000488399 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		E12847721C1763320053ED96 /* sadTrombone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sadTrombone.mp3; sourceTree = "<group>"; };
 		E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = iSmoothRun.gpx; sourceTree = "<group>"; };
 		E13B39921ABA705E007F61ED /* DarkSky.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DarkSky.swift; sourceTree = "<group>"; };
 		E13B48B41B911BDA001C997A /* UiConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UiConstants.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				E10356441C02A1CB006E8FEC /* applause2.mp3 */,
 				E1103F201C00DADF00E18D2E /* click.mp3 */,
 				E1103F211C00DADF00E18D2E /* gun.mp3 */,
+				E12847721C1763320053ED96 /* sadTrombone.mp3 */,
 			);
 			name = Sounds;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 				E1E027831B9A34FE00700DE1 /* Runkeeper.gpx in Resources */,
 				E1103F231C00DADF00E18D2E /* click.mp3 in Resources */,
 				E1D38F491B9E6AFE00380643 /* Runmeter.gpx in Resources */,
+				E12847731C1763320053ED96 /* sadTrombone.mp3 in Resources */,
 				E1E8B92E1AAB73F000D04E38 /* LaunchScreen.xib in Resources */,
 				E1103F241C00DADF00E18D2E /* gun.mp3 in Resources */,
 				E10356451C02A1CB006E8FEC /* applause2.mp3 in Resources */,

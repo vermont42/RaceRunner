@@ -49,6 +49,10 @@ class SettingsManager {
     static let weightDefault: Double = HumanWeight.defaultWeight
     private static let weightKey = "weight"
     
+    private var showWeight: Bool
+    private static let showWeightKey = "showWeight"
+    private static let showWeightDefault = true
+    
     private init() {
         userDefaults = NSUserDefaults.standardUserDefaults()
         
@@ -130,6 +134,15 @@ class SettingsManager {
         else {
             reportEvery = SettingsManager.reportEveryDefault
             userDefaults.setObject(String(format:"%f", reportEvery), forKey: SettingsManager.reportEveryKey)
+            userDefaults.synchronize()
+        }
+        
+        if let storedShowWeightString = userDefaults.stringForKey(SettingsManager.showWeightKey) {
+            showWeight = (storedShowWeightString as NSString).boolValue
+        }
+        else {
+            showWeight = SettingsManager.showWeightDefault
+            userDefaults.setObject("\(showWeight)", forKey: SettingsManager.showWeightKey)
             userDefaults.synchronize()
         }
     }
@@ -242,6 +255,18 @@ class SettingsManager {
         if stopAfter != settingsManager.stopAfter {
             settingsManager.stopAfter = stopAfter
             settingsManager.userDefaults.setObject(String(format:"%f", stopAfter), forKey: SettingsManager.stopAfterKey)
+            settingsManager.userDefaults.synchronize()
+        }
+    }
+    
+    class func getShowWeight() -> Bool {
+        return settingsManager.showWeight
+    }
+    
+    class func setShowWeight(showWeight: Bool) {
+        if showWeight != settingsManager.showWeight {
+            settingsManager.showWeight = showWeight
+            settingsManager.userDefaults.setObject("\(showWeight)", forKey: SettingsManager.showWeightKey)
             settingsManager.userDefaults.synchronize()
         }
     }
