@@ -34,4 +34,3 @@ Because **RaceRunner** is under development, refactoring will occur.
 
 ##Chromatic Inspiration
 ![Miami Vice](http://images2.fanpop.com/image/photos/9300000/Miami-VIce-Season-2-opener-miami-vice-9384840-765-580.jpg "Miami Vice")
-http://images2.fanpop.com/image/photos/9300000/Miami-VIce-Season-2-opener-miami-vice-9384840-765-580.jpg
