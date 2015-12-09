@@ -393,12 +393,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="trd-AD-civ" customClass="COBezierTableView" customModule="COBezierTableView">
-                                <rect key="frame" x="16" y="60" width="568" height="520"/>
+                                <rect key="frame" x="16" y="62" width="568" height="518"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RaceRunner" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIr-Th-QMM">
-                                <rect key="frame" x="189" y="28" width="222" height="55"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="40"/>
+                                <rect key="frame" x="162" y="20" width="277" height="69"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="50"/>
                                 <color key="textColor" red="0.92941176469999998" green="0.68627450980000004" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -406,9 +406,9 @@
                         <color key="backgroundColor" red="0.29019607843137257" green="0.3411764705882353" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="trd-AD-civ" secondAttribute="bottom" constant="20" id="R8a-xo-eXD"/>
-                            <constraint firstItem="DIr-Th-QMM" firstAttribute="top" secondItem="LwI-qT-UPG" secondAttribute="bottom" constant="8" id="U5a-In-2QV"/>
+                            <constraint firstItem="DIr-Th-QMM" firstAttribute="top" secondItem="LwI-qT-UPG" secondAttribute="bottom" id="U5a-In-2QV"/>
                             <constraint firstItem="trd-AD-civ" firstAttribute="leading" secondItem="2sd-gR-2AF" secondAttribute="leading" constant="16" id="WZB-el-Bze"/>
-                            <constraint firstItem="trd-AD-civ" firstAttribute="top" secondItem="2sd-gR-2AF" secondAttribute="top" constant="60" id="f3V-aJ-eb2"/>
+                            <constraint firstItem="trd-AD-civ" firstAttribute="top" secondItem="2sd-gR-2AF" secondAttribute="top" constant="62" id="f3V-aJ-eb2"/>
                             <constraint firstItem="DIr-Th-QMM" firstAttribute="centerX" secondItem="2sd-gR-2AF" secondAttribute="centerX" id="hb0-bC-zc8"/>
                             <constraint firstAttribute="trailing" secondItem="trd-AD-civ" secondAttribute="trailing" constant="16" id="sti-RZ-dgk"/>
                         </constraints>
