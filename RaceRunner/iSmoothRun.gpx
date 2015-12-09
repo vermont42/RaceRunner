@@ -8,10 +8,6 @@ xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:xsi="http:/
 <name>Hill Run</name>
 <desc></desc>
 <trkseg>
-<trkpt lat="37.857243" lon="-122.222733">
-<ele>274.500000</ele>
-<time>2015-09-09T13:45:57Z</time>
-</trkpt>
 <trkpt lat="37.857258" lon="-122.222664">
 <ele>264.750000</ele>
 <time>2015-09-09T13:46:32Z</time>
