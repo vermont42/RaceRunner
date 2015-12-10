@@ -9,12 +9,16 @@ Because **RaceRunner** is under development, refactoring will occur.
 
 
 ###Run in Progress
+
 Colors of the route indicate altitude changes.
+
 ![RaceRunner](RaceRunner2.png "Run in Progress")
 
 
 ###Run Details
+
 As above, colors of the route indicate altitude changes.
+
 ![RaceRunner](RaceRunner.png "Run Details")
 
 
