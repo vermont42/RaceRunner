@@ -135,7 +135,7 @@ class RunVC: ChildVC, RunDelegate {
         pin.map = map
     }
     
-    func plotToCoordinate(coordinate: CLLocationCoordinate2D) {
+    func plotToCoordinate(coordinate: CLLocationCoordinate2D, color: UIColor) {
         if currentCoordinate != nil {
             if currentCoordinate.longitude > coordinate.longitude {
                 runnerIcons.direction = .West
@@ -152,7 +152,7 @@ class RunVC: ChildVC, RunDelegate {
             path.addCoordinate(coords[1])
             let polyline = GMSPolyline()
             polyline.path = path
-            polyline.strokeColor = UiConstants.darkColor
+            polyline.strokeColor = color
             polyline.strokeWidth = UiConstants.polylineWidth
             polyline.map = map
             pin.map = nil
@@ -166,15 +166,15 @@ class RunVC: ChildVC, RunDelegate {
         }
     }
     
-    func receiveProgress(distance: Double, time: Int, paceString: String, altitude: Double, altGainedString: String, altLostString: String) {
-        timeLabel.text = "Time: \(Converter.stringifySecondCount(time, useLongFormat: false))"
-        distanceLabel.text = "Dist.: \(Converter.stringifyDistance(distance))"
-        paceLabel.text = "Pace: " + paceString
+    func receiveProgress(totalDistance: Double, totalSeconds: Int, altitude: Double, altGained: Double, altLost: Double) {
+        timeLabel.text = "Time: \(Converter.stringifySecondCount(totalSeconds, useLongFormat: false))"
         altLabel.text = "Alt.: " + Converter.stringifyAltitude(altitude)
-        altGainedLabel.text = "+: " + altGainedString
-        altLostLabel.text = "-: " + altLostString
+        distanceLabel.text = "Dist.: \(Converter.stringifyDistance(totalDistance))"
+        paceLabel.text = "Pace: " + Converter.stringifyPace(totalDistance, seconds: totalSeconds)
+        altGainedLabel.text = "+: " + Converter.stringifyAltitude(altGained)
+        altLostLabel.text = "-: " + Converter.stringifyAltitude(altLost)
         let stopAfter = SettingsManager.getStopAfter()
-        if (stopAfter != SettingsManager.never) && (distance >= stopAfter) {
+        if (stopAfter != SettingsManager.never) && (totalDistance >= stopAfter) {
             stop()
         }
     }

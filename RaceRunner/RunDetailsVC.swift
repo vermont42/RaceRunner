@@ -37,6 +37,10 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     private var colorAltitudeSegments: [GMSPolyline] = []
     private var addedOverlays: Bool = false
     
+    private static let newRunNamePrompt = "Enter a new name for this run."
+    private static let newRunNameTitle = "Run Name"
+    private static let setRunNameButtonTitle = "Set"
+    
     func mapView(mapView:GMSMapView!,idleAtCameraPosition position:GMSCameraPosition!) {
         if !addedOverlays {
             addOverlays()
@@ -172,16 +176,6 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
                     }
                     var sortedValues = smoothValues
                     sortedValues.sortInPlace { $0 < $1 }
-                    let medianValue = sortedValues[run.locations.count / 2]
-                    let r_red: CGFloat = 1.0
-                    let r_green: CGFloat = 20.0 / 255.0
-                    let r_blue: CGFloat = 44.0 / 255.0
-                    let y_red: CGFloat = 1.0
-                    let y_green: CGFloat = 215.0 / 255.0
-                    let y_blue: CGFloat = 0.0
-                    let g_red: CGFloat = 0.0
-                    let g_green: CGFloat = 146.0 / 255.0
-                    let g_blue: CGFloat = 78.0 / 255.0
                     var colorSegments: [GMSPolyline] = []
                     let stride: Int // https://en.wikipedia.org/wiki/Stride_of_an_array
                     if map.camera.zoom < UiConstants.bigStrideZoomThreshhold {
@@ -197,31 +191,16 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
                         let secondLocCL = CLLocation(latitude: secondLoc.latitude.doubleValue, longitude: secondLoc.longitude.doubleValue)
                         var coords = [firstLocCL.coordinate, secondLocCL.coordinate]
                         let value = smoothValues[i - 1]
-                        var color: UIColor
                         var index = sortedValues.indexOf(value)
                         if (index == nil) {
                             index = 0
-                        }
-                        if value < medianValue {
-                            let ratio = CGFloat(index!) / (CGFloat(run.locations.count) / 2.0)
-                            let red = r_red + ratio * (y_red - r_red)
-                            let green = r_green + ratio * (y_green - r_green)
-                            let blue = r_blue + ratio * (y_blue - r_blue)
-                            color = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
-                        }
-                        else {
-                            let ratio = (CGFloat(index!) - CGFloat(run.locations.count / 2)) / CGFloat(run.locations.count / 2)
-                            let red = y_red + ratio * (g_red - y_red)
-                            let green = y_green + ratio * (g_green - y_green)
-                            let blue = y_blue + ratio * (g_blue - y_blue)
-                            color = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
                         }
                         let path = GMSMutablePath()
                         path.addCoordinate(coords[0])
                         path.addCoordinate(coords[1])
                         let segment = GMSPolyline()
                         segment.path = path
-                        segment.strokeColor = color
+                        segment.strokeColor = UiHelpers.colorForValue(value, sortedArray: sortedValues, index: index!)
                         segment.strokeWidth = UiConstants.polylineWidth
                         colorSegments.append(segment)
                     }
@@ -244,9 +223,8 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     }
 
     @IBAction func setCustomName() {        
-        let alertController = UIAlertController(title: "Run Name", message: "Enter a new name for this run.", preferredStyle: UIAlertControllerStyle.Alert)
-        
-        let setAction = UIAlertAction(title: "Set", style: UIAlertActionStyle.Default, handler: { (action) in
+        let alertController = UIAlertController(title: RunDetailsVC.newRunNameTitle, message: RunDetailsVC.newRunNamePrompt, preferredStyle: UIAlertControllerStyle.Alert)
+        let setAction = UIAlertAction(title: RunDetailsVC.setRunNameButtonTitle, style: UIAlertActionStyle.Default, handler: { (action) in
             let textFields = alertController.textFields!
             self.route.text = "Name: \(textFields[0].text!)"
             self.run.customName = textFields[0].text!

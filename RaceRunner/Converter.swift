@@ -49,7 +49,10 @@ class Converter {
     
     class func announceProgress(totalSeconds: Int, lastSeconds: Int, totalDistance: Double, lastDistance: Double, newAltitude: Double, oldAltitude: Double) {
         let totalLongDistance = convertMetersToLongDistance(totalDistance)
-        let roundedDistance = NSString(format: "%.1f", totalLongDistance) as String
+        var roundedDistance = NSString(format: "%.2f", totalLongDistance) as String
+        if roundedDistance.characters.last! == "0" {
+            roundedDistance = roundedDistance.substringToIndex(roundedDistance.endIndex.predecessor())
+        }
         var progressString = "total distance \(roundedDistance) \(pluralizedCurrentLongUnit(totalLongDistance)), total time \(stringifySecondCount(totalSeconds, useLongFormat: true)), split pace"
         let distanceDelta = totalDistance - lastDistance
         let secondsDelta = totalSeconds - lastSeconds

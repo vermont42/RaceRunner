@@ -13,8 +13,8 @@ import CoreData
 
 protocol RunDelegate {
     func showInitialCoordinate(coordinate: CLLocationCoordinate2D)
-    func plotToCoordinate(coordinate: CLLocationCoordinate2D)
-    func receiveProgress(distance: Double, time: Int, paceString: String, altitude: Double, altGainedString: String, altLostString: String)
+    func plotToCoordinate(coordinate: CLLocationCoordinate2D, color: UIColor)
+    func receiveProgress(totalDistance: Double, totalSeconds: Int, altitude: Double, altGained: Double, altLost: Double)
 }
 
 class RunModel: NSObject, CLLocationManagerDelegate {
@@ -26,19 +26,14 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     static let altFudge: Double = 0.1
     static let noStreetNameDetected: String = "no street name detected"
     var totalDistance = 0.0
-    private var lastDistance = 0.0
     private var currentAltitude = 0.0
     private var oldSplitAltitude = 0.0
     private var currentSplitDistance = 0.0
     private var totalSeconds = 0
-    private var lastSeconds = 0
-    private var lastAltitude = 0.0
-    private var curAltGained = 0.0
-    private var curAltLost = 0.0
-    private var paceString = ""
-    private var altGainedString = ""
-    private var altLostString = ""
     private var splitsCompleted = 0
+    private var shouldReportSplits = false
+    private var lastDistance = 0.0
+    private var lastSeconds = 0
     private var reportEvery = SettingsManager.never
     private var temperature: Float = 0.0
     private var weather = ""
@@ -59,7 +54,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     private var runToSimulate: Run!
     private var gpxFile: String!
     private var secondLength = 1.0
-    private var shouldReportSplits = false
+    private var sortedAltitudes: [Double] = []
     
     static let minDistance = 400.0
     private static let distanceTolerance: Double = 0.05
@@ -166,14 +161,15 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                 let newLocation: CLLocation = location 
                 if abs(newLocation.horizontalAccuracy) < RunModel.minAccuracy {
                     if self.locations.count > 0 {
+                        let index = sortedAltitudes.insertionIndexOf(newLocation.altitude) { $0 < $1 }
+                        sortedAltitudes.insert(newLocation.altitude, atIndex: index)
                         totalDistance += newLocation.distanceFromLocation(self.locations.last!)
-                        runDelegate?.plotToCoordinate(newLocation.coordinate)
+                        runDelegate?.plotToCoordinate(newLocation.coordinate, color: UiHelpers.colorForValue(newLocation.altitude, sortedArray: sortedAltitudes, index: index))
                     }
                     else {
                         runDelegate?.showInitialCoordinate(newLocation.coordinate)
                     }
                     self.locations.append(newLocation)
-                    lastAltitude = newLocation.altitude
                 }
                 
                 if !didSetAutoNameAndFirstLoc {
@@ -226,11 +222,9 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                     }
                     if newLocation.altitude > curAlt + RunModel.altFudge {
                         altGained += newLocation.altitude - curAlt
-                        curAltGained += newLocation.altitude - curAlt
                     }
                     if newLocation.altitude < curAlt - RunModel.altFudge {
                         altLost += curAlt - newLocation.altitude
-                        curAltLost += curAlt - newLocation.altitude
                     }
                 }
                 curAlt = newLocation.altitude
@@ -246,28 +240,21 @@ class RunModel: NSObject, CLLocationManagerDelegate {
             if SettingsManager.getPublishRun() && locations.count > 0 {
                 PubNubManager.pubishLocation(locations[locations.count - 1], distance: totalDistance, seconds: totalSeconds)
             }
+            runDelegate?.receiveProgress(totalDistance, totalSeconds: totalSeconds, altitude: curAlt, altGained: altGained, altLost: altLost)
             currentSplitDistance = totalDistance - lastDistance
             if shouldReportSplits && currentSplitDistance >= reportEvery {
                 splitsCompleted++
-                paceString = Converter.stringifyPace((totalDistance - lastDistance), seconds: (totalSeconds - lastSeconds))
-                altGainedString = Converter.stringifyAltitude(curAltGained)
-                curAltGained = 0.0
-                altLostString = Converter.stringifyAltitude(curAltLost)
-                curAltLost = 0.0
                 currentSplitDistance -= reportEvery
                 if (SettingsManager.getAudibleSplits()) {
                     Converter.announceProgress(totalSeconds, lastSeconds: lastSeconds, totalDistance: totalDistance, lastDistance: lastDistance, newAltitude: curAlt, oldAltitude: oldSplitAltitude)
+                    // TODO: Add a preference to optionally display current split pace. Invoke the delegate
+                    // with what it needs to know to display current split pace. If the preference is set,
+                    // have the delegate display current split pace.
                 }
                 lastDistance = totalDistance
                 lastSeconds = totalSeconds
                 oldSplitAltitude = curAlt
             }
-            if !shouldReportSplits || splitsCompleted == 0 {
-                paceString = Converter.stringifyPace(totalDistance, seconds: totalSeconds)
-                altGainedString = Converter.stringifyAltitude(altGained)
-                altLostString = Converter.stringifyAltitude(altLost)
-            }
-            runDelegate?.receiveProgress(totalDistance, time: totalSeconds, paceString: paceString, altitude: lastAltitude, altGainedString: altGainedString, altLostString: altLostString)
         }
     }
     
@@ -287,14 +274,10 @@ class RunModel: NSObject, CLLocationManagerDelegate {
         totalDistance = 0.0
         lastDistance = 0.0
         currentAltitude = 0.0
-        lastAltitude = 0.0
-        curAltGained = 0.0
-        curAltLost = 0.0
         currentSplitDistance = 0.0
         splitsCompleted = 0
         altGained = 0.0
         altLost = 0.0
-        paceString = ""
         locationManager.startUpdatingLocation()
         startTimer()
         if runToSimulate == nil && gpxFile == nil {
@@ -381,11 +364,9 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     func stop() {
         timer.invalidate()
         locationManager.stopUpdatingLocation()
-        
         if runToSimulate == nil && gpxFile == nil {
             realRunInProgress = false
         }
-        
         if runToSimulate == nil && gpxFile == nil && totalDistance > RunModel.minDistance {
             var customName = ""
             let fetchRequest = NSFetchRequest()
