@@ -153,6 +153,8 @@ class RunVC: ChildVC, RunDelegate {
             let polyline = GMSPolyline()
             polyline.path = path
             polyline.strokeColor = color
+            // TODO: consider using
+            //+ (instancetype) gradientFromColor:(UIColor *) fromColor toColor:(UIColor *) toColor
             polyline.strokeWidth = UiConstants.polylineWidth
             polyline.map = map
             pin.map = nil

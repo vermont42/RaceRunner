@@ -131,7 +131,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
         case .PreRun:
             initialLocation = locations[0] 
             runDelegate?.showInitialCoordinate(initialLocation.coordinate)
-            locationManager.stopUpdatingLocation()
+            locationManager?.stopUpdatingLocation()
             if runToSimulate == nil && gpxFile == nil {
                 DarkSky().currentWeather(CLLocationCoordinate2D(
                     latitude: initialLocation.coordinate.latitude,
@@ -408,6 +408,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
         maxLat = 0.0
         minAlt = 0.0
         maxAlt = 0.0
+        sortedAltitudes = []
     }
     
     func pause() {

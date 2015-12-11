@@ -29,28 +29,28 @@ class UiHelpers {
     }
     
     class func colorForValue(value: Double, sortedArray: [Double], index: Int) -> UIColor {
-        let r_red: CGFloat = 1.0
-        let r_green: CGFloat = 20.0 / 255.0
-        let r_blue: CGFloat = 44.0 / 255.0
-        let y_red: CGFloat = 1.0
-        let y_green: CGFloat = 215.0 / 255.0
-        let y_blue: CGFloat = 0.0
-        let g_red: CGFloat = 0.0
-        let g_green: CGFloat = 146.0 / 255.0
-        let g_blue: CGFloat = 78.0 / 255.0
+        let rRed = CGColorGetComponents(UiConstants.intermediate1Color.CGColor)[0]
+        let rGreen = CGColorGetComponents(UiConstants.intermediate1Color.CGColor)[1]
+        let rBlue = CGColorGetComponents(UiConstants.intermediate1Color.CGColor)[2]
+        let yRed = CGColorGetComponents(UiConstants.intermediate2Color.CGColor)[0]
+        let yGreen = CGColorGetComponents(UiConstants.intermediate2Color.CGColor)[1]
+        let yBlue = CGColorGetComponents(UiConstants.intermediate2Color.CGColor)[2]
+        let gRed = CGColorGetComponents(UiConstants.intermediate3Color.CGColor)[0]
+        let gGreen = CGColorGetComponents(UiConstants.intermediate3Color.CGColor)[1]
+        let gBlue = CGColorGetComponents(UiConstants.intermediate3Color.CGColor)[2]
         let medianValue = sortedArray[sortedArray.count / 2]
         if value < medianValue {
             let ratio = CGFloat(index) / (CGFloat(sortedArray.count) / 2.0)
-            let red = r_red + ratio * (y_red - r_red)
-            let green = r_green + ratio * (y_green - r_green)
-            let blue = r_blue + ratio * (y_blue - r_blue)
+            let red = rRed + ratio * (yRed - rRed)
+            let green = rGreen + ratio * (yGreen - rGreen)
+            let blue = rBlue + ratio * (yBlue - rBlue)
             return UIColor(red: red, green: green, blue: blue, alpha: 1.0)
         }
         else {
             let ratio = (CGFloat(index) - CGFloat(sortedArray.count / 2)) / CGFloat(sortedArray.count / 2)
-            let red = y_red + ratio * (g_red - y_red)
-            let green = y_green + ratio * (g_green - y_green)
-            let blue = y_blue + ratio * (g_blue - y_blue)
+            let red = yRed + ratio * (gRed - yRed)
+            let green = yGreen + ratio * (gGreen - yGreen)
+            let blue = yBlue + ratio * (gBlue - yBlue)
             return UIColor(red: red, green: green, blue: blue, alpha: 1.0)
         }
     }

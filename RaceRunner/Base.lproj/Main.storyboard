@@ -1064,7 +1064,7 @@
         <image name="menu" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ltM-iX-wfX"/>
         <segue reference="BKi-dk-66y"/>
+        <segue reference="Tpz-hV-a4w"/>
     </inferredMetricsTieBreakers>
 </document>
