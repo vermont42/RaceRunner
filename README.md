@@ -12,16 +12,16 @@ Because **RaceRunner** is under development, refactoring will occur.
 
 ###Run in Progress
 
-Colors of the route indicate altitude changes. The runner can also view pace changes by tapping the segmented control.
+Colors of the route indicate altitude changes.
 
-![RaceRunner](RaceRunner2.png "Run in Progress")
+![RaceRunner](RaceRunner1.png "Run in Progress")
 
 
 ###Run Details
 
-As above, colors of the route indicate altitude changes.
+Colors of the route indicate pace changes.
 
-![RaceRunner](RaceRunner.png "Run Details")
+![RaceRunner](RaceRunner2.png "Run Details")
 
 
 ###Settings
