@@ -27,17 +27,20 @@ class UiHelpers {
     class func letterPressedText(plainText: String) -> NSAttributedString {
         return NSAttributedString(string: plainText, attributes: [NSTextEffectAttributeName: NSTextEffectLetterpressStyle])
     }
-    
+
     class func colorForValue(value: Double, sortedArray: [Double], index: Int) -> UIColor {
-        let rRed = CGColorGetComponents(UiConstants.intermediate1Color.CGColor)[0]
-        let rGreen = CGColorGetComponents(UiConstants.intermediate1Color.CGColor)[1]
-        let rBlue = CGColorGetComponents(UiConstants.intermediate1Color.CGColor)[2]
-        let yRed = CGColorGetComponents(UiConstants.intermediate2Color.CGColor)[0]
-        let yGreen = CGColorGetComponents(UiConstants.intermediate2Color.CGColor)[1]
-        let yBlue = CGColorGetComponents(UiConstants.intermediate2Color.CGColor)[2]
-        let gRed = CGColorGetComponents(UiConstants.intermediate3Color.CGColor)[0]
-        let gGreen = CGColorGetComponents(UiConstants.intermediate3Color.CGColor)[1]
-        let gBlue = CGColorGetComponents(UiConstants.intermediate3Color.CGColor)[2]
+        if (sortedArray.count < 2) {
+            return UiConstants.intermediate2ColorDarkened
+        }
+        let rRed = CGColorGetComponents(UiConstants.intermediate1Color.CGColor)[0] * UiConstants.darkening
+        let rGreen = CGColorGetComponents(UiConstants.intermediate1Color.CGColor)[1] * UiConstants.darkening
+        let rBlue = CGColorGetComponents(UiConstants.intermediate1Color.CGColor)[2] * UiConstants.darkening
+        let yRed = CGColorGetComponents(UiConstants.intermediate2Color.CGColor)[0] * UiConstants.darkening
+        let yGreen = CGColorGetComponents(UiConstants.intermediate2Color.CGColor)[1] * UiConstants.darkening
+        let yBlue = CGColorGetComponents(UiConstants.intermediate2Color.CGColor)[2] * UiConstants.darkening
+        let gRed = CGColorGetComponents(UiConstants.intermediate3Color.CGColor)[0] * UiConstants.darkening
+        let gGreen = CGColorGetComponents(UiConstants.intermediate3Color.CGColor)[1] * UiConstants.darkening
+        let gBlue = CGColorGetComponents(UiConstants.intermediate3Color.CGColor)[2] * UiConstants.darkening
         let medianValue = sortedArray[sortedArray.count / 2]
         if value < medianValue {
             let ratio = CGFloat(index) / (CGFloat(sortedArray.count) / 2.0)

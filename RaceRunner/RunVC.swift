@@ -22,11 +22,7 @@ class RunVC: ChildVC, RunDelegate {
     @IBOutlet var showMenuButton: UIButton!
     @IBOutlet var pauseResume: UIButton!
     @IBOutlet var map: GMSMapView!
-    
-    private var currentCoordinate: CLLocationCoordinate2D!
-    private var pin: GMSMarker!
-    private var runnerIcons = RunnerIcons()
-    private var lastDirection: RunnerIcons.Direction = .Stationary
+    @IBOutlet var paceOrAltitude: UISegmentedControl!
     
     private static let gpxTitle = "Berkeley Hills"
     private static let didNotSaveMessage = "RaceRunner did not save this run because it was so short. The run, not RaceRunner. As a collection of electrons on your phone, RaceRunner has no physical height."
@@ -44,23 +40,27 @@ class RunVC: ChildVC, RunDelegate {
         showMenuButton.setImage(UiHelpers.maskedImageNamed("menu", color: UiConstants.lightColor), forState: .Normal)
         map.mapType = kGMSTypeTerrain
         map.hidden = true
+        paceOrAltitude.hidden = true
+        view.sendSubviewToBack(map)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         if let runToSimulate = runToSimulate {
-            RunModel.initializeRunModel(runToSimulate)
+            RunModel.initializeRunModelWithRun(runToSimulate)
             if runToSimulate.customName.isEqualToString("") {
                 viewControllerTitle.text = runToSimulate.autoName as String
             }
             else {
                 viewControllerTitle.text = runToSimulate.customName as String
             }
+            PersistentMapState.initMapState()
             startStop()
         }
         else if let gpxFile = gpxFile {
             RunModel.initializeRunModelWithGpxFile(gpxFile)
             viewControllerTitle.text = RunVC.gpxTitle
+            PersistentMapState.initMapState()
             startStop()
         }
         else {
@@ -78,25 +78,25 @@ class RunVC: ChildVC, RunDelegate {
             startStopButton.setTitle(RunVC.startTitle, forState: UIControlState.Normal)
             startStopButton.hidden = false
             pauseResume.hidden = true
+            PersistentMapState.initMapState()
         case .InProgress:
-            showLabels()
-            startStopButton.backgroundColor = UiConstants.intermediate1Color
-            startStopButton.setTitle(RunVC.stopTitle, forState: UIControlState.Normal)
-            pauseResume.hidden = false
-            startStopButton.hidden = false
             pauseResume.setTitle(RunVC.pauseTitle, forState: UIControlState.Normal)
-            addOverlays()
-            map.hidden = false
         case .Paused:
+            pauseResume.setTitle(RunVC.resumeTitle, forState: UIControlState.Normal)
+            map.camera = GMSCameraPosition.cameraWithLatitude(PersistentMapState.currentCoordinate.latitude, longitude: PersistentMapState.currentCoordinate.longitude, zoom: UiConstants.cameraZoom)
+        }
+        
+        if runModel.status == .InProgress || runModel.status == .Paused {
             showLabels()
             pauseResume.hidden = false
             startStopButton.hidden = false
             startStopButton.backgroundColor = UiConstants.intermediate1Color
             startStopButton.setTitle(RunVC.stopTitle, forState: UIControlState.Normal)
-            pauseResume.setTitle(RunVC.resumeTitle, forState: UIControlState.Normal)
-            addOverlays()
-            map.camera = GMSCameraPosition.cameraWithLatitude(currentCoordinate.latitude, longitude: currentCoordinate.longitude, zoom: UiConstants.cameraZoom)
+            if runToSimulate == nil && gpxFile == nil {
+                addPolylineAndPin()
+            }
             map.hidden = false
+            paceOrAltitude.hidden = false
         }
     }
     
@@ -107,61 +107,53 @@ class RunVC: ChildVC, RunDelegate {
         }
     }
   
-    func addOverlays() {
-        let locations = RunModel.runModel.locations
-        for var i = 0; i < locations.count - 1; i++ {
-            var coords: [CLLocationCoordinate2D] = [locations[i].coordinate, locations[i + 1].coordinate]
-            let path = GMSMutablePath()
-            path.addCoordinate(coords[0])
-            path.addCoordinate(coords[1])
-            let polyline = GMSPolyline()
-            polyline.path = path
-            polyline.strokeColor = UiConstants.darkColor
-            polyline.strokeWidth = UiConstants.polylineWidth
-            polyline.map = map
-        }
-        currentCoordinate = locations.last?.coordinate
-        pin = GMSMarker()
+    func addPolylineAndPin() {
+        PersistentMapState.polyline.map = map
+        PersistentMapState.pin.position = RunModel.runModel.locations.last!.coordinate
+        PersistentMapState.pin.icon = PersistentMapState.runnerIcons.nextIcon()
+        PersistentMapState.pin.map = map
     }
     
     func showInitialCoordinate(coordinate: CLLocationCoordinate2D) {
         map.camera = GMSCameraPosition.cameraWithLatitude(coordinate.latitude, longitude: coordinate.longitude, zoom: UiConstants.cameraZoom)
-        currentCoordinate = coordinate
-        if pin == nil {
-            pin = GMSMarker()
-        }
-        pin.position = coordinate
-        pin.icon = runnerIcons.nextIcon()
-        pin.map = map
+        PersistentMapState.currentCoordinate = coordinate
+        PersistentMapState.pin.position = coordinate
+        PersistentMapState.pin.icon = PersistentMapState.runnerIcons.nextIcon()
+        PersistentMapState.pin.map = map
     }
     
-    func plotToCoordinate(coordinate: CLLocationCoordinate2D, color: UIColor) {
-        if currentCoordinate != nil {
-            if currentCoordinate.longitude > coordinate.longitude {
-                runnerIcons.direction = .West
-                lastDirection = .West
+    func plotToCoordinate(coordinate: CLLocationCoordinate2D, altitudeColor: UIColor, paceColor: UIColor) {
+        if PersistentMapState.currentCoordinate != nil {
+            if PersistentMapState.currentCoordinate.longitude > coordinate.longitude {
+                PersistentMapState.runnerIcons.direction = .West
+                PersistentMapState.latestDirection = .West
             }
-            else if currentCoordinate.longitude < coordinate.longitude {
-                runnerIcons.direction = .East
-                lastDirection = .East
+            else if PersistentMapState.currentCoordinate.longitude < coordinate.longitude {
+                PersistentMapState.runnerIcons.direction = .East
+                PersistentMapState.latestDirection = .East
             }
-            var coords: [CLLocationCoordinate2D] = [currentCoordinate, coordinate]
+            var coords: [CLLocationCoordinate2D] = [PersistentMapState.currentCoordinate, coordinate]
             map.camera = GMSCameraPosition.cameraWithLatitude(coordinate.latitude, longitude: coordinate.longitude, zoom: UiConstants.cameraZoom)
-            let path = GMSMutablePath()
-            path.addCoordinate(coords[0])
-            path.addCoordinate(coords[1])
-            let polyline = GMSPolyline()
-            polyline.path = path
-            polyline.strokeColor = color
-            // TODO: consider using
-            //+ (instancetype) gradientFromColor:(UIColor *) fromColor toColor:(UIColor *) toColor
-            polyline.strokeWidth = UiConstants.polylineWidth
-            polyline.map = map
-            pin.map = nil
-            pin.position = coordinate
-            pin.icon = runnerIcons.nextIcon()
-            pin.map = map
-            currentCoordinate = coordinate
+            PersistentMapState.path.addCoordinate(coords[1])
+            PersistentMapState.polyline.path = PersistentMapState.path
+            let altitudeGradient = GMSStrokeStyle.gradientFromColor(PersistentMapState.latestAltitudeStrokeColor, toColor: altitudeColor)
+            let paceGradient = GMSStrokeStyle.gradientFromColor(PersistentMapState.latestPaceStrokeColor, toColor: paceColor)
+            PersistentMapState.latestAltitudeStrokeColor = altitudeColor
+            PersistentMapState.latestPaceStrokeColor = paceColor
+            PersistentMapState.altitudeSpans.append(GMSStyleSpan(style: altitudeGradient))
+            PersistentMapState.paceSpans.append(GMSStyleSpan(style: paceGradient))
+            if paceOrAltitude.selectedSegmentIndex == 0 {
+                PersistentMapState.polyline.spans = PersistentMapState.altitudeSpans
+            }
+            else {
+                PersistentMapState.polyline.spans = PersistentMapState.paceSpans
+            }
+            PersistentMapState.polyline.map = map
+            PersistentMapState.pin.map = nil
+            PersistentMapState.pin.position = coordinate
+            PersistentMapState.pin.icon = PersistentMapState.runnerIcons.nextIcon()
+            PersistentMapState.pin.map = map
+            PersistentMapState.currentCoordinate = coordinate
         }
         else {
             showInitialCoordinate(coordinate)
@@ -196,23 +188,22 @@ class RunVC: ChildVC, RunDelegate {
             RunModel.runModel.start()
             SoundManager.play("gun")
             map.hidden = false
-        case .InProgress:
+            paceOrAltitude.hidden = false
+        case .InProgress, .Paused:
             stop()
             map.hidden = true
-        case .Paused:
-            stop()
-            map.hidden = true
+            paceOrAltitude.hidden = true
         }
     }
     
     func stop() {
         arc4random_uniform(UiConstants.applauseSampleCount) + 1
         SoundManager.play("applause\(arc4random_uniform(SoundManager.applauseCount) + 1)")
-        runnerIcons.direction = .Stationary
+        PersistentMapState.runnerIcons.direction = .Stationary
         startStopButton.backgroundColor = UiConstants.intermediate3Color
         startStopButton.setTitle("  Start  ", forState: UIControlState.Normal)
         pauseResume.hidden = true
-        pin.map = nil
+        PersistentMapState.pin.map = nil
         let totalDistance = RunModel.runModel.totalDistance
         RunModel.runModel.stop()
         if runToSimulate == nil && gpxFile == nil {
@@ -246,20 +237,20 @@ class RunVC: ChildVC, RunDelegate {
         case .InProgress:
             pauseResume.setTitle(RunVC.resumeTitle, forState: UIControlState.Normal)
             runModel.pause()
-            runnerIcons.direction = .Stationary
-            pin.map = nil
-            pin.icon = runnerIcons.nextIcon()
-            pin.map = map
+            PersistentMapState.runnerIcons.direction = .Stationary
+            PersistentMapState.pin.map = nil
+            PersistentMapState.pin.icon = PersistentMapState.runnerIcons.nextIcon()
+            PersistentMapState.pin.map = map
         case .Paused:
             pauseResume.setTitle(RunVC.pauseTitle, forState: UIControlState.Normal)
-            runnerIcons.direction = lastDirection
+            PersistentMapState.runnerIcons.direction = PersistentMapState.latestDirection
             runModel.resume()
         }
         
     }
     
     @IBAction func returnFromSegueActions(sender: UIStoryboardSegue) {
-        pin.map = map
+        PersistentMapState.pin.map = map
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -280,6 +271,17 @@ class RunVC: ChildVC, RunDelegate {
         }
         
         return super.segueForUnwindingToViewController(toViewController, fromViewController: fromViewController, identifier: identifier)!
+    }
+    
+    @IBAction func changeOverlay(sender: UISegmentedControl) {
+        if paceOrAltitude.selectedSegmentIndex == 0 {
+            PersistentMapState.polyline.spans = PersistentMapState.altitudeSpans
+        }
+        else {
+            PersistentMapState.polyline.spans = PersistentMapState.paceSpans
+        }
+        PersistentMapState.polyline.map = nil
+        PersistentMapState.polyline.map = map
     }
     
     func hideLabels() {

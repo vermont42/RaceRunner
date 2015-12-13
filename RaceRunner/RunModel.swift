@@ -13,7 +13,7 @@ import CoreData
 
 protocol RunDelegate {
     func showInitialCoordinate(coordinate: CLLocationCoordinate2D)
-    func plotToCoordinate(coordinate: CLLocationCoordinate2D, color: UIColor)
+    func plotToCoordinate(coordinate: CLLocationCoordinate2D, altitudeColor: UIColor, paceColor: UIColor)
     func receiveProgress(totalDistance: Double, totalSeconds: Int, altitude: Double, altGained: Double, altLost: Double)
 }
 
@@ -54,7 +54,8 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     private var runToSimulate: Run!
     private var gpxFile: String!
     private var secondLength = 1.0
-    private var sortedAltitudes: [Double] = []
+    private (set) var sortedAltitudes: [Double] = []
+    private (set) var sortedPaces: [Double] = []
     
     static let minDistance = 400.0
     private static let distanceTolerance: Double = 0.05
@@ -73,10 +74,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     }
     
     static let runModel = RunModel()
-    
-    // For reasons unclear to me, SourceKit did not allow this function to
-    // have the following signature, which I would have preferred:
-    // class func initializeRunModel(gpxFile: String)
+        
     class func initializeRunModelWithGpxFile(gpxFile: String) {
         runModel.gpxFile = gpxFile
         runModel.runToSimulate = nil
@@ -84,11 +82,11 @@ class RunModel: NSObject, CLLocationManagerDelegate {
         finishSimulatorSetup()
     }
     
-    class func initializeRunModel(runToSimulate: Run) {
-        runModel.runToSimulate = runToSimulate
+    class func initializeRunModelWithRun(run: Run) {
+        runModel.runToSimulate = run
         runModel.gpxFile = nil
         var cLLocations: [CLLocation] = []
-        for uncastedLocation in runToSimulate.locations {
+        for uncastedLocation in run.locations {
             let location = uncastedLocation as! Location
             cLLocations.append(CLLocation(coordinate: CLLocationCoordinate2D(latitude: location.latitude.doubleValue, longitude: location.longitude.doubleValue), altitude: location.altitude.doubleValue, horizontalAccuracy: RunModel.freezeDriedAccuracy, verticalAccuracy: RunModel.freezeDriedAccuracy, timestamp: location.timestamp))
         }
@@ -161,10 +159,18 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                 let newLocation: CLLocation = location 
                 if abs(newLocation.horizontalAccuracy) < RunModel.minAccuracy {
                     if self.locations.count > 0 {
-                        let index = sortedAltitudes.insertionIndexOf(newLocation.altitude) { $0 < $1 }
-                        sortedAltitudes.insert(newLocation.altitude, atIndex: index)
-                        totalDistance += newLocation.distanceFromLocation(self.locations.last!)
-                        runDelegate?.plotToCoordinate(newLocation.coordinate, color: UiHelpers.colorForValue(newLocation.altitude, sortedArray: sortedAltitudes, index: index))
+                        let altitudeIndex = sortedAltitudes.insertionIndexOf(newLocation.altitude) { $0 < $1 }
+                        sortedAltitudes.insert(newLocation.altitude, atIndex: altitudeIndex)
+                        let altitudeColor = UiHelpers.colorForValue(newLocation.altitude, sortedArray: sortedAltitudes, index: altitudeIndex)
+                        
+                        let distanceDelta = newLocation.distanceFromLocation(self.locations.last!)
+                        totalDistance += distanceDelta
+                        let timeDelta = newLocation.timestamp.timeIntervalSinceDate(self.locations.last!.timestamp)
+                        let pace = distanceDelta / timeDelta
+                        let paceIndex = sortedPaces.insertionIndexOf(pace) { $0 < $1 }
+                        sortedPaces.insert(pace, atIndex: paceIndex)
+                        let paceColor = UiHelpers.colorForValue(pace, sortedArray: sortedPaces, index: paceIndex)
+                        runDelegate?.plotToCoordinate(newLocation.coordinate, altitudeColor: altitudeColor, paceColor: paceColor)
                     }
                     else {
                         runDelegate?.showInitialCoordinate(newLocation.coordinate)
@@ -409,6 +415,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
         minAlt = 0.0
         maxAlt = 0.0
         sortedAltitudes = []
+        sortedPaces = []
     }
     
     func pause() {

@@ -33,9 +33,12 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     var run: Run!
     var logType: LogVC.LogType!
     private var alertView: UIAlertView!
-    private var colorPaceSegments: [GMSPolyline] = []
-    private var colorAltitudeSegments: [GMSPolyline] = []
+    private var paceSpans: [GMSStyleSpan] = []
+    private var altitudeSpans: [GMSStyleSpan] = []
     private var addedOverlays: Bool = false
+    private var latestStrokeColor = UiConstants.intermediate2ColorDarkened
+    private var path = GMSMutablePath()
+    private var polyline = GMSPolyline()
     
     private static let newRunNamePrompt = "Enter a new name for this run."
     private static let newRunNameTitle = "Run Name"
@@ -44,7 +47,6 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     func mapView(mapView:GMSMapView!,idleAtCameraPosition position:GMSCameraPosition!) {
         if !addedOverlays {
             addOverlays()
-            addedOverlays = true
         }
     }
     
@@ -60,6 +62,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
         exportButton.setImage(UiHelpers.maskedImageNamed("export", color: UiConstants.intermediate2Color), forState: UIControlState.Normal)
         map.mapType = kGMSTypeTerrain
         map.delegate = self
+        polyline.strokeWidth = UiConstants.polylineWidth
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -127,102 +130,93 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     func addOverlays() {
         if run.locations.count > 1 {
             map.clear()
-            if (paceOrAltitude.selectedSegmentIndex == 1 && colorPaceSegments.count == 0) ||
-                (paceOrAltitude.selectedSegmentIndex == 0 && colorAltitudeSegments.count == 0) {
-                    var rawValues: [Double] = []
-                    if paceOrAltitude.selectedSegmentIndex == 1 {
-                        for var i = 1; i < run.locations.count; i++ {
-                            let firstLoc = run.locations[i - 1] as! Location
-                            let secondLoc = run.locations[i] as! Location
-                            let firstLocCL = CLLocation(latitude: firstLoc.latitude.doubleValue, longitude: firstLoc.longitude.doubleValue)
-                            let secondLocCL = CLLocation(latitude: secondLoc.latitude.doubleValue, longitude: secondLoc.longitude.doubleValue)
-                            let distance = secondLocCL.distanceFromLocation(firstLocCL)
-                            let time = secondLoc.timestamp.timeIntervalSinceDate(firstLoc.timestamp)
-                            let speed = distance / time
-                            rawValues.append(speed)
-                        }
-                    }
-                    else {
-                        for var i = 0; i < run.locations.count; i++ {
-                            let location = run.locations[i] as! Location
-                            rawValues.append(location.altitude.doubleValue)
-                        }
-                    }
-                    let idealSmoothReachSize = 33 // about 133 locations/mile
-                    var smoothValues: [Double] = []
-                    for (var i = 0; i < rawValues.count; i++) {
-                        var lowerBound = i - idealSmoothReachSize / 2
-                        var upperBound = i + idealSmoothReachSize / 2
-                        if lowerBound < 0 {
-                            lowerBound = 0;
-                        }
-                        if upperBound > (rawValues.count - 1) {
-                            upperBound = rawValues.count - 1
-                        }
-                        var range = NSRange()
-                        range.location = lowerBound
-                        range.length = upperBound - lowerBound
-                        let indexSet = NSMutableIndexSet(indexesInRange: range)
-                        var relevantValues: [Double] = []
-                        for index in indexSet {
-                            relevantValues.append(rawValues[index])
-                        }
-                        var total = 0.0
-                        for value in relevantValues {
-                            total += value
-                        }
-                        let smoothAverage = total / Double(upperBound - lowerBound)
-                        smoothValues.append(smoothAverage)
-                    }
-                    var sortedValues = smoothValues
-                    sortedValues.sortInPlace { $0 < $1 }
-                    var colorSegments: [GMSPolyline] = []
-                    let stride: Int // https://en.wikipedia.org/wiki/Stride_of_an_array
-                    if map.camera.zoom < UiConstants.bigStrideZoomThreshhold {
-                        stride = UiConstants.bigStride
-                    }
-                    else {
-                        stride = 1
-                    }
-                    for var i = 1; i < run.locations.count - stride + 1; i += stride {
+            if (paceOrAltitude.selectedSegmentIndex == 1 && paceSpans.count == 0) ||
+                (paceOrAltitude.selectedSegmentIndex == 0 && altitudeSpans.count == 0) {
+                var rawValues: [Double] = []
+                if paceOrAltitude.selectedSegmentIndex == 1 {
+                    for var i = 1; i < run.locations.count; i++ {
                         let firstLoc = run.locations[i - 1] as! Location
-                        let secondLoc = run.locations[i + stride - 1] as! Location
+                        let secondLoc = run.locations[i] as! Location
                         let firstLocCL = CLLocation(latitude: firstLoc.latitude.doubleValue, longitude: firstLoc.longitude.doubleValue)
                         let secondLocCL = CLLocation(latitude: secondLoc.latitude.doubleValue, longitude: secondLoc.longitude.doubleValue)
-                        var coords = [firstLocCL.coordinate, secondLocCL.coordinate]
-                        let value = smoothValues[i - 1]
-                        var index = sortedValues.indexOf(value)
-                        if (index == nil) {
-                            index = 0
-                        }
-                        let path = GMSMutablePath()
-                        path.addCoordinate(coords[0])
+                        let distance = secondLocCL.distanceFromLocation(firstLocCL)
+                        let time = secondLoc.timestamp.timeIntervalSinceDate(firstLoc.timestamp)
+                        let speed = distance / time
+                        rawValues.append(speed)
+                    }
+                }
+                else {
+                    for var i = 0; i < run.locations.count; i++ {
+                        let location = run.locations[i] as! Location
+                        rawValues.append(location.altitude.doubleValue)
+                    }
+                }
+                let idealSmoothReachSize = 33 // about 133 locations/mile
+                var smoothValues: [Double] = []
+                for (var i = 0; i < rawValues.count; i++) {
+                    var lowerBound = i - idealSmoothReachSize / 2
+                    var upperBound = i + idealSmoothReachSize / 2
+                    if lowerBound < 0 {
+                        lowerBound = 0;
+                    }
+                    if upperBound > (rawValues.count - 1) {
+                        upperBound = rawValues.count - 1
+                    }
+                    var range = NSRange()
+                    range.location = lowerBound
+                    range.length = upperBound - lowerBound
+                    let indexSet = NSMutableIndexSet(indexesInRange: range)
+                    var relevantValues: [Double] = []
+                    for index in indexSet {
+                        relevantValues.append(rawValues[index])
+                    }
+                    var total = 0.0
+                    for value in relevantValues {
+                        total += value
+                    }
+                    let smoothAverage = total / Double(upperBound - lowerBound)
+                    smoothValues.append(smoothAverage)
+                }
+                var sortedValues = smoothValues
+                sortedValues.sortInPlace { $0 < $1 }
+                for var i = 1; i < run.locations.count; i++ {
+                    let firstLoc = run.locations[i - 1] as! Location
+                    let secondLoc = run.locations[i] as! Location
+                    let firstLocCL = CLLocation(latitude: firstLoc.latitude.doubleValue, longitude: firstLoc.longitude.doubleValue)
+                    let secondLocCL = CLLocation(latitude: secondLoc.latitude.doubleValue, longitude: secondLoc.longitude.doubleValue)
+                    var coords = [firstLocCL.coordinate, secondLocCL.coordinate]
+                    let value = smoothValues[i - 1]
+                    var index = sortedValues.indexOf(value)
+                    if index == nil {
+                        index = 0
+                    }
+                    if !addedOverlays {
                         path.addCoordinate(coords[1])
-                        let segment = GMSPolyline()
-                        segment.path = path
-                        segment.strokeColor = UiHelpers.colorForValue(value, sortedArray: sortedValues, index: index!)
-                        segment.strokeWidth = UiConstants.polylineWidth
-                        colorSegments.append(segment)
                     }
-                    for segment in colorSegments {
-                        segment.map = map
-                    }
+                    let color = UiHelpers.colorForValue(value, sortedArray: sortedValues, index: index!)
+                    let gradient = GMSStrokeStyle.gradientFromColor(latestStrokeColor, toColor: color)
+                    latestStrokeColor = color
                     if paceOrAltitude.selectedSegmentIndex == 1 {
-                        colorPaceSegments = colorSegments
+                        paceSpans.append(GMSStyleSpan(style: gradient))
                     }
                     else {
-                        colorAltitudeSegments = colorSegments
+                        altitudeSpans.append(GMSStyleSpan(style: gradient))
                     }
+                }
+                addedOverlays = true
+            }
+            polyline.path = path
+            if paceOrAltitude.selectedSegmentIndex == 1 {
+                polyline.spans = paceSpans
             }
             else {
-                for segment in (paceOrAltitude.selectedSegmentIndex == 1 ? colorPaceSegments: colorAltitudeSegments) {
-                    segment.map = map
-                }
+                polyline.spans = altitudeSpans
             }
+            polyline.map = map
         }
     }
 
-    @IBAction func setCustomName() {        
+    @IBAction func setCustomName() {
         let alertController = UIAlertController(title: RunDetailsVC.newRunNameTitle, message: RunDetailsVC.newRunNamePrompt, preferredStyle: UIAlertControllerStyle.Alert)
         let setAction = UIAlertAction(title: RunDetailsVC.setRunNameButtonTitle, style: UIAlertActionStyle.Default, handler: { (action) in
             let textFields = alertController.textFields!
@@ -300,3 +294,4 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
         return true
     }
 }
+
