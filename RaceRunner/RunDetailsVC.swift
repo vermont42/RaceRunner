@@ -31,7 +31,6 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     @IBOutlet var customTitleButton: UIButton!
     @IBOutlet var exportButton: UIButton!
     var run: Run!
-    var logType: LogVC.LogType!
     private var alertView: UIAlertView!
     private var paceSpans: [GMSStyleSpan] = []
     private var altitudeSpans: [GMSStyleSpan] = []
@@ -242,12 +241,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     }
     
     @IBAction func back(sender: UIButton) {
-        if logType == LogVC.LogType.History {
-            self.performSegueWithIdentifier("unwind pan log", sender: self)
-        }
-        else if logType == LogVC.LogType.Simulate {
-            self.performSegueWithIdentifier("unwind pan", sender: self)
-        }
+        self.performSegueWithIdentifier("unwind pan log", sender: self)
     }
     
     @IBAction func export() {

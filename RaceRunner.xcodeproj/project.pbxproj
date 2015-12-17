@@ -42,6 +42,13 @@
 		E1D529CD1C1C80A500E92AD8 /* PersistentMapState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D529CC1C1C80A500E92AD8 /* PersistentMapState.swift */; };
 		E1D5A01C1AC5170F008A3806 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1D5A01B1AC5170E008A3806 /* AVFoundation.framework */; };
 		E1DA7D6D1B9B8BA2006BC362 /* GpxParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DA7D6C1B9B8BA2006BC362 /* GpxParser.swift */; };
+		E1DBA6CE1C1F676800DE3E4F /* ImportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DBA6CD1C1F676800DE3E4F /* ImportVC.swift */; };
+		E1DBA6D01C1F8EE900DE3E4F /* iSmoothRun2.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA6CF1C1F8EE900DE3E4F /* iSmoothRun2.gpx */; };
+		E1DBA6D21C1FB6C900DE3E4F /* Runtastic.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA6D11C1FB6C900DE3E4F /* Runtastic.gpx */; };
+		E1DBA6D41C1FBA9200DE3E4F /* WeatherRun.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA6D31C1FBA9200DE3E4F /* WeatherRun.gpx */; };
+		E1DBA6D61C1FBCE800DE3E4F /* Digifit.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA6D51C1FBCE800DE3E4F /* Digifit.gpx */; };
+		E1DBA6D81C1FBF0300DE3E4F /* WahooFitness.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA6D71C1FBF0300DE3E4F /* WahooFitness.gpx */; };
+		E1DBA6DA1C1FC0AB00DE3E4F /* Strava.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA6D91C1FC0AB00DE3E4F /* Strava.gpx */; };
 		E1E027831B9A34FE00700DE1 /* Runkeeper.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E1E027821B9A34FE00700DE1 /* Runkeeper.gpx */; };
 		E1E7F7D61C03F8E500F108B6 /* Double+roundToPlaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E7F7D51C03F8E500F108B6 /* Double+roundToPlaces.swift */; };
 		E1E8B9241AAB73F000D04E38 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E8B9231AAB73F000D04E38 /* AppDelegate.swift */; };
@@ -102,6 +109,13 @@
 		E1D529CC1C1C80A500E92AD8 /* PersistentMapState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentMapState.swift; sourceTree = "<group>"; };
 		E1D5A01B1AC5170E008A3806 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		E1DA7D6C1B9B8BA2006BC362 /* GpxParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxParser.swift; sourceTree = "<group>"; };
+		E1DBA6CD1C1F676800DE3E4F /* ImportVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportVC.swift; sourceTree = "<group>"; };
+		E1DBA6CF1C1F8EE900DE3E4F /* iSmoothRun2.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = iSmoothRun2.gpx; sourceTree = "<group>"; };
+		E1DBA6D11C1FB6C900DE3E4F /* Runtastic.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Runtastic.gpx; sourceTree = "<group>"; };
+		E1DBA6D31C1FBA9200DE3E4F /* WeatherRun.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = WeatherRun.gpx; sourceTree = "<group>"; };
+		E1DBA6D51C1FBCE800DE3E4F /* Digifit.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Digifit.gpx; sourceTree = "<group>"; };
+		E1DBA6D71C1FBF0300DE3E4F /* WahooFitness.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = WahooFitness.gpx; sourceTree = "<group>"; };
+		E1DBA6D91C1FC0AB00DE3E4F /* Strava.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Strava.gpx; sourceTree = "<group>"; };
 		E1E027821B9A34FE00700DE1 /* Runkeeper.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Runkeeper.gpx; sourceTree = "<group>"; };
 		E1E7F7D51C03F8E500F108B6 /* Double+roundToPlaces.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+roundToPlaces.swift"; sourceTree = "<group>"; };
 		E1E8B91E1AAB73F000D04E38 /* RaceRunner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RaceRunner.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -169,9 +183,15 @@
 		E1103F271C00DB1D00E18D2E /* GPX */ = {
 			isa = PBXGroup;
 			children = (
+				E1DBA6D11C1FB6C900DE3E4F /* Runtastic.gpx */,
+				E1DBA6D51C1FBCE800DE3E4F /* Digifit.gpx */,
 				E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */,
+				E1DBA6CF1C1F8EE900DE3E4F /* iSmoothRun2.gpx */,
+				E1DBA6D31C1FBA9200DE3E4F /* WeatherRun.gpx */,
 				E1E027821B9A34FE00700DE1 /* Runkeeper.gpx */,
 				E1D38F481B9E6AFE00380643 /* Runmeter.gpx */,
+				E1DBA6D91C1FC0AB00DE3E4F /* Strava.gpx */,
+				E1DBA6D71C1FBF0300DE3E4F /* WahooFitness.gpx */,
 			);
 			name = GPX;
 			sourceTree = "<group>";
@@ -222,6 +242,7 @@
 				E1DA7D6C1B9B8BA2006BC362 /* GpxParser.swift */,
 				E1E8B9481AAB742E00D04E38 /* HelpVC.swift */,
 				E15195F71C0BD41A00BD52FB /* HumanWeight.swift */,
+				E1DBA6CD1C1F676800DE3E4F /* ImportVC.swift */,
 				E1B45F061AE96EFC00AF73AB /* LocationManager.swift */,
 				E1E8B9491AAB742E00D04E38 /* LogVC.swift */,
 				E1C2ED4F1AB63BE200A29728 /* LogCell.swift */,
@@ -329,17 +350,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1E8B9291AAB73F000D04E38 /* Main.storyboard in Resources */,
+				E1DBA6D41C1FBA9200DE3E4F /* WeatherRun.gpx in Resources */,
 				E10356471C02A1EB006E8FEC /* applause3.mp3 in Resources */,
+				E1DBA6D61C1FBCE800DE3E4F /* Digifit.gpx in Resources */,
 				E1103F251C00DADF00E18D2E /* applause1.mp3 in Resources */,
+				E1DBA6D01C1F8EE900DE3E4F /* iSmoothRun2.gpx in Resources */,
 				E138E8CE1BA0A0FB00BA20E5 /* iSmoothRun.gpx in Resources */,
 				E1E027831B9A34FE00700DE1 /* Runkeeper.gpx in Resources */,
 				E1103F231C00DADF00E18D2E /* click.mp3 in Resources */,
 				E1D38F491B9E6AFE00380643 /* Runmeter.gpx in Resources */,
 				E12847731C1763320053ED96 /* sadTrombone.mp3 in Resources */,
+				E1DBA6DA1C1FC0AB00DE3E4F /* Strava.gpx in Resources */,
 				E1E8B92E1AAB73F000D04E38 /* LaunchScreen.xib in Resources */,
 				E1103F241C00DADF00E18D2E /* gun.mp3 in Resources */,
 				E10356451C02A1CB006E8FEC /* applause2.mp3 in Resources */,
+				E1DBA6D81C1FBF0300DE3E4F /* WahooFitness.gpx in Resources */,
 				E1E8B92B1AAB73F000D04E38 /* Images.xcassets in Resources */,
+				E1DBA6D21C1FB6C900DE3E4F /* Runtastic.gpx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,6 +449,7 @@
 				E1804DB61ABBA0D300625188 /* RunDetailsVC.swift in Sources */,
 				E1E8B9551AAB742E00D04E38 /* RunVC.swift in Sources */,
 				E13E30571BFD28F1009CDE60 /* SoundManager.swift in Sources */,
+				E1DBA6CE1C1F676800DE3E4F /* ImportVC.swift in Sources */,
 				E11E22C31C08CDC000488399 /* Config.swift in Sources */,
 				E1E8B9521AAB742E00D04E38 /* ChildVC.swift in Sources */,
 				E1E8B9501AAB742E00D04E38 /* CDManager.swift in Sources */,

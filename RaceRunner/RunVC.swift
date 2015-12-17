@@ -258,7 +258,7 @@ class RunVC: ChildVC, RunDelegate {
             let runDetailsVC: RunDetailsVC = segue.destinationViewController as! RunDetailsVC
             if runToSimulate == nil && gpxFile == nil {
                 runDetailsVC.run = RunModel.runModel.run
-                runDetailsVC.logType = .History
+//                runDetailsVC.logType = .History
             }
         }
     }

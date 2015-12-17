@@ -14,6 +14,8 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var viewControllerTitle: UILabel!
     @IBOutlet var showMenuButton: UIButton!
+    @IBOutlet var importButton: UIButton!
+    
     var viewControllerTitleText: String!
     var context: NSManagedObjectContext!
     var runs: [Run]?
@@ -23,7 +25,7 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate {
         case Simulate
     }
     var logType: LogType!
-    var locFile = "Runmeter"
+    var locFile = "iSmoothRun2"
     private static let rowHeight: CGFloat = 92.0
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -121,7 +123,6 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate {
         if segue.identifier == "pan details from log" {
             let runDetailsVC: RunDetailsVC = segue.destinationViewController as! RunDetailsVC
             runDetailsVC.run = runs![selectedRun]
-            runDetailsVC.logType = .History
         }
         else {
             if segue.identifier == "pan run from log" {
@@ -129,6 +130,10 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate {
                 runVC.runToSimulate = runs![selectedRun]
             }
         }
+    }
+    
+    @IBAction func importRuns() {
+        performSegueWithIdentifier("pan import from log", sender: self)
     }
     
     @IBAction func returnFromSegueActions(sender: UIStoryboardSegue) {}

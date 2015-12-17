@@ -20,7 +20,7 @@ class UiConstants {
     static let titleFont = "Avenir Next"
     static let titleFontSize: CGFloat = 42.0
     static let panDuration: NSTimeInterval = 0.4
-    static let polylineWidth: CGFloat = 7.0
+    static let polylineWidth: CGFloat = 6.0
     static let cameraZoom: Float = 16.0
     static let longitudeCushion: Double = 0.00851970939493185
     static let bigStrideZoomThreshhold: Float = 13.0
