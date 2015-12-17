@@ -24,6 +24,13 @@ Colors of the route indicate pace changes.
 ![RaceRunner](RaceRunner2.png "Run Details")
 
 
+###Run Details
+
+App looks great in landscape mode.
+
+![RaceRunner](RaceRunner2-1.png "Run Details")
+
+
 ###Settings
 ![RaceRunner](RaceRunner3.png "Settings")
 
