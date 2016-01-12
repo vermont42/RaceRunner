@@ -438,25 +438,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text=" " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZY-sm-EK2">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZY-sm-EK2">
                                 <rect key="frame" x="579" y="54" width="5" height="28"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" red="0.96862745100000003" green="0.88235294119999996" blue="0.84313725490000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text=" " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8MU-Rp-a92">
-                                <rect key="frame" x="574" y="126" width="10" height="28"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8MU-Rp-a92">
+                                <rect key="frame" x="579" y="126" width="5" height="28"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" red="0.96862745100000003" green="0.88235294119999996" blue="0.84313725490000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S59-GP-8oH">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S59-GP-8oH">
                                 <rect key="frame" x="16" y="90" width="5" height="28"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" red="0.96862745098039216" green="0.88235294117647056" blue="0.84313725490196079" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9C7-sh-A6r">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9C7-sh-A6r">
                                 <rect key="frame" x="16" y="126" width="5" height="28"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" red="0.96862745098039216" green="0.88235294117647056" blue="0.84313725490196079" alpha="1" colorSpace="calibratedRGB"/>
@@ -515,7 +515,7 @@
                                     <constraint firstAttribute="width" constant="2" id="8Gv-y7-yoK"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text=" " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jch-aM-vdk">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jch-aM-vdk">
                                 <rect key="frame" x="579" y="90" width="5" height="28"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" red="0.96862745100000003" green="0.88235294119999996" blue="0.84313725490000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -555,7 +555,7 @@
                                 <color key="textColor" red="0.87058823529999996" green="0.85882352939999995" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6s7-aI-JS3">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6s7-aI-JS3">
                                 <rect key="frame" x="16" y="54" width="5" height="28"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" red="0.96862745098039216" green="0.88235294117647056" blue="0.84313725490196079" alpha="1" colorSpace="calibratedRGB"/>
@@ -640,37 +640,37 @@
                             <mask key="constraints">
                                 <exclude reference="f3X-ja-xWd"/>
                                 <exclude reference="tbx-SU-Tis"/>
-                                <exclude reference="aG9-ox-Zjx"/>
-                                <exclude reference="NCd-dI-a4k"/>
-                                <exclude reference="4sP-XX-vkE"/>
-                                <exclude reference="SLh-8u-0dM"/>
-                                <exclude reference="ifq-Af-HCm"/>
                                 <exclude reference="SKy-1l-vXx"/>
                                 <exclude reference="yBv-d9-g1T"/>
+                                <exclude reference="aG9-ox-Zjx"/>
                                 <exclude reference="5Q5-7Z-GZq"/>
                                 <exclude reference="hJ6-H7-Iei"/>
                                 <exclude reference="pJJ-4j-fRb"/>
+                                <exclude reference="0ft-2P-h9G"/>
+                                <exclude reference="muX-kN-FzZ"/>
+                                <exclude reference="4sP-XX-vkE"/>
+                                <exclude reference="SLh-8u-0dM"/>
+                                <exclude reference="ifq-Af-HCm"/>
                                 <exclude reference="N7e-MV-caw"/>
                                 <exclude reference="NLj-lm-X2b"/>
                                 <exclude reference="qNK-Nw-Jgv"/>
                                 <exclude reference="vHT-yB-Gxm"/>
-                                <exclude reference="Bek-VG-4MY"/>
-                                <exclude reference="hIP-TT-aYM"/>
-                                <exclude reference="yRT-ZY-e0f"/>
+                                <exclude reference="bh2-rN-gGA"/>
+                                <exclude reference="o5Z-i9-al6"/>
                                 <exclude reference="OtX-8D-q16"/>
                                 <exclude reference="Xoe-a8-SJV"/>
                                 <exclude reference="ssW-bM-anI"/>
+                                <exclude reference="NCd-dI-a4k"/>
+                                <exclude reference="Bek-VG-4MY"/>
+                                <exclude reference="hIP-TT-aYM"/>
+                                <exclude reference="yRT-ZY-e0f"/>
+                                <exclude reference="JTu-lL-6W9"/>
+                                <exclude reference="Zho-Vx-4Bi"/>
                                 <exclude reference="1Uk-a4-GAh"/>
                                 <exclude reference="cWF-bs-Ajq"/>
                                 <exclude reference="Jvg-yc-Ydy"/>
                                 <exclude reference="rpG-9l-23z"/>
                                 <exclude reference="uS8-15-wNf"/>
-                                <exclude reference="bh2-rN-gGA"/>
-                                <exclude reference="o5Z-i9-al6"/>
-                                <exclude reference="0ft-2P-h9G"/>
-                                <exclude reference="muX-kN-FzZ"/>
-                                <exclude reference="JTu-lL-6W9"/>
-                                <exclude reference="Zho-Vx-4Bi"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
@@ -679,12 +679,24 @@
                                 <include reference="f3X-ja-xWd"/>
                                 <include reference="tbx-SU-Tis"/>
                                 <exclude reference="uQM-GN-Eyd"/>
+                                <exclude reference="7Lr-fZ-7ki"/>
+                                <exclude reference="A36-Lg-Uug"/>
+                                <include reference="SKy-1l-vXx"/>
+                                <include reference="yBv-d9-g1T"/>
                                 <exclude reference="IQx-3y-XQd"/>
                                 <include reference="aG9-ox-Zjx"/>
                                 <exclude reference="wme-SX-7hX"/>
-                                <exclude reference="4wR-pL-KOW"/>
-                                <include reference="NCd-dI-a4k"/>
-                                <exclude reference="qRY-bh-iCh"/>
+                                <include reference="5Q5-7Z-GZq"/>
+                                <exclude reference="YDa-oc-6vo"/>
+                                <include reference="hJ6-H7-Iei"/>
+                                <include reference="pJJ-4j-fRb"/>
+                                <exclude reference="rLU-2L-ye0"/>
+                                <include reference="0ft-2P-h9G"/>
+                                <exclude reference="7dv-XC-moa"/>
+                                <exclude reference="I06-tZ-TO2"/>
+                                <exclude reference="aCy-cG-5Zc"/>
+                                <exclude reference="cBb-5h-zc1"/>
+                                <include reference="muX-kN-FzZ"/>
                                 <exclude reference="0bp-SX-ovU"/>
                                 <include reference="4sP-XX-vkE"/>
                                 <include reference="SLh-8u-0dM"/>
@@ -692,15 +704,6 @@
                                 <exclude reference="qn6-Ld-2HB"/>
                                 <exclude reference="rrQ-Dv-W6L"/>
                                 <exclude reference="v0K-lY-aYQ"/>
-                                <exclude reference="7Lr-fZ-7ki"/>
-                                <exclude reference="A36-Lg-Uug"/>
-                                <include reference="SKy-1l-vXx"/>
-                                <include reference="yBv-d9-g1T"/>
-                                <include reference="5Q5-7Z-GZq"/>
-                                <exclude reference="YDa-oc-6vo"/>
-                                <include reference="hJ6-H7-Iei"/>
-                                <include reference="pJJ-4j-fRb"/>
-                                <exclude reference="rLU-2L-ye0"/>
                                 <exclude reference="JXI-Ek-oEh"/>
                                 <include reference="N7e-MV-caw"/>
                                 <include reference="NLj-lm-X2b"/>
@@ -709,17 +712,29 @@
                                 <exclude reference="l1b-7E-NZt"/>
                                 <include reference="qNK-Nw-Jgv"/>
                                 <include reference="vHT-yB-Gxm"/>
-                                <include reference="Bek-VG-4MY"/>
-                                <exclude reference="cMk-wo-8Z1"/>
-                                <exclude reference="gUu-4l-VlO"/>
-                                <include reference="hIP-TT-aYM"/>
-                                <include reference="yRT-ZY-e0f"/>
+                                <include reference="bh2-rN-gGA"/>
+                                <exclude reference="jDL-Mh-rFX"/>
+                                <include reference="o5Z-i9-al6"/>
+                                <exclude reference="oXr-9t-t2R"/>
+                                <exclude reference="uog-y0-Xk1"/>
                                 <include reference="OtX-8D-q16"/>
                                 <exclude reference="PRG-M3-BQM"/>
                                 <exclude reference="Rxc-jz-fBW"/>
                                 <include reference="Xoe-a8-SJV"/>
                                 <exclude reference="iHb-N7-YYS"/>
                                 <exclude reference="ssW-bM-anI"/>
+                                <exclude reference="4wR-pL-KOW"/>
+                                <include reference="NCd-dI-a4k"/>
+                                <exclude reference="qRY-bh-iCh"/>
+                                <include reference="Bek-VG-4MY"/>
+                                <exclude reference="cMk-wo-8Z1"/>
+                                <exclude reference="gUu-4l-VlO"/>
+                                <include reference="hIP-TT-aYM"/>
+                                <include reference="yRT-ZY-e0f"/>
+                                <include reference="JTu-lL-6W9"/>
+                                <exclude reference="ZQ5-XZ-eoa"/>
+                                <include reference="Zho-Vx-4Bi"/>
+                                <exclude reference="cq1-tB-Ule"/>
                                 <include reference="1Uk-a4-GAh"/>
                                 <include reference="cWF-bs-Ajq"/>
                                 <exclude reference="ClA-5g-Hi3"/>
@@ -729,21 +744,6 @@
                                 <exclude reference="kn3-Px-sdu"/>
                                 <include reference="rpG-9l-23z"/>
                                 <include reference="uS8-15-wNf"/>
-                                <include reference="bh2-rN-gGA"/>
-                                <exclude reference="jDL-Mh-rFX"/>
-                                <include reference="o5Z-i9-al6"/>
-                                <exclude reference="oXr-9t-t2R"/>
-                                <exclude reference="uog-y0-Xk1"/>
-                                <include reference="0ft-2P-h9G"/>
-                                <exclude reference="7dv-XC-moa"/>
-                                <exclude reference="I06-tZ-TO2"/>
-                                <exclude reference="aCy-cG-5Zc"/>
-                                <exclude reference="cBb-5h-zc1"/>
-                                <include reference="muX-kN-FzZ"/>
-                                <include reference="JTu-lL-6W9"/>
-                                <exclude reference="ZQ5-XZ-eoa"/>
-                                <include reference="Zho-Vx-4Bi"/>
-                                <exclude reference="cq1-tB-Ule"/>
                             </mask>
                         </variation>
                     </view>

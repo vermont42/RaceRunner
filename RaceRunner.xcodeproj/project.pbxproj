@@ -10,6 +10,8 @@
 		7333C6D291F714851431A2E3 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E91D4B24A52C1C5D97BD0CF /* Pods.framework */; };
 		E10356451C02A1CB006E8FEC /* applause2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E10356441C02A1CB006E8FEC /* applause2.mp3 */; };
 		E10356471C02A1EB006E8FEC /* applause3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E10356461C02A1EB006E8FEC /* applause3.mp3 */; };
+		E10B704A1C455C4F00C70283 /* UIApplication+topViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B70491C455C4F00C70283 /* UIApplication+topViewController.swift */; };
+		E10B704C1C4563E600C70283 /* UIAlertController+showMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B704B1C4563E600C70283 /* UIAlertController+showMessage.swift */; };
 		E1103F231C00DADF00E18D2E /* click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1103F201C00DADF00E18D2E /* click.mp3 */; };
 		E1103F241C00DADF00E18D2E /* gun.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1103F211C00DADF00E18D2E /* gun.mp3 */; };
 		E1103F251C00DADF00E18D2E /* applause1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1103F221C00DADF00E18D2E /* applause1.mp3 */; };
@@ -27,7 +29,7 @@
 		E14360C31AE4AAA4003F27B4 /* GpxLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */; };
 		E15195F81C0BD41A00BD52FB /* HumanWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15195F71C0BD41A00BD52FB /* HumanWeight.swift */; };
 		E159C2541AAB8304007C6EA1 /* RaceRunner.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E159C2521AAB8304007C6EA1 /* RaceRunner.xcdatamodeld */; };
-		E16F35761B8EBC4100C88426 /* UIViewController+NoOp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16F35751B8EBC4100C88426 /* UIViewController+NoOp.swift */; };
+		E16F35761B8EBC4100C88426 /* UIViewController+noOp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16F35751B8EBC4100C88426 /* UIViewController+noOp.swift */; };
 		E1804DB61ABBA0D300625188 /* RunDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */; };
 		E185F8531AE1CB19008BF394 /* RunnerIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185F8521AE1CB19008BF394 /* RunnerIcons.swift */; };
 		E18B6C811C0D1AEC005865BA /* GpxActivityItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18B6C801C0D1AEC005865BA /* GpxActivityItemProvider.swift */; };
@@ -75,6 +77,8 @@
 		B007871155F27C6F21413ECF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E10356441C02A1CB006E8FEC /* applause2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = applause2.mp3; sourceTree = "<group>"; };
 		E10356461C02A1EB006E8FEC /* applause3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = applause3.mp3; sourceTree = "<group>"; };
+		E10B70491C455C4F00C70283 /* UIApplication+topViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+topViewController.swift"; sourceTree = "<group>"; };
+		E10B704B1C4563E600C70283 /* UIAlertController+showMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+showMessage.swift"; sourceTree = "<group>"; };
 		E1103F201C00DADF00E18D2E /* click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = click.mp3; sourceTree = "<group>"; };
 		E1103F211C00DADF00E18D2E /* gun.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gun.mp3; sourceTree = "<group>"; };
 		E1103F221C00DADF00E18D2E /* applause1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = applause1.mp3; sourceTree = "<group>"; };
@@ -92,7 +96,7 @@
 		E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxLocationManager.swift; sourceTree = "<group>"; };
 		E15195F71C0BD41A00BD52FB /* HumanWeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HumanWeight.swift; sourceTree = "<group>"; };
 		E159C2531AAB8304007C6EA1 /* RaceRunner.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RaceRunner.xcdatamodel; sourceTree = "<group>"; };
-		E16F35751B8EBC4100C88426 /* UIViewController+NoOp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+NoOp.swift"; sourceTree = "<group>"; };
+		E16F35751B8EBC4100C88426 /* UIViewController+noOp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+noOp.swift"; sourceTree = "<group>"; };
 		E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunDetailsVC.swift; sourceTree = "<group>"; };
 		E185F8521AE1CB19008BF394 /* RunnerIcons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunnerIcons.swift; sourceTree = "<group>"; };
 		E18B6C801C0D1AEC005865BA /* GpxActivityItemProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxActivityItemProvider.swift; sourceTree = "<group>"; };
@@ -261,9 +265,11 @@
 				E1E8B94B1AAB742E00D04E38 /* SettingsVC.swift */,
 				E13E30561BFD28F1009CDE60 /* SoundManager.swift */,
 				E1E8B94C1AAB742E00D04E38 /* SpectateVC.swift */,
+				E10B704B1C4563E600C70283 /* UIAlertController+showMessage.swift */,
+				E10B70491C455C4F00C70283 /* UIApplication+topViewController.swift */,
 				E13B48B41B911BDA001C997A /* UiConstants.swift */,
 				E13B48B61B921A9F001C997A /* UiHelpers.swift */,
-				E16F35751B8EBC4100C88426 /* UIViewController+NoOp.swift */,
+				E16F35751B8EBC4100C88426 /* UIViewController+noOp.swift */,
 				E11E22BE1C08C71200488399 /* UnitType.swift */,
 				E1E8B94D1AAB742E00D04E38 /* UnwindPanSegue.swift */,
 				E1E8B9211AAB73F000D04E38 /* Supporting Files */,
@@ -440,15 +446,17 @@
 				E1E8B9561AAB742E00D04E38 /* SettingsVC.swift in Sources */,
 				E11E22BF1C08C71200488399 /* UnitType.swift in Sources */,
 				E1A41B4E1BF7D83100E31943 /* PubNubManager.swift in Sources */,
+				E10B704A1C455C4F00C70283 /* UIApplication+topViewController.swift in Sources */,
 				E11655AC1AEAFB5200633C16 /* RunModel.swift in Sources */,
 				E1E8B9541AAB742E00D04E38 /* LogVC.swift in Sources */,
 				E1D529CD1C1C80A500E92AD8 /* PersistentMapState.swift in Sources */,
 				E1E8B9531AAB742E00D04E38 /* HelpVC.swift in Sources */,
 				E1E8B9511AAB742E00D04E38 /* PanSegue.swift in Sources */,
-				E16F35761B8EBC4100C88426 /* UIViewController+NoOp.swift in Sources */,
+				E16F35761B8EBC4100C88426 /* UIViewController+noOp.swift in Sources */,
 				E1804DB61ABBA0D300625188 /* RunDetailsVC.swift in Sources */,
 				E1E8B9551AAB742E00D04E38 /* RunVC.swift in Sources */,
 				E13E30571BFD28F1009CDE60 /* SoundManager.swift in Sources */,
+				E10B704C1C4563E600C70283 /* UIAlertController+showMessage.swift in Sources */,
 				E1DBA6CE1C1F676800DE3E4F /* ImportVC.swift in Sources */,
 				E11E22C31C08CDC000488399 /* Config.swift in Sources */,
 				E1E8B9521AAB742E00D04E38 /* ChildVC.swift in Sources */,

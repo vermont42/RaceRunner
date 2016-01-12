@@ -28,6 +28,8 @@ class SettingsVC: ChildVC {
     @IBOutlet var weightStepper: UIStepper!
     @IBOutlet var showWeightToggle: UISwitch!
     
+    private static let distancePrompt = " To begin inputting, tap \"123\" on the bottom-left corner of your virtual keyboard."
+    
     @IBAction func showMenu(sender: UIButton) {
         showMenu()
     }
@@ -185,7 +187,7 @@ class SettingsVC: ChildVC {
         if invalidValue != nil && invalidValue == true {
             fullPrompt = "That is an invalid value. " + fullPrompt
         }
-        let alertController = UIAlertController(title: "👟", message: fullPrompt + " To begin inputting, tap \"123\" on the bottom-left corner of your virtual keyboard.", preferredStyle: UIAlertControllerStyle.Alert)
+        let alertController = UIAlertController(title: "👟", message: fullPrompt + SettingsVC.distancePrompt, preferredStyle: UIAlertControllerStyle.Alert)
         alertController.view.tintColor = UiConstants.darkColor
         let setAction = UIAlertAction(title: "Set", style: UIAlertActionStyle.Default, handler: { (action) in
             let textFields = alertController.textFields!

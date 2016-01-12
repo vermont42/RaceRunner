@@ -19,6 +19,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     private static let realRunMessage = "There is a real run in progress. Please click the Run menu item and stop the run before attempting to simulate a run."
     private static let okButtonText = "OK"
     private static let gpxFile = "iSmoothRun2"
+    private static let sadFaceTitle = "😢"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,10 +85,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             logTypeToShow = .Simulate
         }
         if (controllerLabels[indexPath.row] == "Simulate" || controllerLabels[indexPath.row] == "Demo") && RunModel.runModel.realRunInProgress {
-            let alertController = UIAlertController(title: "😢", message: MenuVC.realRunMessage, preferredStyle: .Alert)
-            let okAction: UIAlertAction = UIAlertAction(title: MenuVC.okButtonText, style: .Cancel, handler: nil)
-            alertController.addAction(okAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            UIAlertController.showMessage(MenuVC.realRunMessage, title: MenuVC.sadFaceTitle)
         }
         else {
             performSegueWithIdentifier(panSegues[indexPath.row], sender: self)

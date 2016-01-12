@@ -6,6 +6,8 @@
   xmlns="http://www.topografix.com/GPX/1/1"
   xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd"
   xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1">
+<weather>Sunny</weather>
+<temperature>20.0</temperature>
 <trk>
   <name><![CDATA[Runkeeper Run]]></name>
   <time>2015-09-04T19:52:36Z</time>

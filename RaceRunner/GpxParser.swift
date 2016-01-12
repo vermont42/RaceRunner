@@ -9,9 +9,25 @@
 import Foundation
 import CoreLocation
 
+struct ParseResult {
+    let name: String
+    let locations: [CLLocation]
+    let weather: String
+    let temperature: Float
+    
+    init(name: String, locations: [CLLocation], weather: String, temperature: Float) {
+        self.name = name
+        self.locations = locations
+        self.weather = weather
+        self.temperature = temperature
+    }
+}
+
 class GpxParser: NSObject, NSXMLParserDelegate {
     private var parser: NSXMLParser?
     private var name: String = ""
+    private var weather = DarkSky.weatherError
+    private var temperature = DarkSky.temperatureError
     private var locations: [CLLocation] = []
     private var buffer: String = ""
     private let dateFormatter = NSDateFormatter()
@@ -20,6 +36,7 @@ class GpxParser: NSObject, NSXMLParserDelegate {
     private var curEleString: NSString = ""
     private var curTimeString: String = ""
     private var startedTrackPoints = false
+    private var isRuntastic = false
     private static let dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
     private static let accuracy: CLLocationAccuracy = 5.0
     private enum ParsingState: String {
@@ -27,27 +44,41 @@ class GpxParser: NSObject, NSXMLParserDelegate {
         case Name = "name"
         case Ele = "ele"
         case Time = "time"
+        case Temperature = "temperature"
+        case Weather = "weather"
+        case Other = "other"
         init() {
             self = .Name
         }
     }
     private var alreadySetName = false
     private var parsingState: ParsingState = .Name
+    private static let runtastic = "runtastic"
+    private static let runtasticGarbage = ".000"
+    private static let runtasticRunName = "Runtastic Run"
     
-    init?(file: String) {
-        super.init()
-        let url = NSBundle.mainBundle().URLForResource(file, withExtension: "gpx")
-        if url == nil {
+    convenience init?(file: String) {
+        if let url = NSBundle.mainBundle().URLForResource(file, withExtension: "gpx") {
+            self.init(url: url)
+        }
+        else {
             return nil
         }
-        parser = NSXMLParser(contentsOfURL: url!)
+    }
+    
+    init?(url: NSURL) {
+        super.init()
+        parser = NSXMLParser(contentsOfURL: url)
+        if parser == nil {
+            return nil
+        }
         parser?.delegate = self
         dateFormatter.dateFormat = GpxParser.dateFormat
     }
     
-    func parse() -> (String, [CLLocation]) {
+    func parse() -> ParseResult {
         parser?.parse()
-        return (name, locations)
+        return ParseResult(name: name, locations: locations, weather: weather, temperature: temperature)
     }
     
     func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
@@ -65,18 +96,30 @@ class GpxParser: NSObject, NSXMLParserDelegate {
         case ParsingState.Ele.rawValue:
             buffer = ""
             parsingState = .Ele
+        case ParsingState.Temperature.rawValue:
+            buffer = ""
+            parsingState = .Temperature
+        case ParsingState.Weather.rawValue:
+            buffer = ""
+            parsingState = .Weather
         case ParsingState.Time.rawValue:
             if startedTrackPoints {
                 buffer = ""
                 parsingState = .Time
             }
         default:
+            parsingState = .Other
             break
         }
     }
     
     func parser(parser: NSXMLParser, foundCharacters string: String) {
-        if (startedTrackPoints || (parsingState == .Name && !alreadySetName)) && string != "\n" {
+        if !startedTrackPoints {
+            if string == GpxParser.runtastic {
+                isRuntastic = true
+            }
+        }
+        if (startedTrackPoints || (parsingState == .Name && !alreadySetName) || (parsingState == .Temperature) || (parsingState == .Weather)) && string != "\n" {
             buffer = buffer + string
         }
     }
@@ -90,9 +133,17 @@ class GpxParser: NSObject, NSXMLParserDelegate {
             alreadySetName = true
         case ParsingState.Ele.rawValue:
             curEleString = buffer
+        case ParsingState.Temperature.rawValue:
+            temperature = Float(buffer) ?? temperature
+        case ParsingState.Weather.rawValue:
+            weather = buffer
         case ParsingState.Time.rawValue:
             if startedTrackPoints {
                 curTimeString = buffer
+                if isRuntastic {
+                    curTimeString = curTimeString.stringByReplacingOccurrencesOfString(GpxParser.runtasticGarbage, withString: "")
+                    name = GpxParser.runtasticRunName
+                }
             }
         default:
             break

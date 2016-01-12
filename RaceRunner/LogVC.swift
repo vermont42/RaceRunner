@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import MapKit
 
-class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate {
+class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, ImportedRunDelegate {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var viewControllerTitle: UILabel!
     @IBOutlet var showMenuButton: UIButton!
@@ -50,6 +50,17 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate {
         }
         viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
         fetchRuns()
+        RunModel.registerForImportedRunNotifications(self)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        RunModel.deregisterForImportedRunNotifications()
+    }
+    
+    func runWasImported() {
+        fetchRuns()
+        tableView.reloadData()
     }
     
     private func fetchRuns() {
@@ -80,8 +91,8 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate {
         }
         else if !SettingsManager.getAlreadyMadeSampleRun() {
             if let parser = GpxParser(file: locFile) {
-                var (name, coordinates): (String, [CLLocation]) = parser.parse()
-                runs = [RunModel.addRun(coordinates, customName: name, timestamp: coordinates[0].timestamp)]
+                let parseResult = parser.parse()
+                runs = [RunModel.addRun(parseResult.locations, customName: parseResult.name, timestamp: parseResult.locations[0].timestamp, weather: parseResult.weather, temperature: parseResult.temperature)]
                 SettingsManager.setAlreadyMadeSampleRun(true)
             }
             else {

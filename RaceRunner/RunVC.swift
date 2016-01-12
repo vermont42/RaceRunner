@@ -197,8 +197,6 @@ class RunVC: ChildVC, RunDelegate {
     }
     
     func stop() {
-        arc4random_uniform(UiConstants.applauseSampleCount) + 1
-        SoundManager.play("applause\(arc4random_uniform(SoundManager.applauseCount) + 1)")
         PersistentMapState.runnerIcons.direction = .Stationary
         startStopButton.backgroundColor = UiConstants.intermediate3Color
         startStopButton.setTitle("  Start  ", forState: UIControlState.Normal)
@@ -208,16 +206,19 @@ class RunVC: ChildVC, RunDelegate {
         RunModel.runModel.stop()
         if runToSimulate == nil && gpxFile == nil {
             if totalDistance > RunModel.minDistance {
+                arc4random_uniform(UiConstants.applauseSampleCount) + 1
+                SoundManager.play("applause\(arc4random_uniform(SoundManager.applauseCount) + 1)")
                 performSegueWithIdentifier("pan details from run", sender: self)
                 map.clear()
             }
             else {
-                let alertController = UIAlertController(title: RunVC.sadFaceTitle, message: RunVC.didNotSaveMessage, preferredStyle: .Alert)
-                let bummerAction: UIAlertAction = UIAlertAction(title: RunVC.bummerButtonTitle, style: .Cancel) { action -> Void in
-                    self.showMenu()
-                }
-                alertController.addAction(bummerAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
+                UIAlertController.showMessage(RunVC.didNotSaveMessage,
+                    title: RunVC.sadFaceTitle,
+                    okTitle: RunVC.bummerButtonTitle,
+                    handler: {(action) in
+                        SoundManager.play("sadTrombone")
+                        self.showMenu()
+                })
             }
         }
         else if runToSimulate != nil {

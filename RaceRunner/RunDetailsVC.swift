@@ -42,6 +42,9 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     private static let newRunNamePrompt = "Enter a new name for this run."
     private static let newRunNameTitle = "Run Name"
     private static let setRunNameButtonTitle = "Set"
+    private static let shareNotImplemented = "Share functionality has not yet been implemented."
+    private static let notImplementedTitle = "Coming Soon"
+    private static let noProbTitle = "No Prob"
     
     func mapView(mapView:GMSMapView!,idleAtCameraPosition position:GMSCameraPosition!) {
         if !addedOverlays {
@@ -229,6 +232,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
         alertController.addTextFieldWithConfigurationHandler { (textField) in
             textField.placeholder = "Name"
         }
+        alertController.view.tintColor = UiConstants.intermediate1Color
         presentViewController(alertController, animated: true, completion: nil)
     }
     
@@ -271,13 +275,13 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
             self.presentViewController(mailComposer, animated: true, completion: nil)
         }
 */
-        let alertController = UIAlertController(title: "Coming Soon", message: "Share functionality has not yet been implemented.", preferredStyle: UIAlertControllerStyle.Alert)
-        
-        let noProbAction = UIAlertAction(title: "No Prob", style: UIAlertActionStyle.Default, handler: { (action) in
-            SoundManager.play("sadTrombone")
+        UIAlertController.showMessage(RunDetailsVC.shareNotImplemented,
+            title: RunDetailsVC.notImplementedTitle,
+            okTitle: RunDetailsVC.noProbTitle,
+            handler: {(action) in
+                SoundManager.play("sadTrombone")
         })
-        alertController.addAction(noProbAction)
-        presentViewController(alertController, animated: true, completion: nil)
+
     }
     
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {

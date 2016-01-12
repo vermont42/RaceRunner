@@ -118,8 +118,7 @@ public class GpxLocationManager {
     
     public init(gpxFile: String) {
         if let parser = GpxParser(file: gpxFile) {
-            let (_, coordinates): (String, [CLLocation]) = parser.parse()
-            self.locations = coordinates
+            self.locations = parser.parse().locations
         }
         else {
             abort()

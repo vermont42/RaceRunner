@@ -1,5 +1,5 @@
 //
-//  UIViewController+NoOp.swift
+//  UIViewController+noOp.swift
 //  RaceRunner
 //
 //  Created by Joshua Adams on 8/26/15.

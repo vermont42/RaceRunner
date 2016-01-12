@@ -17,14 +17,17 @@ protocol RunDelegate {
     func receiveProgress(totalDistance: Double, totalSeconds: Int, altitude: Double, altGained: Double, altLost: Double)
 }
 
+protocol ImportedRunDelegate {
+    func runWasImported()
+}
+
 class RunModel: NSObject, CLLocationManagerDelegate {
     var locations: [CLLocation]! = []
     var status : Status = .PreRun
     var runDelegate: RunDelegate?
+    var importedRunDelegate: ImportedRunDelegate?
     var run: Run!
     var realRunInProgress = false
-    static let altFudge: Double = 0.1
-    static let noStreetNameDetected: String = "no street name detected"
     var totalDistance = 0.0
     private var currentAltitude = 0.0
     private var oldSplitAltitude = 0.0
@@ -57,6 +60,8 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     private (set) var sortedAltitudes: [Double] = []
     private (set) var sortedPaces: [Double] = []
     
+    static let altFudge: Double = 0.1
+    static let noStreetNameDetected: String = "no street name detected"
     static let minDistance = 400.0
     private static let distanceTolerance: Double = 0.05
     private static let coordinateTolerance: Double = 0.0000050
@@ -66,6 +71,10 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     private static let freezeDriedAccuracy: CLLocationAccuracy = 5.0
     private static let defaultTemperature: Float = 25.0
     private static let defaultWeather = "sunny"
+    private static let importSucceededMessage = "Successfully imported run "
+    private static let importFailedMessage = "Run import failed."
+    private static let importRunTitle = "Import Run"
+    private static let ok = "OK"
     
     enum Status {
         case PreRun
@@ -92,6 +101,14 @@ class RunModel: NSObject, CLLocationManagerDelegate {
         }
         runModel.locationManager = LocationManager(locations: cLLocations)
         finishSimulatorSetup()
+    }
+    
+    class func registerForImportedRunNotifications(importedRunDelegate: ImportedRunDelegate) {
+        runModel.importedRunDelegate = importedRunDelegate
+    }
+    
+    class func deregisterForImportedRunNotifications() {
+        runModel.importedRunDelegate = nil
     }
     
     class func finishSimulatorSetup() {
@@ -291,6 +308,31 @@ class RunModel: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    class func addRun(url: NSURL) -> Bool {
+        var succeeded = true
+        var newRun: Run?
+        if let parser = GpxParser(url: url) {
+            let parseResult = parser.parse()
+            newRun = RunModel.addRun(parseResult.locations, customName: parseResult.name, timestamp: parseResult.locations[0].timestamp, weather: parseResult.weather, temperature: parseResult.temperature)
+        }
+        else {
+            succeeded = false
+        }
+        if newRun == nil {
+            succeeded = false
+        }
+        var resultMessage = ""
+        if succeeded {
+            resultMessage = RunModel.importSucceededMessage + ((newRun?.customName)! as String) + "."
+            runModel.importedRunDelegate?.runWasImported()
+        }
+        else {
+            resultMessage = RunModel.importFailedMessage
+        }
+        UIAlertController.showMessage(resultMessage, title: RunModel.importRunTitle)
+        return succeeded
+    }
+    
     private class func addRun(coordinates: [CLLocation], customName: String, autoName: String, timestamp: NSDate, weather: String, temperature: Float, distance: Double, maxAltitude: Double, minAltitude: Double, maxLongitude: Double, minLongitude: Double, maxLatitude: Double, minLatitude: Double, altitudeGained: Double, altitudeLost: Double, weight: Double) -> Run {
         let newRun: Run = NSEntityDescription.insertNewObjectForEntityForName("Run", inManagedObjectContext: CDManager.sharedCDManager.context) as! Run
         newRun.distance = distance
@@ -323,7 +365,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
         return newRun
     }
     
-    class func addRun(coordinates: [CLLocation], customName: String, timestamp: NSDate) -> Run {
+    class func addRun(coordinates: [CLLocation], customName: String, timestamp: NSDate, weather: String, temperature: Float) -> Run {
         var distance = 0.0
         var altGained  = 0.0
         var altLost = 0.0
@@ -364,7 +406,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
             }
             curAlt = coordinates[i].altitude
         }
-        return RunModel.addRun(coordinates, customName: customName, autoName: customName, timestamp: timestamp, weather: RunModel.defaultWeather, temperature: RunModel.defaultTemperature, distance: distance, maxAltitude: maxAlt, minAltitude: minAlt, maxLongitude: maxLong, minLongitude: minLong, maxLatitude: maxLat, minLatitude: minLat, altitudeGained: altGained, altitudeLost: altLost, weight: HumanWeight.defaultWeight)
+        return RunModel.addRun(coordinates, customName: customName, autoName: customName, timestamp: timestamp, weather: weather, temperature: temperature, distance: distance, maxAltitude: maxAlt, minAltitude: minAlt, maxLongitude: maxLong, minLongitude: minLong, maxLatitude: maxLat, minLatitude: minLat, altitudeGained: altGained, altitudeLost: altLost, weight: HumanWeight.defaultWeight)
     }
     
     func stop() {

@@ -29,15 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CDManager.saveContext()
     }
     
-    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
-        print("url: \(url)")
-        return true
-    }
-    
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
-        print("options: \(options) url: \(url)")
-        // Try opening the file.
-        return true
+        return RunModel.addRun(url)
     }
 }
 
