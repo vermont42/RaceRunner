@@ -84,38 +84,28 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
         distance.text = "Dist: \(Converter.stringifyDistance(run.distance.doubleValue))"
         time.text = "Time: \(Converter.stringifySecondCount(run.duration.integerValue, useLongFormat: false))"
         pace.text = "Pace: \(Converter.stringifyPace(run.distance.doubleValue, seconds: run.duration.integerValue))"
-        self.minAlt.text = "Min Alt: \(Converter.stringifyAltitude(run.minAltitude.doubleValue))"
-        self.maxAlt.text = "Max Alt: \(Converter.stringifyAltitude(run.maxAltitude.doubleValue))"
-        self.gain.text = "Gained: \(Converter.stringifyAltitude(run.altitudeGained.doubleValue))"
-        self.loss.text = "Lost: \(Converter.stringifyAltitude(run.altitudeLost.doubleValue))"
+        minAlt.text = "Min Alt: \(Converter.stringifyAltitude(run.minAltitude.doubleValue))"
+        maxAlt.text = "Max Alt: \(Converter.stringifyAltitude(run.maxAltitude.doubleValue))"
+        gain.text = "Gained: \(Converter.stringifyAltitude(run.altitudeGained.doubleValue))"
+        loss.text = "Lost: \(Converter.stringifyAltitude(run.altitudeLost.doubleValue))"
         if run.weather as String == DarkSky.weatherError {
-            self.weather.text = "Unknown Weather"
+            weather.text = "Unknown Weather"
         }
         else {
-            self.weather.text = "Weather: \(run.weather as String)"
+            weather.text = "Weather: \(run.weather as String)"
         }
         if run.temperature.floatValue == DarkSky.temperatureError {
-            self.temp.text = "Unknown Temp"
+            temp.text = "Unknown Temp"
         }
         else {
-            self.temp.text = "Temp: \(Converter.stringifyTemperature(run.temperature.floatValue))"
+            temp.text = "Temp: \(Converter.stringifyTemperature(run.temperature.floatValue))"
         }
-        if run.customName == "" {
-            if self.run.autoName == RunModel.noStreetNameDetected {
-                self.route.text = "Unnamed Route"
-            }
-            else {
-                self.route.text = "Name: \(run.autoName as String)"
-            }
-        }
-        else {
-            self.route.text = "Name: \(run.customName as String)"
-        }
+        route.text = "Name: \(run.displayName())"
         if SettingsManager.getShowWeight() {
-        self.weight.text = "Weight: \(HumanWeight.weightAsString(run.weight.doubleValue, unitType: SettingsManager.getUnitType()))"
+            weight.text = "Weight: \(HumanWeight.weightAsString(run.weight.doubleValue, unitType: SettingsManager.getUnitType()))"
         }
         else {
-            self.weight.text = " "
+            weight.text = " "
         }
         updateCalories()
     }

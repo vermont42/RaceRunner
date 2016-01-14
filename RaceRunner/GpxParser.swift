@@ -25,7 +25,7 @@ struct ParseResult {
 
 class GpxParser: NSObject, NSXMLParserDelegate {
     private var parser: NSXMLParser?
-    private var name: String = ""
+    private var name: String = Run.unnamedRoute
     private var weather = DarkSky.weatherError
     private var temperature = DarkSky.temperatureError
     private var locations: [CLLocation] = []

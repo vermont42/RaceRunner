@@ -43,7 +43,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     private var timer: NSTimer!
     private var initialLocation: CLLocation!
     private var locationManager: LocationManager!
-    private var autoName = RunModel.noStreetNameDetected
+    private var autoName = Run.noStreetNameDetected
     private var didSetAutoNameAndFirstLoc = false
     private var altGained  = 0.0
     private var altLost = 0.0
@@ -59,19 +59,16 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     private var secondLength = 1.0
     private (set) var sortedAltitudes: [Double] = []
     private (set) var sortedPaces: [Double] = []
-    
     static let altFudge: Double = 0.1
-    static let noStreetNameDetected: String = "no street name detected"
     static let minDistance = 400.0
     private static let distanceTolerance: Double = 0.05
     private static let coordinateTolerance: Double = 0.0000050
-    private static let unknownRoute: String = "unknown route"
     private static let minAccuracy: CLLocationDistance = 20.0
     private static let distanceFilter: CLLocationDistance = 10.0
     private static let freezeDriedAccuracy: CLLocationAccuracy = 5.0
     private static let defaultTemperature: Float = 25.0
     private static let defaultWeather = "sunny"
-    private static let importSucceededMessage = "Successfully imported run "
+    private static let importSucceededMessage = "Successfully imported run"
     private static let importFailedMessage = "Run import failed."
     private static let importRunTitle = "Import Run"
     private static let ok = "OK"
@@ -208,11 +205,11 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                                         }
                                     }
                                     else {
-                                        self.autoName = RunModel.unknownRoute
+                                        self.autoName = Run.unnamedRoute
                                     }
                                 }
                                 else {
-                                    self.autoName = RunModel.unknownRoute
+                                    self.autoName = Run.unnamedRoute
                                 }
                         })
                     }
@@ -323,7 +320,12 @@ class RunModel: NSObject, CLLocationManagerDelegate {
         }
         var resultMessage = ""
         if succeeded {
-            resultMessage = RunModel.importSucceededMessage + ((newRun?.customName)! as String) + "."
+            if newRun?.customName == Run.unnamedRoute {
+                resultMessage = RunModel.importSucceededMessage + "."
+            }
+            else {
+                resultMessage = RunModel.importSucceededMessage + " " + ((newRun?.customName)! as String) + "."
+            }
             runModel.importedRunDelegate?.runWasImported()
         }
         else {

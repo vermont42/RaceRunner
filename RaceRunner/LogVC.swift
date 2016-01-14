@@ -10,11 +10,16 @@ import UIKit
 import CoreData
 import MapKit
 
-class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, ImportedRunDelegate {
+class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource, ImportedRunDelegate {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var viewControllerTitle: UILabel!
     @IBOutlet var showMenuButton: UIButton!
     @IBOutlet var importButton: UIButton!
+    @IBOutlet var sortFieldButton: UIButton!
+    @IBOutlet var reverseSortButton: UIButton!
+    @IBOutlet var fieldPicker: UIPickerView!
+    @IBOutlet var pickerToolbar: UIToolbar!
+    @IBOutlet var showPickerButton: UIButton!
     
     var viewControllerTitleText: String!
     var context: NSManagedObjectContext!
@@ -27,6 +32,7 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, ImportedRunDel
     var logType: LogType!
     var locFile = "iSmoothRun2"
     private static let rowHeight: CGFloat = 92.0
+    private var oldSortField: Int!
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return LogVC.rowHeight
@@ -35,8 +41,14 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, ImportedRunDel
     override func viewDidLoad() {
         tableView.dataSource = self
         tableView.delegate = self
+        fieldPicker.dataSource = self
+        fieldPicker.delegate = self
         tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         showMenuButton.setImage(UiHelpers.maskedImageNamed("menu", color: UiConstants.lightColor), forState: .Normal)
+        reverseSortButton.setImage(UiHelpers.maskedImageNamed("arrow", color: UiConstants.intermediate3Color), forState: .Normal)
+        pickerToolbar.hidden = true
+        fieldPicker.hidden = true
+        fieldPicker.selectRow(SettingsManager.getSortField().pickerPosition(), inComponent: 0, animated: false)
         super.viewDidLoad()
     }
     
@@ -48,8 +60,10 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, ImportedRunDel
         else if logType == LogVC.LogType.Simulate {
             viewControllerTitle.text = "Simulate"
         }
+        showPickerButton.setTitle(SettingsManager.getSortField().rawValue, forState: .Normal)
         viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
         fetchRuns()
+        runs?.sortInPlace { SortField.compare($0, run2: $1) }
         RunModel.registerForImportedRunNotifications(self)
     }
     
@@ -143,6 +157,22 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, ImportedRunDel
         }
     }
     
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return SortField.all().count;
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return SortField.all()[row]
+    }
+    
+    func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        return NSAttributedString(string: SortField.all()[row], attributes: [NSForegroundColorAttributeName: UiConstants.intermediate3Color])
+    }
+    
     @IBAction func importRuns() {
         performSegueWithIdentifier("pan import from log", sender: self)
     }
@@ -159,5 +189,29 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, ImportedRunDel
         
         return super.segueForUnwindingToViewController(toViewController, fromViewController: fromViewController, identifier: identifier)!
     }
-
+    
+    @IBAction func reverseSort() {
+        SettingsManager.setSortType(SortType.reverse(SettingsManager.getSortType()))
+        runs?.sortInPlace { SortField.compare($0, run2: $1) }
+        tableView.reloadData()
+    }
+    
+    @IBAction func showPicker() {
+        pickerToolbar.hidden = false
+        fieldPicker.hidden = false
+        oldSortField = fieldPicker.selectedRowInComponent(0)
+    }
+    
+    @IBAction func dismissPicker(sender: UIBarButtonItem) {
+        pickerToolbar.hidden = true
+        fieldPicker.hidden = true
+        let newSortField = fieldPicker.selectedRowInComponent(0)
+        if newSortField != oldSortField {
+            SettingsManager.setSortField(SortField.sortFieldForPosition(newSortField))
+            showPickerButton.setTitle(SettingsManager.getSortField().rawValue, forState: .Normal)
+            runs?.sortInPlace { SortField.compare($0, run2: $1) }
+            tableView.reloadData()
+        }
+    }
+    
 }

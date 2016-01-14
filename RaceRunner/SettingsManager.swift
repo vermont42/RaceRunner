@@ -15,6 +15,12 @@ class SettingsManager {
     private var unitType: UnitType
     private static let unitTypeKey = "unitType"
     
+    private var sortField: SortField
+    private static let sortFieldKey = "sortField"
+    
+    private var sortType: SortType
+    private static let sortTypeKey = "sortType"
+    
     private var accent: Accent
     private static let accentKey = "accent"
     
@@ -62,6 +68,24 @@ class SettingsManager {
         else {
             unitType = UnitType()
             userDefaults.setObject(unitType.rawValue, forKey: SettingsManager.unitTypeKey)
+            userDefaults.synchronize()
+        }
+        
+        if let storedSortTypeString = userDefaults.stringForKey(SettingsManager.sortTypeKey) {
+            sortType = SortType(rawValue: storedSortTypeString)!
+        }
+        else {
+            sortType = SortType()
+            userDefaults.setObject(sortType.rawValue, forKey: SettingsManager.sortTypeKey)
+            userDefaults.synchronize()
+        }
+        
+        if let storedSortFieldString = userDefaults.stringForKey(SettingsManager.sortFieldKey) {
+            sortField = SortField(rawValue: storedSortFieldString)!
+        }
+        else {
+            sortField = SortField()
+            userDefaults.setObject(sortField.rawValue, forKey: SettingsManager.sortFieldKey)
             userDefaults.synchronize()
         }
         
@@ -155,6 +179,30 @@ class SettingsManager {
         if unitType != settingsManager.unitType {
             settingsManager.unitType = unitType
             settingsManager.userDefaults.setObject(unitType.rawValue, forKey: SettingsManager.unitTypeKey)
+            settingsManager.userDefaults.synchronize()
+        }
+    }
+    
+    class func getSortType() -> SortType {
+        return settingsManager.sortType
+    }
+    
+    class func setSortType(sortType: SortType) {
+        if sortType != settingsManager.sortType {
+            settingsManager.sortType = sortType
+            settingsManager.userDefaults.setObject(sortType.rawValue, forKey: SettingsManager.sortTypeKey)
+            settingsManager.userDefaults.synchronize()
+        }
+    }
+    
+    class func getSortField() -> SortField {
+        return settingsManager.sortField
+    }
+    
+    class func setSortField(sortField: SortField) {
+        if sortField != settingsManager.sortField {
+            settingsManager.sortField = sortField
+            settingsManager.userDefaults.setObject(sortField.rawValue, forKey: SettingsManager.sortFieldKey)
             settingsManager.userDefaults.synchronize()
         }
     }

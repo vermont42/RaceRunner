@@ -856,7 +856,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="S3R-wv-yCt">
-                                <rect key="frame" x="16" y="54" width="568" height="526"/>
+                                <rect key="frame" x="16" y="102" width="568" height="478"/>
                                 <color key="backgroundColor" red="0.29019607843137257" green="0.3411764705882353" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.29019607843137257" green="0.3411764705882353" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -925,6 +925,25 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="luL-nN-K4q">
+                                <rect key="frame" x="16" y="464" width="568" height="116"/>
+                                <color key="backgroundColor" red="0.22352941176470589" green="0.27058823529411763" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="116" id="DCS-tV-vMV"/>
+                                </constraints>
+                            </pickerView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jYh-Ro-zsu">
+                                <rect key="frame" x="16" y="420" width="568" height="44"/>
+                                <items>
+                                    <barButtonItem title="Done" id="pYU-dF-tZr">
+                                        <color key="tintColor" red="0.94117647059999998" green="0.82352941180000006" blue="0.76470588240000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="dismissPicker:" destination="Kw6-vR-YqN" id="RsO-2g-sN6"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                                <color key="barTintColor" red="0.17647058823529413" green="0.20784313725490197" blue="0.21568627450980393" alpha="1" colorSpace="calibratedRGB"/>
+                            </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="        " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fOP-kA-zYR">
                                 <rect key="frame" x="274" y="20" width="52" height="36"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="26"/>
@@ -953,24 +972,69 @@
                                     <action selector="importRuns" destination="Kw6-vR-YqN" eventType="touchUpInside" id="E3o-GY-kev"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tEr-dq-vak">
+                                <rect key="frame" x="284" y="64" width="33" height="30"/>
+                                <state key="normal" title="Date">
+                                    <color key="titleColor" red="0.95686274509803926" green="0.85490196078431369" blue="0.80784313725490198" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="showPicker" destination="Kw6-vR-YqN" eventType="touchUpInside" id="kLM-FU-E4R"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sort by:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4fd-vW-G32">
+                                <rect key="frame" x="215" y="68" width="61" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.69019607839999997" green="0.76862745099999996" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iwt-En-4zM">
+                                <rect key="frame" x="325" y="63" width="32" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="32" id="O62-pg-gcX"/>
+                                    <constraint firstAttribute="height" constant="32" id="h4D-TL-GnI"/>
+                                </constraints>
+                                <state key="normal" image="arrow">
+                                    <color key="titleColor" red="0.94117647058823528" green="0.82352941176470584" blue="0.76470588235294112" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="reverseSort" destination="Kw6-vR-YqN" eventType="touchUpInside" id="bmQ-bD-JIK"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.29019607843137257" green="0.3411764705882353" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="fOP-kA-zYR" firstAttribute="centerY" secondItem="Lk5-9Q-roI" secondAttribute="centerY" id="05V-1B-ckE"/>
+                            <constraint firstItem="tEr-dq-vak" firstAttribute="centerX" secondItem="xb9-Cx-1xD" secondAttribute="centerX" id="0Bc-5r-CUP"/>
                             <constraint firstItem="S3R-wv-yCt" firstAttribute="leading" secondItem="xb9-Cx-1xD" secondAttribute="leading" constant="16" id="7Yt-uE-qfr"/>
                             <constraint firstItem="Lk5-9Q-roI" firstAttribute="leading" secondItem="xb9-Cx-1xD" secondAttribute="leading" constant="10" id="A4x-lc-5wX"/>
-                            <constraint firstItem="S3R-wv-yCt" firstAttribute="top" secondItem="fOP-kA-zYR" secondAttribute="bottom" constant="-2" id="Dfj-KP-OZN"/>
+                            <constraint firstItem="iwt-En-4zM" firstAttribute="leading" secondItem="tEr-dq-vak" secondAttribute="trailing" constant="8" id="Fc4-t9-JnQ"/>
+                            <constraint firstItem="S3R-wv-yCt" firstAttribute="top" secondItem="tEr-dq-vak" secondAttribute="bottom" constant="8" id="Giv-9X-kUu"/>
+                            <constraint firstItem="luL-nN-K4q" firstAttribute="leading" secondItem="xb9-Cx-1xD" secondAttribute="leading" constant="16" id="Gml-ql-6No"/>
+                            <constraint firstAttribute="trailing" secondItem="jYh-Ro-zsu" secondAttribute="trailing" constant="16" id="I92-vH-nqJ"/>
+                            <constraint firstItem="tEr-dq-vak" firstAttribute="leading" secondItem="4fd-vW-G32" secondAttribute="trailing" constant="8" id="Ij9-aa-wpb"/>
+                            <constraint firstAttribute="trailing" secondItem="luL-nN-K4q" secondAttribute="trailing" constant="16" id="Jvx-ih-wz8"/>
+                            <constraint firstItem="jYh-Ro-zsu" firstAttribute="leading" secondItem="xb9-Cx-1xD" secondAttribute="leading" constant="16" id="RjK-eK-vyG"/>
+                            <constraint firstItem="iwt-En-4zM" firstAttribute="centerY" secondItem="4fd-vW-G32" secondAttribute="centerY" id="cbd-Dd-Dt3"/>
+                            <constraint firstItem="luL-nN-K4q" firstAttribute="top" secondItem="jYh-Ro-zsu" secondAttribute="bottom" id="f2H-2f-tAT"/>
                             <constraint firstAttribute="trailing" secondItem="89V-bw-owl" secondAttribute="trailing" constant="16" id="jOX-ow-sKo"/>
                             <constraint firstAttribute="centerX" secondItem="fOP-kA-zYR" secondAttribute="centerX" id="lzM-q1-8qP"/>
                             <constraint firstItem="89V-bw-owl" firstAttribute="centerY" secondItem="fOP-kA-zYR" secondAttribute="centerY" id="qJp-3U-dSq"/>
                             <constraint firstAttribute="trailing" secondItem="S3R-wv-yCt" secondAttribute="trailing" constant="16" id="qYh-7O-pei"/>
+                            <constraint firstItem="tEr-dq-vak" firstAttribute="centerY" secondItem="4fd-vW-G32" secondAttribute="centerY" id="swg-oH-3pE"/>
+                            <constraint firstItem="NdC-Vp-LqM" firstAttribute="top" secondItem="luL-nN-K4q" secondAttribute="bottom" constant="20" id="vLM-vf-ixB"/>
+                            <constraint firstItem="tEr-dq-vak" firstAttribute="top" secondItem="fOP-kA-zYR" secondAttribute="bottom" constant="8" id="vVD-h3-K0m"/>
                             <constraint firstAttribute="bottom" secondItem="S3R-wv-yCt" secondAttribute="bottom" constant="20" id="yUS-gC-Gxf"/>
                             <constraint firstItem="fOP-kA-zYR" firstAttribute="top" secondItem="xb9-Cx-1xD" secondAttribute="top" constant="20" id="yen-ua-C8i"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="fieldPicker" destination="luL-nN-K4q" id="dPZ-yu-8DE"/>
                         <outlet property="importButton" destination="89V-bw-owl" id="JGl-dE-Ta9"/>
+                        <outlet property="pickerToolbar" destination="jYh-Ro-zsu" id="V3G-aI-xde"/>
+                        <outlet property="reverseSortButton" destination="iwt-En-4zM" id="yEr-Bm-VXg"/>
                         <outlet property="showMenuButton" destination="Lk5-9Q-roI" id="rIh-x3-0ee"/>
+                        <outlet property="showPickerButton" destination="tEr-dq-vak" id="lEG-9p-c71"/>
+                        <outlet property="sortFieldButton" destination="tEr-dq-vak" id="23L-AI-A5n"/>
                         <outlet property="tableView" destination="S3R-wv-yCt" id="Byr-gX-8z9"/>
                         <outlet property="viewControllerTitle" destination="fOP-kA-zYR" id="Z2K-GG-eny"/>
                         <segue destination="mkV-F1-5tk" kind="unwind" identifier="unwind pan" unwindAction="returnFromSegueActions:" id="i6n-1o-IT4"/>
@@ -1548,13 +1612,14 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow" width="32" height="32"/>
         <image name="edit" width="80" height="80"/>
         <image name="export" width="60" height="60"/>
         <image name="line" width="299" height="9"/>
         <image name="menu" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ltM-iX-wfX"/>
-        <segue reference="Iru-8H-Blz"/>
+        <segue reference="Tpz-hV-a4w"/>
+        <segue reference="BKi-dk-66y"/>
     </inferredMetricsTieBreakers>
 </document>

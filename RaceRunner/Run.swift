@@ -10,6 +10,9 @@ import Foundation
 import CoreData
 
 class Run: NSManagedObject {
+    static let noStreetNameDetected: String = "no street name detected"
+    static let unnamedRoute = "Unnamed Route"
+  
     @NSManaged var distance: NSNumber
     @NSManaged var duration: NSNumber
     @NSManaged var temperature: NSNumber
@@ -27,4 +30,16 @@ class Run: NSManagedObject {
     @NSManaged var altitudeGained: NSNumber
     @NSManaged var altitudeLost: NSNumber
     @NSManaged var weight: NSNumber
+    
+    func displayName() -> String {
+        if customName != "" {
+            return customName as String
+        }
+        if autoName == Run.noStreetNameDetected {
+            return Run.unnamedRoute
+        }
+        else {
+            return autoName as String
+        }
+    }
 }
