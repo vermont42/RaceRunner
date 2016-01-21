@@ -12,7 +12,7 @@
 		E10356471C02A1EB006E8FEC /* applause3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E10356461C02A1EB006E8FEC /* applause3.mp3 */; };
 		E10B704A1C455C4F00C70283 /* UIApplication+topViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B70491C455C4F00C70283 /* UIApplication+topViewController.swift */; };
 		E10B704C1C4563E600C70283 /* UIAlertController+showMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B704B1C4563E600C70283 /* UIAlertController+showMessage.swift */; };
-		E10B704E1C45C09200C70283 /* SortField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B704D1C45C09200C70283 /* SortField.swift */; };
+		E10B704E1C45C09200C70283 /* LogSortField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B704D1C45C09200C70283 /* LogSortField.swift */; };
 		E10B70501C45C9BF00C70283 /* SortType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B704F1C45C9BF00C70283 /* SortType.swift */; };
 		E1103F231C00DADF00E18D2E /* click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1103F201C00DADF00E18D2E /* click.mp3 */; };
 		E1103F241C00DADF00E18D2E /* gun.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1103F211C00DADF00E18D2E /* gun.mp3 */; };
@@ -22,6 +22,7 @@
 		E11E22C11C08C76E00488399 /* Accent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E22C01C08C76E00488399 /* Accent.swift */; };
 		E11E22C31C08CDC000488399 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E22C21C08CDC000488399 /* Config.swift */; };
 		E12847731C1763320053ED96 /* sadTrombone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E12847721C1763320053ED96 /* sadTrombone.mp3 */; };
+		E13736F01C4F0F1E008CDE36 /* ShoesSortField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13736EF1C4F0F1E008CDE36 /* ShoesSortField.swift */; };
 		E138E8CE1BA0A0FB00BA20E5 /* iSmoothRun.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */; };
 		E13B39931ABA705E007F61ED /* DarkSky.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B39921ABA705E007F61ED /* DarkSky.swift */; };
 		E13B48B51B911BDA001C997A /* UiConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B48B41B911BDA001C997A /* UiConstants.swift */; };
@@ -31,6 +32,13 @@
 		E14360C31AE4AAA4003F27B4 /* GpxLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */; };
 		E15195F81C0BD41A00BD52FB /* HumanWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15195F71C0BD41A00BD52FB /* HumanWeight.swift */; };
 		E159C2541AAB8304007C6EA1 /* RaceRunner.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E159C2521AAB8304007C6EA1 /* RaceRunner.xcdatamodeld */; };
+		E1648E0A1C4861EA002A3ED4 /* Run+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E091C4861EA002A3ED4 /* Run+CoreDataProperties.swift */; };
+		E1648E0C1C4863E3002A3ED4 /* Shoes+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E0B1C4863E3002A3ED4 /* Shoes+CoreDataProperties.swift */; };
+		E1648E0E1C486421002A3ED4 /* Shoes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E0D1C486421002A3ED4 /* Shoes.swift */; };
+		E1648E101C4864E8002A3ED4 /* ShoesBrowserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E0F1C4864E8002A3ED4 /* ShoesBrowserVC.swift */; };
+		E1648E121C487449002A3ED4 /* ShoesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E111C487449002A3ED4 /* ShoesCell.swift */; };
+		E1648E141C4975ED002A3ED4 /* ShoesEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E131C4975ED002A3ED4 /* ShoesEditor.swift */; };
+		E1648E181C497997002A3ED4 /* ShoesDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E171C497997002A3ED4 /* ShoesDelegate.swift */; };
 		E16F35761B8EBC4100C88426 /* UIViewController+noOp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16F35751B8EBC4100C88426 /* UIViewController+noOp.swift */; };
 		E1804DB61ABBA0D300625188 /* RunDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */; };
 		E185F8531AE1CB19008BF394 /* RunnerIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185F8521AE1CB19008BF394 /* RunnerIcons.swift */; };
@@ -75,13 +83,13 @@
 /* Begin PBXFileReference section */
 		1E75B6B8819120E7009CF8E0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		3E91D4B24A52C1C5D97BD0CF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6BAE29B09F03FADB483809E0 /* SuggestedColors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = SuggestedColors.plist; sourceTree = "<group>"; };
+		6BAE29B09F03FADB483809E0 /* SuggestedColors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SuggestedColors.plist; sourceTree = "<group>"; };
 		B007871155F27C6F21413ECF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E10356441C02A1CB006E8FEC /* applause2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = applause2.mp3; sourceTree = "<group>"; };
 		E10356461C02A1EB006E8FEC /* applause3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = applause3.mp3; sourceTree = "<group>"; };
 		E10B70491C455C4F00C70283 /* UIApplication+topViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+topViewController.swift"; sourceTree = "<group>"; };
 		E10B704B1C4563E600C70283 /* UIAlertController+showMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+showMessage.swift"; sourceTree = "<group>"; };
-		E10B704D1C45C09200C70283 /* SortField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortField.swift; sourceTree = "<group>"; };
+		E10B704D1C45C09200C70283 /* LogSortField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogSortField.swift; sourceTree = "<group>"; };
 		E10B704F1C45C9BF00C70283 /* SortType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortType.swift; sourceTree = "<group>"; };
 		E1103F201C00DADF00E18D2E /* click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = click.mp3; sourceTree = "<group>"; };
 		E1103F211C00DADF00E18D2E /* gun.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gun.mp3; sourceTree = "<group>"; };
@@ -91,6 +99,7 @@
 		E11E22C01C08C76E00488399 /* Accent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accent.swift; sourceTree = "<group>"; };
 		E11E22C21C08CDC000488399 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		E12847721C1763320053ED96 /* sadTrombone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sadTrombone.mp3; sourceTree = "<group>"; };
+		E13736EF1C4F0F1E008CDE36 /* ShoesSortField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoesSortField.swift; sourceTree = "<group>"; };
 		E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = iSmoothRun.gpx; sourceTree = "<group>"; };
 		E13B39921ABA705E007F61ED /* DarkSky.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DarkSky.swift; sourceTree = "<group>"; };
 		E13B48B41B911BDA001C997A /* UiConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UiConstants.swift; sourceTree = "<group>"; };
@@ -100,6 +109,13 @@
 		E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxLocationManager.swift; sourceTree = "<group>"; };
 		E15195F71C0BD41A00BD52FB /* HumanWeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HumanWeight.swift; sourceTree = "<group>"; };
 		E159C2531AAB8304007C6EA1 /* RaceRunner.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RaceRunner.xcdatamodel; sourceTree = "<group>"; };
+		E1648E091C4861EA002A3ED4 /* Run+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Run+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E1648E0B1C4863E3002A3ED4 /* Shoes+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Shoes+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E1648E0D1C486421002A3ED4 /* Shoes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shoes.swift; sourceTree = "<group>"; };
+		E1648E0F1C4864E8002A3ED4 /* ShoesBrowserVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoesBrowserVC.swift; sourceTree = "<group>"; };
+		E1648E111C487449002A3ED4 /* ShoesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoesCell.swift; sourceTree = "<group>"; };
+		E1648E131C4975ED002A3ED4 /* ShoesEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoesEditor.swift; sourceTree = "<group>"; };
+		E1648E171C497997002A3ED4 /* ShoesDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoesDelegate.swift; sourceTree = "<group>"; };
 		E16F35751B8EBC4100C88426 /* UIViewController+noOp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+noOp.swift"; sourceTree = "<group>"; };
 		E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunDetailsVC.swift; sourceTree = "<group>"; };
 		E185F8521AE1CB19008BF394 /* RunnerIcons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunnerIcons.swift; sourceTree = "<group>"; };
@@ -207,8 +223,11 @@
 		E159C2591AAB84A7007C6EA1 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				E1648E0D1C486421002A3ED4 /* Shoes.swift */,
+				E1648E0B1C4863E3002A3ED4 /* Shoes+CoreDataProperties.swift */,
 				E1D521661ABA93CD00B46300 /* Location.swift */,
 				E1D521671ABA93CD00B46300 /* Run.swift */,
+				E1648E091C4861EA002A3ED4 /* Run+CoreDataProperties.swift */,
 				E159C2521AAB8304007C6EA1 /* RaceRunner.xcdatamodeld */,
 			);
 			name = CoreData;
@@ -252,6 +271,7 @@
 				E15195F71C0BD41A00BD52FB /* HumanWeight.swift */,
 				E1DBA6CD1C1F676800DE3E4F /* ImportVC.swift */,
 				E1B45F061AE96EFC00AF73AB /* LocationManager.swift */,
+				E10B704D1C45C09200C70283 /* LogSortField.swift */,
 				E1E8B9491AAB742E00D04E38 /* LogVC.swift */,
 				E1C2ED4F1AB63BE200A29728 /* LogCell.swift */,
 				E1E8B9271AAB73F000D04E38 /* Main.storyboard */,
@@ -267,7 +287,11 @@
 				E1E8B94A1AAB742E00D04E38 /* RunVC.swift */,
 				E1CBD2D61AC4D616006F0B85 /* SettingsManager.swift */,
 				E1E8B94B1AAB742E00D04E38 /* SettingsVC.swift */,
-				E10B704D1C45C09200C70283 /* SortField.swift */,
+				E1648E0F1C4864E8002A3ED4 /* ShoesBrowserVC.swift */,
+				E1648E111C487449002A3ED4 /* ShoesCell.swift */,
+				E1648E171C497997002A3ED4 /* ShoesDelegate.swift */,
+				E1648E131C4975ED002A3ED4 /* ShoesEditor.swift */,
+				E13736EF1C4F0F1E008CDE36 /* ShoesSortField.swift */,
 				E10B704F1C45C9BF00C70283 /* SortType.swift */,
 				E13E30561BFD28F1009CDE60 /* SoundManager.swift */,
 				E1E8B94C1AAB742E00D04E38 /* SpectateVC.swift */,
@@ -279,8 +303,6 @@
 				E11E22BE1C08C71200488399 /* UnitType.swift */,
 				E1E8B94D1AAB742E00D04E38 /* UnwindPanSegue.swift */,
 				E1E8B9211AAB73F000D04E38 /* Supporting Files */,
-				E1C22BC71AF05D39003A5712 /* RaceRunner-Bridging-Header.h */,
-				6BAE29B09F03FADB483809E0 /* SuggestedColors.plist */,
 			);
 			path = RaceRunner;
 			sourceTree = "<group>";
@@ -293,6 +315,8 @@
 				E1E8B92A1AAB73F000D04E38 /* Images.xcassets */,
 				E1E8B9221AAB73F000D04E38 /* Info.plist */,
 				E1E8B92C1AAB73F000D04E38 /* LaunchScreen.xib */,
+				E1C22BC71AF05D39003A5712 /* RaceRunner-Bridging-Header.h */,
+				6BAE29B09F03FADB483809E0 /* SuggestedColors.plist */,
 				E1103F261C00DB0D00E18D2E /* Sounds */,
 			);
 			name = "Supporting Files";
@@ -448,20 +472,25 @@
 				E1DA7D6D1B9B8BA2006BC362 /* GpxParser.swift in Sources */,
 				E185F8531AE1CB19008BF394 /* RunnerIcons.swift in Sources */,
 				E159C2541AAB8304007C6EA1 /* RaceRunner.xcdatamodeld in Sources */,
+				E1648E181C497997002A3ED4 /* ShoesDelegate.swift in Sources */,
 				E10B70501C45C9BF00C70283 /* SortType.swift in Sources */,
+				E1648E121C487449002A3ED4 /* ShoesCell.swift in Sources */,
 				E1C2ED501AB63BE200A29728 /* LogCell.swift in Sources */,
 				E1E8B9561AAB742E00D04E38 /* SettingsVC.swift in Sources */,
 				E11E22BF1C08C71200488399 /* UnitType.swift in Sources */,
 				E1A41B4E1BF7D83100E31943 /* PubNubManager.swift in Sources */,
 				E10B704A1C455C4F00C70283 /* UIApplication+topViewController.swift in Sources */,
 				E11655AC1AEAFB5200633C16 /* RunModel.swift in Sources */,
+				E1648E101C4864E8002A3ED4 /* ShoesBrowserVC.swift in Sources */,
 				E1E8B9541AAB742E00D04E38 /* LogVC.swift in Sources */,
 				E1D529CD1C1C80A500E92AD8 /* PersistentMapState.swift in Sources */,
+				E1648E141C4975ED002A3ED4 /* ShoesEditor.swift in Sources */,
 				E1E8B9531AAB742E00D04E38 /* HelpVC.swift in Sources */,
 				E1E8B9511AAB742E00D04E38 /* PanSegue.swift in Sources */,
 				E16F35761B8EBC4100C88426 /* UIViewController+noOp.swift in Sources */,
 				E1804DB61ABBA0D300625188 /* RunDetailsVC.swift in Sources */,
 				E1E8B9551AAB742E00D04E38 /* RunVC.swift in Sources */,
+				E1648E0A1C4861EA002A3ED4 /* Run+CoreDataProperties.swift in Sources */,
 				E13E30571BFD28F1009CDE60 /* SoundManager.swift in Sources */,
 				E10B704C1C4563E600C70283 /* UIAlertController+showMessage.swift in Sources */,
 				E1DBA6CE1C1F676800DE3E4F /* ImportVC.swift in Sources */,
@@ -469,7 +498,9 @@
 				E1E8B9521AAB742E00D04E38 /* ChildVC.swift in Sources */,
 				E1E8B9501AAB742E00D04E38 /* CDManager.swift in Sources */,
 				E1E8B9241AAB73F000D04E38 /* AppDelegate.swift in Sources */,
-				E10B704E1C45C09200C70283 /* SortField.swift in Sources */,
+				E13736F01C4F0F1E008CDE36 /* ShoesSortField.swift in Sources */,
+				E10B704E1C45C09200C70283 /* LogSortField.swift in Sources */,
+				E1648E0E1C486421002A3ED4 /* Shoes.swift in Sources */,
 				E1E8B9581AAB742E00D04E38 /* UnwindPanSegue.swift in Sources */,
 				E1E8B9571AAB742E00D04E38 /* SpectateVC.swift in Sources */,
 				E1D521691ABA93CD00B46300 /* Run.swift in Sources */,
@@ -479,6 +510,7 @@
 				E1CBD2D71AC4D616006F0B85 /* SettingsManager.swift in Sources */,
 				E1E8B94E1AAB742E00D04E38 /* MenuVC.swift in Sources */,
 				E18B6C811C0D1AEC005865BA /* GpxActivityItemProvider.swift in Sources */,
+				E1648E0C1C4863E3002A3ED4 /* Shoes+CoreDataProperties.swift in Sources */,
 				E14360C31AE4AAA4003F27B4 /* GpxLocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

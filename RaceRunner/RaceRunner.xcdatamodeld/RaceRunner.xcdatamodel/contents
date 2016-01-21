@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="14F1021" minimumToolsVersion="Xcode 4.3">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F1504" minimumToolsVersion="Xcode 4.3">
     <entity name="Location" representedClassName="RaceRunner.Location" syncable="YES">
         <attribute name="altitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
@@ -26,8 +26,16 @@
         <attribute name="weight" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <relationship name="locations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Location" inverseName="run" inverseEntity="Location" syncable="YES"/>
     </entity>
+    <entity name="Shoes" representedClassName="RaceRunner.Shoes" syncable="YES">
+        <attribute name="isCurrent" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="kilometers" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="maxKilometers" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="thumbnail" attributeType="Binary" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Location" positionX="-63" positionY="-18" width="128" height="120"/>
         <element name="Run" positionX="214" positionY="-0" width="128" height="300"/>
+        <element name="Shoes" positionX="72" positionY="126" width="128" height="120"/>
     </elements>
 </model>

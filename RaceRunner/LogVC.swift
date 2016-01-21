@@ -32,27 +32,22 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
     var logType: LogType!
     var locFile = "iSmoothRun2"
     private static let rowHeight: CGFloat = 92.0
-    private var oldSortField: Int!
-
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return LogVC.rowHeight
-    }
+    private var oldLogSortField: Int!
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
         fieldPicker.dataSource = self
         fieldPicker.delegate = self
         tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        showMenuButton.setImage(UiHelpers.maskedImageNamed("menu", color: UiConstants.lightColor), forState: .Normal)
-        reverseSortButton.setImage(UiHelpers.maskedImageNamed("arrow", color: UiConstants.intermediate3Color), forState: .Normal)
         pickerToolbar.hidden = true
         fieldPicker.hidden = true
-        fieldPicker.selectRow(SettingsManager.getSortField().pickerPosition(), inComponent: 0, animated: false)
-        super.viewDidLoad()
+        fieldPicker.selectRow(SettingsManager.getLogSortField().pickerPosition(), inComponent: 0, animated: false)
     }
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         self.viewControllerTitle.text = viewControllerTitleText
         if logType == LogVC.LogType.History {
             viewControllerTitle.text = "History"
@@ -60,10 +55,10 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
         else if logType == LogVC.LogType.Simulate {
             viewControllerTitle.text = "Simulate"
         }
-        showPickerButton.setTitle(SettingsManager.getSortField().rawValue, forState: .Normal)
+        showPickerButton.setTitle(SettingsManager.getLogSortField().rawValue, forState: .Normal)
         viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
         fetchRuns()
-        runs?.sortInPlace { SortField.compare($0, run2: $1) }
+        runs?.sortInPlace { LogSortField.compare($0, run2: $1) }
         RunModel.registerForImportedRunNotifications(self)
     }
     
@@ -120,7 +115,7 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as? LogCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("LogCell") as? LogCell
         cell?.displayRun(runs![indexPath.row])
         return cell!
     }
@@ -144,6 +139,10 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
         }
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return LogVC.rowHeight
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "pan details from log" {
             let runDetailsVC: RunDetailsVC = segue.destinationViewController as! RunDetailsVC
@@ -162,15 +161,15 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return SortField.all().count;
+        return LogSortField.all().count;
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return SortField.all()[row]
+        return LogSortField.all()[row]
     }
     
     func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        return NSAttributedString(string: SortField.all()[row], attributes: [NSForegroundColorAttributeName: UiConstants.intermediate3Color])
+        return NSAttributedString(string: LogSortField.all()[row], attributes: [NSForegroundColorAttributeName: UiConstants.intermediate3Color])
     }
     
     @IBAction func importRuns() {
@@ -192,24 +191,24 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
     
     @IBAction func reverseSort() {
         SettingsManager.setSortType(SortType.reverse(SettingsManager.getSortType()))
-        runs?.sortInPlace { SortField.compare($0, run2: $1) }
+        runs?.sortInPlace { LogSortField.compare($0, run2: $1) }
         tableView.reloadData()
     }
     
     @IBAction func showPicker() {
         pickerToolbar.hidden = false
         fieldPicker.hidden = false
-        oldSortField = fieldPicker.selectedRowInComponent(0)
+        oldLogSortField = fieldPicker.selectedRowInComponent(0)
     }
     
     @IBAction func dismissPicker(sender: UIBarButtonItem) {
         pickerToolbar.hidden = true
         fieldPicker.hidden = true
-        let newSortField = fieldPicker.selectedRowInComponent(0)
-        if newSortField != oldSortField {
-            SettingsManager.setSortField(SortField.sortFieldForPosition(newSortField))
-            showPickerButton.setTitle(SettingsManager.getSortField().rawValue, forState: .Normal)
-            runs?.sortInPlace { SortField.compare($0, run2: $1) }
+        let newLogSortField = fieldPicker.selectedRowInComponent(0)
+        if newLogSortField != oldLogSortField {
+            SettingsManager.setLogSortField(LogSortField.sortFieldForPosition(newLogSortField))
+            showPickerButton.setTitle(SettingsManager.getLogSortField().rawValue, forState: .Normal)
+            runs?.sortInPlace { LogSortField.compare($0, run2: $1) }
             tableView.reloadData()
         }
     }

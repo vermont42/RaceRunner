@@ -10,8 +10,8 @@ import UIKit
 
 class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet var menuTable: UITableView!
-    var controllerLabels = ["Start Run", "Simulate", "Demo", "History", "Spectate", "Settings"]
-    var panSegues = ["pan run", "pan log", "pan GPX run", "pan log", "pan spectate", "pan settings"]
+    var controllerLabels = ["Start Run", "Simulate", "Demo", "History", "Spectate", "Settings", "Shoes"]
+    var panSegues = ["pan run", "pan log", "pan GPX run", "pan log", "pan spectate", "pan settings", "pan shoes"]
     var selectedMenuItem: Int = 0
     var logTypeToShow: LogVC.LogType!
 
@@ -20,6 +20,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     private static let okButtonText = "OK"
     private static let gpxFile = "iSmoothRun2"
     private static let sadFaceTitle = "😢"
+    static let menuFontSize: CGFloat = 42.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +60,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             selectedBackgroundView.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.2)
             cell!.textLabel?.textAlignment = NSTextAlignment.Center
             cell!.selectedBackgroundView = selectedBackgroundView
-            cell!.textLabel?.font = UIFont(name: UiConstants.titleFont, size: UiConstants.titleFontSize)
+            cell!.textLabel?.font = UIFont(name: UiConstants.globalFont, size: MenuVC.menuFontSize)
         }
         if RunModel.runModel.status == .PreRun && controllerLabels[0] == "Continue"
         {

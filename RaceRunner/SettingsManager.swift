@@ -15,8 +15,11 @@ class SettingsManager {
     private var unitType: UnitType
     private static let unitTypeKey = "unitType"
     
-    private var sortField: SortField
-    private static let sortFieldKey = "sortField"
+    private var logSortField: LogSortField
+    private static let logSortFieldKey = "logSortField"
+
+    private var shoesSortField: ShoesSortField
+    private static let shoesSortFieldKey = "shoeSortField"
     
     private var sortType: SortType
     private static let sortTypeKey = "sortType"
@@ -80,12 +83,21 @@ class SettingsManager {
             userDefaults.synchronize()
         }
         
-        if let storedSortFieldString = userDefaults.stringForKey(SettingsManager.sortFieldKey) {
-            sortField = SortField(rawValue: storedSortFieldString)!
+        if let storedLogSortFieldString = userDefaults.stringForKey(SettingsManager.logSortFieldKey) {
+            logSortField = LogSortField(rawValue: storedLogSortFieldString)!
         }
         else {
-            sortField = SortField()
-            userDefaults.setObject(sortField.rawValue, forKey: SettingsManager.sortFieldKey)
+            logSortField = LogSortField()
+            userDefaults.setObject(logSortField.rawValue, forKey: SettingsManager.logSortFieldKey)
+            userDefaults.synchronize()
+        }
+        
+        if let storedShoesSortFieldString = userDefaults.stringForKey(SettingsManager.shoesSortFieldKey) {
+            shoesSortField = ShoesSortField(rawValue: storedShoesSortFieldString)!
+        }
+        else {
+            shoesSortField = ShoesSortField()
+            userDefaults.setObject(shoesSortField.rawValue, forKey: SettingsManager.shoesSortFieldKey)
             userDefaults.synchronize()
         }
         
@@ -195,18 +207,30 @@ class SettingsManager {
         }
     }
     
-    class func getSortField() -> SortField {
-        return settingsManager.sortField
+    class func getLogSortField() -> LogSortField {
+        return settingsManager.logSortField
     }
     
-    class func setSortField(sortField: SortField) {
-        if sortField != settingsManager.sortField {
-            settingsManager.sortField = sortField
-            settingsManager.userDefaults.setObject(sortField.rawValue, forKey: SettingsManager.sortFieldKey)
+    class func setLogSortField(logSortField: LogSortField) {
+        if logSortField != settingsManager.logSortField {
+            settingsManager.logSortField = logSortField
+            settingsManager.userDefaults.setObject(logSortField.rawValue, forKey: SettingsManager.logSortFieldKey)
             settingsManager.userDefaults.synchronize()
         }
     }
+
+    class func getShoesSortField() -> ShoesSortField {
+        return settingsManager.shoesSortField
+    }
     
+    class func setShoesSortField(shoesSortField: ShoesSortField) {
+        if shoesSortField != settingsManager.shoesSortField {
+            settingsManager.shoesSortField = shoesSortField
+            settingsManager.userDefaults.setObject(shoesSortField.rawValue, forKey: SettingsManager.shoesSortFieldKey)
+            settingsManager.userDefaults.synchronize()
+        }
+    }
+
     class func getWeight() -> Double {
         return settingsManager.weight
     }

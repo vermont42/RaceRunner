@@ -9,7 +9,6 @@
 import UIKit
 
 class LogCell: UITableViewCell {
-
     @IBOutlet var pace: UILabel!
     @IBOutlet var distance: UILabel!
     @IBOutlet var dateTime: UILabel!

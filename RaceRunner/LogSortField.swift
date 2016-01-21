@@ -1,12 +1,12 @@
 //
-//  SortField.swift
+//  LogSortField.swift
 //  RaceRunner
 //
 //  Created by Joshua Adams on 1/12/16.
 //  Copyright © 2016 Josh Adams. All rights reserved.
 //
 
-enum SortField: String {
+enum LogSortField: String {
     case Date = "Date"
     case Name = "Name"
     case Pace = "Pace"
@@ -18,10 +18,10 @@ enum SortField: String {
     }
     
     static func all() -> [String] {
-        return [SortField.Date.asString(), SortField.Name.asString(), SortField.Pace.asString(), SortField.Distance.asString(), SortField.Duration.asString()]
+        return [LogSortField.Date.asString(), LogSortField.Name.asString(), LogSortField.Pace.asString(), LogSortField.Distance.asString(), LogSortField.Duration.asString()]
     }
     
-    static func sortFieldForPosition(position: Int) -> SortField {
+    static func sortFieldForPosition(position: Int) -> LogSortField {
         switch position {
         case 0:
             return .Date
@@ -38,10 +38,10 @@ enum SortField: String {
         }
     }
     
-    // This methods exists in case I internationalize at some point.
+    // This method exists in case I internationalize at some point.
     func asString() -> String {
         switch self {
-        case Date:
+        case .Date:
             return self.rawValue
         case .Name:
             return self.rawValue
@@ -56,7 +56,7 @@ enum SortField: String {
     
     func pickerPosition() -> Int {
         switch self {
-        case Date:
+        case .Date:
             return 0
         case .Name:
             return 1
@@ -71,7 +71,7 @@ enum SortField: String {
     
     static func compare(run1: Run, run2: Run) -> Bool {
         let sortType = SettingsManager.getSortType()
-        let sortField = SettingsManager.getSortField()
+        let sortField = SettingsManager.getLogSortField()
         var ordering: NSComparisonResult
         switch sortType {
         case .Normal:
@@ -101,7 +101,11 @@ enum SortField: String {
             }
             return result
         case .Duration:
-            return run1.duration.intValue < run2.distance.intValue
+            var result = run1.duration.intValue < run2.duration.intValue
+            if ordering == .OrderedDescending {
+                result = !result
+            }
+            return result
         }
     }
 }

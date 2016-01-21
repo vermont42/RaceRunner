@@ -288,7 +288,6 @@ class RunModel: NSObject, CLLocationManagerDelegate {
             shouldReportSplits = true
         }
         
-            
         oldSplitAltitude = 0.0
         lastSeconds = 0
         totalDistance = 0.0
@@ -437,6 +436,13 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                 }
             }
             run = RunModel.addRun(locations, customName: customName, autoName: autoName, timestamp: NSDate(), weather: weather, temperature: temperature, distance: totalDistance, maxAltitude: maxAlt, minAltitude: minAlt, maxLongitude: maxLong, minLongitude: minLong, maxLatitude: maxLat, minLatitude: minLat, altitudeGained: altGained, altitudeLost: altLost, weight: SettingsManager.getWeight())
+            let result = Shoes.addMeters(totalDistance)
+            if result != Shoes.shoesAreOkay {
+                let delay = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), UiConstants.messageDelay * Int64(NSEC_PER_SEC))
+                dispatch_after(delay, dispatch_get_main_queue()) {
+                    UIAlertController.showMessage(result, title: Shoes.warningTitle, okTitle: Shoes.gotIt)
+                }
+            }
         }
         else {
             // I don't consider this a magic number because the unadjusted length of a second will never change.

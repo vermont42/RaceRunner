@@ -18,7 +18,6 @@ class HelpVC: ChildVC {
     
     override func viewDidLoad() {
         viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
-        showMenuButton.setImage(UiHelpers.maskedImageNamed("menu", color: UiConstants.lightColor), forState: .Normal)
         super.viewDidLoad()
     }
 }

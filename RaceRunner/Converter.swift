@@ -10,7 +10,6 @@ import Foundation
 import AVFoundation
 
 class Converter {
-    private static let metersInKilometer: Double = 1000.0
     private static let feetInMeter: Double = 3.281
     private static let fahrenheitMultiplier: Float = 9.0 / 5.0
     private static let celsiusFraction: Float = 5.0 / 9.0
@@ -37,6 +36,8 @@ class Converter {
     private static let kilometers: String = "kilometers"
     private static let synth = AVSpeechSynthesizer()
     static let metersInMile: Double = 1609.344
+    static let metersInKilometer: Double = 1000.0
+    static let kilometersPerMile: Float = 1.609344
     static let poundsPerKilogram = 2.2
     
     class func netCaloriesAsString(distance: Double, weight: Double) -> String {
@@ -108,6 +109,32 @@ class Converter {
             return meters / metersInMile
         case .Metric:
             return meters / metersInKilometer
+        }
+    }
+    
+    class func stringifyKilometers(kilometers: Float, includeUnits: Bool = false) -> String {
+        var number = kilometers
+        var units = ""
+        if SettingsManager.getUnitType() == .Metric {
+            units = Converter.kilometerAbbr
+        }
+        else {
+            units = Converter.mileAbbr
+            number /= kilometersPerMile
+        }
+        var output = String(format: "%.0f", number)
+        if includeUnits {
+            output += " " + units
+        }
+        return output
+    }
+    
+    class func floatifyMileage(mileage: String) -> Float {
+        if SettingsManager.getUnitType() == .Metric {
+            return Float(mileage)!
+        }
+        else {
+            return Float(mileage)! * Converter.kilometersPerMile
         }
     }
     

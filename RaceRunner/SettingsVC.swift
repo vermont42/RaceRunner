@@ -44,7 +44,6 @@ class SettingsVC: ChildVC {
         accentButtons[SettingsManager.getAccent().radioButtonPosition()].sendActionsForControlEvents(UIControlEvents.TouchUpInside)
         multiplierSlider.value = Float(SettingsManager.getMultiplier())
         viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
-        showMenuButton.setImage(UiHelpers.maskedImageNamed("menu", color: UiConstants.lightColor), forState: .Normal)
     }
     
     func updateToggles() {

@@ -37,7 +37,6 @@ class RunVC: ChildVC, RunDelegate {
     var gpxFile: String?
     
     override func viewDidLoad() {
-        showMenuButton.setImage(UiHelpers.maskedImageNamed("menu", color: UiConstants.lightColor), forState: .Normal)
         map.mapType = kGMSTypeTerrain
         map.hidden = true
         paceOrAltitude.hidden = true

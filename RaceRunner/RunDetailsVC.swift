@@ -60,8 +60,6 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
         else {
             fatalError("Attempted to display details of run with zero locations.")
         }
-        customTitleButton.setImage(UiHelpers.maskedImageNamed("edit", color: UiConstants.intermediate2Color), forState: UIControlState.Normal)
-        exportButton.setImage(UiHelpers.maskedImageNamed("export", color: UiConstants.intermediate2Color), forState: UIControlState.Normal)
         map.mapType = kGMSTypeTerrain
         map.delegate = self
         polyline.strokeWidth = UiConstants.polylineWidth
