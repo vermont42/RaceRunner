@@ -24,7 +24,7 @@ If you would like to build a copy of **RaceRunner** for yourself, use these inst
 
 Colors of the route indicate altitude changes.
 
-![RaceRunner](RaceRunner1.png "Run in Progress")
+![RaceRunner](RaceRunner/RaceRunner1.png "Run in Progress")
 
 
 ###Run Details
