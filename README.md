@@ -31,34 +31,34 @@ Colors of the route indicate altitude changes.
 
 Colors of the route indicate pace changes.
 
-![RaceRunner](RaceRunner2.png "Run Details")
+![RaceRunner](RaceRunner/RaceRunner2.png "Run Details")
 
 
 ###Run Details
 
 App looks great in landscape mode.
 
-![RaceRunner](RaceRunner2-1.png "Run Details")
+![RaceRunner](RaceRunner/RaceRunner2-1.png "Run Details")
 
 
 ###Settings
-![RaceRunner](RaceRunner3.png "Settings")
+![RaceRunner](RaceRunner/RaceRunner3.png "Settings")
 
 
 ###Spectating a Race in Germany from California
-![RaceRunner](RaceRunner4.png "Spectating a Race in Germany from California")
+![RaceRunner](RaceRunner/RaceRunner4.png "Spectating a Race in Germany from California")
 
 
 ###Spectating a Walk in Vermont from California
-![RaceRunner](RaceRunner5.png "Spectating a Walk in Vermont from California")
+![RaceRunner](RaceRunner/RaceRunner5.png "Spectating a Walk in Vermont from California")
 
 
 ###Shoes
-![RaceRunner](RaceRunner6.png "Shoes")
+![RaceRunner](RaceRunner/RaceRunner6.png "Shoes")
 
 
 ###Main Menu
-![RaceRunner](RaceRunner7.png "Main Menu")
+![RaceRunner](RaceRunner/RaceRunner7.png "Main Menu")
 
 
 ##Chromatic Inspiration
