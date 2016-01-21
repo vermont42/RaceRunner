@@ -8,9 +8,11 @@ Because **RaceRunner** is under development, refactoring will occur.
 **RaceRunner** requires API keys for Google Maps, Dark Sky, and PubNub in `Config.swift`.
 
 If you would like to build a copy of **RaceRunner** for yourself, use these instructions.
+
 1. Clone the repo.
 2. Add API keys for Google Maps, Dark Sky, and PubNub to `Config.swift`.
 3. Modify `UIView+Bezier.swift`, which is in the **COBezierTableView** Cocoapod, as follows:
+
 ```swift
     public struct BezierPoints {
         static var p1 = CGPoint(x: -128, y: 0)
