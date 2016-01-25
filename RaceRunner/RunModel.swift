@@ -43,7 +43,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     private var timer: NSTimer!
     private var initialLocation: CLLocation!
     private var locationManager: LocationManager!
-    private var autoName = Run.noStreetNameDetected
+    private var autoName = Run.noAutoName
     private var didSetAutoNameAndFirstLoc = false
     private var altGained  = 0.0
     private var altLost = 0.0
@@ -150,8 +150,8 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                     longitude: initialLocation.coordinate.longitude) ) { result in
                         switch result {
                         case .Error(_, _):
-                            self.temperature = DarkSky.temperatureError
-                            self.weather = DarkSky.weatherError
+                            self.temperature = Run.noTemperature
+                            self.weather = Run.noWeather
                         case .Success(_, let dictionary):
                             if dictionary != nil {
                                 self.temperature = Converter.convertFahrenheitToCelsius(dictionary["currently"]!["apparentTemperature"] as! Float)
@@ -162,8 +162,8 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                                 //synth.speakUtterance(utterance)
                             }
                             else {
-                                self.temperature = DarkSky.temperatureError
-                                self.weather = DarkSky.weatherError                                
+                                self.temperature = Run.noTemperature
+                                self.weather = Run.noWeather
                             }
                         }
                 }
@@ -205,11 +205,11 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                                         }
                                     }
                                     else {
-                                        self.autoName = Run.unnamedRoute
+                                        self.autoName = Run.noAutoName
                                     }
                                 }
                                 else {
-                                    self.autoName = Run.unnamedRoute
+                                    self.autoName = Run.noAutoName
                                 }
                         })
                     }
@@ -250,7 +250,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
                 curAlt = newLocation.altitude
             }
         case .Paused:
-            break // ignore
+            break
         }
     }
     
@@ -309,7 +309,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
         var newRun: Run?
         if let parser = GpxParser(url: url) {
             let parseResult = parser.parse()
-            newRun = RunModel.addRun(parseResult.locations, customName: parseResult.name, timestamp: parseResult.locations[0].timestamp, weather: parseResult.weather, temperature: parseResult.temperature)
+            newRun = RunModel.addRun(parseResult.locations, autoName: parseResult.autoName, customName: parseResult.customName, timestamp: parseResult.locations.last!.timestamp, weather: parseResult.weather, temperature: parseResult.temperature, weight: parseResult.weight)
         }
         else {
             succeeded = false
@@ -319,11 +319,11 @@ class RunModel: NSObject, CLLocationManagerDelegate {
         }
         var resultMessage = ""
         if succeeded {
-            if newRun?.customName == Run.unnamedRoute {
+            if newRun?.customName == Run.noAutoName {
                 resultMessage = RunModel.importSucceededMessage + "."
             }
             else {
-                resultMessage = RunModel.importSucceededMessage + " " + ((newRun?.customName)! as String) + "."
+                resultMessage = RunModel.importSucceededMessage + " " + ((newRun?.displayName())! as String) + "."
             }
             runModel.importedRunDelegate?.runWasImported()
         }
@@ -366,7 +366,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
         return newRun
     }
     
-    class func addRun(coordinates: [CLLocation], customName: String, timestamp: NSDate, weather: String, temperature: Float) -> Run {
+    class func addRun(coordinates: [CLLocation], autoName: String, customName: String, timestamp: NSDate, weather: String, temperature: Float, weight: Double) -> Run {
         var distance = 0.0
         var altGained  = 0.0
         var altLost = 0.0
@@ -407,7 +407,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
             }
             curAlt = coordinates[i].altitude
         }
-        return RunModel.addRun(coordinates, customName: customName, autoName: customName, timestamp: timestamp, weather: weather, temperature: temperature, distance: distance, maxAltitude: maxAlt, minAltitude: minAlt, maxLongitude: maxLong, minLongitude: minLong, maxLatitude: maxLat, minLatitude: minLat, altitudeGained: altGained, altitudeLost: altLost, weight: HumanWeight.defaultWeight)
+        return RunModel.addRun(coordinates, customName: customName, autoName: autoName, timestamp: timestamp, weather: weather, temperature: temperature, distance: distance, maxAltitude: maxAlt, minAltitude: minAlt, maxLongitude: maxLong, minLongitude: minLong, maxLatitude: maxLat, minLatitude: minLat, altitudeGained: altGained, altitudeLost: altLost, weight: weight)
     }
     
     func stop() {

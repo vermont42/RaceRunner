@@ -8,9 +8,8 @@
 
 import UIKit
 import GoogleMaps
-import MessageUI
 
-class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, GMSMapViewDelegate, MFMailComposeViewControllerDelegate {
+class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, GMSMapViewDelegate {
     @IBOutlet var map: GMSMapView!
     @IBOutlet var date: UILabel!
     @IBOutlet var distance: UILabel!
@@ -42,9 +41,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     private static let newRunNamePrompt = "Enter a new name for this run."
     private static let newRunNameTitle = "Run Name"
     private static let setRunNameButtonTitle = "Set"
-    private static let shareNotImplemented = "Share functionality has not yet been implemented."
-    private static let notImplementedTitle = "Coming Soon"
-    private static let noProbTitle = "No Prob"
+    private static let noLocationsError = "Attempted to display details of run with zero locations."
     
     func mapView(mapView:GMSMapView!,idleAtCameraPosition position:GMSCameraPosition!) {
         if !addedOverlays {
@@ -58,7 +55,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
             configureView()
         }
         else {
-            fatalError("Attempted to display details of run with zero locations.")
+            fatalError(RunDetailsVC.noLocationsError)
         }
         map.mapType = kGMSTypeTerrain
         map.delegate = self
@@ -86,20 +83,20 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
         maxAlt.text = "Max Alt: \(Converter.stringifyAltitude(run.maxAltitude.doubleValue))"
         gain.text = "Gained: \(Converter.stringifyAltitude(run.altitudeGained.doubleValue))"
         loss.text = "Lost: \(Converter.stringifyAltitude(run.altitudeLost.doubleValue))"
-        if run.weather as String == DarkSky.weatherError {
-            weather.text = "Unknown Weather"
+        if run.weather as String == Run.noWeather {
+            weather.text = Run.noWeather
         }
         else {
             weather.text = "Weather: \(run.weather as String)"
         }
-        if run.temperature.floatValue == DarkSky.temperatureError {
-            temp.text = "Unknown Temp"
+        if run.temperature.floatValue == Run.noTemperature {
+            temp.text = Run.noTemperatureText
         }
         else {
             temp.text = "Temp: \(Converter.stringifyTemperature(run.temperature.floatValue))"
         }
         route.text = "Name: \(run.displayName())"
-        if SettingsManager.getShowWeight() {
+        if SettingsManager.getShowWeight() && run.weight.doubleValue != Run.noWeight {
             weight.text = "Weight: \(HumanWeight.weightAsString(run.weight.doubleValue, unitType: SettingsManager.getUnitType()))"
         }
         else {
@@ -109,11 +106,12 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     }
     
     func updateCalories() {
+        let weight = run.weight.doubleValue != Run.noWeight ? run.weight.doubleValue : HumanWeight.defaultWeight
         if netOrTotalCals.selectedSegmentIndex == 0 { // total
-            self.calories.text = Converter.totalCaloriesAsString(run.distance.doubleValue, weight: run.weight.doubleValue)
+            self.calories.text = Converter.totalCaloriesAsString(run.distance.doubleValue, weight: weight)
         }
         else { // net
-            self.calories.text = Converter.netCaloriesAsString(run.distance.doubleValue, weight: run.weight.doubleValue)
+            self.calories.text = Converter.netCaloriesAsString(run.distance.doubleValue, weight: weight)
         }
     }
     
@@ -237,43 +235,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     }
     
     @IBAction func export() {
-//        let someText:String = "foo"
-//        let google:NSURL = NSURL(string:"http://google.com/")!
-        
-        // let's add a String and an NSURL
-//        let activityViewController = UIActivityViewController(
-//            activityItems: [GpxActivityItemProvider(placeholderItem: NSData())],
-//            applicationActivities: nil)
-//        self.presentViewController(activityViewController, animated: true, completion: nil)
-        /*
-        let contents = "some text"
-        if(MFMailComposeViewController.canSendMail()) {
-            let mailComposer = MFMailComposeViewController()
-            mailComposer.mailComposeDelegate = self
-            mailComposer.setSubject("run exported from iSmoothRun")
-            mailComposer.setMessageBody("This run was recorded by iSmoothRun.", isHTML: false)
-            //let data = contents.dataUsingEncoding(NSUTF8StringEncoding)
-            //mailComposer.addAttachmentData(data!, mimeType: "text/xml", fileName: "run.gpx")
-            
-            if let filePath = NSBundle.mainBundle().pathForResource("iSmoothRun", ofType: "gpx") {
-                if let fileData = NSData(contentsOfFile: filePath) {
-                    mailComposer.addAttachmentData(fileData, mimeType: "audio/wav", fileName: "iSmoothRun.gpx")
-                }
-            }
-            self.presentViewController(mailComposer, animated: true, completion: nil)
-        }
-*/
-        UIAlertController.showMessage(RunDetailsVC.shareNotImplemented,
-            title: RunDetailsVC.notImplementedTitle,
-            okTitle: RunDetailsVC.noProbTitle,
-            handler: {(action) in
-                SoundManager.play("sadTrombone")
-        })
-
-    }
-    
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        GpxExporter.export(run)
     }
     
     override func prefersStatusBarHidden() -> Bool {

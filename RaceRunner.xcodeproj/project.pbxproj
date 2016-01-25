@@ -31,6 +31,7 @@
 		E13E30571BFD28F1009CDE60 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13E30561BFD28F1009CDE60 /* SoundManager.swift */; };
 		E14360C31AE4AAA4003F27B4 /* GpxLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */; };
 		E15195F81C0BD41A00BD52FB /* HumanWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15195F71C0BD41A00BD52FB /* HumanWeight.swift */; };
+		E15681F91C52F007008E077C /* GpxExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15681F81C52F007008E077C /* GpxExporter.swift */; };
 		E159C2541AAB8304007C6EA1 /* RaceRunner.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E159C2521AAB8304007C6EA1 /* RaceRunner.xcdatamodeld */; };
 		E1648E0A1C4861EA002A3ED4 /* Run+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E091C4861EA002A3ED4 /* Run+CoreDataProperties.swift */; };
 		E1648E0C1C4863E3002A3ED4 /* Shoes+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E0B1C4863E3002A3ED4 /* Shoes+CoreDataProperties.swift */; };
@@ -108,6 +109,7 @@
 		E13E30561BFD28F1009CDE60 /* SoundManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxLocationManager.swift; sourceTree = "<group>"; };
 		E15195F71C0BD41A00BD52FB /* HumanWeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HumanWeight.swift; sourceTree = "<group>"; };
+		E15681F81C52F007008E077C /* GpxExporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxExporter.swift; sourceTree = "<group>"; };
 		E159C2531AAB8304007C6EA1 /* RaceRunner.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RaceRunner.xcdatamodel; sourceTree = "<group>"; };
 		E1648E091C4861EA002A3ED4 /* Run+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Run+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E1648E0B1C4863E3002A3ED4 /* Shoes+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Shoes+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 				E13B39921ABA705E007F61ED /* DarkSky.swift */,
 				E1E7F7D51C03F8E500F108B6 /* Double+roundToPlaces.swift */,
 				E18B6C801C0D1AEC005865BA /* GpxActivityItemProvider.swift */,
+				E15681F81C52F007008E077C /* GpxExporter.swift */,
 				E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */,
 				E1DA7D6C1B9B8BA2006BC362 /* GpxParser.swift */,
 				E1E8B9481AAB742E00D04E38 /* HelpVC.swift */,
@@ -501,6 +504,7 @@
 				E13736F01C4F0F1E008CDE36 /* ShoesSortField.swift in Sources */,
 				E10B704E1C45C09200C70283 /* LogSortField.swift in Sources */,
 				E1648E0E1C486421002A3ED4 /* Shoes.swift in Sources */,
+				E15681F91C52F007008E077C /* GpxExporter.swift in Sources */,
 				E1E8B9581AAB742E00D04E38 /* UnwindPanSegue.swift in Sources */,
 				E1E8B9571AAB742E00D04E38 /* SpectateVC.swift in Sources */,
 				E1D521691ABA93CD00B46300 /* Run.swift in Sources */,

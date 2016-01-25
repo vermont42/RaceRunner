@@ -101,11 +101,11 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
         else if !SettingsManager.getAlreadyMadeSampleRun() {
             if let parser = GpxParser(file: locFile) {
                 let parseResult = parser.parse()
-                runs = [RunModel.addRun(parseResult.locations, customName: parseResult.name, timestamp: parseResult.locations[0].timestamp, weather: parseResult.weather, temperature: parseResult.temperature)]
+                runs = [RunModel.addRun(parseResult.locations, autoName: parseResult.autoName, customName: parseResult.customName, timestamp: parseResult.locations[0].timestamp, weather: parseResult.weather, temperature: parseResult.temperature, weight: parseResult.weight)]
                 SettingsManager.setAlreadyMadeSampleRun(true)
             }
             else {
-                fatalError("Could not parse GPX file.")
+                fatalError(GpxParser.parseError)
             }
             return 1
         }

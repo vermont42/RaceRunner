@@ -10,26 +10,32 @@ import Foundation
 import CoreLocation
 
 struct ParseResult {
-    let name: String
+    let autoName: String
+    let customName: String
     let locations: [CLLocation]
     let weather: String
     let temperature: Float
+    let weight: Double
     
-    init(name: String, locations: [CLLocation], weather: String, temperature: Float) {
-        self.name = name
+    init(autoName: String, customName: String, locations: [CLLocation], weather: String, temperature: Float, weight: Double) {
+        self.autoName = autoName
+        self.customName = customName
         self.locations = locations
         self.weather = weather
         self.temperature = temperature
+        self.weight = weight
     }
 }
 
 class GpxParser: NSObject, NSXMLParserDelegate {
     private var parser: NSXMLParser?
-    private var name: String = Run.unnamedRoute
-    private var weather = DarkSky.weatherError
-    private var temperature = DarkSky.temperatureError
+    private var autoName = Run.noAutoName
+    private var customName = Run.noCustomName
+    private var weather = Run.noWeather
+    private var temperature = Run.noTemperature
+    private var weight = Run.noWeight
     private var locations: [CLLocation] = []
-    private var buffer: String = ""
+    private var buffer = ""
     private let dateFormatter = NSDateFormatter()
     private var curLatString: NSString = ""
     private var curLonString: NSString = ""
@@ -41,21 +47,24 @@ class GpxParser: NSObject, NSXMLParserDelegate {
     private static let accuracy: CLLocationAccuracy = 5.0
     private enum ParsingState: String {
         case Trkpt = "trkpt"
-        case Name = "name"
+        case AutoName = "name"
+        case CustomName = "customName"
+        case Weight = "weight"
         case Ele = "ele"
         case Time = "time"
         case Temperature = "temperature"
         case Weather = "weather"
         case Other = "other"
         init() {
-            self = .Name
+            self = .AutoName
         }
     }
     private var alreadySetName = false
-    private var parsingState: ParsingState = .Name
+    private var parsingState: ParsingState = .AutoName
     private static let runtastic = "runtastic"
     private static let runtasticGarbage = ".000"
     private static let runtasticRunName = "Runtastic Run"
+    static let parseError = "An error occurred during GPX parsing."
     
     convenience init?(file: String) {
         if let url = NSBundle.mainBundle().URLForResource(file, withExtension: "gpx") {
@@ -78,7 +87,7 @@ class GpxParser: NSObject, NSXMLParserDelegate {
     
     func parse() -> ParseResult {
         parser?.parse()
-        return ParseResult(name: name, locations: locations, weather: weather, temperature: temperature)
+        return ParseResult(autoName: autoName, customName: customName, locations: locations, weather: weather, temperature: temperature, weight: weight)
     }
     
     func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
@@ -88,11 +97,14 @@ class GpxParser: NSObject, NSXMLParserDelegate {
             curLonString = attributeDict["lon"]!
             parsingState = .Trkpt
             startedTrackPoints = true
-        case ParsingState.Name.rawValue:
+        case ParsingState.AutoName.rawValue:
             if !alreadySetName {
                 buffer = ""
-                parsingState = .Name
+                parsingState = .AutoName
             }
+        case ParsingState.CustomName.rawValue:
+            buffer = ""
+            parsingState = .CustomName
         case ParsingState.Ele.rawValue:
             buffer = ""
             parsingState = .Ele
@@ -107,6 +119,9 @@ class GpxParser: NSObject, NSXMLParserDelegate {
                 buffer = ""
                 parsingState = .Time
             }
+        case ParsingState.Weight.rawValue:
+            buffer = ""
+            parsingState = .Weight
         default:
             parsingState = .Other
             break
@@ -119,7 +134,7 @@ class GpxParser: NSObject, NSXMLParserDelegate {
                 isRuntastic = true
             }
         }
-        if (startedTrackPoints || (parsingState == .Name && !alreadySetName) || (parsingState == .Temperature) || (parsingState == .Weather)) && string != "\n" {
+        if (startedTrackPoints || (parsingState == .AutoName && !alreadySetName) || (parsingState == .CustomName) || (parsingState == .Weight) || (parsingState == .Temperature) || (parsingState == .Weather)) && string != "\n" {
             buffer = buffer + string
         }
     }
@@ -128,21 +143,25 @@ class GpxParser: NSObject, NSXMLParserDelegate {
         switch elementName {
         case ParsingState.Trkpt.rawValue:
             locations.append(CLLocation(coordinate: CLLocationCoordinate2D(latitude: curLatString.doubleValue, longitude: curLonString.doubleValue), altitude: curEleString.doubleValue, horizontalAccuracy: GpxParser.accuracy, verticalAccuracy: GpxParser.accuracy, timestamp: dateFormatter.dateFromString(curTimeString)!))
-        case ParsingState.Name.rawValue:
-            name = buffer
+        case ParsingState.AutoName.rawValue:
+            autoName = buffer
             alreadySetName = true
+        case ParsingState.CustomName.rawValue:
+            customName = buffer
         case ParsingState.Ele.rawValue:
             curEleString = buffer
         case ParsingState.Temperature.rawValue:
             temperature = Float(buffer) ?? temperature
         case ParsingState.Weather.rawValue:
             weather = buffer
+        case ParsingState.Weight.rawValue:
+            weight = Double(buffer) ?? weight
         case ParsingState.Time.rawValue:
             if startedTrackPoints {
                 curTimeString = buffer
                 if isRuntastic {
                     curTimeString = curTimeString.stringByReplacingOccurrencesOfString(GpxParser.runtasticGarbage, withString: "")
-                    name = GpxParser.runtasticRunName
+                    autoName = GpxParser.runtasticRunName
                 }
             }
         default:

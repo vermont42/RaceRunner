@@ -26,6 +26,7 @@ class RunVC: ChildVC, RunDelegate {
     
     private static let gpxTitle = "Berkeley Hills"
     private static let didNotSaveMessage = "RaceRunner did not save this run because it was so short. The run, not RaceRunner. As a collection of electrons on your phone, RaceRunner has no physical height."
+    private static let pauseError = "Attempted to display details of run with zero locations."
     private static let bummerButtonTitle = "Bummer"
     private static let sadFaceTitle = "😢"
     private static let startTitle = " Start "
@@ -233,7 +234,7 @@ class RunVC: ChildVC, RunDelegate {
         let runModel = RunModel.runModel
         switch runModel.status {
         case .PreRun:
-            fatalError("Attempted to pause before run started.")
+            fatalError(RunVC.pauseError)
         case .InProgress:
             pauseResume.setTitle(RunVC.resumeTitle, forState: UIControlState.Normal)
             runModel.pause()

@@ -9,10 +9,9 @@ import Foundation
 import CoreLocation
 
 public class DarkSky {
-    static let temperatureError: Float = -1000.0
-    static let weatherError = "weather error"
-    static let basePath = "https://api.forecast.io/forecast/"
-    static let apiKey = Config.darkSkyKey
+    private static let basePath = "https://api.forecast.io/forecast/"
+    private static let apiKey = Config.darkSkyKey
+    private static let noApiKey = "This app cannot query Dark Sky for current temperature and weather until you obtain an API key and put it in Config.swift. Here is the website to get an API key: https://developer.forecast.io/register You can ignore the following error message, which Dark Sky returned due to the empty API key."
     
     public enum Result {
         case Success(NSURLResponse!, NSDictionary!)
@@ -59,7 +58,7 @@ public class DarkSky {
     
     private func call(method: String, callback: (Result) -> ()) {
         if DarkSky.apiKey == "" {
-            print("This app cannot query Dark Sky for current temperature and weather until you obtain an API key and put it in DarkSky.swift. Here is the website to get an API key: https://developer.forecast.io/register You can ignore the following error message, which Dark Sky returned due to the empty API key.")
+            print(DarkSky.noApiKey)
         }
         let url = DarkSky.basePath + DarkSky.apiKey + "/" + method
         let request = NSURLRequest(URL: NSURL(string: url)!)

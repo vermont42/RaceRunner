@@ -9,7 +9,9 @@
 import UIKit
 
 extension UIAlertController {
-    class func showMessage(message: String, title: String, okTitle: String = "OK", handler: ((UIAlertAction) -> Void)? = nil) {
+    private static let okTitle = "OK"
+    
+    class func showMessage(message: String, title: String, okTitle: String = UIAlertController.okTitle, handler: ((UIAlertAction) -> Void)? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         let okAction = UIAlertAction(title: okTitle, style: UIAlertActionStyle.Default, handler: handler)
         alertController.addAction(okAction)

@@ -23,8 +23,6 @@ class UiConstants {
     static let polylineWidth: CGFloat = 6.0
     static let cameraZoom: Float = 16.0
     static let longitudeCushion: Double = 0.00851970939493185
-    static let bigStrideZoomThreshhold: Float = 13.0
-    static let bigStride: Int = 10
     static let applauseSampleCount: UInt32 = 3
     static let messageDelay: Int64 = 2
 }
