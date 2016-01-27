@@ -9,21 +9,21 @@
 import UIKit
 
 class ChildVC: UIViewController {    
-    override func viewDidLoad() {
-        setupSwipeGestureRecognizer()
-    }
-    
-    func setupSwipeGestureRecognizer() {
-        let swipeGestureRecognizer: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "showMenu")
-        swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirection.Right
-        self.view.addGestureRecognizer(swipeGestureRecognizer)
-    }
-    
-    func showMenu() {
-        self.performSegueWithIdentifier("unwind pan", sender: self)
-    }
-    
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
+  override func viewDidLoad() {
+    setupSwipeGestureRecognizer()
+  }
+  
+  func setupSwipeGestureRecognizer() {
+    let swipeGestureRecognizer: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "showMenu")
+    swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirection.Right
+    self.view.addGestureRecognizer(swipeGestureRecognizer)
+  }
+  
+  func showMenu() {
+    self.performSegueWithIdentifier("unwind pan", sender: self)
+  }
+  
+  override func prefersStatusBarHidden() -> Bool {
+    return true
+  }
 }

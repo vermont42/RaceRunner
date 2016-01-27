@@ -10,6 +10,6 @@ import Foundation
 import CoreData
 
 protocol ShoesDelegate: class {
-    func receiveShoes(shoes: Shoes, isNew: Bool)
-    func makeNewIsCurrent(newIsCurrent: Shoes)
+  func receiveShoes(shoes: Shoes, isNew: Bool)
+  func makeNewIsCurrent(newIsCurrent: Shoes)
 }

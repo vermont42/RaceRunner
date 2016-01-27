@@ -9,22 +9,22 @@
 import Foundation
 
 struct HumanWeight {
-    static let maxMetric = 454.0
-    static let minMetric = 1.0
-    static let maxImperial = 999.0
-    static let minImperial = 2.0
-    static let defaultWeight = 68.0
-    
-    static func weightAsString() -> String {
-        return weightAsString(SettingsManager.getWeight(), unitType: SettingsManager.getUnitType())
+  static let maxMetric = 454.0
+  static let minMetric = 1.0
+  static let maxImperial = 999.0
+  static let minImperial = 2.0
+  static let defaultWeight = 68.0
+  
+  static func weightAsString() -> String {
+    return weightAsString(SettingsManager.getWeight(), unitType: SettingsManager.getUnitType())
+  }
+  
+  static func weightAsString(weight: Double, unitType: UnitType) -> String {
+    switch unitType {
+    case .Metric:
+      return String(format: "%.0f kg", weight)
+    case .Imperial:
+      return String(format: "%.0f lb", weight * Converter.poundsPerKilogram)
     }
-    
-    static func weightAsString(weight: Double, unitType: UnitType) -> String {
-        switch unitType {
-        case .Metric:
-            return String(format: "%.0f kg", weight)
-        case .Imperial:
-            return String(format: "%.0f lb", weight * Converter.poundsPerKilogram)
-        }
-    }
+  }
 }

@@ -13,9 +13,9 @@ import Foundation
 import CoreData
 
 extension Shoes {
-    @NSManaged var name: String
-    @NSManaged var kilometers: NSNumber
-    @NSManaged var maxKilometers: NSNumber
-    @NSManaged var thumbnail: NSData
-    @NSManaged var isCurrent: NSNumber
+  @NSManaged var name: String
+  @NSManaged var kilometers: NSNumber
+  @NSManaged var maxKilometers: NSNumber
+  @NSManaged var thumbnail: NSData
+  @NSManaged var isCurrent: NSNumber
 }

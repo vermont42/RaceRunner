@@ -9,9 +9,9 @@
 import Foundation
 
 enum UnitType: String {
-    case Imperial = "Imperial"
-    case Metric = "Metric"
-    init() {
-        self = .Imperial
-    }
+  case Imperial = "Imperial"
+  case Metric = "Metric"
+  init() {
+    self = .Imperial
+  }
 }

@@ -10,20 +10,20 @@ import Foundation
 import CoreData
 
 class Run: NSManagedObject {
-    static let noTemperature: Float = -99.0
-    static let noTemperatureText = "Unknown Temp"
-    static let noWeather = "Unknown Weather"
-    static let noAutoName = "Unnamed Route"
-    static let noCustomName = ""
-    static let noWeight: Double = -99.0
-    static let noWeightText = "not recorded"
+  static let noTemperature: Float = -99.0
+  static let noTemperatureText = "Unknown Temp"
+  static let noWeather = "Unknown Weather"
+  static let noAutoName = "Unnamed Route"
+  static let noCustomName = ""
+  static let noWeight: Double = -99.0
+  static let noWeightText = "not recorded"
 
-    func displayName() -> String {
-        if customName != "" {
-            return customName as String
-        }
-        else {
-            return autoName as String
-        }
+  func displayName() -> String {
+    if customName != "" {
+      return customName as String
     }
+    else {
+      return autoName as String
+    }
+  }
 }
