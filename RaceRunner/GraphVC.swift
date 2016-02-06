@@ -8,7 +8,6 @@
 
 import UIKit
 import DLRadioButton
-import SwiftCharts
 
 class GraphVC: ChildVC {
   @IBOutlet var viewControllerTitle: UILabel!

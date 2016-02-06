@@ -25,9 +25,7 @@ class GraphView: UIView {
   private static let speedAlpha: CGFloat = 0.85
   
   override func drawRect(rect: CGRect) {
-    super.drawRect(rect)
-    print("\(SettingsManager.getOverlay())")
-    
+    super.drawRect(rect)    
     if let run = run {
       let chartHeight = bounds.size.height - 2 * GraphView.chartOffset
       let chartWidth = bounds.size.width - 2 * GraphView.chartOffset
