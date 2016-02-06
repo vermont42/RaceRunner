@@ -27,6 +27,9 @@ class SettingsManager {
   private var accent: Accent
   private static let accentKey = "accent"
   
+  private var overlay: Overlay
+  private static let overlayKey = "overlay"
+  
   private var publishRun: Bool
   private static let publishRunKey = "publishRun"
   private static let publishRunDefault = false
@@ -107,6 +110,15 @@ class SettingsManager {
     else {
       accent = Accent()
       userDefaults.setObject(accent.rawValue, forKey: SettingsManager.accentKey)
+      userDefaults.synchronize()
+    }
+
+    if let storedOverlayString = userDefaults.stringForKey(SettingsManager.overlayKey) {
+      overlay = Overlay(rawValue: storedOverlayString)!
+    }
+    else {
+      overlay = Overlay()
+      userDefaults.setObject(overlay.rawValue, forKey: SettingsManager.overlayKey)
       userDefaults.synchronize()
     }
     
@@ -251,6 +263,18 @@ class SettingsManager {
     if accent != settingsManager.accent {
       settingsManager.accent = accent
       settingsManager.userDefaults.setObject(accent.rawValue, forKey: SettingsManager.accentKey)
+      settingsManager.userDefaults.synchronize()
+    }
+  }
+  
+  class func getOverlay() -> Overlay {
+    return settingsManager.overlay
+  }
+  
+  class func setOverlay(overlay: Overlay) {
+    if overlay != settingsManager.overlay {
+      settingsManager.overlay = overlay
+      settingsManager.userDefaults.setObject(overlay.rawValue, forKey: SettingsManager.overlayKey)
       settingsManager.userDefaults.synchronize()
     }
   }

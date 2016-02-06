@@ -22,7 +22,8 @@
 		E11E22C11C08C76E00488399 /* Accent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E22C01C08C76E00488399 /* Accent.swift */; };
 		E11E22C31C08CDC000488399 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E22C21C08CDC000488399 /* Config.swift */; };
 		E12847731C1763320053ED96 /* sadTrombone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E12847721C1763320053ED96 /* sadTrombone.mp3 */; };
-		E12E44F01C572F340065AE66 /* GraphsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12E44EF1C572F340065AE66 /* GraphsVC.swift */; };
+		E12E44F01C572F340065AE66 /* GraphVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12E44EF1C572F340065AE66 /* GraphVC.swift */; };
+		E12E44F21C58BAAB0065AE66 /* Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12E44F11C58BAAB0065AE66 /* Overlay.swift */; };
 		E13736F01C4F0F1E008CDE36 /* ShoesSortField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13736EF1C4F0F1E008CDE36 /* ShoesSortField.swift */; };
 		E138E8CE1BA0A0FB00BA20E5 /* iSmoothRun.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */; };
 		E13B39931ABA705E007F61ED /* DarkSky.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B39921ABA705E007F61ED /* DarkSky.swift */; };
@@ -39,7 +40,7 @@
 		E1648E0E1C486421002A3ED4 /* Shoes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E0D1C486421002A3ED4 /* Shoes.swift */; };
 		E1648E101C4864E8002A3ED4 /* ShoesBrowserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E0F1C4864E8002A3ED4 /* ShoesBrowserVC.swift */; };
 		E1648E121C487449002A3ED4 /* ShoesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E111C487449002A3ED4 /* ShoesCell.swift */; };
-		E1648E141C4975ED002A3ED4 /* ShoesEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E131C4975ED002A3ED4 /* ShoesEditor.swift */; };
+		E1648E141C4975ED002A3ED4 /* ShoesEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E131C4975ED002A3ED4 /* ShoesEditorVC.swift */; };
 		E1648E181C497997002A3ED4 /* ShoesDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E171C497997002A3ED4 /* ShoesDelegate.swift */; };
 		E16F35761B8EBC4100C88426 /* UIViewController+noOp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16F35751B8EBC4100C88426 /* UIViewController+noOp.swift */; };
 		E1804DB61ABBA0D300625188 /* RunDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */; };
@@ -79,6 +80,7 @@
 		E1E8B9561AAB742E00D04E38 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E8B94B1AAB742E00D04E38 /* SettingsVC.swift */; };
 		E1E8B9571AAB742E00D04E38 /* SpectateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E8B94C1AAB742E00D04E38 /* SpectateVC.swift */; };
 		E1E8B9581AAB742E00D04E38 /* UnwindPanSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E8B94D1AAB742E00D04E38 /* UnwindPanSegue.swift */; };
+		E1F3FC2F1C6106F7001B2DE7 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F3FC2E1C6106F7001B2DE7 /* GraphView.swift */; };
 		E1FCB00E1AB8F43100B1D803 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FCB00D1AB8F43100B1D803 /* Converter.swift */; };
 /* End PBXBuildFile section */
 
@@ -101,7 +103,8 @@
 		E11E22C01C08C76E00488399 /* Accent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accent.swift; sourceTree = "<group>"; };
 		E11E22C21C08CDC000488399 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		E12847721C1763320053ED96 /* sadTrombone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sadTrombone.mp3; sourceTree = "<group>"; };
-		E12E44EF1C572F340065AE66 /* GraphsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphsVC.swift; sourceTree = "<group>"; };
+		E12E44EF1C572F340065AE66 /* GraphVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphVC.swift; sourceTree = "<group>"; };
+		E12E44F11C58BAAB0065AE66 /* Overlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Overlay.swift; sourceTree = "<group>"; };
 		E13736EF1C4F0F1E008CDE36 /* ShoesSortField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoesSortField.swift; sourceTree = "<group>"; };
 		E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = iSmoothRun.gpx; sourceTree = "<group>"; };
 		E13B39921ABA705E007F61ED /* DarkSky.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DarkSky.swift; sourceTree = "<group>"; };
@@ -118,7 +121,7 @@
 		E1648E0D1C486421002A3ED4 /* Shoes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shoes.swift; sourceTree = "<group>"; };
 		E1648E0F1C4864E8002A3ED4 /* ShoesBrowserVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoesBrowserVC.swift; sourceTree = "<group>"; };
 		E1648E111C487449002A3ED4 /* ShoesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoesCell.swift; sourceTree = "<group>"; };
-		E1648E131C4975ED002A3ED4 /* ShoesEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoesEditor.swift; sourceTree = "<group>"; };
+		E1648E131C4975ED002A3ED4 /* ShoesEditorVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoesEditorVC.swift; sourceTree = "<group>"; };
 		E1648E171C497997002A3ED4 /* ShoesDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoesDelegate.swift; sourceTree = "<group>"; };
 		E16F35751B8EBC4100C88426 /* UIViewController+noOp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+noOp.swift"; sourceTree = "<group>"; };
 		E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunDetailsVC.swift; sourceTree = "<group>"; };
@@ -162,6 +165,7 @@
 		E1E8B94B1AAB742E00D04E38 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		E1E8B94C1AAB742E00D04E38 /* SpectateVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpectateVC.swift; sourceTree = "<group>"; };
 		E1E8B94D1AAB742E00D04E38 /* UnwindPanSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnwindPanSegue.swift; sourceTree = "<group>"; };
+		E1F3FC2E1C6106F7001B2DE7 /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		E1FCB00D1AB8F43100B1D803 /* Converter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -272,7 +276,8 @@
 				E15681F81C52F007008E077C /* GpxExporter.swift */,
 				E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */,
 				E1DA7D6C1B9B8BA2006BC362 /* GpxParser.swift */,
-				E12E44EF1C572F340065AE66 /* GraphsVC.swift */,
+				E1F3FC2E1C6106F7001B2DE7 /* GraphView.swift */,
+				E12E44EF1C572F340065AE66 /* GraphVC.swift */,
 				E1E8B9481AAB742E00D04E38 /* HelpVC.swift */,
 				E15195F71C0BD41A00BD52FB /* HumanWeight.swift */,
 				E1DBA6CD1C1F676800DE3E4F /* ImportVC.swift */,
@@ -284,6 +289,7 @@
 				E1C22BCB1AF05DA1003A5712 /* MarqueeLabel.h */,
 				E1C22BCA1AF05DA1003A5712 /* MarqueeLabel.m */,
 				E1E8B9431AAB742E00D04E38 /* MenuVC.swift */,
+				E12E44F11C58BAAB0065AE66 /* Overlay.swift */,
 				E1E8B9461AAB742E00D04E38 /* PanSegue.swift */,
 				E1D529CC1C1C80A500E92AD8 /* PersistentMapState.swift */,
 				E1A41B4D1BF7D83100E31943 /* PubNubManager.swift */,
@@ -296,7 +302,7 @@
 				E1648E0F1C4864E8002A3ED4 /* ShoesBrowserVC.swift */,
 				E1648E111C487449002A3ED4 /* ShoesCell.swift */,
 				E1648E171C497997002A3ED4 /* ShoesDelegate.swift */,
-				E1648E131C4975ED002A3ED4 /* ShoesEditor.swift */,
+				E1648E131C4975ED002A3ED4 /* ShoesEditorVC.swift */,
 				E13736EF1C4F0F1E008CDE36 /* ShoesSortField.swift */,
 				E10B704F1C45C9BF00C70283 /* SortType.swift */,
 				E13E30561BFD28F1009CDE60 /* SoundManager.swift */,
@@ -490,11 +496,13 @@
 				E1648E101C4864E8002A3ED4 /* ShoesBrowserVC.swift in Sources */,
 				E1E8B9541AAB742E00D04E38 /* LogVC.swift in Sources */,
 				E1D529CD1C1C80A500E92AD8 /* PersistentMapState.swift in Sources */,
-				E12E44F01C572F340065AE66 /* GraphsVC.swift in Sources */,
-				E1648E141C4975ED002A3ED4 /* ShoesEditor.swift in Sources */,
+				E12E44F01C572F340065AE66 /* GraphVC.swift in Sources */,
+				E1648E141C4975ED002A3ED4 /* ShoesEditorVC.swift in Sources */,
+				E1F3FC2F1C6106F7001B2DE7 /* GraphView.swift in Sources */,
 				E1E8B9531AAB742E00D04E38 /* HelpVC.swift in Sources */,
 				E1E8B9511AAB742E00D04E38 /* PanSegue.swift in Sources */,
 				E16F35761B8EBC4100C88426 /* UIViewController+noOp.swift in Sources */,
+				E12E44F21C58BAAB0065AE66 /* Overlay.swift in Sources */,
 				E1804DB61ABBA0D300625188 /* RunDetailsVC.swift in Sources */,
 				E1E8B9551AAB742E00D04E38 /* RunVC.swift in Sources */,
 				E1648E0A1C4861EA002A3ED4 /* Run+CoreDataProperties.swift in Sources */,

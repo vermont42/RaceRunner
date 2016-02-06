@@ -33,6 +33,9 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   private var alertView: UIAlertView!
   private var paceSpans: [GMSStyleSpan] = []
   private var altitudeSpans: [GMSStyleSpan] = []
+  private var smoothSpeeds: [Double]?
+  private var maxSmoothSpeed = 0.0
+  private var minSmoothSpeed = Double(LONG_MAX)
   private var addedOverlays: Bool = false
   private var latestStrokeColor = UiConstants.intermediate2ColorDarkened
   private var path = GMSMutablePath()
@@ -118,89 +121,106 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   func addOverlays() {
     if run.locations.count > 1 {
       map.clear()
-      if (paceOrAltitude.selectedSegmentIndex == 1 && paceSpans.count == 0) ||
-          (paceOrAltitude.selectedSegmentIndex == 0 && altitudeSpans.count == 0) {
-        var rawValues: [Double] = []
-        if paceOrAltitude.selectedSegmentIndex == 1 {
-          for var i = 1; i < run.locations.count; i++ {
-            let firstLoc = run.locations[i - 1] as! Location
-            let secondLoc = run.locations[i] as! Location
-            let firstLocCL = CLLocation(latitude: firstLoc.latitude.doubleValue, longitude: firstLoc.longitude.doubleValue)
-            let secondLocCL = CLLocation(latitude: secondLoc.latitude.doubleValue, longitude: secondLoc.longitude.doubleValue)
-            let distance = secondLocCL.distanceFromLocation(firstLocCL)
-            let time = secondLoc.timestamp.timeIntervalSinceDate(firstLoc.timestamp)
-            let speed = distance / time
-            rawValues.append(speed)
-          }
-        }
-        else {
-          for var i = 0; i < run.locations.count; i++ {
-            let location = run.locations[i] as! Location
-            rawValues.append(location.altitude.doubleValue)
-          }
-        }
-        let idealSmoothReachSize = 33 // about 133 locations/mile
-        var smoothValues: [Double] = []
-        for (var i = 0; i < rawValues.count; i++) {
-          var lowerBound = i - idealSmoothReachSize / 2
-          var upperBound = i + idealSmoothReachSize / 2
-          if lowerBound < 0 {
-            lowerBound = 0;
-          }
-          if upperBound > (rawValues.count - 1) {
-            upperBound = rawValues.count - 1
-          }
-          var range = NSRange()
-          range.location = lowerBound
-          range.length = upperBound - lowerBound
-          let indexSet = NSMutableIndexSet(indexesInRange: range)
-          var relevantValues: [Double] = []
-          for index in indexSet {
-            relevantValues.append(rawValues[index])
-          }
-          var total = 0.0
-          for value in relevantValues {
-            total += value
-          }
-          let smoothAverage = total / Double(upperBound - lowerBound)
-          smoothValues.append(smoothAverage)
-        }
-        var sortedValues = smoothValues
-        sortedValues.sortInPlace { $0 < $1 }
-        for var i = 1; i < run.locations.count; i++ {
-          let firstLoc = run.locations[i - 1] as! Location
-          let secondLoc = run.locations[i] as! Location
-          let firstLocCL = CLLocation(latitude: firstLoc.latitude.doubleValue, longitude: firstLoc.longitude.doubleValue)
-          let secondLocCL = CLLocation(latitude: secondLoc.latitude.doubleValue, longitude: secondLoc.longitude.doubleValue)
-          var coords = [firstLocCL.coordinate, secondLocCL.coordinate]
-          let value = smoothValues[i - 1]
-          var index = sortedValues.indexOf(value)
-          if index == nil {
-            index = 0
-          }
-          if !addedOverlays {
-            path.addCoordinate(coords[1])
-          }
-          let color = UiHelpers.colorForValue(value, sortedArray: sortedValues, index: index!)
-          let gradient = GMSStrokeStyle.gradientFromColor(latestStrokeColor, toColor: color)
-          latestStrokeColor = color
-          if paceOrAltitude.selectedSegmentIndex == 1 {
-            paceSpans.append(GMSStyleSpan(style: gradient))
-          }
-          else {
-            altitudeSpans.append(GMSStyleSpan(style: gradient))
-          }
-        }
+      let areSpeeds = paceOrAltitude.selectedSegmentIndex == 1 ? true : false
+      if (areSpeeds && paceSpans.count == 0) ||
+          (!areSpeeds && altitudeSpans.count == 0) {
+        makeSpans(areSpeeds: areSpeeds)
         addedOverlays = true
       }
       polyline.path = path
-      if paceOrAltitude.selectedSegmentIndex == 1 {
+      if areSpeeds {
         polyline.spans = paceSpans
       }
       else {
         polyline.spans = altitudeSpans
       }
       polyline.map = map
+    }
+  }
+  
+  private func makeSpans(areSpeeds areSpeeds: Bool) {
+    var rawValues: [Double] = []
+    if areSpeeds {
+      for var i = 1; i < run.locations.count; i++ {
+        let firstLoc = run.locations[i - 1] as! Location
+        let secondLoc = run.locations[i] as! Location
+        let firstLocCL = CLLocation(latitude: firstLoc.latitude.doubleValue, longitude: firstLoc.longitude.doubleValue)
+        let secondLocCL = CLLocation(latitude: secondLoc.latitude.doubleValue, longitude: secondLoc.longitude.doubleValue)
+        let distance = secondLocCL.distanceFromLocation(firstLocCL)
+        let time = secondLoc.timestamp.timeIntervalSinceDate(firstLoc.timestamp)
+        let speed = distance / time
+        rawValues.append(speed)
+      }
+    }
+    else {
+      for var i = 0; i < run.locations.count; i++ {
+        let location = run.locations[i] as! Location
+        rawValues.append(location.altitude.doubleValue)
+      }
+    }
+    let idealSmoothReachSize = 33 // about 133 locations/mile
+    var smoothValues: [Double] = []
+    for (var i = 0; i < rawValues.count; i++) {
+      var lowerBound = i - idealSmoothReachSize / 2
+      var upperBound = i + idealSmoothReachSize / 2
+      if lowerBound < 0 {
+        lowerBound = 0;
+      }
+      if upperBound > (rawValues.count - 1) {
+        upperBound = rawValues.count - 1
+      }
+      var range = NSRange()
+      range.location = lowerBound
+      range.length = upperBound - lowerBound
+      let indexSet = NSMutableIndexSet(indexesInRange: range)
+      var relevantValues: [Double] = []
+      for index in indexSet {
+        relevantValues.append(rawValues[index])
+      }
+      var total = 0.0
+      for value in relevantValues {
+        total += value
+      }
+      let smoothAverage = total / Double(upperBound - lowerBound)
+      if (areSpeeds) {
+        if smoothAverage > maxSmoothSpeed {
+          maxSmoothSpeed = smoothAverage
+        }
+        if smoothAverage < minSmoothSpeed {
+          minSmoothSpeed = smoothAverage
+        }
+      }
+      smoothValues.append(smoothAverage)
+    }
+    if (areSpeeds) {
+      smoothSpeeds = smoothValues
+    }
+    
+    var sortedValues = smoothValues
+    sortedValues.sortInPlace { $0 < $1 }
+    for var i = 1; i < run.locations.count; i++ {
+      let firstLoc = run.locations[i - 1] as! Location
+      let secondLoc = run.locations[i] as! Location
+      let firstLocCL = CLLocation(latitude: firstLoc.latitude.doubleValue, longitude: firstLoc.longitude.doubleValue)
+      let secondLocCL = CLLocation(latitude: secondLoc.latitude.doubleValue, longitude: secondLoc.longitude.doubleValue)
+      var coords = [firstLocCL.coordinate, secondLocCL.coordinate]
+      let value = smoothValues[i - 1]
+      var index = sortedValues.indexOf(value)
+      if index == nil {
+        index = 0
+      }
+      if !addedOverlays {
+        path.addCoordinate(coords[1])
+      }
+      let color = UiHelpers.colorForValue(value, sortedArray: sortedValues, index: index!)
+      let gradient = GMSStrokeStyle.gradientFromColor(latestStrokeColor, toColor: color)
+      latestStrokeColor = color
+      if areSpeeds {
+        paceSpans.append(GMSStyleSpan(style: gradient))
+      }
+      else {
+        altitudeSpans.append(GMSStyleSpan(style: gradient))
+      }
     }
   }
   
@@ -219,8 +239,16 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     if segue.identifier == "pan graphs from details" {
-      let graphsVC: GraphsVC = segue.destinationViewController as! GraphsVC
-      graphsVC.run = run
+      let graphVC: GraphVC = segue.destinationViewController as! GraphVC
+      graphVC.run = run
+      if smoothSpeeds == nil {
+        makeSpans(areSpeeds: true)
+      }
+      if let smoothSpeeds = smoothSpeeds {
+        graphVC.smoothSpeeds = smoothSpeeds
+        graphVC.maxSmoothSpeed = maxSmoothSpeed
+        graphVC.minSmoothSpeed = minSmoothSpeed
+      }
     }
   }
 

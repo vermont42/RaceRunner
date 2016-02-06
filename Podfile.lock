@@ -16,6 +16,7 @@ PODS:
     - PubNub/Core (= 4.2.3)
   - PubNub/Core (4.2.3):
     - CocoaLumberjack (= 2.2.0)
+  - SwiftCharts (0.3)
 
 DEPENDENCIES:
   - COBezierTableView
@@ -23,6 +24,7 @@ DEPENDENCIES:
   - GoogleMaps
   - MGSwipeTableCell
   - PubNub
+  - SwiftCharts (~> 0.2)
 
 SPEC CHECKSUMS:
   COBezierTableView: e8fa8ac961f213fe0c4b3e8e9708478df04930de
@@ -31,5 +33,6 @@ SPEC CHECKSUMS:
   GoogleMaps: c947160008f414c66707a5ea60f35e92055c7670
   MGSwipeTableCell: 5ae3b9a15efda26b201adc8676b24040febe6ff6
   PubNub: 461805c30ce11332a6ee5ab2c34be2d4c82c38d7
+  SwiftCharts: c66a449d58f9c811c467f865a47b1b6136b49499
 
 COCOAPODS: 0.39.0

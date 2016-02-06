@@ -15,20 +15,20 @@ enum Accent: String {
   case 🇦🇺 = "🇦🇺"
     
   init() {
-      self = .🇺🇸
+    self = .🇺🇸
   }
   
   func languageCode() -> String {
-      switch self {
-      case .🇺🇸:
-          return "US"
-      case .🇮🇪:
-          return "IE"
-      case .🇬🇧:
-          return "GB"
-      case .🇦🇺:
-          return "AU"
-      }
+    switch self {
+    case .🇺🇸:
+      return "US"
+    case .🇮🇪:
+      return "IE"
+    case .🇬🇧:
+      return "GB"
+    case .🇦🇺:
+      return "AU"
+    }
   }
     
   func radioButtonPosition() -> Int {
