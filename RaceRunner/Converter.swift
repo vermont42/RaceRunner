@@ -205,7 +205,7 @@ class Converter {
     }
   }
   
-  class func stringifyPace(meters: Double, seconds:Int, forSpeaking:Bool = false) -> String {
+  class func stringifyPace(meters: Double, seconds:Int, forSpeaking:Bool = false, includeUnit: Bool = true) -> String {
     if seconds == 0 || meters == 0.0 {
       return "0"
     }
@@ -235,6 +235,9 @@ class Converter {
     }
     let paceMin = Int((avgPaceSecMeters * unitMultiplier) / Double(secondsPerMinute))
     let paceSec = Int(avgPaceSecMeters * unitMultiplier - Double((paceMin * secondsPerMinute)))
+    if !includeUnit {
+      unitName = ""
+    }
     if forSpeaking {
       return NSString(format: "%d minutes %02d seconds per %@", paceMin, paceSec, unitName) as String
     }
@@ -243,7 +246,7 @@ class Converter {
     }
   }
 
-  class func stringifyAltitude(meters: Double, unabbreviated: Bool = false) -> String {
+  class func stringifyAltitude(meters: Double, unabbreviated: Bool = false, includeUnit: Bool = true) -> String {
     var unitMultiplier: Double
     var unitName: String
     if SettingsManager.getUnitType() == .Metric {
@@ -263,6 +266,9 @@ class Converter {
       else {
         unitName = feet
       }
+    }
+    if !includeUnit {
+      unitName = ""
     }
     return NSString(format: "%.0f %@", meters * unitMultiplier, unitName) as String
   }

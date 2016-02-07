@@ -30,7 +30,7 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
     case Simulate
   }
   var logType: LogType!
-  var locFile = "iSmoothRun2"
+  var locFile = "RaceRunner"
   private static let rowHeight: CGFloat = 92.0
   private var oldLogSortField: Int!
   

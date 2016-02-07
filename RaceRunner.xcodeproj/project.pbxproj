@@ -43,6 +43,7 @@
 		E1648E141C4975ED002A3ED4 /* ShoesEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E131C4975ED002A3ED4 /* ShoesEditorVC.swift */; };
 		E1648E181C497997002A3ED4 /* ShoesDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E171C497997002A3ED4 /* ShoesDelegate.swift */; };
 		E16F35761B8EBC4100C88426 /* UIViewController+noOp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16F35751B8EBC4100C88426 /* UIViewController+noOp.swift */; };
+		E17B11571C67C97E0027945F /* RaceRunner.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E17B11561C67C97E0027945F /* RaceRunner.gpx */; };
 		E1804DB61ABBA0D300625188 /* RunDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */; };
 		E185F8531AE1CB19008BF394 /* RunnerIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185F8521AE1CB19008BF394 /* RunnerIcons.swift */; };
 		E18B6C811C0D1AEC005865BA /* GpxActivityItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18B6C801C0D1AEC005865BA /* GpxActivityItemProvider.swift */; };
@@ -124,6 +125,7 @@
 		E1648E131C4975ED002A3ED4 /* ShoesEditorVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoesEditorVC.swift; sourceTree = "<group>"; };
 		E1648E171C497997002A3ED4 /* ShoesDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoesDelegate.swift; sourceTree = "<group>"; };
 		E16F35751B8EBC4100C88426 /* UIViewController+noOp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+noOp.swift"; sourceTree = "<group>"; };
+		E17B11561C67C97E0027945F /* RaceRunner.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = RaceRunner.gpx; sourceTree = "<group>"; };
 		E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunDetailsVC.swift; sourceTree = "<group>"; };
 		E185F8521AE1CB19008BF394 /* RunnerIcons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunnerIcons.swift; sourceTree = "<group>"; };
 		E18B6C801C0D1AEC005865BA /* GpxActivityItemProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxActivityItemProvider.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 		E1103F271C00DB1D00E18D2E /* GPX */ = {
 			isa = PBXGroup;
 			children = (
+				E17B11561C67C97E0027945F /* RaceRunner.gpx */,
 				E1DBA6D11C1FB6C900DE3E4F /* Runtastic.gpx */,
 				E1DBA6D51C1FBCE800DE3E4F /* Digifit.gpx */,
 				E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */,
@@ -413,6 +416,7 @@
 				E1103F241C00DADF00E18D2E /* gun.mp3 in Resources */,
 				E10356451C02A1CB006E8FEC /* applause2.mp3 in Resources */,
 				E1DBA6D81C1FBF0300DE3E4F /* WahooFitness.gpx in Resources */,
+				E17B11571C67C97E0027945F /* RaceRunner.gpx in Resources */,
 				E1E8B92B1AAB73F000D04E38 /* Images.xcassets in Resources */,
 				E1DBA6D21C1FB6C900DE3E4F /* Runtastic.gpx in Resources */,
 			);
