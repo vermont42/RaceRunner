@@ -42,6 +42,10 @@ App looks great in landscape mode.
 ![RaceRunner](RaceRunner/RaceRunner2-1.png "Run Details")
 
 
+###Graph of Pace and Altitude
+![RaceRunner](RaceRunner/RaceRunner8.png "Graph of Pace and Altitude")
+
+
 ###Settings
 ![RaceRunner](RaceRunner/RaceRunner3.png "Settings")
 
