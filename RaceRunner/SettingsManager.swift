@@ -24,6 +24,9 @@ class SettingsManager {
   private var sortType: SortType
   private static let sortTypeKey = "sortType"
   
+  private var iconType: RunnerIcons.IconType
+  private static let iconTypeKey = "iconType"
+  
   private var accent: Accent
   private static let accentKey = "accent"
   
@@ -83,6 +86,15 @@ class SettingsManager {
     else {
       sortType = SortType()
       userDefaults.setObject(sortType.rawValue, forKey: SettingsManager.sortTypeKey)
+      userDefaults.synchronize()
+    }
+    
+    if let storedIconTypeString = userDefaults.stringForKey(SettingsManager.iconTypeKey) {
+      iconType = RunnerIcons.IconType(rawValue: storedIconTypeString)!
+    }
+    else {
+      iconType = RunnerIcons.IconType()
+      userDefaults.setObject(iconType.rawValue, forKey: SettingsManager.iconTypeKey)
       userDefaults.synchronize()
     }
     
@@ -215,6 +227,18 @@ class SettingsManager {
     if sortType != settingsManager.sortType {
       settingsManager.sortType = sortType
       settingsManager.userDefaults.setObject(sortType.rawValue, forKey: SettingsManager.sortTypeKey)
+      settingsManager.userDefaults.synchronize()
+    }
+  }
+  
+  class func getIconType() -> RunnerIcons.IconType {
+    return settingsManager.iconType
+  }
+  
+  class func setIconType(iconType: RunnerIcons.IconType) {
+    if iconType != settingsManager.iconType {
+      settingsManager.iconType = iconType
+      settingsManager.userDefaults.setObject(iconType.rawValue, forKey: SettingsManager.iconTypeKey)
       settingsManager.userDefaults.synchronize()
     }
   }

@@ -8,9 +8,11 @@
 
 import UIKit
 import DLRadioButton
+import StoreKit
 
 class SettingsVC: ChildVC {
   @IBOutlet var unitsToggle: UISwitch!
+  @IBOutlet var iconToggle: UISwitch!
   @IBOutlet var publishRunToggle: UISwitch!
   @IBOutlet var multiplierSlider: UISlider!
   @IBOutlet var multiplierLabel: UILabel!
@@ -29,6 +31,8 @@ class SettingsVC: ChildVC {
   @IBOutlet var showWeightToggle: UISwitch!
   
   private static let distancePrompt = " To begin inputting, tap \"123\" on the bottom-left corner of your virtual keyboard."
+  private var products = [SKProduct]()
+
   
   @IBAction func showMenu(sender: UIButton) {
     showMenu()
@@ -44,6 +48,31 @@ class SettingsVC: ChildVC {
     accentButtons[SettingsManager.getAccent().radioButtonPosition()].sendActionsForControlEvents(UIControlEvents.TouchUpInside)
     multiplierSlider.value = Float(SettingsManager.getMultiplier())
     viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "productPurchased:", name: IapHelperProductPurchasedNotification, object: nil)
+    products = []
+    Products.store.requestProductsWithCompletionHandler { success, products in
+      if success {
+        self.products = products
+//        print("retrieved products")
+      }
+      else {
+//        print("failed to retrieve products")
+      }
+    }
+  }
+  
+  deinit {
+    NSNotificationCenter.defaultCenter().removeObserver(self)
+  }
+  
+  func productPurchased(notification: NSNotification) {
+    let productIdentifier = notification.object as! String
+    for (index, product) in products.enumerate() {
+      if product.productIdentifier == productIdentifier {
+        print("purchased: \(productIdentifier)  index: \(index)")
+        break
+      }
+    }
   }
   
   func updateToggles() {
@@ -52,6 +81,12 @@ class SettingsVC: ChildVC {
     }
     else {
       unitsToggle.on = true
+    }
+    if SettingsManager.getIconType() == RunnerIcons.IconType.Human {
+      iconToggle.on = false
+    }
+    else {
+      iconToggle.on = true
     }
     publishRunToggle.on = SettingsManager.getPublishRun()
     showWeightToggle.on = SettingsManager.getShowWeight()
@@ -119,10 +154,28 @@ class SettingsVC: ChildVC {
     updateWeightStepper()
     updateWeightLabel()
   }
-
+  
+  @IBAction func toggleIconType(sender: UISwitch) {
+    if sender.on {
+      SettingsManager.setIconType(RunnerIcons.IconType.Horse)
+    }
+    else {
+      SettingsManager.setIconType(RunnerIcons.IconType.Human)
+    }
+  }
+  
   @IBAction func togglePublishRun(sender: UISwitch) {
     if sender.on {
       SettingsManager.setPublishRun(true)
+      Products.store.requestProductsWithCompletionHandler { success, products in
+        if success {
+          self.products = products
+          print("Purchase request succeeded.")
+        }
+        else {
+          print("Purchase request failed.")
+        }
+      }
     }
     else {
       SettingsManager.setPublishRun(false)
@@ -255,5 +308,13 @@ class SettingsVC: ChildVC {
     else {
       SettingsManager.setShowWeight(false)
     }
+  }
+  
+  @IBAction func buyRunningHorse() {
+    Products.store.purchaseProduct(products[1])
+  }
+  
+  @IBAction func buyBroadcastRuns() {
+    Products.store.purchaseProduct(products[0])
   }
 }
