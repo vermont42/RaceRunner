@@ -47,7 +47,8 @@ class SettingsVC: ChildVC {
   private static let promoCode = "Promo Code"
   private static let sweetTitle = "Sweet"
   private static let unlockedMessage = "In-app purchases unlocked!"
-  private static let couldNotUnlockMessage = "In-app purchases not unlocked. Promo code is invalid."
+  private static let invalidPromoCodeMessage = "In-app purchases not unlocked. Promo code is invalid."
+  private static let unlockErrorMessage = "Could not unlock in-app purchases"
   
   @IBAction func showMenu(sender: UIButton) {
     showMenu()
@@ -95,8 +96,13 @@ class SettingsVC: ChildVC {
             }
             else {
               dispatch_async(dispatch_get_main_queue()) {
-                UIAlertController.showMessage(SettingsVC.couldNotUnlockMessage, title: SettingsVC.bummerTitle)
+                UIAlertController.showMessage(SettingsVC.invalidPromoCodeMessage, title: SettingsVC.bummerTitle)
               }
+            }
+          }
+          else {
+            dispatch_async(dispatch_get_main_queue()) {
+              UIAlertController.showMessage("\(SettingsVC.unlockErrorMessage): \(error!.localizedDescription)", title: SettingsVC.bummerTitle)
             }
           }
         }
