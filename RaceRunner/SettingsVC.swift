@@ -123,7 +123,7 @@ class SettingsVC: ChildVC {
     Products.store.requestProductsWithCompletionHandler { success, products in
       if success {
         self.products = products
-        print("retrieved products")
+        //print("retrieved products")
       }
       else {
         print("failed to retrieve products")
@@ -166,13 +166,13 @@ class SettingsVC: ChildVC {
   }
   
   func productPurchased(notification: NSNotification) {
-    let productIdentifier = notification.object as! String
-    for (index, product) in products.enumerate() {
-      if product.productIdentifier == productIdentifier {
-        print("purchased: \(productIdentifier)  index: \(index)")
-        break
-      }
-    }
+//    let productIdentifier = notification.object as! String
+//    for (index, product) in products.enumerate() {
+//      if product.productIdentifier == productIdentifier {
+//        print("purchased: \(productIdentifier)  index: \(index)")
+//        break
+//      }
+//    }
     updatePurchaseWidgets()
   }
   

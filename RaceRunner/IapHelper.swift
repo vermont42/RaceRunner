@@ -39,9 +39,9 @@ public class IapHelper : NSObject  {
       let purchased = NSUserDefaults.standardUserDefaults().boolForKey(productIdentifier)
       if purchased {
         purchasedProductIdentifiers.insert(productIdentifier)
-        print("Previously purchased: \(productIdentifier)")
+        //print("Previously purchased: \(productIdentifier)")
       } else {
-        print("Not purchased: \(productIdentifier)")
+        //print("Not purchased: \(productIdentifier)")
       }
     }
     super.init()
@@ -87,9 +87,9 @@ extension IapHelper: SKProductsRequestDelegate {
     clearRequest()
     
     // debug printing
-    for p in products {
-      print("Found product: \(p.productIdentifier) \(p.localizedTitle) \(p.price.floatValue)")
-    }
+//    for p in products {
+//      print("Found product: \(p.productIdentifier) \(p.localizedTitle) \(p.price.floatValue)")
+//    }
   }
   
   public func request(request: SKRequest, didFailWithError error: NSError) {
