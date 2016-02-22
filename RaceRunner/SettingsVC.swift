@@ -9,6 +9,7 @@
 import UIKit
 import DLRadioButton
 import StoreKit
+import CloudKit
 
 class SettingsVC: ChildVC {
   @IBOutlet var unitsToggle: UISwitch!
@@ -29,10 +30,24 @@ class SettingsVC: ChildVC {
   @IBOutlet var weightLabel: UILabel!
   @IBOutlet var weightStepper: UIStepper!
   @IBOutlet var showWeightToggle: UISwitch!
-  
-  private static let distancePrompt = " To begin inputting, tap \"123\" on the bottom-left corner of your virtual keyboard."
+  @IBOutlet var buyLabel: UILabel!
+  @IBOutlet var runningHorseButton: UIButton!
+  @IBOutlet var broadcastRunsButton: UIButton!
+  @IBOutlet var priceLabel: UILabel!
+  @IBOutlet var restoreButton: UIButton!
   private var products = [SKProduct]()
-
+  private static let distancePrompt = " To begin inputting, tap \"123\" on the bottom-left corner of your virtual keyboard."
+  private static let bummerTitle = "😓"
+  private static let noHorseMessage = "RaceRunner cannot display the animated horse during your runs because you have not purchased that feature."
+  private static let noBroadcastMessage = "RaceRunner cannot broadcast your runs to spectators because you have not purchased that feature."
+  private static let promoCodeTitle = "Input Promo Code"
+  private static let promoCodePrompt = "To unlock RaceRunner's in-app purchases, input a promo code and tap Unlock."
+  private static let promoCodeUnlock = "Unlock"
+  private static let cancel = "Cancel"
+  private static let promoCode = "Promo Code"
+  private static let sweetTitle = "Sweet"
+  private static let unlockedMessage = "In-app purchases unlocked!"
+  private static let couldNotUnlockMessage = "In-app purchases not unlocked. Promo code is invalid."
   
   @IBAction func showMenu(sender: UIButton) {
     showMenu()
@@ -49,20 +64,99 @@ class SettingsVC: ChildVC {
     multiplierSlider.value = Float(SettingsManager.getMultiplier())
     viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
     NSNotificationCenter.defaultCenter().addObserver(self, selector: "productPurchased:", name: IapHelperProductPurchasedNotification, object: nil)
-    products = []
-    Products.store.requestProductsWithCompletionHandler { success, products in
-      if success {
-        self.products = products
-//        print("retrieved products")
-      }
-      else {
-//        print("failed to retrieve products")
-      }
-    }
+    setUpProducts()
+    let secretSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: "unlockIaps")
+    secretSwipeRecognizer.numberOfTouchesRequired = 2
+    secretSwipeRecognizer.direction = .Down
+    view.addGestureRecognizer(secretSwipeRecognizer)
   }
   
   deinit {
     NSNotificationCenter.defaultCenter().removeObserver(self)
+  }
+  
+  func unlockIaps() {
+    let purchasedHorse = Products.store.isProductPurchased(Products.runningHorse)
+    let purchasedBroadcast = Products.store.isProductPurchased(Products.broadcastRuns)
+    if !purchasedBroadcast || !purchasedHorse {
+      let alertController = UIAlertController(title: SettingsVC.promoCodeTitle, message: SettingsVC.promoCodePrompt, preferredStyle: UIAlertControllerStyle.Alert)
+      let unlockAction = UIAlertAction(title: SettingsVC.promoCodeUnlock, style: UIAlertActionStyle.Default, handler: { (action) in
+        let textFields = alertController.textFields!
+        let predicate = NSPredicate(format: "promoCode = %@", textFields[0].text!.lowercaseString)
+        let query = CKQuery(recordType: "PromoCodes", predicate: predicate)
+        CKContainer.defaultContainer().publicCloudDatabase.performQuery(query, inZoneWithID: nil) {
+          results, error in
+          if error == nil {
+            if results!.count > 0 {
+              dispatch_async(dispatch_get_main_queue()) {
+                UIAlertController.showMessage(SettingsVC.unlockedMessage, title: SettingsVC.sweetTitle)
+                Products.store.fakeIapPurchases()
+              }
+            }
+            else {
+              dispatch_async(dispatch_get_main_queue()) {
+                UIAlertController.showMessage(SettingsVC.couldNotUnlockMessage, title: SettingsVC.bummerTitle)
+              }
+            }
+          }
+        }
+      })
+      alertController.addAction(unlockAction)
+      let cancelAction = UIAlertAction(title: SettingsVC.cancel, style: UIAlertActionStyle.Cancel, handler: { (action) in })
+      alertController.addAction(cancelAction)
+      alertController.addTextFieldWithConfigurationHandler { (textField) in
+        textField.placeholder = SettingsVC.promoCode
+      }
+      alertController.view.tintColor = UiConstants.intermediate1Color
+      presentViewController(alertController, animated: true, completion: nil)
+    }
+  }
+  
+  func setUpProducts() {
+    products = []
+    Products.store.requestProductsWithCompletionHandler { success, products in
+      if success {
+        self.products = products
+        print("retrieved products")
+      }
+      else {
+        print("failed to retrieve products")
+      }
+    }
+    updatePurchaseWidgets()
+  }
+  
+  func updatePurchaseWidgets() {
+    let purchasedHorse = Products.store.isProductPurchased(Products.runningHorse)
+    let purchasedBroadcast = Products.store.isProductPurchased(Products.broadcastRuns)
+    if purchasedHorse && purchasedBroadcast {
+      buyLabel.hidden = true
+      runningHorseButton.hidden = true
+      broadcastRunsButton.hidden = true
+      priceLabel.hidden = true
+      restoreButton.hidden = true
+    }
+    else if purchasedHorse && !purchasedBroadcast{
+      buyLabel.hidden = false
+      runningHorseButton.hidden = true
+      broadcastRunsButton.hidden = false
+      priceLabel.hidden = false
+      restoreButton.hidden = false
+    }
+    else if !purchasedHorse && purchasedBroadcast{
+      buyLabel.hidden = false
+      runningHorseButton.hidden = false
+      broadcastRunsButton.hidden = true
+      priceLabel.hidden = false
+      restoreButton.hidden = false
+    }
+    else {// purchased neither
+      buyLabel.hidden = false
+      runningHorseButton.hidden = false
+      broadcastRunsButton.hidden = false
+      priceLabel.hidden = false
+      restoreButton.hidden = false
+    }
   }
   
   func productPurchased(notification: NSNotification) {
@@ -73,6 +167,7 @@ class SettingsVC: ChildVC {
         break
       }
     }
+    updatePurchaseWidgets()
   }
   
   func updateToggles() {
@@ -156,29 +251,32 @@ class SettingsVC: ChildVC {
   }
   
   @IBAction func toggleIconType(sender: UISwitch) {
-    if sender.on {
-      SettingsManager.setIconType(RunnerIcons.IconType.Horse)
+    if sender.on && !Products.store.isProductPurchased(Products.runningHorse) {
+      UIAlertController.showMessage(SettingsVC.noHorseMessage, title: SettingsVC.bummerTitle)
+      sender.on = false
     }
     else {
-      SettingsManager.setIconType(RunnerIcons.IconType.Human)
+      if sender.on {
+        SettingsManager.setIconType(RunnerIcons.IconType.Horse)
+      }
+      else {
+        SettingsManager.setIconType(RunnerIcons.IconType.Human)
+      }
     }
   }
   
   @IBAction func togglePublishRun(sender: UISwitch) {
-    if sender.on {
-      SettingsManager.setPublishRun(true)
-      Products.store.requestProductsWithCompletionHandler { success, products in
-        if success {
-          self.products = products
-          print("Purchase request succeeded.")
-        }
-        else {
-          print("Purchase request failed.")
-        }
-      }
+    if sender.on && !Products.store.isProductPurchased(Products.broadcastRuns) {
+      UIAlertController.showMessage(SettingsVC.noBroadcastMessage, title: SettingsVC.bummerTitle)
+      sender.on = false
     }
     else {
-      SettingsManager.setPublishRun(false)
+      if sender.on {
+        SettingsManager.setPublishRun(true)
+      }
+      else {
+        SettingsManager.setPublishRun(false)
+      }
     }
   }
   
@@ -311,10 +409,18 @@ class SettingsVC: ChildVC {
   }
   
   @IBAction func buyRunningHorse() {
-    Products.store.purchaseProduct(products[1])
+    if products.count == 2 {
+      Products.store.purchaseProduct(products[1])
+    }
   }
   
   @IBAction func buyBroadcastRuns() {
-    Products.store.purchaseProduct(products[0])
+    if products.count == 2 {
+      Products.store.purchaseProduct(products[0])
+    }
+  }
+  
+  @IBAction func restorePurchases(sender: UIButton) {
+    Products.store.restoreCompletedTransactions()
   }
 }

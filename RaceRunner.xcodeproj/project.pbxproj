@@ -35,6 +35,7 @@
 		E15195F81C0BD41A00BD52FB /* HumanWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15195F71C0BD41A00BD52FB /* HumanWeight.swift */; };
 		E15681F91C52F007008E077C /* GpxExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15681F81C52F007008E077C /* GpxExporter.swift */; };
 		E159C2541AAB8304007C6EA1 /* RaceRunner.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E159C2521AAB8304007C6EA1 /* RaceRunner.xcdatamodeld */; };
+		E162397C1C7A9D0300739B7F /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E162397B1C7A9D0300739B7F /* CloudKit.framework */; };
 		E1648E0A1C4861EA002A3ED4 /* Run+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E091C4861EA002A3ED4 /* Run+CoreDataProperties.swift */; };
 		E1648E0C1C4863E3002A3ED4 /* Shoes+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E0B1C4863E3002A3ED4 /* Shoes+CoreDataProperties.swift */; };
 		E1648E0E1C486421002A3ED4 /* Shoes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E0D1C486421002A3ED4 /* Shoes.swift */; };
@@ -47,7 +48,6 @@
 		E1804DB61ABBA0D300625188 /* RunDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */; };
 		E185F8531AE1CB19008BF394 /* RunnerIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185F8521AE1CB19008BF394 /* RunnerIcons.swift */; };
 		E18B6C811C0D1AEC005865BA /* GpxActivityItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18B6C801C0D1AEC005865BA /* GpxActivityItemProvider.swift */; };
-		E18C164E1C7697040013690E /* run-9.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E18C164D1C7697040013690E /* run-9.gpx */; };
 		E1A41B4E1BF7D83100E31943 /* PubNubManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A41B4D1BF7D83100E31943 /* PubNubManager.swift */; };
 		E1B45F071AE96EFC00AF73AB /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B45F061AE96EFC00AF73AB /* LocationManager.swift */; };
 		E1C22BCC1AF05DA1003A5712 /* MarqueeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C22BCA1AF05DA1003A5712 /* MarqueeLabel.m */; };
@@ -120,6 +120,8 @@
 		E15195F71C0BD41A00BD52FB /* HumanWeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HumanWeight.swift; sourceTree = "<group>"; };
 		E15681F81C52F007008E077C /* GpxExporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxExporter.swift; sourceTree = "<group>"; };
 		E159C2531AAB8304007C6EA1 /* RaceRunner.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RaceRunner.xcdatamodel; sourceTree = "<group>"; };
+		E162397A1C7A9CF600739B7F /* RaceRunner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = RaceRunner.entitlements; sourceTree = "<group>"; };
+		E162397B1C7A9D0300739B7F /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		E1648E091C4861EA002A3ED4 /* Run+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Run+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E1648E0B1C4863E3002A3ED4 /* Shoes+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Shoes+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E1648E0D1C486421002A3ED4 /* Shoes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shoes.swift; sourceTree = "<group>"; };
@@ -132,7 +134,6 @@
 		E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunDetailsVC.swift; sourceTree = "<group>"; };
 		E185F8521AE1CB19008BF394 /* RunnerIcons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunnerIcons.swift; sourceTree = "<group>"; };
 		E18B6C801C0D1AEC005865BA /* GpxActivityItemProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxActivityItemProvider.swift; sourceTree = "<group>"; };
-		E18C164D1C7697040013690E /* run-9.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "run-9.gpx"; sourceTree = "<group>"; };
 		E1A41B4D1BF7D83100E31943 /* PubNubManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubNubManager.swift; sourceTree = "<group>"; };
 		E1B45F061AE96EFC00AF73AB /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		E1C22BC71AF05D39003A5712 /* RaceRunner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RaceRunner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -182,6 +183,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E162397C1C7A9D0300739B7F /* CloudKit.framework in Frameworks */,
 				E1D5A01C1AC5170F008A3806 /* AVFoundation.framework in Frameworks */,
 				7333C6D291F714851431A2E3 /* Pods.framework in Frameworks */,
 			);
@@ -193,6 +195,7 @@
 		4BF0F840305CCC95E1CE5907 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E162397B1C7A9D0300739B7F /* CloudKit.framework */,
 				E1D5A01B1AC5170E008A3806 /* AVFoundation.framework */,
 				3E91D4B24A52C1C5D97BD0CF /* Pods.framework */,
 			);
@@ -224,7 +227,6 @@
 		E1103F271C00DB1D00E18D2E /* GPX */ = {
 			isa = PBXGroup;
 			children = (
-				E18C164D1C7697040013690E /* run-9.gpx */,
 				E17B11561C67C97E0027945F /* RaceRunner.gpx */,
 				E1DBA6D11C1FB6C900DE3E4F /* Runtastic.gpx */,
 				E1DBA6D51C1FBCE800DE3E4F /* Digifit.gpx */,
@@ -273,6 +275,7 @@
 		E1E8B9201AAB73F000D04E38 /* RaceRunner */ = {
 			isa = PBXGroup;
 			children = (
+				E162397A1C7A9CF600739B7F /* RaceRunner.entitlements */,
 				E11E22C01C08C76E00488399 /* Accent.swift */,
 				E1E8B9231AAB73F000D04E38 /* AppDelegate.swift */,
 				E13C763E1C1A01520046021A /* Array+insertionIndexOf.swift */,
@@ -383,6 +386,11 @@
 					E1E8B91D1AAB73F000D04E38 = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = V3L2PL4QC9;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -422,7 +430,6 @@
 				E12847731C1763320053ED96 /* sadTrombone.mp3 in Resources */,
 				E1DBA6DA1C1FC0AB00DE3E4F /* Strava.gpx in Resources */,
 				E1E8B92E1AAB73F000D04E38 /* LaunchScreen.xib in Resources */,
-				E18C164E1C7697040013690E /* run-9.gpx in Resources */,
 				E1103F241C00DADF00E18D2E /* gun.mp3 in Resources */,
 				E10356451C02A1CB006E8FEC /* applause2.mp3 in Resources */,
 				E1DBA6D81C1FBF0300DE3E4F /* WahooFitness.gpx in Resources */,
@@ -657,6 +664,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = RaceRunner/RaceRunner.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -677,6 +685,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = RaceRunner/RaceRunner.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;

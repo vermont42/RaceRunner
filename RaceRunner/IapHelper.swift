@@ -39,9 +39,9 @@ public class IapHelper : NSObject  {
       let purchased = NSUserDefaults.standardUserDefaults().boolForKey(productIdentifier)
       if purchased {
         purchasedProductIdentifiers.insert(productIdentifier)
-//        print("Previously purchased: \(productIdentifier)")
+        print("Previously purchased: \(productIdentifier)")
       } else {
-//        print("Not purchased: \(productIdentifier)")
+        print("Not purchased: \(productIdentifier)")
       }
     }
     super.init()
@@ -71,6 +71,10 @@ public class IapHelper : NSObject  {
   public func restoreCompletedTransactions() {
     SKPaymentQueue.defaultQueue().restoreCompletedTransactions()
   }
+  
+  public class func canMakePayments() -> Bool {
+    return SKPaymentQueue.canMakePayments()
+  }
 }
 
 // MARK: - SKProductsRequestDelegate
@@ -83,9 +87,9 @@ extension IapHelper: SKProductsRequestDelegate {
     clearRequest()
     
     // debug printing
-//    for p in products {
-//      print("Found product: \(p.productIdentifier) \(p.localizedTitle) \(p.price.floatValue)")
-//    }
+    for p in products {
+      print("Found product: \(p.productIdentifier) \(p.localizedTitle) \(p.price.floatValue)")
+    }
   }
   
   public func request(request: SKRequest, didFailWithError error: NSError) {
@@ -143,6 +147,12 @@ extension IapHelper: SKPaymentTransactionObserver {
     NSUserDefaults.standardUserDefaults().setBool(true, forKey: productIdentifier)
     NSUserDefaults.standardUserDefaults().synchronize()
     NSNotificationCenter.defaultCenter().postNotificationName(IapHelperProductPurchasedNotification, object: productIdentifier)
+  }
+  
+  func fakeIapPurchases() {
+    for productIdentifier in productIdentifiers {
+      provideContentForProductIdentifier(productIdentifier)
+    }
   }
   
   private func failedTransaction(transaction: SKPaymentTransaction) {

@@ -45,6 +45,8 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   private static let newRunNameTitle = "Run Name"
   private static let setRunNameButtonTitle = "Set"
   private static let noLocationsError = "Attempted to display details of run with zero locations."
+  private static let cancel = "Cancel"
+  private static let name = "Name"
   
   func mapView(mapView:GMSMapView!,idleAtCameraPosition position:GMSCameraPosition!) {
     if !addedOverlays {
@@ -256,12 +258,12 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     let alertController = UIAlertController(title: RunDetailsVC.newRunNameTitle, message: RunDetailsVC.newRunNamePrompt, preferredStyle: UIAlertControllerStyle.Alert)
     let setAction = UIAlertAction(title: RunDetailsVC.setRunNameButtonTitle, style: UIAlertActionStyle.Default, handler: { (action) in
       let textFields = alertController.textFields!
-      self.route.text = "Name: \(textFields[0].text!)"
+      self.route.text = "\(RunDetailsVC.name): \(textFields[0].text!)"
       self.run.customName = textFields[0].text!
       CDManager.saveContext()
     })
     alertController.addAction(setAction)
-    let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action) in })
+    let cancelAction = UIAlertAction(title: RunDetailsVC.cancel, style: UIAlertActionStyle.Cancel, handler: { (action) in })
     alertController.addAction(cancelAction)
     alertController.addTextFieldWithConfigurationHandler { (textField) in
       textField.placeholder = "Name"

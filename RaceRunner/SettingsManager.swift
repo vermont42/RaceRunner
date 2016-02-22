@@ -36,7 +36,7 @@ class SettingsManager {
   private var publishRun: Bool
   private static let publishRunKey = "publishRun"
   private static let publishRunDefault = false
-
+  
   private var audibleSplits: Bool
   private static let audibleSplitsKey = "audibleSplits"
   private static let audibleSplitsDefault = true

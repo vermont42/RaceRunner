@@ -41,7 +41,7 @@
                                 <rect key="frame" x="0.0" y="72" width="600" height="528"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B2r-WL-KEW" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="477"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="503"/>
                                         <subviews>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HJf-9i-6b7">
                                                 <rect key="frame" x="170" y="40" width="51" height="31"/>
@@ -126,6 +126,9 @@
                                                 <state key="normal" title="Running Horse">
                                                     <color key="titleColor" red="0.83921568629999999" green="0.82745098039999998" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="buyRunningHorse" destination="owB-CJ-77e" eventType="touchUpInside" id="FNz-GE-XS7"/>
+                                                </connections>
                                             </button>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="14G-rd-jtz">
                                                 <rect key="frame" x="165" y="0.0" width="51" height="31"/>
@@ -323,6 +326,9 @@
                                                 <state key="normal" title="Broadcast Runs">
                                                     <color key="titleColor" red="0.83921568629999999" green="0.82745098039999998" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="buyBroadcastRuns" destination="owB-CJ-77e" eventType="touchUpInside" id="P0L-at-gvi"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🏃🏻" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OXr-5f-2w3">
                                                 <rect key="frame" x="165" y="155" width="22" height="24"/>
@@ -331,6 +337,22 @@
                                                 <color key="textColor" red="0.92941176469999998" green="0.68627450980000004" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$4.99 Each" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qN1-Zg-ayq">
+                                                <rect key="frame" x="16" y="463" width="89" height="24"/>
+                                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
+                                                <color key="textColor" red="0.92941176469999998" green="0.68627450980000004" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D3I-7n-cbE">
+                                                <rect key="frame" x="111" y="457" width="60" height="36"/>
+                                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
+                                                <state key="normal" title="Restore">
+                                                    <color key="titleColor" red="0.83921568629999999" green="0.82745098039999998" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="restorePurchases:" destination="owB-CJ-77e" eventType="touchUpInside" id="CGz-Z9-9n6"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.22352941176470589" green="0.27058823529411763" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -359,8 +381,8 @@
                                             <constraint firstItem="bEc-02-bVa" firstAttribute="leading" secondItem="B2r-WL-KEW" secondAttribute="leading" constant="16" id="EE3-ss-5kI"/>
                                             <constraint firstItem="HJf-9i-6b7" firstAttribute="leading" secondItem="NLB-qd-e41" secondAttribute="trailing" constant="8" id="EGN-ua-kq0"/>
                                             <constraint firstItem="G21-ev-B5m" firstAttribute="leading" secondItem="Swq-ep-Iw8" secondAttribute="trailing" constant="8" id="EjG-Vl-LfE"/>
+                                            <constraint firstItem="D3I-7n-cbE" firstAttribute="centerY" secondItem="qN1-Zg-ayq" secondAttribute="centerY" id="Fs4-o5-mlG"/>
                                             <constraint firstItem="ebd-V4-tT7" firstAttribute="top" secondItem="xWn-fU-aIh" secondAttribute="bottom" constant="17" id="Fuz-f5-7ba"/>
-                                            <constraint firstAttribute="bottomMargin" secondItem="d9e-Od-KAj" secondAttribute="bottom" constant="14" id="Ghf-G6-SqH"/>
                                             <constraint firstItem="Llt-nU-ZO0" firstAttribute="leading" secondItem="ZB3-ZU-4ib" secondAttribute="trailing" constant="8" id="Gqj-PJ-P4J"/>
                                             <constraint firstItem="kAQ-iS-OHx" firstAttribute="centerY" secondItem="xWn-fU-aIh" secondAttribute="centerY" id="H85-Ey-JjA"/>
                                             <constraint firstItem="ebd-V4-tT7" firstAttribute="leading" secondItem="B2r-WL-KEW" secondAttribute="leading" constant="16" id="H8l-cf-wAA"/>
@@ -369,6 +391,7 @@
                                             <constraint firstItem="O8X-oZ-2Gm" firstAttribute="centerY" secondItem="qDc-U2-WUV" secondAttribute="centerY" id="M02-JR-aF6"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="0vr-mw-OhZ" secondAttribute="trailing" constant="8" id="Mio-Ur-1fv"/>
                                             <constraint firstItem="EQq-Fn-DGo" firstAttribute="top" secondItem="OjO-yI-twx" secondAttribute="bottom" constant="11" id="ODq-LK-O3N"/>
+                                            <constraint firstAttribute="bottom" secondItem="qN1-Zg-ayq" secondAttribute="bottom" constant="16" id="OvU-by-Cuf"/>
                                             <constraint firstItem="Eag-e0-E7j" firstAttribute="centerY" secondItem="qdk-tc-BR2" secondAttribute="centerY" id="QI8-4Y-x3m"/>
                                             <constraint firstItem="oFN-hr-16i" firstAttribute="leading" secondItem="KBV-HH-UbC" secondAttribute="trailing" constant="8" id="SIw-GR-MTe"/>
                                             <constraint firstItem="MhG-dV-Bdl" firstAttribute="centerY" secondItem="ebd-V4-tT7" secondAttribute="centerY" id="Snf-Xr-fAc"/>
@@ -392,6 +415,9 @@
                                             <constraint firstItem="G21-ev-B5m" firstAttribute="centerY" secondItem="YP5-Ir-314" secondAttribute="centerY" id="e01-Pf-0MS"/>
                                             <constraint firstItem="DJf-D0-c4Q" firstAttribute="leading" secondItem="Dvk-aa-wNU" secondAttribute="trailing" constant="8" id="eaW-VM-2E8"/>
                                             <constraint firstItem="d9e-Od-KAj" firstAttribute="centerY" secondItem="OKf-u0-B0U" secondAttribute="centerY" id="ehC-ff-cUl"/>
+                                            <constraint firstItem="qN1-Zg-ayq" firstAttribute="leading" secondItem="B2r-WL-KEW" secondAttribute="leading" constant="16" id="ei1-x2-pnq"/>
+                                            <constraint firstItem="D3I-7n-cbE" firstAttribute="leading" secondItem="qN1-Zg-ayq" secondAttribute="trailing" constant="6" id="f5Z-4l-txL"/>
+                                            <constraint firstItem="qN1-Zg-ayq" firstAttribute="top" secondItem="d9e-Od-KAj" secondAttribute="bottom" constant="8" id="fHS-aw-Zxz"/>
                                             <constraint firstItem="EQq-Fn-DGo" firstAttribute="top" secondItem="OjO-yI-twx" secondAttribute="bottom" constant="11" id="fbd-N7-4So"/>
                                             <constraint firstItem="3JI-Yn-9cK" firstAttribute="leading" secondItem="B2r-WL-KEW" secondAttribute="leading" constant="16" id="fnP-G8-Ywp"/>
                                             <constraint firstItem="oFN-hr-16i" firstAttribute="centerY" secondItem="qdk-tc-BR2" secondAttribute="centerY" id="frl-VH-fGy"/>
@@ -448,12 +474,17 @@
                         <outlet property="audibleSplitsToggle" destination="a5z-kQ-OU0" id="HAe-FF-dky"/>
                         <outlet property="autoStopButton" destination="Z6y-Cg-Nkg" id="K5R-NZ-SZi"/>
                         <outlet property="autoStopToggle" destination="G21-ev-B5m" id="ePq-sV-5Ow"/>
+                        <outlet property="broadcastRunsButton" destination="tsu-8k-d1H" id="LU6-K4-vl4"/>
+                        <outlet property="buyLabel" destination="d9e-Od-KAj" id="Ka0-j6-wSC"/>
                         <outlet property="iconToggle" destination="O8X-oZ-2Gm" id="ZMw-Oi-NTK"/>
                         <outlet property="multiplierLabel" destination="Llt-nU-ZO0" id="gc8-jS-u21"/>
                         <outlet property="multiplierSlider" destination="ZB3-ZU-4ib" id="xS8-1K-MRg"/>
                         <outlet property="neverButton" destination="Swq-ep-Iw8" id="m9k-zt-g5u"/>
                         <outlet property="noneButton" destination="KBV-HH-UbC" id="jpr-DB-HJ3"/>
+                        <outlet property="priceLabel" destination="qN1-Zg-ayq" id="bSI-HV-tSp"/>
                         <outlet property="publishRunToggle" destination="HJf-9i-6b7" id="rqm-Fm-sqf"/>
+                        <outlet property="restoreButton" destination="D3I-7n-cbE" id="xjb-St-AH4"/>
+                        <outlet property="runningHorseButton" destination="OKf-u0-B0U" id="NUo-oz-IHY"/>
                         <outlet property="showMenuButton" destination="9a9-Ud-iYG" id="3VR-B4-9O9"/>
                         <outlet property="showWeightToggle" destination="Ttb-nq-hIL" id="eYa-SE-sKf"/>
                         <outlet property="splitsButton" destination="Eag-e0-E7j" id="kSu-CC-dfw"/>
