@@ -57,8 +57,8 @@ App looks great in landscape mode.
 ###Spectating a Walk in Vermont from California
 ![RaceRunner](RaceRunner/RaceRunner5.png "Spectating a Walk in Vermont from California")
 
-###Skiing the French Alps
-![RaceRunner](RaceRunner/RaceRunner9.png "Skiing the French Alps")
+###A Ski Run in the French Alps
+![RaceRunner](RaceRunner/RaceRunner9.png "A Ski Run in the French Alps")
 
 ###Shoes
 ![RaceRunner](RaceRunner/RaceRunner6.png "Shoes")
