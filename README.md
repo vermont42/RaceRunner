@@ -3,7 +3,7 @@ RaceRunner
 
 **RaceRunner** is a run-tracking app I am developing in the open. There are many run-tracking apps in the App Store, but **RaceRunner** is distinguished by features focused on racing. Spectators can track the progress of runners during races. Spectators will be able to start and stop timing of runs. The app can stop timing a run automatically after a certain distance, which is useful for time trials. The app can track shoe mileage and warn the user when mileage limits are exceeded.
 
-Because **RaceRunner** is under development, refactoring will occur.
+Notwithstanding my previous, positive [experience](https://itunes.apple.com/us/app/immigration/id777319358) with the pay-up-front business model, I have decided to explore freemium with **RaceRunner**. The app will therefore be free to download but two features, broadcasting of runs to spectators and use of an animated [horse](https://en.wikipedia.org/wiki/Eadweard_Muybridge#Stanford_and_horse_gaits) to represent the runner, will be available via in-app purchases.
 
 **RaceRunner** requires API keys for Google Maps, Dark Sky, and PubNub in `Config.swift`.
 
