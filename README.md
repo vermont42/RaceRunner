@@ -7,7 +7,7 @@ Notwithstanding my previous, positive [experience](https://itunes.apple.com/us/a
 
 **RaceRunner** requires API keys for Google Maps, Dark Sky, and PubNub in `Config.swift`.
 
-If you would like to build **RaceRunner** for yourself, follow these three easy steps.
+If you would like to build **RaceRunner** for yourself, follow these three easy steps:
 
 1. Clone the repo.
 2. Add API keys for Google Maps, Dark Sky, and PubNub to `Config.swift`.
