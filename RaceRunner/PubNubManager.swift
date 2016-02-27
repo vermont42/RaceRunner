@@ -30,7 +30,7 @@ class PubNubManager: NSObject, PNObjectEventListener {
     pubNubSubscriber?.receiveProgress("received message \(message.data.message)")
   }
 
-  class func pubishLocation(location: CLLocation, distance: Double, seconds: Int) {
+  class func publishLocation(location: CLLocation, distance: Double, seconds: Int) {
     let message = "\(location.coordinate.latitude) \(location.coordinate.longitude) \(location.altitude) \(distance) \(seconds)"
     sharedNub.pubNub?.publish(message, toChannel: PubNubManager.publicChannel, storeInHistory: false, compressed: false, withCompletion: { (status) -> Void in
       if !status.error {

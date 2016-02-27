@@ -35,6 +35,20 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1.0.7</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>3835fee2cf704d70edbfdc3210412d698fac6f91</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Answers</string>
+			</dict>
+		</array>
+	</dict>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSApplicationQueriesSchemes</key>

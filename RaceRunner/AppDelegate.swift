@@ -9,6 +9,8 @@
 import UIKit
 import GoogleMaps
 import AVFoundation
+import Fabric
+import Answers
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     Config.checkKeys()
     GMSServices.provideAPIKey(Config.googleMapsKey)
     SoundManager.enableBackgroundAudio()
+    Fabric.with([Answers.self])
+    //Fabric.sharedSDK().debug = true
     return true
   }
     

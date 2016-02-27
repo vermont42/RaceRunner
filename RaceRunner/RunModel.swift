@@ -257,7 +257,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     if status == .InProgress {
       totalSeconds++
       if SettingsManager.getPublishRun() && locations.count > 0 {
-        PubNubManager.pubishLocation(locations[locations.count - 1], distance: totalDistance, seconds: totalSeconds)
+        PubNubManager.publishLocation(locations[locations.count - 1], distance: totalDistance, seconds: totalSeconds)
       }
       runDelegate?.receiveProgress(totalDistance, totalSeconds: totalSeconds, altitude: curAlt, altGained: altGained, altLost: altLost)
       currentSplitDistance = totalDistance - lastDistance
