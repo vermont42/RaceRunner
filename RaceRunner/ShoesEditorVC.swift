@@ -29,7 +29,6 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
   private static let metricMaxMileageLabel = "Maximum Klicks:"
   private static let editShoes = "Edit Shoes"
   private static let newShoes = "New Shoes"
-  private static let notDoneAlpha: CGFloat = 0.50
   private var choosingThumbnail = false
   
   override func viewDidLoad() {
@@ -139,7 +138,7 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
   }
       
   func disableDoneButton() {
-    doneButton.alpha = ShoesEditorVC.notDoneAlpha
+    doneButton.alpha = UiConstants.notDoneAlpha
     doneButton.enabled = false
   }
   

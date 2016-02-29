@@ -256,7 +256,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
   func eachSecond() {
     if status == .InProgress {
       totalSeconds++
-      if SettingsManager.getPublishRun() && locations.count > 0 {
+      if SettingsManager.getBroadcastRun() && locations.count > 0 {
         PubNubManager.publishLocation(locations[locations.count - 1], distance: totalDistance, seconds: totalSeconds)
       }
       runDelegate?.receiveProgress(totalDistance, totalSeconds: totalSeconds, altitude: curAlt, altGained: altGained, altLost: altLost)

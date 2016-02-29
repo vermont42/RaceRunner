@@ -14,7 +14,7 @@ import CloudKit
 class SettingsVC: ChildVC {
   @IBOutlet var unitsToggle: UISwitch!
   @IBOutlet var iconToggle: UISwitch!
-  @IBOutlet var publishRunToggle: UISwitch!
+  @IBOutlet var broadcastNextRunButton: UIButton!
   @IBOutlet var multiplierSlider: UISlider!
   @IBOutlet var multiplierLabel: UILabel!
   @IBOutlet var viewControllerTitle: UILabel!
@@ -39,7 +39,7 @@ class SettingsVC: ChildVC {
   private static let distancePrompt = " To begin inputting, tap \"123\" on the bottom-left corner of your virtual keyboard."
   private static let bummerTitle = "😓"
   private static let noHorseMessage = "RaceRunner cannot display the animated horse during your runs because you have not purchased that feature."
-  private static let noBroadcastMessage = "RaceRunner cannot broadcast your runs to spectators because you have not purchased that feature."
+  private static let noBroadcastMessage = "RaceRunner cannot broadcast your runs to spectators because you have not bought that feature. If you would like to buy it, tap the Broadcast Runs button in the Buy section below."
   private static let promoCodeTitle = "Input Promo Code"
   private static let promoCodePrompt = "To unlock RaceRunner's in-app purchases, input a promo code and tap Unlock."
   private static let promoCodeUnlock = "Unlock"
@@ -49,6 +49,9 @@ class SettingsVC: ChildVC {
   private static let unlockedMessage = "In-app purchases unlocked!"
   private static let invalidPromoCodeMessage = "In-app purchases not unlocked. Promo code is invalid."
   private static let unlockErrorMessage = "Could not unlock in-app purchases"
+  private static let broadcastNextRunTitle = "Broadcast Next Run"
+  private static let stopBroadcastingTitle = "Stop Broadcasting"
+  
   
   @IBAction func showMenu(sender: UIButton) {
     showMenu()
@@ -72,8 +75,18 @@ class SettingsVC: ChildVC {
     view.addGestureRecognizer(secretSwipeRecognizer)
   }
   
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    updateBroadcastButton()
+    print("viewWillAppear")
+  }
+  
   deinit {
     NSNotificationCenter.defaultCenter().removeObserver(self)
+  }
+  
+  func updateBroadcastButton() {
+    broadcastNextRunButton.setTitle(SettingsManager.getBroadcastRun() ? SettingsVC.stopBroadcastingTitle : SettingsVC.broadcastNextRunTitle, forState: .Normal)
   }
   
   func unlockIaps() {
@@ -189,7 +202,6 @@ class SettingsVC: ChildVC {
     else {
       iconToggle.on = true
     }
-    publishRunToggle.on = SettingsManager.getPublishRun()
     showWeightToggle.on = SettingsManager.getShowWeight()
     audibleSplitsToggle.on = SettingsManager.getAudibleSplits()
   }
@@ -257,33 +269,18 @@ class SettingsVC: ChildVC {
   }
   
   @IBAction func toggleIconType(sender: UISwitch) {
-    if sender.on && !Products.store.isProductPurchased(Products.runningHorse) {
-      UIAlertController.showMessage(SettingsVC.noHorseMessage, title: SettingsVC.bummerTitle)
-      sender.on = false
-    }
-    else {
+//    if sender.on && !Products.store.isProductPurchased(Products.runningHorse) {
+//      UIAlertController.showMessage(SettingsVC.noHorseMessage, title: SettingsVC.bummerTitle)
+//      sender.on = false
+//    }
+//    else {
       if sender.on {
         SettingsManager.setIconType(RunnerIcons.IconType.Horse)
       }
       else {
         SettingsManager.setIconType(RunnerIcons.IconType.Human)
       }
-    }
-  }
-  
-  @IBAction func togglePublishRun(sender: UISwitch) {
-    if sender.on && !Products.store.isProductPurchased(Products.broadcastRuns) {
-      UIAlertController.showMessage(SettingsVC.noBroadcastMessage, title: SettingsVC.bummerTitle)
-      sender.on = false
-    }
-    else {
-      if sender.on {
-        SettingsManager.setPublishRun(true)
-      }
-      else {
-        SettingsManager.setPublishRun(false)
-      }
-    }
+//    }
   }
   
   @IBAction func toggleAutoStop(sender: UISwitch) {
@@ -426,7 +423,29 @@ class SettingsVC: ChildVC {
     }
   }
   
+  @IBAction func startOrStopBroadcasting() {
+//    if !SettingsManager.getBroadcastRun() && !Products.store.isProductPurchased(Products.broadcastRuns) {
+//      UIAlertController.showMessage(SettingsVC.noBroadcastMessage, title: SettingsVC.bummerTitle)
+//      return
+//    }
+    SettingsManager.setBroadcastRun(!SettingsManager.getBroadcastRun())
+    updateBroadcastButton()
+    performSegueWithIdentifier("pan publish", sender: self)
+  }
+  
   @IBAction func restorePurchases(sender: UIButton) {
     Products.store.restoreCompletedTransactions()
+  }
+  
+  @IBAction func returnFromSegueActions(sender: UIStoryboardSegue) {}
+  
+  override func segueForUnwindingToViewController(toViewController: UIViewController, fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
+    if let id = identifier {
+      let unwindSegue = UnwindPanSegue(identifier: id, source: fromViewController, destination: toViewController, performHandler: { () -> Void in
+        
+      })
+      return unwindSegue
+    }
+    return super.segueForUnwindingToViewController(toViewController, fromViewController: fromViewController, identifier: identifier)!
   }
 }

@@ -21,6 +21,7 @@ class SpectateVC: ChildVC, PubNubSubscriber {
   private var runnerIcons = RunnerIcons()
   private var pin: GMSMarker = GMSMarker()
   private var counter = 0
+  private static let updateStride: Int = 5
   
   override func viewDidLoad() {
     viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
@@ -37,7 +38,7 @@ class SpectateVC: ChildVC, PubNubSubscriber {
   func receiveProgress(progress: String) {
     // If didReceiveMessage() is not called on the main thread, this needs GCD.
     counter++
-    if counter % 5 == 0 {
+    if counter % SpectateVC.updateStride == 0 {
       let progressArray = progress.componentsSeparatedByString(" ")
       let latitude = Double(progressArray[2])!
       let longitude = Double(progressArray[3])!

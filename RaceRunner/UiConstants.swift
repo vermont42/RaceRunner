@@ -25,4 +25,5 @@ class UiConstants {
   static let longitudeCushion: Double = 0.00851970939493185
   static let applauseSampleCount: UInt32 = 3
   static let messageDelay: Int64 = 2
+  static let notDoneAlpha: CGFloat = 0.50
 }

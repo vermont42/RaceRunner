@@ -33,9 +33,21 @@ class SettingsManager {
   private var overlay: Overlay
   private static let overlayKey = "overlay"
   
-  private var publishRun: Bool
-  private static let publishRunKey = "publishRun"
-  private static let publishRunDefault = false
+  private var broadcastRun: Bool
+  private static let broadcastRunKey = "broadcastRun"
+  private static let broadcastRunDefault = false
+
+  private var allowStop: Bool
+  private static let allowStopKey = "allowStop"
+  private static let allowStopDefault = false
+
+  private var broadcastAvailability: Bool
+  private static let broadcastAvailabilityKey = "broadcastAvailability"
+  private static let broadcastAvailabilityDefault = false
+
+  private var broadcastName: String
+  private static let broadcastNameKey = "broadcastName"
+  private static let broadcastNameDefault = ""
   
   private var audibleSplits: Bool
   private static let audibleSplitsKey = "audibleSplits"
@@ -143,15 +155,42 @@ class SettingsManager {
       userDefaults.synchronize()
     }
     
-    if let storedPublishRunString = userDefaults.stringForKey(SettingsManager.publishRunKey) {
-      publishRun = (storedPublishRunString as NSString).boolValue
+    if let storedBroadcastRunString = userDefaults.stringForKey(SettingsManager.broadcastRunKey) {
+      broadcastRun = (storedBroadcastRunString as NSString).boolValue
     }
     else {
-      publishRun = SettingsManager.publishRunDefault
-      userDefaults.setObject("\(publishRun)", forKey: SettingsManager.publishRunKey)
+      broadcastRun = SettingsManager.broadcastRunDefault
+      userDefaults.setObject("\(broadcastRun)", forKey: SettingsManager.broadcastRunKey)
       userDefaults.synchronize()
     }
 
+    if let storedAllowStopString = userDefaults.stringForKey(SettingsManager.allowStopKey) {
+      allowStop = (storedAllowStopString as NSString).boolValue
+    }
+    else {
+      allowStop = SettingsManager.allowStopDefault
+      userDefaults.setObject("\(allowStop)", forKey: SettingsManager.allowStopKey)
+      userDefaults.synchronize()
+    }
+
+    if let storedBroadcastAvailabilityString = userDefaults.stringForKey(SettingsManager.broadcastAvailabilityKey) {
+      broadcastAvailability = (storedBroadcastAvailabilityString as NSString).boolValue
+    }
+    else {
+      broadcastAvailability = SettingsManager.broadcastAvailabilityDefault
+      userDefaults.setObject("\(broadcastAvailability)", forKey: SettingsManager.broadcastAvailabilityKey)
+      userDefaults.synchronize()
+    }
+
+    if let storedBroadcastNameString = userDefaults.stringForKey(SettingsManager.broadcastNameKey) {
+      broadcastName = storedBroadcastNameString
+    }
+    else {
+      broadcastName = SettingsManager.broadcastNameDefault
+      userDefaults.setObject(broadcastName, forKey: SettingsManager.broadcastNameKey)
+      userDefaults.synchronize()
+    }
+    
     if let storedAudibleSplitsString = userDefaults.stringForKey(SettingsManager.audibleSplitsKey) {
       audibleSplits = (storedAudibleSplitsString as NSString).boolValue
     }
@@ -319,14 +358,50 @@ class SettingsManager {
     }
   }
 
-  class func getPublishRun() -> Bool {
-    return settingsManager.publishRun
+  class func getBroadcastRun() -> Bool {
+    return settingsManager.broadcastRun
   }
   
-  class func setPublishRun(publishRun: Bool) {
-    if publishRun != settingsManager.publishRun {
-      settingsManager.publishRun = publishRun
-      settingsManager.userDefaults.setObject("\(publishRun)", forKey: SettingsManager.publishRunKey)
+  class func setBroadcastRun(broadcastRun: Bool) {
+    if broadcastRun != settingsManager.broadcastRun {
+      settingsManager.broadcastRun = broadcastRun
+      settingsManager.userDefaults.setObject("\(broadcastRun)", forKey: SettingsManager.broadcastRunKey)
+      settingsManager.userDefaults.synchronize()
+    }
+  }
+  
+  class func getAllowStop() -> Bool {
+    return settingsManager.allowStop
+  }
+  
+  class func setAllowStop(allowStop: Bool) {
+    if allowStop != settingsManager.allowStop {
+      settingsManager.allowStop = allowStop
+      settingsManager.userDefaults.setObject("\(allowStop)", forKey: SettingsManager.allowStopKey)
+      settingsManager.userDefaults.synchronize()
+    }
+  }
+
+  class func getBroadcastAvailability() -> Bool {
+    return settingsManager.broadcastAvailability
+  }
+  
+  class func setBroadcastAvailability(broadcastAvailability: Bool) {
+    if broadcastAvailability != settingsManager.broadcastAvailability {
+      settingsManager.broadcastAvailability = broadcastAvailability
+      settingsManager.userDefaults.setObject("\(broadcastAvailability)", forKey: SettingsManager.broadcastAvailabilityKey)
+      settingsManager.userDefaults.synchronize()
+    }
+  }
+
+  class func getBroadcastName() -> String {
+    return settingsManager.broadcastName
+  }
+  
+  class func setBroadcastName(broadcastName: String) {
+    if broadcastName != settingsManager.broadcastName {
+      settingsManager.broadcastName = broadcastName
+      settingsManager.userDefaults.setObject(broadcastName, forKey: SettingsManager.broadcastNameKey)
       settingsManager.userDefaults.synchronize()
     }
   }

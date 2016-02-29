@@ -82,6 +82,7 @@
 		E1E8B9561AAB742E00D04E38 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E8B94B1AAB742E00D04E38 /* SettingsVC.swift */; };
 		E1E8B9571AAB742E00D04E38 /* SpectateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E8B94C1AAB742E00D04E38 /* SpectateVC.swift */; };
 		E1E8B9581AAB742E00D04E38 /* UnwindPanSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E8B94D1AAB742E00D04E38 /* UnwindPanSegue.swift */; };
+		E1E9E3441C8288CC00F70D79 /* BroadcastVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E9E3431C8288CC00F70D79 /* BroadcastVC.swift */; };
 		E1F354031C7124F500D6C581 /* Products.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F354021C7124F500D6C581 /* Products.swift */; };
 		E1F354051C7125FC00D6C581 /* IapHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F354041C7125FC00D6C581 /* IapHelper.swift */; };
 		E1F3FC2F1C6106F7001B2DE7 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F3FC2E1C6106F7001B2DE7 /* GraphView.swift */; };
@@ -172,6 +173,7 @@
 		E1E8B94B1AAB742E00D04E38 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		E1E8B94C1AAB742E00D04E38 /* SpectateVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpectateVC.swift; sourceTree = "<group>"; };
 		E1E8B94D1AAB742E00D04E38 /* UnwindPanSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnwindPanSegue.swift; sourceTree = "<group>"; };
+		E1E9E3431C8288CC00F70D79 /* BroadcastVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BroadcastVC.swift; sourceTree = "<group>"; };
 		E1F354021C7124F500D6C581 /* Products.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Products.swift; sourceTree = "<group>"; };
 		E1F354041C7125FC00D6C581 /* IapHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IapHelper.swift; sourceTree = "<group>"; };
 		E1F3FC2E1C6106F7001B2DE7 /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				E1E8B9461AAB742E00D04E38 /* PanSegue.swift */,
 				E1D529CC1C1C80A500E92AD8 /* PersistentMapState.swift */,
 				E1F354021C7124F500D6C581 /* Products.swift */,
+				E1E9E3431C8288CC00F70D79 /* BroadcastVC.swift */,
 				E1A41B4D1BF7D83100E31943 /* PubNubManager.swift */,
 				E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */,
 				E11655AB1AEAFB5200633C16 /* RunModel.swift */,
@@ -564,6 +567,7 @@
 				E18B6C811C0D1AEC005865BA /* GpxActivityItemProvider.swift in Sources */,
 				E1648E0C1C4863E3002A3ED4 /* Shoes+CoreDataProperties.swift in Sources */,
 				E1F354051C7125FC00D6C581 /* IapHelper.swift in Sources */,
+				E1E9E3441C8288CC00F70D79 /* BroadcastVC.swift in Sources */,
 				E14360C31AE4AAA4003F27B4 /* GpxLocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
