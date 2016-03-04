@@ -1,3 +1,6 @@
+![RaceRunner](RaceRunner/logo.png "Logo by Moze")
+
+
 RaceRunner
 ===================
 
