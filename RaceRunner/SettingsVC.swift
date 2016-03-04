@@ -11,7 +11,7 @@ import DLRadioButton
 import StoreKit
 import CloudKit
 
-class SettingsVC: ChildVC {
+class SettingsVC: ChildVC, BroadcastDelegate {
   @IBOutlet var unitsToggle: UISwitch!
   @IBOutlet var iconToggle: UISwitch!
   @IBOutlet var broadcastNextRunButton: UIButton!
@@ -78,7 +78,6 @@ class SettingsVC: ChildVC {
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
     updateBroadcastButton()
-    print("viewWillAppear")
   }
   
   deinit {
@@ -86,7 +85,7 @@ class SettingsVC: ChildVC {
   }
   
   func updateBroadcastButton() {
-    broadcastNextRunButton.setTitle(SettingsManager.getBroadcastRun() ? SettingsVC.stopBroadcastingTitle : SettingsVC.broadcastNextRunTitle, forState: .Normal)
+    broadcastNextRunButton.setTitle(SettingsManager.getBroadcastNextRun() ? SettingsVC.stopBroadcastingTitle : SettingsVC.broadcastNextRunTitle, forState: .Normal)
   }
   
   func unlockIaps() {
@@ -269,6 +268,7 @@ class SettingsVC: ChildVC {
   }
   
   @IBAction func toggleIconType(sender: UISwitch) {
+    // TODO: enable this logic
 //    if sender.on && !Products.store.isProductPurchased(Products.runningHorse) {
 //      UIAlertController.showMessage(SettingsVC.noHorseMessage, title: SettingsVC.bummerTitle)
 //      sender.on = false
@@ -424,13 +424,18 @@ class SettingsVC: ChildVC {
   }
   
   @IBAction func startOrStopBroadcasting() {
+    // TODO: enable this logic
 //    if !SettingsManager.getBroadcastRun() && !Products.store.isProductPurchased(Products.broadcastRuns) {
 //      UIAlertController.showMessage(SettingsVC.noBroadcastMessage, title: SettingsVC.bummerTitle)
 //      return
 //    }
-    SettingsManager.setBroadcastRun(!SettingsManager.getBroadcastRun())
-    updateBroadcastButton()
-    performSegueWithIdentifier("pan publish", sender: self)
+    if !SettingsManager.getBroadcastNextRun() {
+      performSegueWithIdentifier("pan publish", sender: self)
+    }
+    else {
+      SettingsManager.setBroadcastNextRun(false)
+      updateBroadcastButton()
+    }
   }
   
   @IBAction func restorePurchases(sender: UIButton) {
@@ -447,5 +452,16 @@ class SettingsVC: ChildVC {
       return unwindSegue
     }
     return super.segueForUnwindingToViewController(toViewController, fromViewController: fromViewController, identifier: identifier)!
+  }
+  
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    if segue.identifier == "pan publish" {
+      (segue.destinationViewController as! BroadcastVC).broadcastDelegate = self
+    }
+  }
+  
+  func userWantsToBroadcast(userWantsToBroadcast: Bool) {
+    SettingsManager.setBroadcastNextRun(userWantsToBroadcast)
+    updateBroadcastButton()
   }
 }

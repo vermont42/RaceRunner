@@ -256,7 +256,8 @@ class RunModel: NSObject, CLLocationManagerDelegate {
   func eachSecond() {
     if status == .InProgress {
       totalSeconds++
-      if SettingsManager.getBroadcastRun() && locations.count > 0 {
+      // TODO: only do this if a real run is in progress
+      if SettingsManager.getBroadcastNextRun() && locations.count > 0 {
         PubNubManager.publishLocation(locations[locations.count - 1], distance: totalDistance, seconds: totalSeconds)
       }
       runDelegate?.receiveProgress(totalDistance, totalSeconds: totalSeconds, altitude: curAlt, altGained: altGained, altLost: altLost)
@@ -412,6 +413,9 @@ class RunModel: NSObject, CLLocationManagerDelegate {
   func stop() {
     timer.invalidate()
     locationManager.stopUpdatingLocation()
+    PubNubManager.runStopped()
+    // TODO: put the next line inside the if statement
+    SettingsManager.setBroadcastNextRun(false) // TODO: broadcast some sort of notification to clients
     if runToSimulate == nil && gpxFile == nil {
       realRunInProgress = false
     }

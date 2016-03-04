@@ -33,9 +33,9 @@ class SettingsManager {
   private var overlay: Overlay
   private static let overlayKey = "overlay"
   
-  private var broadcastRun: Bool
-  private static let broadcastRunKey = "broadcastRun"
-  private static let broadcastRunDefault = false
+  private var broadcastNextRun: Bool
+  private static let broadcastNextRunKey = "broadcastNextRun"
+  private static let broadcastNextRunDefault = false
 
   private var allowStop: Bool
   private static let allowStopKey = "allowStop"
@@ -43,7 +43,7 @@ class SettingsManager {
 
   private var broadcastAvailability: Bool
   private static let broadcastAvailabilityKey = "broadcastAvailability"
-  private static let broadcastAvailabilityDefault = false
+  private static let broadcastAvailabilityDefault = true
 
   private var broadcastName: String
   private static let broadcastNameKey = "broadcastName"
@@ -155,12 +155,12 @@ class SettingsManager {
       userDefaults.synchronize()
     }
     
-    if let storedBroadcastRunString = userDefaults.stringForKey(SettingsManager.broadcastRunKey) {
-      broadcastRun = (storedBroadcastRunString as NSString).boolValue
+    if let storedBroadcastNextRunString = userDefaults.stringForKey(SettingsManager.broadcastNextRunKey) {
+      broadcastNextRun = (storedBroadcastNextRunString as NSString).boolValue
     }
     else {
-      broadcastRun = SettingsManager.broadcastRunDefault
-      userDefaults.setObject("\(broadcastRun)", forKey: SettingsManager.broadcastRunKey)
+      broadcastNextRun = SettingsManager.broadcastNextRunDefault
+      userDefaults.setObject("\(broadcastNextRun)", forKey: SettingsManager.broadcastNextRunKey)
       userDefaults.synchronize()
     }
 
@@ -358,14 +358,14 @@ class SettingsManager {
     }
   }
 
-  class func getBroadcastRun() -> Bool {
-    return settingsManager.broadcastRun
+  class func getBroadcastNextRun() -> Bool {
+    return settingsManager.broadcastNextRun
   }
   
-  class func setBroadcastRun(broadcastRun: Bool) {
-    if broadcastRun != settingsManager.broadcastRun {
-      settingsManager.broadcastRun = broadcastRun
-      settingsManager.userDefaults.setObject("\(broadcastRun)", forKey: SettingsManager.broadcastRunKey)
+  class func setBroadcastNextRun(broadcastNextRun: Bool) {
+    if broadcastNextRun != settingsManager.broadcastNextRun {
+      settingsManager.broadcastNextRun = broadcastNextRun
+      settingsManager.userDefaults.setObject("\(broadcastNextRun)", forKey: SettingsManager.broadcastNextRunKey)
       settingsManager.userDefaults.synchronize()
     }
   }

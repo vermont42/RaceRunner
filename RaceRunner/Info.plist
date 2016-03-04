@@ -30,11 +30,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.7</string>
+	<string>1.0.8</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.7</string>
+	<string>1.0.8</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -50,7 +50,7 @@
 		</array>
 	</dict>
 	<key>LSApplicationCategoryType</key>
-	<string></string>
+	<string>public.app-category.healthcare-fitness</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>googlechromes</string>
@@ -58,6 +58,8 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+  <key>ITSAppUsesNonExemptEncryption</key>
+  <false/>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>RaceRunner would like to access your location.</string>
 	<key>UIBackgroundModes</key>

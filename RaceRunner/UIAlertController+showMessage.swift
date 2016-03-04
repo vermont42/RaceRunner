@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIAlertController {
-  private static let okTitle = "OK"
+  static var okTitle: String { get { return "OK" } } // static let causes compilation error
   
   class func showMessage(message: String, title: String, okTitle: String = UIAlertController.okTitle, handler: ((UIAlertAction) -> Void)? = nil) {
     let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)

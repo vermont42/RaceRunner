@@ -10,6 +10,8 @@ import UIKit
 
 class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
   @IBOutlet var menuTable: UITableView!
+  @IBOutlet var viewControllerTitle: UILabel!
+  
   var controllerLabels = ["Start Run", "Simulate", "Demo", "History", "Spectate", "Settings", "Shoes"]
   var panSegues = ["pan run", "pan log", "pan GPX run", "pan log", "pan spectate", "pan settings", "pan shoes"]
   var selectedMenuItem: Int = 0
@@ -24,6 +26,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
     menuTable.separatorStyle = .None
     menuTable.backgroundColor = UIColor.clearColor()
     menuTable.scrollsToTop = false

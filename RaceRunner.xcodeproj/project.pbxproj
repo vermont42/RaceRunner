@@ -25,12 +25,15 @@
 		E12E44F01C572F340065AE66 /* GraphVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12E44EF1C572F340065AE66 /* GraphVC.swift */; };
 		E12E44F21C58BAAB0065AE66 /* Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12E44F11C58BAAB0065AE66 /* Overlay.swift */; };
 		E13736F01C4F0F1E008CDE36 /* ShoesSortField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13736EF1C4F0F1E008CDE36 /* ShoesSortField.swift */; };
+		E137AC9E1C87BEB600A3148D /* String+removeWhitespace.swift in Sources */ = {isa = PBXBuildFile; fileRef = E137AC9D1C87BEB600A3148D /* String+removeWhitespace.swift */; };
 		E138E8CE1BA0A0FB00BA20E5 /* iSmoothRun.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */; };
 		E13B39931ABA705E007F61ED /* DarkSky.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B39921ABA705E007F61ED /* DarkSky.swift */; };
 		E13B48B51B911BDA001C997A /* UiConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B48B41B911BDA001C997A /* UiConstants.swift */; };
 		E13B48B71B921A9F001C997A /* UiHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B48B61B921A9F001C997A /* UiHelpers.swift */; };
 		E13C763F1C1A01520046021A /* Array+insertionIndexOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13C763E1C1A01520046021A /* Array+insertionIndexOf.swift */; };
 		E13E30571BFD28F1009CDE60 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13E30561BFD28F1009CDE60 /* SoundManager.swift */; };
+		E14175A91C877AC1001F402C /* BroadcastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14175A81C877AC1001F402C /* BroadcastDelegate.swift */; };
+		E14175AB1C87A322001F402C /* PubNubSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14175AA1C87A322001F402C /* PubNubSubscriber.swift */; };
 		E14360C31AE4AAA4003F27B4 /* GpxLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */; };
 		E15195F81C0BD41A00BD52FB /* HumanWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15195F71C0BD41A00BD52FB /* HumanWeight.swift */; };
 		E15681F91C52F007008E077C /* GpxExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15681F81C52F007008E077C /* GpxExporter.swift */; };
@@ -111,12 +114,15 @@
 		E12E44EF1C572F340065AE66 /* GraphVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphVC.swift; sourceTree = "<group>"; };
 		E12E44F11C58BAAB0065AE66 /* Overlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Overlay.swift; sourceTree = "<group>"; };
 		E13736EF1C4F0F1E008CDE36 /* ShoesSortField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoesSortField.swift; sourceTree = "<group>"; };
+		E137AC9D1C87BEB600A3148D /* String+removeWhitespace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+removeWhitespace.swift"; sourceTree = "<group>"; };
 		E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = iSmoothRun.gpx; sourceTree = "<group>"; };
 		E13B39921ABA705E007F61ED /* DarkSky.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DarkSky.swift; sourceTree = "<group>"; };
 		E13B48B41B911BDA001C997A /* UiConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UiConstants.swift; sourceTree = "<group>"; };
 		E13B48B61B921A9F001C997A /* UiHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UiHelpers.swift; sourceTree = "<group>"; };
 		E13C763E1C1A01520046021A /* Array+insertionIndexOf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+insertionIndexOf.swift"; sourceTree = "<group>"; };
 		E13E30561BFD28F1009CDE60 /* SoundManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
+		E14175A81C877AC1001F402C /* BroadcastDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BroadcastDelegate.swift; sourceTree = "<group>"; };
+		E14175AA1C87A322001F402C /* PubNubSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubNubSubscriber.swift; sourceTree = "<group>"; };
 		E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxLocationManager.swift; sourceTree = "<group>"; };
 		E15195F71C0BD41A00BD52FB /* HumanWeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HumanWeight.swift; sourceTree = "<group>"; };
 		E15681F81C52F007008E077C /* GpxExporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxExporter.swift; sourceTree = "<group>"; };
@@ -281,6 +287,8 @@
 				E11E22C01C08C76E00488399 /* Accent.swift */,
 				E1E8B9231AAB73F000D04E38 /* AppDelegate.swift */,
 				E13C763E1C1A01520046021A /* Array+insertionIndexOf.swift */,
+				E14175A81C877AC1001F402C /* BroadcastDelegate.swift */,
+				E1E9E3431C8288CC00F70D79 /* BroadcastVC.swift */,
 				E1E8B9451AAB742E00D04E38 /* CDManager.swift */,
 				E1E8B9471AAB742E00D04E38 /* ChildVC.swift */,
 				E11E22C21C08CDC000488399 /* Config.swift */,
@@ -309,8 +317,8 @@
 				E1E8B9461AAB742E00D04E38 /* PanSegue.swift */,
 				E1D529CC1C1C80A500E92AD8 /* PersistentMapState.swift */,
 				E1F354021C7124F500D6C581 /* Products.swift */,
-				E1E9E3431C8288CC00F70D79 /* BroadcastVC.swift */,
 				E1A41B4D1BF7D83100E31943 /* PubNubManager.swift */,
+				E14175AA1C87A322001F402C /* PubNubSubscriber.swift */,
 				E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */,
 				E11655AB1AEAFB5200633C16 /* RunModel.swift */,
 				E185F8521AE1CB19008BF394 /* RunnerIcons.swift */,
@@ -325,6 +333,7 @@
 				E10B704F1C45C9BF00C70283 /* SortType.swift */,
 				E13E30561BFD28F1009CDE60 /* SoundManager.swift */,
 				E1E8B94C1AAB742E00D04E38 /* SpectateVC.swift */,
+				E137AC9D1C87BEB600A3148D /* String+removeWhitespace.swift */,
 				E10B704B1C4563E600C70283 /* UIAlertController+showMessage.swift */,
 				E10B70491C455C4F00C70283 /* UIApplication+topViewController.swift */,
 				E13B48B41B911BDA001C997A /* UiConstants.swift */,
@@ -516,6 +525,7 @@
 				E15195F81C0BD41A00BD52FB /* HumanWeight.swift in Sources */,
 				E1C22BCC1AF05DA1003A5712 /* MarqueeLabel.m in Sources */,
 				E13B48B71B921A9F001C997A /* UiHelpers.swift in Sources */,
+				E137AC9E1C87BEB600A3148D /* String+removeWhitespace.swift in Sources */,
 				E13B39931ABA705E007F61ED /* DarkSky.swift in Sources */,
 				E1FCB00E1AB8F43100B1D803 /* Converter.swift in Sources */,
 				E1D521681ABA93CD00B46300 /* Location.swift in Sources */,
@@ -536,6 +546,7 @@
 				E1D529CD1C1C80A500E92AD8 /* PersistentMapState.swift in Sources */,
 				E12E44F01C572F340065AE66 /* GraphVC.swift in Sources */,
 				E1648E141C4975ED002A3ED4 /* ShoesEditorVC.swift in Sources */,
+				E14175A91C877AC1001F402C /* BroadcastDelegate.swift in Sources */,
 				E1F3FC2F1C6106F7001B2DE7 /* GraphView.swift in Sources */,
 				E1E8B9531AAB742E00D04E38 /* HelpVC.swift in Sources */,
 				E1E8B9511AAB742E00D04E38 /* PanSegue.swift in Sources */,
@@ -559,6 +570,7 @@
 				E1F354031C7124F500D6C581 /* Products.swift in Sources */,
 				E1E8B9571AAB742E00D04E38 /* SpectateVC.swift in Sources */,
 				E1D521691ABA93CD00B46300 /* Run.swift in Sources */,
+				E14175AB1C87A322001F402C /* PubNubSubscriber.swift in Sources */,
 				E1E7F7D61C03F8E500F108B6 /* Double+roundToPlaces.swift in Sources */,
 				E1B45F071AE96EFC00AF73AB /* LocationManager.swift in Sources */,
 				E11E22C11C08C76E00488399 /* Accent.swift in Sources */,
