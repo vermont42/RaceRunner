@@ -9,6 +9,9 @@
   xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/gpx/1/1/gpx.xsd">
 <metadata>
 <name>Runmeter Run</name>
+<weight>50</weight>
+<temperature>20</temperature>
+<weather>Sunny</weather>
 <desc>Runmeter Run Sep 7, 2015, 5:10:48 PM</desc>
 <author><name>Abvio Runmeter</name><email id="support" domain="abvio.com"/></author>
 <copyright author="Abvio Inc."><year>2015</year></copyright>

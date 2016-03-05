@@ -36,6 +36,7 @@ class RunVC: ChildVC, RunDelegate {
   
   var runToSimulate: Run?
   var gpxFile: String?
+  private var modelStoppedRun = false
   
   override func viewDidLoad() {
     map.mapType = kGMSTypeTerrain
@@ -203,7 +204,12 @@ class RunVC: ChildVC, RunDelegate {
     pauseResume.hidden = true
     PersistentMapState.pin.map = nil
     let totalDistance = RunModel.runModel.totalDistance
-    RunModel.runModel.stop()
+    if !modelStoppedRun {
+      RunModel.runModel.stop()
+    }
+    else {
+      modelStoppedRun = false
+    }
     if runToSimulate == nil && gpxFile == nil {
       if totalDistance > RunModel.minDistance {
         arc4random_uniform(UiConstants.applauseSampleCount) + 1
@@ -295,5 +301,10 @@ class RunVC: ChildVC, RunDelegate {
     altLabel.hidden = false
     altGainedLabel.hidden = false
     altLostLabel.hidden = false
+  }
+  
+  func stopRun() {
+    modelStoppedRun = true
+    startStop()
   }
 }

@@ -11,17 +11,11 @@ import MapKit
 import CoreLocation
 import CoreData
 
-protocol RunDelegate {
-  func showInitialCoordinate(coordinate: CLLocationCoordinate2D)
-  func plotToCoordinate(coordinate: CLLocationCoordinate2D, altitudeColor: UIColor, paceColor: UIColor)
-  func receiveProgress(totalDistance: Double, totalSeconds: Int, altitude: Double, altGained: Double, altLost: Double)
-}
-
 protocol ImportedRunDelegate {
   func runWasImported()
 }
 
-class RunModel: NSObject, CLLocationManagerDelegate {
+class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   var locations: [CLLocation]! = []
   var status : Status = .PreRun
   var runDelegate: RunDelegate?
@@ -257,7 +251,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     if status == .InProgress {
       totalSeconds++
       // TODO: only do this if a real run is in progress
-      if SettingsManager.getBroadcastNextRun() && locations.count > 0 {
+      if SettingsManager.getBroadcastNextRun() && locations.count > 0 && realRunInProgress {
         PubNubManager.publishLocation(locations[locations.count - 1], distance: totalDistance, seconds: totalSeconds)
       }
       runDelegate?.receiveProgress(totalDistance, totalSeconds: totalSeconds, altitude: curAlt, altGained: altGained, altLost: altLost)
@@ -301,6 +295,9 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     startTimer()
     if runToSimulate == nil && gpxFile == nil {
       realRunInProgress = true
+    }
+    if SettingsManager.getBroadcastNextRun() && realRunInProgress {
+      PubNubManager.subscribeToChannel(self, publisher: SettingsManager.getBroadcastName())
     }
   }
   
@@ -413,9 +410,11 @@ class RunModel: NSObject, CLLocationManagerDelegate {
   func stop() {
     timer.invalidate()
     locationManager.stopUpdatingLocation()
-    PubNubManager.runStopped()
-    // TODO: put the next line inside the if statement
-    SettingsManager.setBroadcastNextRun(false) // TODO: broadcast some sort of notification to clients
+    if realRunInProgress && SettingsManager.getBroadcastNextRun() {
+      PubNubManager.runStopped()
+      PubNubManager.unsubscribeFromChannel(SettingsManager.getBroadcastName())
+      SettingsManager.setBroadcastNextRun(false)
+    }
     if runToSimulate == nil && gpxFile == nil {
       realRunInProgress = false
     }
@@ -446,6 +445,7 @@ class RunModel: NSObject, CLLocationManagerDelegate {
           UIAlertController.showMessage(result, title: Shoes.warningTitle, okTitle: Shoes.gotIt)
         }
       }
+      runDelegate?.stopRun()
     }
     else {
       // I don't consider this a magic number because the unadjusted length of a second will never change.
@@ -495,6 +495,10 @@ class RunModel: NSObject, CLLocationManagerDelegate {
     else {
       return true
     }
+  }
+  
+  func stopRun() {
+    stop()
   }
 }
 

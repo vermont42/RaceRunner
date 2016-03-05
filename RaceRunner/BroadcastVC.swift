@@ -13,7 +13,6 @@ class BroadcastVC: UIViewController, UITextFieldDelegate {
   @IBOutlet var viewControllerTitle: UILabel!
   @IBOutlet var doneButton: UIButton!
   @IBOutlet var nameField: UITextField!
-  @IBOutlet var visibleToggle: UISwitch!
   @IBOutlet var stopToggle: UISwitch!
   weak var broadcastDelegate: BroadcastDelegate!
 
@@ -24,7 +23,6 @@ class BroadcastVC: UIViewController, UITextFieldDelegate {
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
     viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
-    visibleToggle.on = SettingsManager.getBroadcastAvailability()
     stopToggle.on = SettingsManager.getAllowStop()
     nameField.text = SettingsManager.getBroadcastName()
     setupDoneButton()
@@ -42,10 +40,6 @@ class BroadcastVC: UIViewController, UITextFieldDelegate {
   
   override func prefersStatusBarHidden() -> Bool {
     return true
-  }
-  
-  @IBAction func toggleVisible() {
-    SettingsManager.setBroadcastAvailability(!SettingsManager.getBroadcastAvailability())
   }
   
   @IBAction func toggleStop() {

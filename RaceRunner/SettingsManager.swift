@@ -41,10 +41,6 @@ class SettingsManager {
   private static let allowStopKey = "allowStop"
   private static let allowStopDefault = false
 
-  private var broadcastAvailability: Bool
-  private static let broadcastAvailabilityKey = "broadcastAvailability"
-  private static let broadcastAvailabilityDefault = true
-
   private var broadcastName: String
   private static let broadcastNameKey = "broadcastName"
   private static let broadcastNameDefault = ""
@@ -170,15 +166,6 @@ class SettingsManager {
     else {
       allowStop = SettingsManager.allowStopDefault
       userDefaults.setObject("\(allowStop)", forKey: SettingsManager.allowStopKey)
-      userDefaults.synchronize()
-    }
-
-    if let storedBroadcastAvailabilityString = userDefaults.stringForKey(SettingsManager.broadcastAvailabilityKey) {
-      broadcastAvailability = (storedBroadcastAvailabilityString as NSString).boolValue
-    }
-    else {
-      broadcastAvailability = SettingsManager.broadcastAvailabilityDefault
-      userDefaults.setObject("\(broadcastAvailability)", forKey: SettingsManager.broadcastAvailabilityKey)
       userDefaults.synchronize()
     }
 
@@ -378,18 +365,6 @@ class SettingsManager {
     if allowStop != settingsManager.allowStop {
       settingsManager.allowStop = allowStop
       settingsManager.userDefaults.setObject("\(allowStop)", forKey: SettingsManager.allowStopKey)
-      settingsManager.userDefaults.synchronize()
-    }
-  }
-
-  class func getBroadcastAvailability() -> Bool {
-    return settingsManager.broadcastAvailability
-  }
-  
-  class func setBroadcastAvailability(broadcastAvailability: Bool) {
-    if broadcastAvailability != settingsManager.broadcastAvailability {
-      settingsManager.broadcastAvailability = broadcastAvailability
-      settingsManager.userDefaults.setObject("\(broadcastAvailability)", forKey: SettingsManager.broadcastAvailabilityKey)
       settingsManager.userDefaults.synchronize()
     }
   }

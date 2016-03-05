@@ -12,7 +12,7 @@ class GpxExporter: NSObject, MFMailComposeViewControllerDelegate {
   private static let failureMessage = "RaceRunner could not export this run because RaceRunner could not open the Mail app. One possible cause is that there are no email accounts configured for Mail."
   private static let failureTitle = "Export Failed"
   private static let subject = "run exported by RaceRunner"
-  private static let body = "This run was recorded by RaceRunner, a run-tracking app lovingly crafted in Berkeley, California and Kāʻanapali, Hawaiʻi."
+  private static let body = "This run was recorded by RaceRunner, a run-tracking app designed in Kāʻanapali, Hawaiʻi and coded in Berkeley, California."
   private static let mimeType = "text/xml"
   private static let fileName = "run.gpx"
   private static let gpxExporter = GpxExporter()

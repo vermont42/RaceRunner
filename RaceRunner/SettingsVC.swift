@@ -73,6 +73,7 @@ class SettingsVC: ChildVC, BroadcastDelegate {
     secretSwipeRecognizer.numberOfTouchesRequired = 2
     secretSwipeRecognizer.direction = .Down
     view.addGestureRecognizer(secretSwipeRecognizer)
+    SettingsManager.setBroadcastNextRun(false)
   }
   
   override func viewWillAppear(animated: Bool) {
@@ -435,6 +436,7 @@ class SettingsVC: ChildVC, BroadcastDelegate {
     else {
       SettingsManager.setBroadcastNextRun(false)
       updateBroadcastButton()
+      PubNubManager.runStopped()
     }
   }
   
