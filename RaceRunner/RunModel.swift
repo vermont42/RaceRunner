@@ -51,6 +51,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   private var runToSimulate: Run!
   private var gpxFile: String!
   private var secondLength = 1.0
+  private var spectatorStoppedRun = false
   private (set) var sortedAltitudes: [Double] = []
   private (set) var sortedPaces: [Double] = []
   static let altFudge: Double = 0.1
@@ -252,7 +253,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
       totalSeconds++
       // TODO: only do this if a real run is in progress
       if SettingsManager.getBroadcastNextRun() && locations.count > 0 && realRunInProgress {
-        PubNubManager.publishLocation(locations[locations.count - 1], distance: totalDistance, seconds: totalSeconds)
+        PubNubManager.publishLocation(locations[locations.count - 1], distance: totalDistance, seconds: totalSeconds, publisher: SettingsManager.getBroadcastName())
       }
       runDelegate?.receiveProgress(totalDistance, totalSeconds: totalSeconds, altitude: curAlt, altGained: altGained, altLost: altLost)
       currentSplitDistance = totalDistance - lastDistance
@@ -445,7 +446,10 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
           UIAlertController.showMessage(result, title: Shoes.warningTitle, okTitle: Shoes.gotIt)
         }
       }
-      runDelegate?.stopRun()
+      if spectatorStoppedRun {
+        runDelegate?.stopRun()
+        spectatorStoppedRun = false
+      }
     }
     else {
       // I don't consider this a magic number because the unadjusted length of a second will never change.
@@ -498,7 +502,12 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   }
   
   func stopRun() {
+    spectatorStoppedRun = true
     stop()
+  }
+  
+  func receiveMessage(message: String) {
+    Utterer.utter(message)
   }
 }
 

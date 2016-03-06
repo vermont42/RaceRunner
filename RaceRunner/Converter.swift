@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import AVFoundation
 
 class Converter {
   private static let feetInMeter: Double = 3.281
@@ -34,7 +33,6 @@ class Converter {
   private static let kilometer: String = "kilometer"
   private static let miles: String = "miles"
   private static let kilometers: String = "kilometers"
-  private static let synth = AVSpeechSynthesizer()
   static let metersInMile: Double = 1609.344
   static let metersInKilometer: Double = 1000.0
   static let kilometersPerMile: Float = 1.609344
@@ -68,11 +66,7 @@ class Converter {
     else {
       progressString += ", no altitude change"
     }
-    let utterance = AVSpeechUtterance(string: progressString)
-    utterance.rate = 0.5
-    utterance.voice = AVSpeechSynthesisVoice(language: "en-\(SettingsManager.getAccent().languageCode())")        
-    utterance.pitchMultiplier = 0.8
-    synth.speakUtterance(utterance)
+    Utterer.utter(progressString)
   }
   
   class func pluralizedCurrentLongUnit(value: Double) -> String {

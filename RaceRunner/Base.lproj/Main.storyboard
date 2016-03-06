@@ -6,6 +6,80 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--HelpVC-->
+        <scene sceneID="s0w-Hd-wKn">
+            <objects>
+                <viewController id="J4K-qe-vqE" customClass="HelpVC" customModule="RaceRunner" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7Tz-ly-cjF"/>
+                        <viewControllerLayoutGuide type="bottom" id="8JS-Hz-PQo"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="moE-Fv-Dfp">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a7P-Nf-A8a">
+                                <rect key="frame" x="20" y="20" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="EdW-2s-6oC"/>
+                                    <constraint firstAttribute="width" constant="44" id="Ki5-iW-wsG"/>
+                                </constraints>
+                                <state key="normal" image="menu">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showMenu:" destination="J4K-qe-vqE" eventType="touchUpInside" id="gBb-gH-bt4"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Help" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLY-gk-dEi">
+                                <rect key="frame" x="256" y="20" width="89" height="55"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="40"/>
+                                <color key="textColor" red="0.92941176469999998" green="0.68627450980000004" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="MFx-iy-lLu">
+                                <rect key="frame" x="20" y="72" width="560" height="472"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" red="0.83921568629999999" green="0.82745098039999998" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="FDd-wU-sge">
+                                <rect key="frame" x="205" y="552" width="191" height="29"/>
+                                <color key="backgroundColor" red="0.83921568629999999" green="0.82745098039999998" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                <segments>
+                                    <segment title="Help"/>
+                                    <segment title="Credits"/>
+                                    <segment title="Support"/>
+                                </segments>
+                                <color key="tintColor" red="0.22352941176470587" green="0.27058823529411763" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
+                            </segmentedControl>
+                        </subviews>
+                        <color key="backgroundColor" red="0.22352941176470587" green="0.27058823529411763" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="jLY-gk-dEi" firstAttribute="top" secondItem="7Tz-ly-cjF" secondAttribute="bottom" id="IsS-e5-sLu"/>
+                            <constraint firstItem="FDd-wU-sge" firstAttribute="centerX" secondItem="moE-Fv-Dfp" secondAttribute="centerX" id="PaH-qo-9wg"/>
+                            <constraint firstItem="a7P-Nf-A8a" firstAttribute="top" secondItem="7Tz-ly-cjF" secondAttribute="bottom" id="alQ-Dp-l3F"/>
+                            <constraint firstItem="MFx-iy-lLu" firstAttribute="leading" secondItem="moE-Fv-Dfp" secondAttribute="leading" constant="20" id="bED-fh-fVU"/>
+                            <constraint firstItem="jLY-gk-dEi" firstAttribute="centerX" secondItem="moE-Fv-Dfp" secondAttribute="centerX" id="dA4-I4-KYJ"/>
+                            <constraint firstAttribute="trailing" secondItem="MFx-iy-lLu" secondAttribute="trailing" constant="20" id="lt9-tj-vPL"/>
+                            <constraint firstItem="8JS-Hz-PQo" firstAttribute="top" secondItem="FDd-wU-sge" secondAttribute="bottom" constant="20" id="nRE-2k-QZU"/>
+                            <constraint firstItem="FDd-wU-sge" firstAttribute="top" secondItem="MFx-iy-lLu" secondAttribute="bottom" constant="8" id="s5g-IF-fkP"/>
+                            <constraint firstItem="MFx-iy-lLu" firstAttribute="top" secondItem="a7P-Nf-A8a" secondAttribute="bottom" constant="8" id="vRc-Kb-UKH"/>
+                            <constraint firstItem="a7P-Nf-A8a" firstAttribute="leading" secondItem="moE-Fv-Dfp" secondAttribute="leading" constant="20" id="wW5-D0-Z5H"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="viewControllerTitle" destination="jLY-gk-dEi" id="p7M-3z-9Uq"/>
+                        <segue destination="Vjy-QJ-XvK" kind="unwind" identifier="unwind pan" unwindAction="returnFromSegueActions:" id="L1T-gj-BZ5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oXC-H1-W3F" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Vjy-QJ-XvK" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="-154" y="-429"/>
+        </scene>
         <!--SettingsVC-->
         <scene sceneID="YtX-WC-Tc5">
             <objects>
@@ -491,7 +565,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pvI-qj-ZS9" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="1fh-ku-Kl6" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-154" y="257"/>
+            <point key="canvasLocation" x="-154" y="317"/>
         </scene>
         <!--BroadcastVC-->
         <scene sceneID="MKh-ws-XtA">
@@ -856,6 +930,7 @@
                         <segue destination="Gd5-qf-mR6" kind="custom" identifier="pan GPX run" customClass="PanSegue" customModule="RaceRunner" customModuleProvider="target" id="ltM-iX-wfX"/>
                         <segue destination="Ww2-AC-tWa" kind="custom" identifier="pan spectate" customClass="PanSegue" customModule="RaceRunner" customModuleProvider="target" id="lhD-2F-ggI"/>
                         <segue destination="QBU-40-b2r" kind="custom" identifier="pan shoes" customClass="PanSegue" customModule="RaceRunner" customModuleProvider="target" id="ACN-iC-y2S"/>
+                        <segue destination="J4K-qe-vqE" kind="custom" identifier="pan help" customClass="PanSegue" customModule="RaceRunner" customModuleProvider="target" id="25Z-Ym-CcF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ke-KH-Y7l" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1204,14 +1279,14 @@
                         <outlet property="timeLabel" destination="S59-GP-8oH" id="dyN-yP-5CG"/>
                         <outlet property="viewControllerTitle" destination="Ehh-bc-N8p" id="10z-nH-BTf"/>
                         <segue destination="9PW-vg-XNt" kind="unwind" identifier="unwind pan" unwindAction="returnFromSegueActions:" id="MSN-4U-8Uc"/>
-                        <segue destination="NGd-Jn-waq" kind="custom" identifier="pan details from run" customClass="PanSegue" customModule="RaceRunner" id="Iru-8H-Blz"/>
                         <segue destination="9PW-vg-XNt" kind="unwind" identifier="unwind pan log" unwindAction="returnFromSegueActions:" id="UaW-km-q40"/>
+                        <segue destination="NGd-Jn-waq" kind="custom" identifier="pan details from run" customClass="PanSegue" customModule="RaceRunner" customModuleProvider="target" id="xed-hc-tXN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rFO-hh-8Zc" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="9PW-vg-XNt" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1279" y="276"/>
+            <point key="canvasLocation" x="1396" y="272"/>
         </scene>
         <!--SpectateVC-->
         <scene sceneID="sqy-fq-qrA">
@@ -1231,6 +1306,13 @@
                                 <color key="textColor" red="0.92941176469999998" green="0.68627450980000004" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QNG-Or-CcH">
+                                <rect key="frame" x="299" y="0.0" width="2" height="600"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="2" id="MWz-MA-Shg"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vcn-GQ-Bbv" customClass="GMSMapView">
                                 <rect key="frame" x="20" y="80" width="560" height="380"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1255,7 +1337,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rsg-h4-TVv">
-                                <rect key="frame" x="20" y="532" width="560" height="48"/>
+                                <rect key="frame" x="20" y="532" width="271" height="48"/>
                                 <color key="backgroundColor" red="0.69019607839999997" green="0.76862745099999996" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="26"/>
                                 <state key="normal" title="Start">
@@ -1290,25 +1372,44 @@
                                 <color key="textColor" red="0.92941176469999998" green="0.68627450980000004" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eNh-Cp-Ply">
+                                <rect key="frame" x="310" y="532" width="270" height="48"/>
+                                <color key="backgroundColor" red="0.83921568629999999" green="0.82745098039999998" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="26"/>
+                                <state key="normal" title="Message">
+                                    <color key="titleColor" red="0.22352941179999999" green="0.27058823529999998" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="sendMessage" destination="Ww2-AC-tWa" eventType="touchUpInside" id="OUB-xt-sSG"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.29019607843137252" green="0.3411764705882353" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Vcn-GQ-Bbv" firstAttribute="top" secondItem="FBJ-yc-FTO" secondAttribute="bottom" constant="8" id="12S-ec-3kS"/>
                             <constraint firstItem="SoM-el-f4R" firstAttribute="top" secondItem="qO3-ge-VtZ" secondAttribute="top" constant="20" id="6RS-oi-gb3"/>
+                            <constraint firstAttribute="trailing" secondItem="eNh-Cp-Ply" secondAttribute="trailing" constant="20" id="6ug-dL-f21"/>
+                            <constraint firstItem="QNG-Or-CcH" firstAttribute="top" secondItem="qO3-ge-VtZ" secondAttribute="top" id="8SE-8g-75q"/>
                             <constraint firstItem="ar4-uk-jnF" firstAttribute="top" secondItem="Vcn-GQ-Bbv" secondAttribute="bottom" constant="8" id="AUC-NP-tGs"/>
+                            <constraint firstItem="cgY-7I-uUP" firstAttribute="top" secondItem="eNh-Cp-Ply" secondAttribute="bottom" constant="20" id="Ant-Jo-7dV"/>
                             <constraint firstAttribute="trailing" secondItem="9e3-rp-8KK" secondAttribute="trailing" constant="20" id="DcQ-Fh-Gh5"/>
                             <constraint firstAttribute="trailing" secondItem="n7F-yg-oic" secondAttribute="trailing" constant="20" id="Gfo-C4-j4k"/>
+                            <constraint firstAttribute="bottom" secondItem="QNG-Or-CcH" secondAttribute="bottom" id="Izf-7i-LLK"/>
+                            <constraint firstItem="QNG-Or-CcH" firstAttribute="leading" secondItem="rsg-h4-TVv" secondAttribute="trailing" constant="8" id="JrB-CA-9KT"/>
                             <constraint firstItem="SoM-el-f4R" firstAttribute="leading" secondItem="qO3-ge-VtZ" secondAttribute="leading" constant="20" id="K07-Yt-rCZ"/>
                             <constraint firstItem="n7F-yg-oic" firstAttribute="top" secondItem="9e3-rp-8KK" secondAttribute="bottom" constant="8" id="ND3-5p-YgA"/>
                             <constraint firstItem="hoJ-1m-kC7" firstAttribute="top" secondItem="ZVY-Tm-hfA" secondAttribute="bottom" id="OYh-p6-GPJ"/>
                             <constraint firstItem="Vcn-GQ-Bbv" firstAttribute="leading" secondItem="qO3-ge-VtZ" secondAttribute="leading" constant="20" id="Rbq-D7-uha"/>
+                            <constraint firstItem="eNh-Cp-Ply" firstAttribute="leading" secondItem="QNG-Or-CcH" secondAttribute="trailing" constant="9" id="SmR-7H-TYq"/>
+                            <constraint firstItem="QNG-Or-CcH" firstAttribute="centerX" secondItem="qO3-ge-VtZ" secondAttribute="centerX" id="T3T-6R-9pt"/>
                             <constraint firstItem="hoJ-1m-kC7" firstAttribute="centerX" secondItem="qO3-ge-VtZ" secondAttribute="centerX" id="ald-Je-wkP"/>
                             <constraint firstAttribute="trailing" secondItem="FBJ-yc-FTO" secondAttribute="trailing" constant="20" id="chj-Ci-A32"/>
                             <constraint firstItem="6An-ik-hII" firstAttribute="leading" secondItem="qO3-ge-VtZ" secondAttribute="leading" constant="20" id="dAR-k6-kMH"/>
                             <constraint firstAttribute="trailing" secondItem="Vcn-GQ-Bbv" secondAttribute="trailing" constant="20" id="dv4-Yz-g5C"/>
                             <constraint firstItem="ar4-uk-jnF" firstAttribute="leading" secondItem="qO3-ge-VtZ" secondAttribute="leading" constant="20" id="fOR-rs-k7B"/>
-                            <constraint firstAttribute="trailing" secondItem="rsg-h4-TVv" secondAttribute="trailing" constant="20" id="foM-BT-azY"/>
                             <constraint firstItem="6An-ik-hII" firstAttribute="top" secondItem="ar4-uk-jnF" secondAttribute="bottom" constant="8" id="gzx-0V-VZY"/>
+                            <constraint firstItem="eNh-Cp-Ply" firstAttribute="top" secondItem="n7F-yg-oic" secondAttribute="bottom" constant="8" id="kdW-4c-bxj"/>
                             <constraint firstItem="rsg-h4-TVv" firstAttribute="top" secondItem="6An-ik-hII" secondAttribute="bottom" constant="8" id="rMC-cc-hee"/>
                             <constraint firstItem="rsg-h4-TVv" firstAttribute="leading" secondItem="qO3-ge-VtZ" secondAttribute="leading" constant="20" id="sS4-KI-EX7"/>
                             <constraint firstItem="cgY-7I-uUP" firstAttribute="top" secondItem="rsg-h4-TVv" secondAttribute="bottom" constant="20" id="tW5-3x-6FI"/>
@@ -1322,6 +1423,7 @@
                         <outlet property="altitudeLabel" destination="n7F-yg-oic" id="ajs-S2-wV7"/>
                         <outlet property="distanceLabel" destination="ar4-uk-jnF" id="Uig-br-YwS"/>
                         <outlet property="map" destination="Vcn-GQ-Bbv" id="wEV-Xt-37V"/>
+                        <outlet property="messageButton" destination="eNh-Cp-Ply" id="Ety-Sl-WwR"/>
                         <outlet property="paceLabel" destination="6An-ik-hII" id="2z6-cR-zhV"/>
                         <outlet property="showMenuButton" destination="SoM-el-f4R" id="A8z-of-dGS"/>
                         <outlet property="spectationLabel" destination="FBJ-yc-FTO" id="xmB-GI-hjh"/>
@@ -2184,7 +2286,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yT3-Ko-fZ2" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="ej2-kQ-hCW" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1352" y="1167"/>
+            <point key="canvasLocation" x="1456" y="1019"/>
         </scene>
         <!--Shoes EditorVC-->
         <scene sceneID="Nwe-ca-hZb">
@@ -2368,6 +2470,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ltM-iX-wfX"/>
-        <segue reference="Iru-8H-Blz"/>
+        <segue reference="xed-hc-tXN"/>
     </inferredMetricsTieBreakers>
 </document>

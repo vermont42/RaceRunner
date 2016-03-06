@@ -18,6 +18,7 @@ class PubNubManager: NSObject, PNObjectEventListener {
   static let publicChannel = "foo"
   static let stopped = "stopped"
   private static let stopRun = "stop run"
+  private static let messageLabel = "message: "
 
   override init() {
     pubNub = PubNub.clientWithConfiguration(PNConfiguration(publishKey: Config.pubNubPublishKey, subscribeKey: Config.pubNubSubscribeKey))
@@ -26,20 +27,24 @@ class PubNubManager: NSObject, PNObjectEventListener {
   }
   
   func client(client: PubNub!, didReceiveMessage message: PNMessageResult!) {
-    if "\(message.data.message)" == PubNubManager.stopped {
+    let messageString = "\(message.data.message)"
+    if messageString == PubNubManager.stopped {
       pubNubSubscriber?.runStopped()
     }
-    else if "\(message.data.message)" == PubNubManager.stopRun {
+    else if messageString == PubNubManager.stopRun {
       pubNubPublisher?.stopRun()
     }
+    else if (messageString as NSString).substringToIndex(PubNubManager.messageLabel.characters.count) == PubNubManager.messageLabel {
+      pubNubPublisher?.receiveMessage((messageString as NSString).substringFromIndex(PubNubManager.messageLabel.characters.count))
+    }
     else {
-      pubNubSubscriber?.receiveProgress("\(message.data.message)")
+      pubNubSubscriber?.receiveProgress(messageString)
     }
   }
 
-  class func publishLocation(location: CLLocation, distance: Double, seconds: Int) {
+  class func publishLocation(location: CLLocation, distance: Double, seconds: Int, publisher: String) {
     let message = "\(location.coordinate.latitude) \(location.coordinate.longitude) \(location.altitude) \(distance) \(seconds) \(SettingsManager.getAllowStop())"
-    sharedNub.pubNub?.publish(message, toChannel: SettingsManager.getBroadcastName(), storeInHistory: false, compressed: false, withCompletion: { (status) -> Void in
+    sharedNub.pubNub?.publish(message, toChannel: publisher, storeInHistory: false, compressed: false, withCompletion: { (status) -> Void in
       if !status.error {
           //print("Successfully published.")
       }
@@ -55,6 +60,10 @@ class PubNubManager: NSObject, PNObjectEventListener {
   
   class func publishRunStoppage(publisher: String) {
     sharedNub.pubNub?.publish(PubNubManager.stopRun, toChannel: publisher, storeInHistory: false, compressed: false, withCompletion: nil)
+  }
+
+  class func publishMessage(message: String, publisher: String) {
+    sharedNub.pubNub?.publish(PubNubManager.messageLabel + message, toChannel: publisher, storeInHistory: false, compressed: false, withCompletion: nil)
   }
   
   class func runStopped() {

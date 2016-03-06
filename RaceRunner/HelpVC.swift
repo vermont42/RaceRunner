@@ -10,7 +10,6 @@ import UIKit
 
 class HelpVC: ChildVC {
   @IBOutlet var viewControllerTitle: UILabel!
-  @IBOutlet var showMenuButton: UIButton!
   
   @IBAction func showMenu(sender: UIButton) {
     showMenu()

@@ -14,6 +14,7 @@ class SpectateVC: ChildVC, PubNubSubscriber {
   @IBOutlet var viewControllerTitle: UILabel!
   @IBOutlet var map: GMSMapView!
   @IBOutlet var startStopButton: UIButton!
+  @IBOutlet var messageButton: UIButton!
   @IBOutlet var spectationLabel: MarqueeLabel!
   @IBOutlet var distanceLabel: UILabel!
   @IBOutlet var paceLabel: UILabel!
@@ -29,11 +30,16 @@ class SpectateVC: ChildVC, PubNubSubscriber {
   private static let runEndedTitle = "Ended"
   private static let broadcasterTitle = "Select Runner"
   private static let broadcasterPrompt = "Whose run would you like to spectate?"
-  private static let broadcasterButtonTitle = "Start Spectating"
+  private static let subscribeAlertTitle = "Start Spectating"
   private static let stopBothPrompt = "Would you like to stop spectating or stop the run?"
   private static let stopSpectatingPrompt = "Stop spectating?"
   private static let stopSpectatingButtonTitle = "Stop Spectating"
   private static let stopRunButtonTitle = "Stop Run"
+  private static let sendMessageTitle = "Send Message"
+  private static let sendMessagePrompt = "Enter a message for the runner and tap Send."
+  private static let sendAlertTitle = "Send"
+  private static let message = "Message"
+  private static let runner = "Runner"
   private static let cancel = "Cancel"
   private static let start = "Start"
   private static let stop = "Stop"
@@ -44,8 +50,10 @@ class SpectateVC: ChildVC, PubNubSubscriber {
   private static let initialZoom: Float = 2.0
 
   override func viewDidLoad() {
-    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
     super.viewDidLoad()
+    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
+    messageButton.hidden = true
+    map.camera = GMSCameraPosition.cameraWithLatitude(SpectateVC.centerLatitude, longitude: SpectateVC.centerLongitude, zoom: SpectateVC.initialZoom)
   }
   
   override func viewWillDisappear(animated: Bool) {
@@ -59,7 +67,6 @@ class SpectateVC: ChildVC, PubNubSubscriber {
     super.viewWillAppear(animated)
     clearLabels()
     startStopButton.setTitle(SpectateVC.start, forState: .Normal)
-    map.camera = GMSCameraPosition.cameraWithLatitude(SpectateVC.centerLatitude, longitude: SpectateVC.centerLongitude, zoom: SpectateVC.initialZoom)
   }
   
   private func clearLabels() {
@@ -67,15 +74,16 @@ class SpectateVC: ChildVC, PubNubSubscriber {
     timeLabel.text = ""
     paceLabel.text = ""
     altitudeLabel.text = ""
-    startStopButton.setTitle(SpectateVC.broadcasterButtonTitle, forState: .Normal)
+    startStopButton.setTitle(SpectateVC.start, forState: .Normal)
     startStopButton.backgroundColor = UiConstants.intermediate3Color
+    messageButton.hidden = true
     viewControllerTitle.text = SpectateVC.spectate
     spectationLabel.text = ""
   }
   
   private func getBroadcasterAndSubscribe() {
     let alertController = UIAlertController(title: SpectateVC.broadcasterTitle, message: SpectateVC.broadcasterPrompt, preferredStyle: UIAlertControllerStyle.Alert)
-    let subscribeAction = UIAlertAction(title: SpectateVC.broadcasterButtonTitle, style: UIAlertActionStyle.Default, handler: { (action) in
+    let subscribeAction = UIAlertAction(title: SpectateVC.subscribeAlertTitle, style: UIAlertActionStyle.Default, handler: { (action) in
       let textFields = alertController.textFields!
       self.publisher = textFields[0].text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
       if self.publisher != "" {
@@ -83,14 +91,15 @@ class SpectateVC: ChildVC, PubNubSubscriber {
         self.viewControllerTitle.text = SpectateVC.spectating
         self.startStopButton.setTitle(SpectateVC.stop, forState: .Normal)
         self.startStopButton.backgroundColor = UiConstants.intermediate1Color
+        self.messageButton.hidden = false
         PubNubManager.subscribeToChannel(self, publisher: self.publisher)
       }
     })
     alertController.addAction(subscribeAction)
-    let cancelAction = UIAlertAction(title: SpectateVC.cancel, style: UIAlertActionStyle.Cancel, handler: { (action) in })
+    let cancelAction = UIAlertAction(title: SpectateVC.cancel, style: UIAlertActionStyle.Cancel, handler: nil)
     alertController.addAction(cancelAction)
     alertController.addTextFieldWithConfigurationHandler { (textField) in
-      textField.placeholder = "Runner"
+      textField.placeholder = SpectateVC.runner
     }
     alertController.view.tintColor = UiConstants.intermediate1Color
     presentViewController(alertController, animated: true, completion: nil)
@@ -166,6 +175,24 @@ class SpectateVC: ChildVC, PubNubSubscriber {
       alertController.view.tintColor = UiConstants.intermediate1Color
       presentViewController(alertController, animated: true, completion: nil)
     }
+  }
+  
+  @IBAction func sendMessage() {
+    let alertController = UIAlertController(title: SpectateVC.sendMessageTitle, message: SpectateVC.sendMessagePrompt, preferredStyle: UIAlertControllerStyle.Alert)
+    let sendAction = UIAlertAction(title: SpectateVC.sendAlertTitle, style: UIAlertActionStyle.Default, handler: { (action) in
+      let message = alertController.textFields![0].text!
+      if message != "" {
+        PubNubManager.publishMessage(message, publisher: self.publisher)
+      }
+    })
+    alertController.addAction(sendAction)
+    let cancelAction = UIAlertAction(title: SpectateVC.cancel, style: UIAlertActionStyle.Cancel, handler: nil)
+    alertController.addAction(cancelAction)
+    alertController.addTextFieldWithConfigurationHandler { (textField) in
+      textField.placeholder = SpectateVC.message
+    }
+    alertController.view.tintColor = UiConstants.intermediate1Color
+    presentViewController(alertController, animated: true, completion: nil)
   }
   
   private func stopSpectating() {

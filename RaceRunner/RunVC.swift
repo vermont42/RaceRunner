@@ -215,6 +215,7 @@ class RunVC: ChildVC, RunDelegate {
         arc4random_uniform(UiConstants.applauseSampleCount) + 1
         SoundManager.play("applause\(arc4random_uniform(SoundManager.applauseCount) + 1)")
         performSegueWithIdentifier("pan details from run", sender: self)
+        print("pan details")
         map.clear()
       }
       else {

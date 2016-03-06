@@ -4,7 +4,7 @@
 RaceRunner
 ===================
 
-**RaceRunner** is a run-tracking app focused on racing. Spectators can track the progress of runners during races. Spectators can start and stop timing of runs. The app can stop timing a run automatically after a certain distance, which is useful for the time trials that runners conduct in preparation for races. The app can track shoe mileage and warn the user when mileage limits are exceeded.
+**RaceRunner** is a run-tracking app focused on racing. Spectators can track the progress of runners during races. Spectators can start and stop timing of runs. Spectators can send messages to runners which are read aloud by the runner's phone. The app can stop timing a run automatically after a certain distance, which is useful for the time trials that runners conduct in preparation for races. The app can track shoe mileage and warn the user when mileage limits are exceeded.
 
 I will release **RaceRunner** to the App Store in April, but contact me if you would like to join the TestFlight beta.
 

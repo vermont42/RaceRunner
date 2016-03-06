@@ -12,8 +12,8 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
   @IBOutlet var menuTable: UITableView!
   @IBOutlet var viewControllerTitle: UILabel!
   
-  var controllerLabels = ["Start Run", "Simulate", "Demo", "History", "Spectate", "Settings", "Shoes"]
-  var panSegues = ["pan run", "pan log", "pan GPX run", "pan log", "pan spectate", "pan settings", "pan shoes"]
+  var controllerLabels = ["Start Run", "Simulate", "Demo", "History", "Spectate", "Settings", "Shoes", "Help"]
+  var panSegues = ["pan run", "pan log", "pan GPX run", "pan log", "pan spectate", "pan settings", "pan shoes", "pan help"]
   var selectedMenuItem: Int = 0
   var logTypeToShow: LogVC.LogType!
 
