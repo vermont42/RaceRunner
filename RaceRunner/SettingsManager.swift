@@ -37,6 +37,10 @@ class SettingsManager {
   private static let broadcastNextRunKey = "broadcastNextRun"
   private static let broadcastNextRunDefault = false
 
+  private var showedForecastCredit: Bool
+  private static let showedForecastCreditKey = "showedForecastCredit"
+  private static let showedForecastCreditDefault = false
+  
   private var allowStop: Bool
   private static let allowStopKey = "allowStop"
   private static let allowStopDefault = false
@@ -168,7 +172,16 @@ class SettingsManager {
       userDefaults.setObject("\(allowStop)", forKey: SettingsManager.allowStopKey)
       userDefaults.synchronize()
     }
-
+    
+    if let storedShowedForecastCreditString = userDefaults.stringForKey(SettingsManager.showedForecastCreditKey) {
+      showedForecastCredit = (storedShowedForecastCreditString as NSString).boolValue
+    }
+    else {
+      showedForecastCredit = SettingsManager.showedForecastCreditDefault
+      userDefaults.setObject("\(showedForecastCredit)", forKey: SettingsManager.showedForecastCreditKey)
+      userDefaults.synchronize()
+    }
+    
     if let storedBroadcastNameString = userDefaults.stringForKey(SettingsManager.broadcastNameKey) {
       broadcastName = storedBroadcastNameString
     }
@@ -341,6 +354,18 @@ class SettingsManager {
     if alreadyMadeSampleRun != settingsManager.alreadyMadeSampleRun {
       settingsManager.alreadyMadeSampleRun = alreadyMadeSampleRun
       settingsManager.userDefaults.setObject("\(alreadyMadeSampleRun)", forKey: SettingsManager.alreadyMadeSampleRunKey)
+      settingsManager.userDefaults.synchronize()
+    }
+  }
+  
+  class func getShowedForecastCredit() -> Bool {
+    return settingsManager.showedForecastCredit
+  }
+  
+  class func setShowedForecastCredit(showedForecastCredit: Bool) {
+    if showedForecastCredit != settingsManager.showedForecastCredit {
+      settingsManager.showedForecastCredit = showedForecastCredit
+      settingsManager.userDefaults.setObject("\(showedForecastCredit)", forKey: SettingsManager.showedForecastCreditKey)
       settingsManager.userDefaults.synchronize()
     }
   }

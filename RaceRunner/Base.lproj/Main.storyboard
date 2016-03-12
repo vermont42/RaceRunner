@@ -37,13 +37,13 @@
                                 <color key="textColor" red="0.92941176469999998" green="0.68627450980000004" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="MFx-iy-lLu">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MFx-iy-lLu">
                                 <rect key="frame" x="20" y="72" width="560" height="472"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <color key="textColor" red="0.83921568629999999" green="0.82745098039999998" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="16"/>
+                                <color key="tintColor" red="0.83921568629999999" green="0.82745098039999998" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                <attributedString key="attributedText"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="FDd-wU-sge">
                                 <rect key="frame" x="205" y="552" width="191" height="29"/>
@@ -54,9 +54,12 @@
                                     <segment title="Support"/>
                                 </segments>
                                 <color key="tintColor" red="0.22352941176470587" green="0.27058823529411763" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="changeHelpText" destination="J4K-qe-vqE" eventType="valueChanged" id="tGm-LE-Nog"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
-                        <color key="backgroundColor" red="0.22352941176470587" green="0.27058823529411763" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.29019607843137252" green="0.3411764705882353" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="jLY-gk-dEi" firstAttribute="top" secondItem="7Tz-ly-cjF" secondAttribute="bottom" id="IsS-e5-sLu"/>
                             <constraint firstItem="FDd-wU-sge" firstAttribute="centerX" secondItem="moE-Fv-Dfp" secondAttribute="centerX" id="PaH-qo-9wg"/>
@@ -71,6 +74,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="helpView" destination="MFx-iy-lLu" id="wGu-K4-AZe"/>
+                        <outlet property="textPicker" destination="FDd-wU-sge" id="xOP-ur-lkv"/>
                         <outlet property="viewControllerTitle" destination="jLY-gk-dEi" id="p7M-3z-9Uq"/>
                         <segue destination="Vjy-QJ-XvK" kind="unwind" identifier="unwind pan" unwindAction="returnFromSegueActions:" id="L1T-gj-BZ5"/>
                     </connections>
@@ -1663,12 +1668,13 @@
                                 <color key="textColor" red="0.92941176469999998" green="0.68627450980000004" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="See code." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="biu-hI-qQl">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="See code." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="biu-hI-qQl">
                                 <rect key="frame" x="20" y="87" width="560" height="493"/>
                                 <color key="backgroundColor" red="0.2901960784" green="0.3411764706" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" red="0.87058823529999996" green="0.85882352939999995" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0FD-Yt-fUG">
                                 <rect key="frame" x="20" y="28" width="45" height="40"/>

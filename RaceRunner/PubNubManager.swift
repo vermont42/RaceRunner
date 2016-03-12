@@ -26,8 +26,8 @@ class PubNubManager: NSObject, PNObjectEventListener {
     pubNub?.addListener(self)
   }
   
-  func client(client: PubNub!, didReceiveMessage message: PNMessageResult!) {
-    let messageString = "\(message.data.message)"
+  func client(client: PubNub, didReceiveMessage message: PNMessageResult) {
+    let messageString = "\(message.data.message!)"
     if messageString == PubNubManager.stopped {
       pubNubSubscriber?.runStopped()
     }

@@ -47,8 +47,11 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   private static let noLocationsError = "Attempted to display details of run with zero locations."
   private static let cancel = "Cancel"
   private static let name = "Name"
+  private static let forecastMessage = "Weather data powered by Forecast. http://forecast.io/"
+  private static let forecastTitle = "Credit"
+  private static let forecastOkay = "Got It"
   
-  func mapView(mapView:GMSMapView!,idleAtCameraPosition position:GMSCameraPosition!) {
+  func mapView(mapView:GMSMapView,idleAtCameraPosition position:GMSCameraPosition) {
     if !addedOverlays {
       addOverlays()
     }
@@ -69,6 +72,10 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
+    if !SettingsManager.getShowedForecastCredit() {
+      UIAlertController.showMessage(RunDetailsVC.forecastMessage, title: RunDetailsVC.forecastTitle, okTitle: RunDetailsVC.forecastOkay)
+      SettingsManager.setShowedForecastCredit(true)
+    }
   }
   
   func configureView() {

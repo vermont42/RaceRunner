@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 
 class UiHelpers {
+  private static let headerDelimiter = "^"
+  private static let boldDelimiter = "​" // http://www.fileformat.info/info/unicode/char/200B/browsertest.htm
+  
   class func maskedImageNamed(name:String, color:UIColor) -> UIImage {
     let image = UIImage(named: name)
     let rect:CGRect = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: image!.size.width, height: image!.size.height))
@@ -56,5 +59,58 @@ class UiHelpers {
       let blue = yBlue + ratio * (gBlue - yBlue)
       return UIColor(red: red, green: green, blue: blue, alpha: 1.0)
     }
+  }
+  
+  //    let fontFamilyNames = UIFont.familyNames()
+  //    for familyName in fontFamilyNames {
+  //      print("------------------------------")
+  //      print("Font Family Name = [\(familyName)]")
+  //      let names = UIFont.fontNamesForFamilyName(familyName as String)
+  //      print("Font Names = [\(names)]")
+  //    }
+  
+  class func styleText(text: String) -> NSAttributedString {
+    let matText = NSMutableAttributedString(string: text)
+    matText.addAttributes([NSForegroundColorAttributeName: UiConstants.lightColor, NSFontAttributeName: UIFont(name: UiConstants.globalFont, size: UiConstants.bodyFontSize)!], range: NSMakeRange(0, matText.length))
+    let centeredStyle = NSMutableParagraphStyle()
+    centeredStyle.alignment = .Center
+    let headerAttributes = [NSForegroundColorAttributeName: UiConstants.intermediate1Color, NSTextEffectAttributeName: NSTextEffectLetterpressStyle]
+    let textAsNsString = text as NSString
+    var i: Int = 0
+    var insideHeading = false
+    var insideBold = false
+    var startIndex = 0
+    while i < textAsNsString.length {
+      if textAsNsString.substringWithRange(NSMakeRange(i, 1)) == UiHelpers.headerDelimiter {
+        if insideHeading {
+          let headerWithDelimitersRange = NSMakeRange(startIndex, (i - startIndex) + 1)
+          matText.addAttribute(NSParagraphStyleAttributeName, value: centeredStyle, range: headerWithDelimitersRange)
+          let headerRange = NSMakeRange(startIndex + 1, (i - startIndex) - 1)
+          matText.addAttributes(headerAttributes, range: headerRange)
+          let leadingRange = NSMakeRange(startIndex, 1)
+          matText.addAttribute(NSForegroundColorAttributeName, value: UiConstants.darkColor, range: leadingRange)
+          let trailingRange = NSMakeRange(i, 1)
+          matText.addAttribute(NSForegroundColorAttributeName, value: UiConstants.darkColor, range: trailingRange)
+          insideHeading = false
+        }
+        else {
+          insideHeading = true
+          startIndex = i
+        }
+      }
+      else if textAsNsString.substringWithRange(NSMakeRange(i, 1)) == UiHelpers.boldDelimiter {
+        if insideBold {
+          let boldRange = NSMakeRange(startIndex, i - startIndex)
+          matText.addAttribute(NSFontAttributeName, value: UIFont(name: UiConstants.globalFontBold, size: UiConstants.bodyFontSize)!, range: boldRange)
+          insideBold = false
+        }
+        else {
+          insideBold = true
+          startIndex = i + 1
+        }
+      }
+      i++
+    }
+    return matText
   }
 }
