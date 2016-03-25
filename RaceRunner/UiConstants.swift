@@ -22,7 +22,7 @@ class UiConstants {
   static let bodyFontSize: CGFloat = 18.0
   static let cellButtonTitleSize: CGFloat = 17.0
   static let panDuration: NSTimeInterval = 0.4
-  static let polylineWidth: CGFloat = 6.0
+  static let polylineWidth: CGFloat = 8.0
   static let cameraZoom: Float = 16.0
   static let longitudeCushion: Double = 0.00851970939493185
   static let applauseSampleCount: UInt32 = 3

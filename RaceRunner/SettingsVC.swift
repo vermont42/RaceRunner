@@ -58,13 +58,19 @@ class SettingsVC: ChildVC, BroadcastDelegate {
   }
   
   override func viewDidLoad() {
+    super.viewDidLoad()
     updateToggles()
     updateSplitsWidgets()
     updateAutoStopWidgets()
     updateMultiplierLabel()
     updateWeightStepper()
     updateWeightLabel()
-    accentButtons[SettingsManager.getAccent().radioButtonPosition()].sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+    for button in accentButtons {
+      if button.titleLabel!.text == SettingsManager.getAccent().rawValue {
+        button.selected = true
+        break
+      }
+    }
     multiplierSlider.value = Float(SettingsManager.getMultiplier())
     viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
     NSNotificationCenter.defaultCenter().addObserver(self, selector: "productPurchased:", name: IapHelperProductPurchasedNotification, object: nil)
