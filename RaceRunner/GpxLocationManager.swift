@@ -55,9 +55,11 @@ public class GpxLocationManager {
   private var callerQueue: dispatch_queue_t!
   private var updateQueue: dispatch_queue_t!
   private var dateFormatter = NSDateFormatter()
+  private var dummyCLLocationManager: CLLocationManager!
   static let dateFudge: NSTimeInterval = 1.0
   private static let dateFormat = "yyyy-MM-dd HH:mm:ss"
-  private var dummyCLLocationManager: CLLocationManager!
+  private static let initWithNoArgumentsMessage = "Attempted to initialize GpxLocationManager with no arguments."
+  private static let gpxParseErrorMessage = "Parsing of GPX file failed."
   
   public func startUpdatingLocation() {
     if !hasStarted {
@@ -112,7 +114,7 @@ public class GpxLocationManager {
   }
   
   public init() {
-    abort()
+    fatalError(GpxLocationManager.initWithNoArgumentsMessage)
   }
   
   public init(gpxFile: String) {
@@ -120,7 +122,7 @@ public class GpxLocationManager {
       self.locations = parser.parse().locations
     }
     else {
-      abort()
+      fatalError(GpxLocationManager.gpxParseErrorMessage)
     }
   }
   

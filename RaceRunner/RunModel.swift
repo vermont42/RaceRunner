@@ -125,6 +125,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   class func configureLocationManager() {
     runModel.locationManager.delegate = runModel
     runModel.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    runModel.locationManager.distanceFilter = kCLDistanceFilterNone // This is the default. Explicit is good.
     runModel.locationManager.activityType = .Fitness
     runModel.locationManager.requestAlwaysAuthorization()
     runModel.locationManager.distanceFilter = RunModel.distanceFilter
@@ -251,7 +252,6 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   func eachSecond() {
     if status == .InProgress {
       totalSeconds++
-      // TODO: only do this if a real run is in progress
       if SettingsManager.getBroadcastNextRun() && locations.count > 0 && realRunInProgress {
         PubNubManager.publishLocation(locations[locations.count - 1], distance: totalDistance, seconds: totalSeconds, publisher: SettingsManager.getBroadcastName())
       }

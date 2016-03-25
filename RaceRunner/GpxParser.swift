@@ -140,10 +140,8 @@ class GpxParser: NSObject, NSXMLParserDelegate {
   }
   
   func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-    print("end: \(elementName)  buffer: \(buffer)")
     switch elementName {
     case ParsingState.Trkpt.rawValue:
-      //print("lat: \(curLatString.doubleValue) lon: \(curLonString.doubleValue) alt: \(curEleString.doubleValue) time: \(dateFormatter.dateFromString(curTimeString))")
       locations.append(CLLocation(coordinate: CLLocationCoordinate2D(latitude: curLatString.doubleValue, longitude: curLonString.doubleValue), altitude: curEleString.doubleValue, horizontalAccuracy: GpxParser.accuracy, verticalAccuracy: GpxParser.accuracy, timestamp: dateFormatter.dateFromString(curTimeString)!))
     case ParsingState.AutoName.rawValue:
       if !alreadySetName {
