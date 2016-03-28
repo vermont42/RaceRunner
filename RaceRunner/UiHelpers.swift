@@ -109,7 +109,7 @@ class UiHelpers {
           startIndex = i + 1
         }
       }
-      i++
+      i += 1
     }
     return matText
   }

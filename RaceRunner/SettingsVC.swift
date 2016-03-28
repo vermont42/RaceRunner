@@ -73,9 +73,9 @@ class SettingsVC: ChildVC, BroadcastDelegate {
     }
     multiplierSlider.value = Float(SettingsManager.getMultiplier())
     viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "productPurchased:", name: IapHelperProductPurchasedNotification, object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SettingsVC.productPurchased), name: IapHelperProductPurchasedNotification, object: nil)
     setUpProducts()
-    let secretSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: "unlockIaps")
+    let secretSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(SettingsVC.unlockIaps))
     secretSwipeRecognizer.numberOfTouchesRequired = 2
     secretSwipeRecognizer.direction = .Down
     view.addGestureRecognizer(secretSwipeRecognizer)
@@ -275,19 +275,18 @@ class SettingsVC: ChildVC, BroadcastDelegate {
   }
   
   @IBAction func toggleIconType(sender: UISwitch) {
-    // TODO: enable this logic
-//    if sender.on && !Products.store.isProductPurchased(Products.runningHorse) {
-//      UIAlertController.showMessage(SettingsVC.noHorseMessage, title: SettingsVC.bummerTitle)
-//      sender.on = false
-//    }
-//    else {
+    if sender.on && !Products.store.isProductPurchased(Products.runningHorse) {
+      UIAlertController.showMessage(SettingsVC.noHorseMessage, title: SettingsVC.bummerTitle)
+      sender.on = false
+    }
+    else {
       if sender.on {
         SettingsManager.setIconType(RunnerIcons.IconType.Horse)
       }
       else {
         SettingsManager.setIconType(RunnerIcons.IconType.Human)
       }
-//    }
+    }
   }
   
   @IBAction func toggleAutoStop(sender: UISwitch) {
@@ -431,11 +430,10 @@ class SettingsVC: ChildVC, BroadcastDelegate {
   }
   
   @IBAction func startOrStopBroadcasting() {
-    // TODO: enable this logic
-//    if !SettingsManager.getBroadcastRun() && !Products.store.isProductPurchased(Products.broadcastRuns) {
-//      UIAlertController.showMessage(SettingsVC.noBroadcastMessage, title: SettingsVC.bummerTitle)
-//      return
-//    }
+    if !SettingsManager.getBroadcastNextRun() && !Products.store.isProductPurchased(Products.broadcastRuns) {
+      UIAlertController.showMessage(SettingsVC.noBroadcastMessage, title: SettingsVC.bummerTitle)
+      return
+    }
     if !SettingsManager.getBroadcastNextRun() {
       performSegueWithIdentifier("pan publish", sender: self)
     }

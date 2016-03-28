@@ -47,6 +47,8 @@ class RunVC: ChildVC, RunDelegate {
   
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
+    map.clear()
+
     if let runToSimulate = runToSimulate {
       RunModel.initializeRunModelWithRun(runToSimulate)
       if runToSimulate.customName.isEqualToString("") {
@@ -202,7 +204,6 @@ class RunVC: ChildVC, RunDelegate {
     startStopButton.backgroundColor = UiConstants.intermediate3Color
     startStopButton.setTitle("  Start  ", forState: UIControlState.Normal)
     pauseResume.hidden = true
-    PersistentMapState.pin.map = nil
     let totalDistance = RunModel.runModel.totalDistance
     if !modelStoppedRun {
       RunModel.runModel.stop()
@@ -215,7 +216,6 @@ class RunVC: ChildVC, RunDelegate {
         arc4random_uniform(UiConstants.applauseSampleCount) + 1
         SoundManager.play("applause\(arc4random_uniform(SoundManager.applauseCount) + 1)")
         performSegueWithIdentifier("pan details from run", sender: self)
-        map.clear()
       }
       else {
         UIAlertController.showMessage(RunVC.didNotSaveMessage, title: RunVC.sadFaceTitle, okTitle: RunVC.bummerButtonTitle, handler: {(action) in

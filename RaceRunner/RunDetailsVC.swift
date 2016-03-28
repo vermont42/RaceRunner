@@ -150,7 +150,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   private func makeSpans(areSpeeds areSpeeds: Bool) {
     var rawValues: [Double] = []
     if areSpeeds {
-      for var i = 1; i < run.locations.count; i++ {
+      for i in 1 ..< run.locations.count {
         let firstLoc = run.locations[i - 1] as! Location
         let secondLoc = run.locations[i] as! Location
         let firstLocCL = CLLocation(latitude: firstLoc.latitude.doubleValue, longitude: firstLoc.longitude.doubleValue)
@@ -162,14 +162,14 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
       }
     }
     else {
-      for var i = 0; i < run.locations.count; i++ {
+      for i in 0 ..< run.locations.count {
         let location = run.locations[i] as! Location
         rawValues.append(location.altitude.doubleValue)
       }
     }
     let idealSmoothReachSize = 33 // about 133 locations/mile
     var smoothValues: [Double] = []
-    for (var i = 0; i < rawValues.count; i++) {
+    for i in 0 ..< rawValues.count {
       var lowerBound = i - idealSmoothReachSize / 2
       var upperBound = i + idealSmoothReachSize / 2
       if lowerBound < 0 {
@@ -207,7 +207,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     
     var sortedValues = smoothValues
     sortedValues.sortInPlace { $0 < $1 }
-    for var i = 1; i < run.locations.count; i++ {
+    for i in 1 ..< run.locations.count {
       let firstLoc = run.locations[i - 1] as! Location
       let secondLoc = run.locations[i] as! Location
       let firstLocCL = CLLocation(latitude: firstLoc.latitude.doubleValue, longitude: firstLoc.longitude.doubleValue)

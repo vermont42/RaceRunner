@@ -61,7 +61,7 @@ class RunnerIcons {
           currentIndex = 0
         }
         else {
-          currentIndex++
+          currentIndex += 1
         }
       }
       else {
@@ -73,7 +73,7 @@ class RunnerIcons {
           currentIndex = 0
         }
         else {
-          currentIndex++
+          currentIndex += 1
         }
       }
       return westIcon
@@ -88,7 +88,7 @@ class RunnerIcons {
           currentIndex = 0
         }
         else {
-          currentIndex++
+          currentIndex += 1
         }
       }
       else {
@@ -100,7 +100,7 @@ class RunnerIcons {
           currentIndex = 0
         }
         else {
-          currentIndex++
+          currentIndex += 1
         }
       }
       return eastIcon

@@ -61,7 +61,7 @@ class GpxExporter: NSObject, MFMailComposeViewControllerDelegate {
       contents += GpxExporter.interlude
       for location in run.locations {
         let locationCD = location as! Location
-        contents += String(format: GpxExporter.trkpt, locationCD.latitude.doubleValue, locationCD.longitude.doubleValue, locationCD.altitude.doubleValue, GpxExporter.dateFormatter.stringFromDate(location.timestamp))
+        contents += String(format: GpxExporter.trkpt, locationCD.latitude.doubleValue, locationCD.longitude.doubleValue, locationCD.altitude.doubleValue, GpxExporter.dateFormatter.stringFromDate(NSDate(timeIntervalSinceReferenceDate: location.timestamp)))
       }
       contents += GpxExporter.coda
       let mailComposer = MFMailComposeViewController()

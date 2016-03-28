@@ -91,7 +91,7 @@ class GraphView: UIView {
       let end = (run.locations.lastObject as! Location).timestamp
       let span = end.timeIntervalSinceDate(start)
       let timeChunk = Int(span) / (xTics + 1)
-      for var x = 0; x < xTics; x++ {
+      for x in 0 ..< xTics {
         UiConstants.darkColor.setStroke()
         ticPath.moveToPoint(CGPoint(x: chunkWidth + GraphView.chartOffset + (CGFloat(x) * chunkWidth), y: GraphView.chartOffset + chartHeight))
         ticPath.addLineToPoint(CGPoint(x: chunkWidth + GraphView.chartOffset + (CGFloat(x) * chunkWidth), y: GraphView.chartOffset + chartHeight + GraphView.ticLength))
@@ -111,7 +111,7 @@ class GraphView: UIView {
       let chunkHeight = chartHeight / CGFloat((yTics + 1))
       let altChunkSpan = (run.maxAltitude.doubleValue - run.minAltitude.doubleValue) / Double(yTics + 1)
       let paceChunkSpan = (maxSmoothSpeed - minSmoothSpeed) / Double(yTics)
-      for var y = 0; y < yTics + 2; y++ {
+      for y in 0 ..< yTics + 1 {
         if overlay == .Both || overlay == .Altitude {
           UiConstants.darkColor.setStroke()
           ticPath.moveToPoint(CGPoint(x: GraphView.chartOffset, y: GraphView.chartOffset + (CGFloat(y) * chunkHeight)))
@@ -165,11 +165,13 @@ class GraphView: UIView {
       let zeroBasedFirstVal = firstVal - minVal
       let firstY = GraphView.chartOffset + chartHeight - (chartHeight * CGFloat((zeroBasedFirstVal / valRange)))
       path.moveToPoint(CGPoint(x: GraphView.chartOffset, y: firstY))
-      for var x: CGFloat = GraphView.stride; x < chartWidth; x += GraphView.stride {
+      var x: CGFloat = GraphView.stride
+      while x < chartWidth {
         let curVal = getVal(x: Int(x))
         let zeroBasedCurVal = curVal - minVal
         let curY = GraphView.chartOffset + chartHeight - (chartHeight * CGFloat((zeroBasedCurVal / valRange)))
         path.addLineToPoint(CGPoint(x: x + GraphView.chartOffset, y: curY))
+        x += GraphView.stride
       }
     }
     color.setStroke()

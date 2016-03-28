@@ -107,7 +107,7 @@ class SpectateVC: ChildVC, PubNubSubscriber {
   
   func receiveProgress(progress: String) {
     // If didReceiveMessage() is not called on the main thread, this needs GCD.
-    counter++
+    counter += 1
     let progressArray = progress.componentsSeparatedByString(" ")
     let latitude = Double(progressArray[0])!
     let longitude = Double(progressArray[1])!

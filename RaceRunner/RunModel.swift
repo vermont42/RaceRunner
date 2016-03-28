@@ -251,14 +251,14 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   
   func eachSecond() {
     if status == .InProgress {
-      totalSeconds++
+      totalSeconds += 1
       if SettingsManager.getBroadcastNextRun() && locations.count > 0 && realRunInProgress {
         PubNubManager.publishLocation(locations[locations.count - 1], distance: totalDistance, seconds: totalSeconds, publisher: SettingsManager.getBroadcastName())
       }
       runDelegate?.receiveProgress(totalDistance, totalSeconds: totalSeconds, altitude: curAlt, altGained: altGained, altLost: altLost)
       currentSplitDistance = totalDistance - lastDistance
       if shouldReportSplits && currentSplitDistance >= reportEvery {
-        splitsCompleted++
+        splitsCompleted += 1
         currentSplitDistance -= reportEvery
         if (SettingsManager.getAudibleSplits()) {
           Converter.announceProgress(totalSeconds, lastSeconds: lastSeconds, totalDistance: totalDistance, lastDistance: lastDistance, newAltitude: curAlt, oldAltitude: oldSplitAltitude)
@@ -376,7 +376,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     var maxAlt = coordinates[0].altitude
     var curAlt = coordinates[0].altitude
     var currentCoordinate = coordinates[0]
-    for var i = 1; i < coordinates.count; i++ {
+    for i in 1 ..< coordinates.count {
       distance += coordinates[i].distanceFromLocation(currentCoordinate)
       currentCoordinate = coordinates[i]
       if currentCoordinate.coordinate.latitude < minLat {
@@ -488,7 +488,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   }
   
   func startTimer() {
-    timer = NSTimer.scheduledTimerWithTimeInterval(secondLength, target: self, selector: Selector("eachSecond"), userInfo: nil, repeats: true)
+    timer = NSTimer.scheduledTimerWithTimeInterval(secondLength, target: self, selector: #selector(RunModel.eachSecond), userInfo: nil, repeats: true)
   }
   
   class func matchMeasurement(measurement1: Double, measurement2: Double, tolerance: Double) -> Bool {

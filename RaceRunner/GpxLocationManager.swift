@@ -89,12 +89,12 @@ public class GpxLocationManager {
                 self.delegate.locationManager?(self.dummyCLLocationManager, didUpdateLocations: [currentLocation])
               })
             }
-            currentIndex++
+            currentIndex += 1
           }
           timeIntervalSinceStart += 1.0
           if currentIndex == self.locations.count {
             currentIndex = 0
-            loopsCompleted++
+            loopsCompleted += 1
           }
           NSThread.sleepForTimeInterval(self.secondLength)
         }

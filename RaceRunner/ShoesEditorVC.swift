@@ -37,9 +37,9 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
     currentMileage.delegate = self
     maximumMileage.delegate = self
     imagePicker.delegate = self
-    thumbnail.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "chooseThumbnail"))
+    thumbnail.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ShoesEditorVC.chooseThumbnail)))
     thumbnail.userInteractionEnabled = true
-    isCurrent.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "toggleIsCurrent"))
+    isCurrent.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ShoesEditorVC.toggleIsCurrent)))
     isCurrent.userInteractionEnabled = true
   }
   

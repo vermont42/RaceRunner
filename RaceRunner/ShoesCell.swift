@@ -29,7 +29,7 @@ class ShoesCell: MGSwipeTableCell {
     updateIsCurrentImage(shoes.isCurrent.boolValue)
     self.shoesDelegate = shoesDelegate
     self.shoes = shoes
-    isCurrentImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "toggleIsCurrent"))
+    isCurrentImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ShoesCell.toggleIsCurrent)))
     isCurrentImage.userInteractionEnabled = true
   }
   
