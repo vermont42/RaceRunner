@@ -38,7 +38,7 @@ class SettingsVC: ChildVC, BroadcastDelegate {
   private var products = [SKProduct]()
   private static let distancePrompt = " To begin inputting, tap \"123\" on the bottom-left corner of your virtual keyboard."
   private static let bummerTitle = "😓"
-  private static let noHorseMessage = "RaceRunner cannot display the animated horse during your runs because you have not purchased that feature."
+  private static let noHorseMessage = "RaceRunner cannot display the animated horse during your runs because you have not purchased that feature. If you would like to buy it, tap the Running Horse button in the Buy section below."
   private static let noBroadcastMessage = "RaceRunner cannot broadcast your runs to spectators because you have not bought that feature. If you would like to buy it, tap the Broadcast Runs button in the Buy section below."
   private static let promoCodeTitle = "Input Promo Code"
   private static let promoCodePrompt = "To unlock RaceRunner's in-app purchases, input a promo code and tap Unlock."
