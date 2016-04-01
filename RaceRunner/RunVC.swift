@@ -177,7 +177,12 @@ class RunVC: ChildVC, RunDelegate {
   }
   
   @IBAction func showMenu(sender: UIButton) {
-    showMenu()
+    if runToSimulate == nil && gpxFile == nil {
+      showMenu()
+    }
+    else {
+      stop()
+    }
   }
   
   @IBAction func startStop() {

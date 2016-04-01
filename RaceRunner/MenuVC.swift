@@ -18,7 +18,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
   var logTypeToShow: LogVC.LogType!
 
   private static let rowHeight: CGFloat = 50.0
-  private static let realRunMessage = "There is a real run in progress. Please click the Run menu item and stop the run before attempting to simulate a run."
+  private static let realRunMessage = "There is a real run in progress. Please tap the Continue menu item and stop the run before attempting to simulate a run."
   private static let okButtonText = "OK"
   private static let gpxFile = "iSmoothRun"
   private static let sadFaceTitle = "😢"

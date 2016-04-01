@@ -11,9 +11,9 @@ PODS:
   - CocoaLumberjack/Extensions (2.2.0):
     - CocoaLumberjack/Default
   - DLRadioButton (1.4.6)
-  - Fabric (1.6.6)
-  - GoogleMaps (1.12.3)
-  - MGSwipeTableCell (1.5.3)
+  - Fabric (1.6.7)
+  - GoogleMaps (1.13.0)
+  - MGSwipeTableCell (1.5.4)
   - PubNub (4.3.0):
     - CocoaLumberjack (= 2.2.0)
     - PubNub/Core (= 4.3.0)
@@ -34,9 +34,9 @@ SPEC CHECKSUMS:
   COBezierTableView: e8fa8ac961f213fe0c4b3e8e9708478df04930de
   CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0
   DLRadioButton: 4005319c135297c2998781d4b3dabc5e9b9781c4
-  Fabric: 1abc1e59f11fa39ede6f690ef7309d8563e3ec59
-  GoogleMaps: a4ac67918d0b5ba5f6b9893ac80487e357779e6c
-  MGSwipeTableCell: 5ae3b9a15efda26b201adc8676b24040febe6ff6
+  Fabric: caf7580c725e64db144f610ac65cd60956911dc7
+  GoogleMaps: 7a6caeb8336d7cb42982e969fc9b1b20a889fe79
+  MGSwipeTableCell: cffd3378af74eb991911f132c5f3911261fda860
   PubNub: a05f2a2c6cc1f637a0c473f236c4671c0b8c09b1
 
-COCOAPODS: 0.39.0
+COCOAPODS: 0.38.2
