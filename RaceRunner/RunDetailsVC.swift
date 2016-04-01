@@ -30,7 +30,6 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   @IBOutlet var customTitleButton: UIButton!
   @IBOutlet var exportButton: UIButton!
   var run: Run!
-  private var alertView: UIAlertView!
   private var paceSpans: [GMSStyleSpan] = []
   private var altitudeSpans: [GMSStyleSpan] = []
   private var smoothSpeeds: [Double]?
@@ -236,14 +235,8 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   @IBAction func returnFromSegueActions(sender: UIStoryboardSegue) {}
   
   override func segueForUnwindingToViewController(toViewController: UIViewController, fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
-    if let id = identifier{
-      let unwindSegue = UnwindPanSegue(identifier: id, source: fromViewController, destination: toViewController, performHandler: { () -> Void in
-        
-      })
-      return unwindSegue
-    }
-    
-    return super.segueForUnwindingToViewController(toViewController, fromViewController: fromViewController, identifier: identifier)!
+    return UnwindPanSegue(identifier: identifier!, source: fromViewController, destination: toViewController, performHandler: { () -> Void in
+    })
   }
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

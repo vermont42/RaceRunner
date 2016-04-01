@@ -408,6 +408,15 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     return RunModel.addRun(coordinates, customName: customName, autoName: autoName, timestamp: timestamp, weather: weather, temperature: temperature, distance: distance, maxAltitude: maxAlt, minAltitude: minAlt, maxLongitude: maxLong, minLongitude: minLong, maxLatitude: maxLat, minLatitude: minLat, altitudeGained: altGained, altitudeLost: altLost, weight: weight)
   }
   
+  class func gpsIsAvailable() -> Bool {
+    if CLLocationManager.authorizationStatus() == .AuthorizedAlways {
+      return true
+    }
+    else {
+      return false
+    }
+  }
+  
   func stop() {
     timer.invalidate()
     locationManager.stopUpdatingLocation()

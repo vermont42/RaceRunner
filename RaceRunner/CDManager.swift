@@ -23,7 +23,7 @@ class CDManager {
     catch let error as NSError {
       fatalError(error.localizedDescription)
     }
-    context = NSManagedObjectContext()
+    context = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
     context.persistentStoreCoordinator = coordinator
   }
   

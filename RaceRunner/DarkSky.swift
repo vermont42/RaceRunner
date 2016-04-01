@@ -56,18 +56,16 @@ public class DarkSky {
     call(coordinateString, callback: callback);
   }
   
-  private func call(method: String, callback: (Result) -> ()) {
+  private func call(method: String, callback: (Result) -> ()) {    
     if DarkSky.apiKey == "" {
-      print(DarkSky.noApiKey)
+      fatalError(DarkSky.noApiKey)
     }
-    let url = DarkSky.basePath + DarkSky.apiKey + "/" + method
-    let request = NSURLRequest(URL: NSURL(string: url)!)
     let currentQueue = NSOperationQueue.currentQueue();
-    
-    NSURLConnection.sendAsynchronousRequest(request, queue: queue) { (response: NSURLResponse?, data: NSData?, error: NSError?) -> Void in
+    let url = NSURL(string: DarkSky.basePath + DarkSky.apiKey + "/" + method)
+    NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: {(data, response, error) in
       let error: NSError? = error
       var dictionary: NSDictionary?
-      
+
       if let data = data {
         do {
           try dictionary = NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSDictionary
@@ -83,6 +81,6 @@ public class DarkSky {
         }
         callback(result)
       }
-    }
+    }).resume()
   }
 }

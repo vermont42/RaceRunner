@@ -151,11 +151,7 @@ public class LocationManager {
       case .Gpx:
         return gpxLocationManager.allowsBackgroundLocationUpdates
       case .CoreLocation:
-        if #available(iOS 9.0, *) {
-          return cLLocationManager.allowsBackgroundLocationUpdates
-        } else {
-          return true
-        }
+        return cLLocationManager.allowsBackgroundLocationUpdates
       }
     }
     set {
@@ -163,11 +159,7 @@ public class LocationManager {
       case .Gpx:
         gpxLocationManager.allowsBackgroundLocationUpdates = newValue
       case .CoreLocation:
-        if #available(iOS 9.0, *) {
-          cLLocationManager.allowsBackgroundLocationUpdates = newValue
-        } else {
-          // Fallback on earlier versions.
-        }
+        cLLocationManager.allowsBackgroundLocationUpdates = newValue
         break
       }
     }

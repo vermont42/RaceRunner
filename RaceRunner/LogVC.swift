@@ -177,14 +177,8 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
   @IBAction func returnFromSegueActions(sender: UIStoryboardSegue) {}
   
   override func segueForUnwindingToViewController(toViewController: UIViewController, fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
-    if let id = identifier{
-      let unwindSegue = UnwindPanSegue(identifier: id, source: fromViewController, destination: toViewController, performHandler: { () -> Void in
-          
-      })
-      return unwindSegue
-    }
-    
-    return super.segueForUnwindingToViewController(toViewController, fromViewController: fromViewController, identifier: identifier)!
+    return UnwindPanSegue(identifier: identifier!, source: fromViewController, destination: toViewController, performHandler: { () -> Void in
+    })
   }
   
   @IBAction func reverseSort() {

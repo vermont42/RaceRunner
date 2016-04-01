@@ -148,13 +148,8 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
   @IBAction func returnFromSegueActions(sender: UIStoryboardSegue) {}
 
   override func segueForUnwindingToViewController(toViewController: UIViewController, fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
-    if let id = identifier {
-      let unwindSegue = UnwindPanSegue(identifier: id, source: fromViewController, destination: toViewController, performHandler: { () -> Void in
-          
-      })
-      return unwindSegue
-    }
-    return super.segueForUnwindingToViewController(toViewController, fromViewController: fromViewController, identifier: identifier)!
+    return UnwindPanSegue(identifier: identifier!, source: fromViewController, destination: toViewController, performHandler: { () -> Void in
+    })
   }
   
   func receiveShoes(shoes: Shoes, isNew: Bool) {

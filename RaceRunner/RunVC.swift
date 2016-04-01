@@ -26,6 +26,7 @@ class RunVC: ChildVC, RunDelegate {
   
   private static let gpxTitle = "Berkeley Hills"
   private static let didNotSaveMessage = "RaceRunner did not save this run because it was so short. The run, not RaceRunner. As a collection of electrons on your phone, RaceRunner has no physical height."
+  private static let noGpsMessage = "RaceRunner cannot record your run because you have not given it permission to access the GPS sensors. You can give this permission in the Settings app."
   private static let pauseError = "Attempted to display details of run with zero locations."
   private static let bummerButtonTitle = "Bummer"
   private static let sadFaceTitle = "😢"
@@ -188,15 +189,22 @@ class RunVC: ChildVC, RunDelegate {
   @IBAction func startStop() {
     switch RunModel.runModel.status {
     case .PreRun:
-      showLabels()
-      startStopButton.backgroundColor = UiConstants.intermediate1Color
-      startStopButton.setTitle("  Stop  ", forState: UIControlState.Normal)
-      pauseResume.hidden = false
-      pauseResume.setTitle("  Pause  ", forState: UIControlState.Normal)
-      RunModel.runModel.start()
-      SoundManager.play("gun")
-      map.hidden = false
-      paceOrAltitude.hidden = false
+      if RunModel.gpsIsAvailable() {
+        showLabels()
+        startStopButton.backgroundColor = UiConstants.intermediate1Color
+        startStopButton.setTitle("  Stop  ", forState: UIControlState.Normal)
+        pauseResume.hidden = false
+        pauseResume.setTitle("  Pause  ", forState: UIControlState.Normal)
+        RunModel.runModel.start()
+        SoundManager.play("gun")
+        map.hidden = false
+        paceOrAltitude.hidden = false
+      }
+      else {
+        UIAlertController.showMessage(RunVC.noGpsMessage, title: RunVC.sadFaceTitle, okTitle: RunVC.bummerButtonTitle, handler: {(action) in
+          SoundManager.play("sadTrombone")
+        })
+      }
     case .InProgress, .Paused:
       stop()
       map.hidden = true
@@ -271,12 +279,8 @@ class RunVC: ChildVC, RunDelegate {
   }
   
   override func segueForUnwindingToViewController(toViewController: UIViewController, fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
-    if let id = identifier{
-      let unwindSegue = UnwindPanSegue(identifier: id, source: fromViewController, destination: toViewController, performHandler: { () -> Void in
-      })
-      return unwindSegue
-    }
-    return super.segueForUnwindingToViewController(toViewController, fromViewController: fromViewController, identifier: identifier)!
+    return UnwindPanSegue(identifier: identifier!, source: fromViewController, destination: toViewController, performHandler: { () -> Void in
+    })
   }
   
   @IBAction func changeOverlay(sender: UISegmentedControl) {
