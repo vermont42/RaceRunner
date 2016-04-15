@@ -1,8 +1,8 @@
 //
 //  SoundManager.swift
-//  RaceRunner
+//  StitchFix (originally RaceRunner)
 //
-//  Created by Joshua Adams on 11/18/15.
+//  Created by Josh Adams on 11/18/15.
 //  Copyright © 2015 Josh Adams. All rights reserved.
 //
 
@@ -11,9 +11,13 @@ import AVFoundation.AVAudioPlayer
 import AVFoundation.AVAudioSession
 
 class SoundManager {
+  // MARK: properties
+  
   private static let soundManager = SoundManager()
   private var sounds: [String: AVAudioPlayer]
-  static let applauseCount: UInt32 = 3
+  private static let soundExtension = "mp3"
+  
+  // MARK: methods
   
   private init () {
     sounds = Dictionary()
@@ -24,18 +28,18 @@ class SoundManager {
     }
   }
   
-  static func play(sound: String) {
-    if soundManager.sounds[sound] == nil {
-      if let audioUrl = NSBundle.mainBundle().URLForResource(sound, withExtension: "mp3") {
+  static func play(sound: Sound) {
+    if soundManager.sounds[sound.rawValue] == nil {
+      if let audioUrl = NSBundle.mainBundle().URLForResource(sound.rawValue, withExtension: soundExtension) {
         do {
-          try soundManager.sounds[sound] = AVAudioPlayer.init(contentsOfURL: audioUrl)
+          try soundManager.sounds[sound.rawValue] = AVAudioPlayer.init(contentsOfURL: audioUrl)
         } catch let error as NSError {
           print("\(error.localizedDescription)")
         }
       }
 
     }
-    soundManager.sounds[sound]?.play()
+    soundManager.sounds[sound.rawValue]?.play()
   }
   
   static func enableBackgroundAudio() {
@@ -44,7 +48,7 @@ class SoundManager {
       try session.setCategory(AVAudioSessionCategoryPlayback, withOptions: AVAudioSessionCategoryOptions.MixWithOthers)
     }
     catch let error as NSError {
-      fatalError(error.localizedDescription)
+      print("\(error.localizedDescription)")
     }
   }
 }

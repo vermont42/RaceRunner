@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="IO6-UC-hio">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="IO6-UC-hio">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -141,7 +141,7 @@
                                                     <constraint firstAttribute="height" constant="4" id="CBz-nd-2oj"/>
                                                 </constraints>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JLE-Yl-wDd" customClass="DLRadioButton">
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JLE-Yl-wDd" customClass="DLRadioButton">
                                                 <rect key="frame" x="184" y="388" width="42" height="22"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="42" id="03g-Po-vIx"/>
@@ -296,7 +296,7 @@
                                                 <color key="textColor" red="0.92941176469999998" green="0.68627450980000004" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DJf-D0-c4Q" customClass="DLRadioButton">
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DJf-D0-c4Q" customClass="DLRadioButton">
                                                 <rect key="frame" x="134" y="388" width="42" height="22"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="42" id="Nk5-dn-aOf"/>
@@ -357,7 +357,7 @@
                                                 <color key="textColor" red="0.92941176469999998" green="0.68627450980000004" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dvk-aa-wNU" customClass="DLRadioButton">
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dvk-aa-wNU" customClass="DLRadioButton">
                                                 <rect key="frame" x="84" y="388" width="42" height="22"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="42" id="fE0-15-lFg"/>
@@ -370,7 +370,7 @@
                                                     <outletCollection property="otherButtons" destination="DJf-D0-c4Q" id="Vqp-di-cv9"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MhG-dV-Bdl" customClass="DLRadioButton">
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MhG-dV-Bdl" customClass="DLRadioButton">
                                                 <rect key="frame" x="234" y="388" width="42" height="22"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="42" id="oMU-16-RnR"/>
@@ -1740,7 +1740,7 @@
                                 <color key="textColor" red="0.92941176469999998" green="0.68627450980000004" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oUf-gA-1MO" customClass="DLRadioButton">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oUf-gA-1MO" customClass="DLRadioButton">
                                 <rect key="frame" x="270" y="558" width="60" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="Xwp-70-Uy1"/>
@@ -1757,7 +1757,7 @@
                                     <action selector="changeOverlay:" destination="4FY-q9-M0m" eventType="touchUpInside" id="AMa-ar-f9I"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bLv-75-KRf" customClass="DLRadioButton">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bLv-75-KRf" customClass="DLRadioButton">
                                 <rect key="frame" x="338" y="558" width="85" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="85" id="pfz-iM-jRE"/>
@@ -1774,11 +1774,11 @@
                                     <action selector="changeOverlay:" destination="4FY-q9-M0m" eventType="touchUpInside" id="O9e-EE-34w"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PhZ-YT-29L" customClass="GraphView" customModule="RaceRunner" customModuleProvider="target">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PhZ-YT-29L" customClass="GraphView" customModule="RaceRunner" customModuleProvider="target">
                                 <rect key="frame" x="20" y="60" width="560" height="490"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UyX-Gk-3Ah" customClass="DLRadioButton">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UyX-Gk-3Ah" customClass="DLRadioButton">
                                 <rect key="frame" x="202" y="558" width="60" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="K5Z-NL-H7C"/>
@@ -2475,7 +2475,7 @@
         <image name="shoe" width="69" height="52"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ltM-iX-wfX"/>
-        <segue reference="xed-hc-tXN"/>
+        <segue reference="Tpz-hV-a4w"/>
+        <segue reference="BKi-dk-66y"/>
     </inferredMetricsTieBreakers>
 </document>

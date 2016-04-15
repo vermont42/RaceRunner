@@ -383,7 +383,7 @@ class SettingsVC: ChildVC, BroadcastDelegate {
   }
   
   @IBAction func changeAccent(sender: DLRadioButton) {
-    let selectedFlag = sender.selectedButton().titleLabel?.text
+    let selectedFlag = sender.selectedButton()!.titleLabel?.text
     if let selectedFlag = selectedFlag {
       SettingsManager.setAccent(selectedFlag)
     }

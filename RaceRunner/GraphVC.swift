@@ -47,7 +47,7 @@ class GraphVC: ChildVC {
   }
   
   @IBAction func changeOverlay(sender: DLRadioButton) {
-    let selectedOverlay = sender.selectedButton().titleLabel?.text
+    let selectedOverlay = sender.selectedButton()!.titleLabel?.text
     if let selectedOverlay = selectedOverlay {
       SettingsManager.setOverlay(Overlay.stringToOVerlay(selectedOverlay))
       graphView.setNeedsDisplay()

@@ -196,13 +196,13 @@ class RunVC: ChildVC, RunDelegate {
         pauseResume.hidden = false
         pauseResume.setTitle("  Pause  ", forState: UIControlState.Normal)
         RunModel.runModel.start()
-        SoundManager.play("gun")
+        SoundManager.play(.Gun)
         map.hidden = false
         paceOrAltitude.hidden = false
       }
       else {
         UIAlertController.showMessage(RunVC.noGpsMessage, title: RunVC.sadFaceTitle, okTitle: RunVC.bummerButtonTitle, handler: {(action) in
-          SoundManager.play("sadTrombone")
+          SoundManager.play(.SadTrombone)
         })
       }
     case .InProgress, .Paused:
@@ -226,13 +226,22 @@ class RunVC: ChildVC, RunDelegate {
     }
     if runToSimulate == nil && gpxFile == nil {
       if totalDistance > RunModel.minDistance {
-        arc4random_uniform(UiConstants.applauseSampleCount) + 1
-        SoundManager.play("applause\(arc4random_uniform(SoundManager.applauseCount) + 1)")
+        let randomApplause = arc4random_uniform(Sound.applauseCount) + 1
+        switch randomApplause {
+        case 1:
+          SoundManager.play(.Applause1)
+        case 2:
+          SoundManager.play(.Applause2)
+        case 3:
+          SoundManager.play(.Applause3)
+        default:
+          break
+        }
         performSegueWithIdentifier("pan details from run", sender: self)
       }
       else {
         UIAlertController.showMessage(RunVC.didNotSaveMessage, title: RunVC.sadFaceTitle, okTitle: RunVC.bummerButtonTitle, handler: {(action) in
-          SoundManager.play("sadTrombone")
+          SoundManager.play(.SadTrombone)
           self.showMenu()
         })
       }
@@ -246,7 +255,7 @@ class RunVC: ChildVC, RunDelegate {
   }
   
   @IBAction func pauseResume(sender: UIButton) {
-    SoundManager.play("click")
+    SoundManager.play(.Click)
     let runModel = RunModel.runModel
     switch runModel.status {
     case .PreRun:
