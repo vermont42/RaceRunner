@@ -1,6 +1,6 @@
 //
 //  SoundManager.swift
-//  StitchFix (originally RaceRunner)
+//  RaceRunner
 //
 //  Created by Josh Adams on 11/18/15.
 //  Copyright © 2015 Josh Adams. All rights reserved.
