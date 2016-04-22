@@ -4,19 +4,19 @@
 RaceRunner
 ===================
 
-**RaceRunner** is a run-tracking app focused on racing. Spectators can track the progress of runners during races. Spectators can start and stop timing of runs. Spectators can send messages to runners which are read aloud by the runner's phone. The app can stop timing a run automatically after a certain distance, which is useful for the time trials that runners conduct in preparation for races. The app can track shoe mileage and warn the user when mileage limits are exceeded.
+**RaceRunner** is a run-tracking iPhone app focused on racing. Spectators can track the progress of runners during races. Spectators can start and stop timing of runs. Spectators can send messages to runners which are read aloud by the runner's phone. The app can stop timing a run automatically after a certain distance, which is useful for the time trials that runners conduct in preparation for races. The app can track shoe mileage and warn the user when mileage limits are exceeded.
 
-I will release **RaceRunner** to the App Store in April, but contact me if you would like to join the TestFlight beta.
+I released **RaceRunner** to the [App Store](https://itunes.apple.com/us/app/racerunner-run-tracking-app/id1065017082) on April 21, 2016.
 
-Notwithstanding my previous, positive [experience](https://itunes.apple.com/us/app/immigration/id777319358) with the pay-up-front business model, I have decided to explore freemium with **RaceRunner**. The app will therefore be free to download but two features, broadcasting of runs to spectators and use of an animated [horse](https://en.wikipedia.org/wiki/Eadweard_Muybridge#Stanford_and_horse_gaits) to represent the runner, will be available via in-app purchases.
-
-**RaceRunner** requires API keys for Google Maps, Dark Sky, and PubNub in `Config.swift`.
+Notwithstanding my previous, positive [experience](https://itunes.apple.com/us/app/immigration/id777319358) with the pay-up-front business model, I decided to explore freemium with **RaceRunner**. The app is therefore free to download but two features, broadcasting of runs to spectators and use of an animated [horse](https://en.wikipedia.org/wiki/Eadweard_Muybridge#Stanford_and_horse_gaits) to represent the runner, are available via in-app purchases.
 
 If you would like to build **RaceRunner** for yourself, follow these three easy steps:
 
 1. Clone the repo.
-2. Add API keys for Google Maps, Dark Sky, and PubNub to `Config.swift`.
-3. Modify `UIView+Bezier.swift`, which is in the **COBezierTableView** CocoaPod, as follows and then build **RaceRunner**.
+2. Type `pod install` from the root of **RaceRunner** in Terminal.
+3. Add API keys for Google Maps, Dark Sky, and PubNub to `Config.swift`.
+4. Modify `UIView+Bezier.swift`, which is in the **COBezierTableView** CocoaPod, as shown below.
+
 ```swift
     public struct BezierPoints {
         static var p1 = CGPoint(x: -128, y: 0)
