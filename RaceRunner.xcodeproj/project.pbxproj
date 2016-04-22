@@ -40,6 +40,7 @@
 		E15195F81C0BD41A00BD52FB /* HumanWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15195F71C0BD41A00BD52FB /* HumanWeight.swift */; };
 		E15681F91C52F007008E077C /* GpxExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15681F81C52F007008E077C /* GpxExporter.swift */; };
 		E159C2541AAB8304007C6EA1 /* RaceRunner.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E159C2521AAB8304007C6EA1 /* RaceRunner.xcdatamodeld */; };
+		E161FF2D1CC8529200C92485 /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = E161FF2C1CC8529200C92485 /* Sound.swift */; };
 		E162397C1C7A9D0300739B7F /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E162397B1C7A9D0300739B7F /* CloudKit.framework */; };
 		E1648E0A1C4861EA002A3ED4 /* Run+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E091C4861EA002A3ED4 /* Run+CoreDataProperties.swift */; };
 		E1648E0C1C4863E3002A3ED4 /* Shoes+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E0B1C4863E3002A3ED4 /* Shoes+CoreDataProperties.swift */; };
@@ -56,7 +57,6 @@
 		E18B6C811C0D1AEC005865BA /* GpxActivityItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18B6C801C0D1AEC005865BA /* GpxActivityItemProvider.swift */; };
 		E1A41B4E1BF7D83100E31943 /* PubNubManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A41B4D1BF7D83100E31943 /* PubNubManager.swift */; };
 		E1B45F071AE96EFC00AF73AB /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B45F061AE96EFC00AF73AB /* LocationManager.swift */; };
-		E1B5311B1CBEEB9900A45E83 /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B5311A1CBEEB9900A45E83 /* Sound.swift */; };
 		E1C22BCC1AF05DA1003A5712 /* MarqueeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C22BCA1AF05DA1003A5712 /* MarqueeLabel.m */; };
 		E1C2ED501AB63BE200A29728 /* LogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C2ED4F1AB63BE200A29728 /* LogCell.swift */; };
 		E1CBD2D71AC4D616006F0B85 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CBD2D61AC4D616006F0B85 /* SettingsManager.swift */; };
@@ -133,6 +133,7 @@
 		E15195F71C0BD41A00BD52FB /* HumanWeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HumanWeight.swift; sourceTree = "<group>"; };
 		E15681F81C52F007008E077C /* GpxExporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxExporter.swift; sourceTree = "<group>"; };
 		E159C2531AAB8304007C6EA1 /* RaceRunner.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RaceRunner.xcdatamodel; sourceTree = "<group>"; };
+		E161FF2C1CC8529200C92485 /* Sound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
 		E162397A1C7A9CF600739B7F /* RaceRunner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = RaceRunner.entitlements; sourceTree = "<group>"; };
 		E162397B1C7A9D0300739B7F /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		E1648E091C4861EA002A3ED4 /* Run+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Run+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -150,7 +151,6 @@
 		E18B6C801C0D1AEC005865BA /* GpxActivityItemProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxActivityItemProvider.swift; sourceTree = "<group>"; };
 		E1A41B4D1BF7D83100E31943 /* PubNubManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubNubManager.swift; sourceTree = "<group>"; };
 		E1B45F061AE96EFC00AF73AB /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		E1B5311A1CBEEB9900A45E83 /* Sound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Sound.swift; path = ../../StitchFix/StitchFix/Sound.swift; sourceTree = "<group>"; };
 		E1C22BC71AF05D39003A5712 /* RaceRunner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RaceRunner-Bridging-Header.h"; sourceTree = "<group>"; };
 		E1C22BCA1AF05DA1003A5712 /* MarqueeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarqueeLabel.m; sourceTree = "<group>"; };
 		E1C22BCB1AF05DA1003A5712 /* MarqueeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarqueeLabel.h; sourceTree = "<group>"; };
@@ -341,7 +341,7 @@
 				E1648E131C4975ED002A3ED4 /* ShoesEditorVC.swift */,
 				E13736EF1C4F0F1E008CDE36 /* ShoesSortField.swift */,
 				E10B704F1C45C9BF00C70283 /* SortType.swift */,
-				E1B5311A1CBEEB9900A45E83 /* Sound.swift */,
+				E161FF2C1CC8529200C92485 /* Sound.swift */,
 				E13E30561BFD28F1009CDE60 /* SoundManager.swift */,
 				E1E8B94C1AAB742E00D04E38 /* SpectateVC.swift */,
 				E137AC9D1C87BEB600A3148D /* String+removeWhitespace.swift */,
@@ -532,7 +532,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1B5311B1CBEEB9900A45E83 /* Sound.swift in Sources */,
+				E161FF2D1CC8529200C92485 /* Sound.swift in Sources */,
 				E13C763F1C1A01520046021A /* Array+insertionIndexOf.swift in Sources */,
 				E13B48B51B911BDA001C997A /* UiConstants.swift in Sources */,
 				E15195F81C0BD41A00BD52FB /* HumanWeight.swift in Sources */,
