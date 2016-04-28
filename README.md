@@ -10,7 +10,7 @@ I released **RaceRunner** to the [App Store](https://itunes.apple.com/us/app/rac
 
 Notwithstanding my previous, positive [experience](https://itunes.apple.com/us/app/immigration/id777319358) with the pay-up-front business model, I decided to explore freemium with **RaceRunner**. The app is therefore free to download but two features, broadcasting of runs to spectators and use of an animated [horse](https://en.wikipedia.org/wiki/Eadweard_Muybridge#Stanford_and_horse_gaits) to represent the runner, are available via in-app purchases.
 
-If you would like to build **RaceRunner** for yourself, follow these three easy steps:
+If you would like to build **RaceRunner** for yourself, follow these four easy steps:
 
 1. Clone the repo.
 2. Type `pod install` from the root of **RaceRunner** in Terminal.
