@@ -64,6 +64,7 @@
 	<string>RaceRunner would like to access your location.</string>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>audio</string>
 		<string>location</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

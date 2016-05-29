@@ -54,6 +54,7 @@
 		E1804DB61ABBA0D300625188 /* RunDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */; };
 		E1844B4F1C8CDCE800A97EAD /* Utterer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1844B4E1C8CDCE800A97EAD /* Utterer.swift */; };
 		E185F8531AE1CB19008BF394 /* RunnerIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185F8521AE1CB19008BF394 /* RunnerIcons.swift */; };
+		E1863B141CD66A6C00B55CD3 /* silence.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1863B131CD66A6C00B55CD3 /* silence.mp3 */; };
 		E18B6C811C0D1AEC005865BA /* GpxActivityItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18B6C801C0D1AEC005865BA /* GpxActivityItemProvider.swift */; };
 		E1A41B4E1BF7D83100E31943 /* PubNubManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A41B4D1BF7D83100E31943 /* PubNubManager.swift */; };
 		E1B45F071AE96EFC00AF73AB /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B45F061AE96EFC00AF73AB /* LocationManager.swift */; };
@@ -148,6 +149,7 @@
 		E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunDetailsVC.swift; sourceTree = "<group>"; };
 		E1844B4E1C8CDCE800A97EAD /* Utterer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utterer.swift; sourceTree = "<group>"; };
 		E185F8521AE1CB19008BF394 /* RunnerIcons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunnerIcons.swift; sourceTree = "<group>"; };
+		E1863B131CD66A6C00B55CD3 /* silence.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = silence.mp3; sourceTree = "<group>"; };
 		E18B6C801C0D1AEC005865BA /* GpxActivityItemProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxActivityItemProvider.swift; sourceTree = "<group>"; };
 		E1A41B4D1BF7D83100E31943 /* PubNubManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubNubManager.swift; sourceTree = "<group>"; };
 		E1B45F061AE96EFC00AF73AB /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				E1103F201C00DADF00E18D2E /* click.mp3 */,
 				E1103F211C00DADF00E18D2E /* gun.mp3 */,
 				E12847721C1763320053ED96 /* sadTrombone.mp3 */,
+				E1863B131CD66A6C00B55CD3 /* silence.mp3 */,
 			);
 			name = Sounds;
 			sourceTree = "<group>";
@@ -442,6 +445,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1863B141CD66A6C00B55CD3 /* silence.mp3 in Resources */,
 				E1E8B9291AAB73F000D04E38 /* Main.storyboard in Resources */,
 				E1DBA6D41C1FBA9200DE3E4F /* WeatherRun.gpx in Resources */,
 				E10356471C02A1EB006E8FEC /* applause3.mp3 in Resources */,
@@ -711,8 +715,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = RaceRunner/RaceRunner.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = RaceRunner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
@@ -720,7 +724,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = "biz.joshadams.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f5983df3-5354-408f-8dc1-0f870d22fdad";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "RaceRunner/RaceRunner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -734,8 +738,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = RaceRunner/RaceRunner.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = RaceRunner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
@@ -743,7 +747,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = "biz.joshadams.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f5983df3-5354-408f-8dc1-0f870d22fdad";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "RaceRunner/RaceRunner-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
