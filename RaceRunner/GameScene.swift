@@ -103,6 +103,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       self.contentCreated = true
       motionManager.startAccelerometerUpdates()
     }
+    startTime = NSDate()
     physicsWorld.contactDelegate = self
   }
   
