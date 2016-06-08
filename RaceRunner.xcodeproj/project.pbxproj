@@ -26,6 +26,14 @@
 		E12E44F21C58BAAB0065AE66 /* Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12E44F11C58BAAB0065AE66 /* Overlay.swift */; };
 		E12F33C91C8B7490008BA8D8 /* RunDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12F33C81C8B7490008BA8D8 /* RunDelegate.swift */; };
 		E12F33CB1C8B7929008BA8D8 /* PubNubPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12F33CA1C8B7929008BA8D8 /* PubNubPublisher.swift */; };
+		E1342BBF1D04F94000ABFCA7 /* scream1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1342BBB1D04F94000ABFCA7 /* scream1.mp3 */; };
+		E1342BC01D04F94000ABFCA7 /* scream2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1342BBC1D04F94000ABFCA7 /* scream2.mp3 */; };
+		E1342BC11D04F94000ABFCA7 /* gun2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1342BBD1D04F94000ABFCA7 /* gun2.mp3 */; };
+		E1342BC21D04F94000ABFCA7 /* neigh.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1342BBE1D04F94000ABFCA7 /* neigh.mp3 */; };
+		E1342BC71D04FA3B00ABFCA7 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1342BC31D04FA3B00ABFCA7 /* GameScene.swift */; };
+		E1342BC81D04FA3B00ABFCA7 /* Bullet.sks in Resources */ = {isa = PBXBuildFile; fileRef = E1342BC41D04FA3B00ABFCA7 /* Bullet.sks */; };
+		E1342BC91D04FA3B00ABFCA7 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1342BC51D04FA3B00ABFCA7 /* GameOverScene.swift */; };
+		E1342BCA1D04FA3B00ABFCA7 /* GameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1342BC61D04FA3B00ABFCA7 /* GameVC.swift */; };
 		E13736F01C4F0F1E008CDE36 /* ShoesSortField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13736EF1C4F0F1E008CDE36 /* ShoesSortField.swift */; };
 		E137AC9E1C87BEB600A3148D /* String+removeWhitespace.swift in Sources */ = {isa = PBXBuildFile; fileRef = E137AC9D1C87BEB600A3148D /* String+removeWhitespace.swift */; };
 		E138E8CE1BA0A0FB00BA20E5 /* iSmoothRun.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */; };
@@ -120,6 +128,14 @@
 		E12E44F11C58BAAB0065AE66 /* Overlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Overlay.swift; sourceTree = "<group>"; };
 		E12F33C81C8B7490008BA8D8 /* RunDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunDelegate.swift; sourceTree = "<group>"; };
 		E12F33CA1C8B7929008BA8D8 /* PubNubPublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubNubPublisher.swift; sourceTree = "<group>"; };
+		E1342BBB1D04F94000ABFCA7 /* scream1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = scream1.mp3; sourceTree = "<group>"; };
+		E1342BBC1D04F94000ABFCA7 /* scream2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = scream2.mp3; sourceTree = "<group>"; };
+		E1342BBD1D04F94000ABFCA7 /* gun2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gun2.mp3; sourceTree = "<group>"; };
+		E1342BBE1D04F94000ABFCA7 /* neigh.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = neigh.mp3; sourceTree = "<group>"; };
+		E1342BC31D04FA3B00ABFCA7 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		E1342BC41D04FA3B00ABFCA7 /* Bullet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Bullet.sks; sourceTree = "<group>"; };
+		E1342BC51D04FA3B00ABFCA7 /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
+		E1342BC61D04FA3B00ABFCA7 /* GameVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameVC.swift; sourceTree = "<group>"; };
 		E13736EF1C4F0F1E008CDE36 /* ShoesSortField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoesSortField.swift; sourceTree = "<group>"; };
 		E137AC9D1C87BEB600A3148D /* String+removeWhitespace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+removeWhitespace.swift"; sourceTree = "<group>"; };
 		E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = iSmoothRun.gpx; sourceTree = "<group>"; };
@@ -237,6 +253,10 @@
 				E10356441C02A1CB006E8FEC /* applause2.mp3 */,
 				E1103F201C00DADF00E18D2E /* click.mp3 */,
 				E1103F211C00DADF00E18D2E /* gun.mp3 */,
+				E1342BBD1D04F94000ABFCA7 /* gun2.mp3 */,
+				E1342BBE1D04F94000ABFCA7 /* neigh.mp3 */,
+				E1342BBB1D04F94000ABFCA7 /* scream1.mp3 */,
+				E1342BBC1D04F94000ABFCA7 /* scream2.mp3 */,
 				E12847721C1763320053ED96 /* sadTrombone.mp3 */,
 				E1863B131CD66A6C00B55CD3 /* silence.mp3 */,
 			);
@@ -258,6 +278,17 @@
 				E1DBA6D71C1FBF0300DE3E4F /* WahooFitness.gpx */,
 			);
 			name = GPX;
+			sourceTree = "<group>";
+		};
+		E1342BBA1D04F3F200ABFCA7 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				E1342BC31D04FA3B00ABFCA7 /* GameScene.swift */,
+				E1342BC41D04FA3B00ABFCA7 /* Bullet.sks */,
+				E1342BC51D04FA3B00ABFCA7 /* GameOverScene.swift */,
+				E1342BC61D04FA3B00ABFCA7 /* GameVC.swift */,
+			);
+			name = Game;
 			sourceTree = "<group>";
 		};
 		E159C2591AAB84A7007C6EA1 /* CoreData */ = {
@@ -356,6 +387,7 @@
 				E11E22BE1C08C71200488399 /* UnitType.swift */,
 				E1E8B94D1AAB742E00D04E38 /* UnwindPanSegue.swift */,
 				E1844B4E1C8CDCE800A97EAD /* Utterer.swift */,
+				E1342BBA1D04F3F200ABFCA7 /* Game */,
 				E1E8B9211AAB73F000D04E38 /* Supporting Files */,
 			);
 			path = RaceRunner;
@@ -445,13 +477,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1342BC81D04FA3B00ABFCA7 /* Bullet.sks in Resources */,
 				E1863B141CD66A6C00B55CD3 /* silence.mp3 in Resources */,
 				E1E8B9291AAB73F000D04E38 /* Main.storyboard in Resources */,
 				E1DBA6D41C1FBA9200DE3E4F /* WeatherRun.gpx in Resources */,
 				E10356471C02A1EB006E8FEC /* applause3.mp3 in Resources */,
+				E1342BBF1D04F94000ABFCA7 /* scream1.mp3 in Resources */,
 				E1DBA6D61C1FBCE800DE3E4F /* Digifit.gpx in Resources */,
 				E1103F251C00DADF00E18D2E /* applause1.mp3 in Resources */,
+				E1342BC11D04F94000ABFCA7 /* gun2.mp3 in Resources */,
 				E1DBA6D01C1F8EE900DE3E4F /* iSmoothRun2.gpx in Resources */,
+				E1342BC01D04F94000ABFCA7 /* scream2.mp3 in Resources */,
 				E138E8CE1BA0A0FB00BA20E5 /* iSmoothRun.gpx in Resources */,
 				E1E027831B9A34FE00700DE1 /* Runkeeper.gpx in Resources */,
 				E1103F231C00DADF00E18D2E /* click.mp3 in Resources */,
@@ -460,6 +496,7 @@
 				E1DBA6DA1C1FC0AB00DE3E4F /* Strava.gpx in Resources */,
 				E1E8B92E1AAB73F000D04E38 /* LaunchScreen.xib in Resources */,
 				E1103F241C00DADF00E18D2E /* gun.mp3 in Resources */,
+				E1342BC21D04F94000ABFCA7 /* neigh.mp3 in Resources */,
 				E10356451C02A1CB006E8FEC /* applause2.mp3 in Resources */,
 				E1DBA6D81C1FBF0300DE3E4F /* WahooFitness.gpx in Resources */,
 				E17B11571C67C97E0027945F /* RaceRunner.gpx in Resources */,
@@ -557,6 +594,7 @@
 				E11E22BF1C08C71200488399 /* UnitType.swift in Sources */,
 				E1A41B4E1BF7D83100E31943 /* PubNubManager.swift in Sources */,
 				E1844B4F1C8CDCE800A97EAD /* Utterer.swift in Sources */,
+				E1342BC91D04FA3B00ABFCA7 /* GameOverScene.swift in Sources */,
 				E10B704A1C455C4F00C70283 /* UIApplication+topViewController.swift in Sources */,
 				E11655AC1AEAFB5200633C16 /* RunModel.swift in Sources */,
 				E1648E101C4864E8002A3ED4 /* ShoesBrowserVC.swift in Sources */,
@@ -575,6 +613,7 @@
 				E1648E0A1C4861EA002A3ED4 /* Run+CoreDataProperties.swift in Sources */,
 				E13E30571BFD28F1009CDE60 /* SoundManager.swift in Sources */,
 				E10B704C1C4563E600C70283 /* UIAlertController+showMessage.swift in Sources */,
+				E1342BCA1D04FA3B00ABFCA7 /* GameVC.swift in Sources */,
 				E1DBA6CE1C1F676800DE3E4F /* ImportVC.swift in Sources */,
 				E11E22C31C08CDC000488399 /* Config.swift in Sources */,
 				E1E8B9521AAB742E00D04E38 /* ChildVC.swift in Sources */,
@@ -596,6 +635,7 @@
 				E1CBD2D71AC4D616006F0B85 /* SettingsManager.swift in Sources */,
 				E1E8B94E1AAB742E00D04E38 /* MenuVC.swift in Sources */,
 				E18B6C811C0D1AEC005865BA /* GpxActivityItemProvider.swift in Sources */,
+				E1342BC71D04FA3B00ABFCA7 /* GameScene.swift in Sources */,
 				E1648E0C1C4863E3002A3ED4 /* Shoes+CoreDataProperties.swift in Sources */,
 				E1F354051C7125FC00D6C581 /* IapHelper.swift in Sources */,
 				E1E9E3441C8288CC00F70D79 /* BroadcastVC.swift in Sources */,

@@ -15,6 +15,10 @@ enum Sound: String {
   case Applause3 = "applause3"
   case Click = "click"
   case Gun = "gun"
+  case Gun2 = "gun2"
+  case Neigh = "neigh"
   case SadTrombone = "sadTrombone"
+  case Scream1 = "scream1"
+  case Scream2 = "scream2"
   case Silence = "silence"
 }

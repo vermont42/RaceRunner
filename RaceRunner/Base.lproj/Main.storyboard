@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="IO6-UC-hio">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="IO6-UC-hio">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -18,19 +18,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a7P-Nf-A8a">
-                                <rect key="frame" x="20" y="20" width="44" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="EdW-2s-6oC"/>
-                                    <constraint firstAttribute="width" constant="44" id="Ki5-iW-wsG"/>
-                                </constraints>
-                                <state key="normal" image="menu">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="showMenu:" destination="J4K-qe-vqE" eventType="touchUpInside" id="gBb-gH-bt4"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Help" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLY-gk-dEi">
                                 <rect key="frame" x="256" y="20" width="89" height="55"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="40"/>
@@ -58,6 +45,19 @@
                                     <action selector="changeHelpText" destination="J4K-qe-vqE" eventType="valueChanged" id="tGm-LE-Nog"/>
                                 </connections>
                             </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a7P-Nf-A8a">
+                                <rect key="frame" x="20" y="20" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="EdW-2s-6oC"/>
+                                    <constraint firstAttribute="width" constant="44" id="Ki5-iW-wsG"/>
+                                </constraints>
+                                <state key="normal" image="menu">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showMenu:" destination="J4K-qe-vqE" eventType="touchUpInside" id="gBb-gH-bt4"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.29019607843137252" green="0.3411764705882353" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -936,6 +936,7 @@
                         <segue destination="Ww2-AC-tWa" kind="custom" identifier="pan spectate" customClass="PanSegue" customModule="RaceRunner" customModuleProvider="target" id="lhD-2F-ggI"/>
                         <segue destination="QBU-40-b2r" kind="custom" identifier="pan shoes" customClass="PanSegue" customModule="RaceRunner" customModuleProvider="target" id="ACN-iC-y2S"/>
                         <segue destination="J4K-qe-vqE" kind="custom" identifier="pan help" customClass="PanSegue" customModule="RaceRunner" customModuleProvider="target" id="25Z-Ym-CcF"/>
+                        <segue destination="Tru-XR-1Ye" kind="custom" identifier="pan game" customClass="PanSegue" customModule="RaceRunner" customModuleProvider="target" id="j1s-2s-rc4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ke-KH-Y7l" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1550,19 +1551,6 @@
                                 <color key="textColor" red="0.92941176469999998" green="0.68627450980000004" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lk5-9Q-roI">
-                                <rect key="frame" x="20" y="26" width="44" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="D6P-W2-BBG"/>
-                                    <constraint firstAttribute="width" constant="44" id="hEe-Te-EOB"/>
-                                </constraints>
-                                <state key="normal" image="menu">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="showMenu:" destination="Kw6-vR-YqN" eventType="touchUpInside" id="fvk-gx-AwQ"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="89V-bw-owl">
                                 <rect key="frame" x="521" y="24" width="63" height="40"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
@@ -1600,6 +1588,19 @@
                                 </state>
                                 <connections>
                                     <action selector="reverseSort" destination="Kw6-vR-YqN" eventType="touchUpInside" id="bmQ-bD-JIK"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lk5-9Q-roI">
+                                <rect key="frame" x="20" y="26" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="D6P-W2-BBG"/>
+                                    <constraint firstAttribute="width" constant="44" id="hEe-Te-EOB"/>
+                                </constraints>
+                                <state key="normal" image="menu">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showMenu:" destination="Kw6-vR-YqN" eventType="touchUpInside" id="fvk-gx-AwQ"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1710,6 +1711,47 @@
                 <exit id="DF7-Id-vRA" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="513" y="1907"/>
+        </scene>
+        <!--GameVC-->
+        <scene sceneID="ADz-XK-TNV">
+            <objects>
+                <viewController id="Tru-XR-1Ye" customClass="GameVC" customModule="RaceRunner" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Qf1-XV-9fF"/>
+                        <viewControllerLayoutGuide type="bottom" id="0hZ-FZ-Z9d"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="FL8-a2-s8G" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I9u-zS-0Fo">
+                                <rect key="frame" x="20" y="28" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="mgb-OM-3MA"/>
+                                    <constraint firstAttribute="height" constant="44" id="xt6-bj-Mk1"/>
+                                </constraints>
+                                <state key="normal" image="menu">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showMenu" destination="Tru-XR-1Ye" eventType="touchUpInside" id="L6I-aa-lqY"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="I9u-zS-0Fo" firstAttribute="leading" secondItem="FL8-a2-s8G" secondAttribute="leading" constant="20" id="erL-VA-Sgb"/>
+                            <constraint firstItem="I9u-zS-0Fo" firstAttribute="top" secondItem="Qf1-XV-9fF" secondAttribute="bottom" constant="8" id="oPT-ZF-H5W"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <segue destination="gWC-9a-609" kind="unwind" identifier="unwind pan" customClass="UnwindPanSegue" customModule="RaceRunner" customModuleProvider="target" unwindAction="returnFromSegueActions:" id="G9q-mO-kEF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dq0-np-CEb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="gWC-9a-609" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1975" y="1965"/>
         </scene>
         <!--GraphVC-->
         <scene sceneID="fjm-WY-NcI">
@@ -2476,6 +2518,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Tpz-hV-a4w"/>
-        <segue reference="BKi-dk-66y"/>
+        <segue reference="xed-hc-tXN"/>
     </inferredMetricsTieBreakers>
 </document>

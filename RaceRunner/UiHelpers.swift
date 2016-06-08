@@ -61,14 +61,6 @@ class UiHelpers {
     }
   }
   
-  //    let fontFamilyNames = UIFont.familyNames()
-  //    for familyName in fontFamilyNames {
-  //      print("------------------------------")
-  //      print("Font Family Name = [\(familyName)]")
-  //      let names = UIFont.fontNamesForFamilyName(familyName as String)
-  //      print("Font Names = [\(names)]")
-  //    }
-  
   class func styleText(text: String) -> NSAttributedString {
     let matText = NSMutableAttributedString(string: text)
     matText.addAttributes([NSForegroundColorAttributeName: UiConstants.lightColor, NSFontAttributeName: UIFont(name: UiConstants.globalFont, size: UiConstants.bodyFontSize)!], range: NSMakeRange(0, matText.length))

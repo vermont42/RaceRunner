@@ -80,6 +80,10 @@ class SettingsManager {
   private static let showWeightKey = "showWeight"
   private static let showWeightDefault = true
   
+  private var highScore: Int
+  private static let highScoreDefault = 0
+  private static let highScoreKey = "highScore"
+  
   private init() {
     userDefaults = NSUserDefaults.standardUserDefaults()
     
@@ -244,6 +248,15 @@ class SettingsManager {
       userDefaults.setObject("\(showWeight)", forKey: SettingsManager.showWeightKey)
       userDefaults.synchronize()
     }
+    
+    if let storedHighScoreString = userDefaults.stringForKey(SettingsManager.highScoreKey) {
+      highScore = (Int)((storedHighScoreString as NSString).intValue)
+    }
+    else {
+      highScore = SettingsManager.highScoreDefault
+      userDefaults.setObject(String(format:"%d", highScore), forKey: SettingsManager.highScoreKey)
+      userDefaults.synchronize()
+    }
   }
   
   class func getUnitType() -> UnitType {
@@ -314,6 +327,18 @@ class SettingsManager {
     if weight != settingsManager.weight {
       settingsManager.weight = weight
       settingsManager.userDefaults.setObject(String(format:"%f", weight), forKey: SettingsManager.weightKey)
+      settingsManager.userDefaults.synchronize()
+    }
+  }
+
+  class func getHighScore() -> Int {
+    return settingsManager.highScore
+  }
+  
+  class func setHighScore(highScore: Int) {
+    if highScore != settingsManager.highScore {
+      settingsManager.highScore = highScore
+      settingsManager.userDefaults.setObject(String(format:"%d", highScore), forKey: SettingsManager.highScoreKey)
       settingsManager.userDefaults.synchronize()
     }
   }
