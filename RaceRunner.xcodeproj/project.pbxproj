@@ -58,6 +58,7 @@
 		E1648E141C4975ED002A3ED4 /* ShoesEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E131C4975ED002A3ED4 /* ShoesEditorVC.swift */; };
 		E1648E181C497997002A3ED4 /* ShoesDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E171C497997002A3ED4 /* ShoesDelegate.swift */; };
 		E16F35761B8EBC4100C88426 /* UIViewController+noOp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16F35751B8EBC4100C88426 /* UIViewController+noOp.swift */; };
+		E17016511D0877EB00CF5825 /* scratch.txt in Resources */ = {isa = PBXBuildFile; fileRef = E17016501D0877EB00CF5825 /* scratch.txt */; };
 		E17B11571C67C97E0027945F /* RaceRunner.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E17B11561C67C97E0027945F /* RaceRunner.gpx */; };
 		E1804DB61ABBA0D300625188 /* RunDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */; };
 		E1844B4F1C8CDCE800A97EAD /* Utterer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1844B4E1C8CDCE800A97EAD /* Utterer.swift */; };
@@ -161,6 +162,7 @@
 		E1648E131C4975ED002A3ED4 /* ShoesEditorVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoesEditorVC.swift; sourceTree = "<group>"; };
 		E1648E171C497997002A3ED4 /* ShoesDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoesDelegate.swift; sourceTree = "<group>"; };
 		E16F35751B8EBC4100C88426 /* UIViewController+noOp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+noOp.swift"; sourceTree = "<group>"; };
+		E17016501D0877EB00CF5825 /* scratch.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scratch.txt; sourceTree = "<group>"; };
 		E17B11561C67C97E0027945F /* RaceRunner.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = RaceRunner.gpx; sourceTree = "<group>"; };
 		E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunDetailsVC.swift; sourceTree = "<group>"; };
 		E1844B4E1C8CDCE800A97EAD /* Utterer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utterer.swift; sourceTree = "<group>"; };
@@ -367,6 +369,7 @@
 				E11655AB1AEAFB5200633C16 /* RunModel.swift */,
 				E185F8521AE1CB19008BF394 /* RunnerIcons.swift */,
 				E1E8B94A1AAB742E00D04E38 /* RunVC.swift */,
+				E17016501D0877EB00CF5825 /* scratch.txt */,
 				E1CBD2D61AC4D616006F0B85 /* SettingsManager.swift */,
 				E1E8B94B1AAB742E00D04E38 /* SettingsVC.swift */,
 				E1648E0F1C4864E8002A3ED4 /* ShoesBrowserVC.swift */,
@@ -494,6 +497,7 @@
 				E1D38F491B9E6AFE00380643 /* Runmeter.gpx in Resources */,
 				E12847731C1763320053ED96 /* sadTrombone.mp3 in Resources */,
 				E1DBA6DA1C1FC0AB00DE3E4F /* Strava.gpx in Resources */,
+				E17016511D0877EB00CF5825 /* scratch.txt in Resources */,
 				E1E8B92E1AAB73F000D04E38 /* LaunchScreen.xib in Resources */,
 				E1103F241C00DADF00E18D2E /* gun.mp3 in Resources */,
 				E1342BC21D04F94000ABFCA7 /* neigh.mp3 in Resources */,

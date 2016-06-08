@@ -18,6 +18,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   var score: Int = 0
   var runnerHealth: Float = 1.0
   var timePerMove: CFTimeInterval = 1.0
+  var startTime = NSDate()
   let eastRunners: [SKTexture]
   let westRunners: [SKTexture]
   let eastHorses: [SKTexture]
@@ -58,6 +59,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   let invaderBulletDuration: NSTimeInterval = 2.0
   let transitionDuration: NSTimeInterval = 1.0
   let pointsPerHit = 100
+  let healthAdjustment: Float = -0.334
   static let invaderWidth: CGFloat = 24.0 // must be static to be used in enum
   static let invaderHeight: CGFloat = 16.0 // must be static to be used in enum
 
@@ -429,7 +431,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let nodeNames = [contact.bodyA.node!.name!, contact.bodyB.node!.name!]
     if nodeNames.contains(runnerName) && nodeNames.contains(invaderFiredBulletName) {
       runAction(SKAction.playSoundFileNamed(Sound.Scream1.rawValue, waitForCompletion: false))
-      adjustrunnerHealthBy(-0.334)
+      adjustrunnerHealthBy(healthAdjustment)
       if runnerHealth <= 0.0 {
         contact.bodyA.node!.removeFromParent()
         contact.bodyB.node!.removeFromParent()
@@ -480,9 +482,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     if !gameEnding {
       gameEnding = true
       motionManager.stopAccelerometerUpdates()
+      var adjustedScore = Int(Float(score) * (runnerHealth + 1.0) - Float(NSDate().timeIntervalSinceDate(startTime)))
+      if adjustedScore < 0 {
+        adjustedScore = 0
+      }
       let oldHighScore = SettingsManager.getHighScore()
-      if score > oldHighScore {
-        SettingsManager.setHighScore(score)
+      if adjustedScore > oldHighScore {
+        SettingsManager.setHighScore(adjustedScore)
       }
       let gameOverScene: GameOverScene = GameOverScene(size: size, oldHighScore: oldHighScore)
       view?.presentScene(gameOverScene, transition: SKTransition.doorsOpenHorizontalWithDuration(transitionDuration))
