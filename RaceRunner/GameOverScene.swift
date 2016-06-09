@@ -11,16 +11,19 @@ import SpriteKit
 class GameOverScene: SKScene {
   private var contentCreated = false
   private let oldHighScore: Int
+  private let adjustedScore: Int
   private let gameOverText = "Game Over"
-  private let newHighScoreString = "New high score of "
+  private let newHighScoreString = "New high score: "
+  private let notNewHighScoreString = "Score: "
   private let tapPrompt = "Tap to play again."
   private let largeFontSize: CGFloat = 50.0
   private let smallFontSize: CGFloat = 25.0
   private let gameOverYOffset: CGFloat = 2.0 / 3.0
   private let labelYOffset: CGFloat = 40.0
   
-  init(size: CGSize, oldHighScore: Int) {
+  init(size: CGSize, adjustedScore: Int, oldHighScore: Int) {
     self.oldHighScore = oldHighScore
+    self.adjustedScore = adjustedScore
     super.init(size: size)
   }
   
@@ -48,11 +51,11 @@ class GameOverScene: SKScene {
     highScoreLabel.fontColor = UiConstants.intermediate1Color
   
     let highScoreText: String
-    if SettingsManager.getHighScore() > oldHighScore {
-      highScoreText = newHighScoreString + "\(SettingsManager.getHighScore())" + "!"
+    if adjustedScore > oldHighScore {
+      highScoreText = newHighScoreString + "\(adjustedScore)"
     }
     else {
-      highScoreText = ""
+      highScoreText = notNewHighScoreString + "\(adjustedScore)"
     }
     highScoreLabel.text = highScoreText
     highScoreLabel.position = CGPointMake(self.size.width/2, gameOverLabel.frame.origin.y - gameOverLabel.frame.size.height - labelYOffset);

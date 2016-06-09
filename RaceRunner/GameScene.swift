@@ -491,7 +491,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       if adjustedScore > oldHighScore {
         SettingsManager.setHighScore(adjustedScore)
       }
-      let gameOverScene: GameOverScene = GameOverScene(size: size, oldHighScore: oldHighScore)
+      let gameOverScene: GameOverScene = GameOverScene(size: size, adjustedScore: adjustedScore, oldHighScore: oldHighScore)
       view?.presentScene(gameOverScene, transition: SKTransition.doorsOpenHorizontalWithDuration(transitionDuration))
     }
   }
