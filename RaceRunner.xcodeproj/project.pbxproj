@@ -59,6 +59,8 @@
 		E1648E181C497997002A3ED4 /* ShoesDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E171C497997002A3ED4 /* ShoesDelegate.swift */; };
 		E16F35761B8EBC4100C88426 /* UIViewController+noOp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16F35751B8EBC4100C88426 /* UIViewController+noOp.swift */; };
 		E17016511D0877EB00CF5825 /* scratch.txt in Resources */ = {isa = PBXBuildFile; fileRef = E17016501D0877EB00CF5825 /* scratch.txt */; };
+		E17016531D09DA3A00CF5825 /* LowMemoryHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17016521D09DA3A00CF5825 /* LowMemoryHandler.swift */; };
+		E17016551D0DB92400CF5825 /* RunInProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17016541D0DB92400CF5825 /* RunInProgress.swift */; };
 		E17B11571C67C97E0027945F /* RaceRunner.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E17B11561C67C97E0027945F /* RaceRunner.gpx */; };
 		E1804DB61ABBA0D300625188 /* RunDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */; };
 		E1844B4F1C8CDCE800A97EAD /* Utterer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1844B4E1C8CDCE800A97EAD /* Utterer.swift */; };
@@ -163,6 +165,8 @@
 		E1648E171C497997002A3ED4 /* ShoesDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoesDelegate.swift; sourceTree = "<group>"; };
 		E16F35751B8EBC4100C88426 /* UIViewController+noOp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+noOp.swift"; sourceTree = "<group>"; };
 		E17016501D0877EB00CF5825 /* scratch.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scratch.txt; sourceTree = "<group>"; };
+		E17016521D09DA3A00CF5825 /* LowMemoryHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LowMemoryHandler.swift; sourceTree = "<group>"; };
+		E17016541D0DB92400CF5825 /* RunInProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunInProgress.swift; sourceTree = "<group>"; };
 		E17B11561C67C97E0027945F /* RaceRunner.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = RaceRunner.gpx; sourceTree = "<group>"; };
 		E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunDetailsVC.swift; sourceTree = "<group>"; };
 		E1844B4E1C8CDCE800A97EAD /* Utterer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utterer.swift; sourceTree = "<group>"; };
@@ -299,9 +303,10 @@
 				E1648E0D1C486421002A3ED4 /* Shoes.swift */,
 				E1648E0B1C4863E3002A3ED4 /* Shoes+CoreDataProperties.swift */,
 				E1D521661ABA93CD00B46300 /* Location.swift */,
+				E159C2521AAB8304007C6EA1 /* RaceRunner.xcdatamodeld */,
 				E1D521671ABA93CD00B46300 /* Run.swift */,
 				E1648E091C4861EA002A3ED4 /* Run+CoreDataProperties.swift */,
-				E159C2521AAB8304007C6EA1 /* RaceRunner.xcdatamodeld */,
+				E17016541D0DB92400CF5825 /* RunInProgress.swift */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -353,6 +358,7 @@
 				E10B704D1C45C09200C70283 /* LogSortField.swift */,
 				E1E8B9491AAB742E00D04E38 /* LogVC.swift */,
 				E1C2ED4F1AB63BE200A29728 /* LogCell.swift */,
+				E17016521D09DA3A00CF5825 /* LowMemoryHandler.swift */,
 				E1E8B9271AAB73F000D04E38 /* Main.storyboard */,
 				E1C22BCB1AF05DA1003A5712 /* MarqueeLabel.h */,
 				E1C22BCA1AF05DA1003A5712 /* MarqueeLabel.m */,
@@ -598,12 +604,14 @@
 				E11E22BF1C08C71200488399 /* UnitType.swift in Sources */,
 				E1A41B4E1BF7D83100E31943 /* PubNubManager.swift in Sources */,
 				E1844B4F1C8CDCE800A97EAD /* Utterer.swift in Sources */,
+				E17016551D0DB92400CF5825 /* RunInProgress.swift in Sources */,
 				E1342BC91D04FA3B00ABFCA7 /* GameOverScene.swift in Sources */,
 				E10B704A1C455C4F00C70283 /* UIApplication+topViewController.swift in Sources */,
 				E11655AC1AEAFB5200633C16 /* RunModel.swift in Sources */,
 				E1648E101C4864E8002A3ED4 /* ShoesBrowserVC.swift in Sources */,
 				E1E8B9541AAB742E00D04E38 /* LogVC.swift in Sources */,
 				E1D529CD1C1C80A500E92AD8 /* PersistentMapState.swift in Sources */,
+				E17016531D09DA3A00CF5825 /* LowMemoryHandler.swift in Sources */,
 				E12E44F01C572F340065AE66 /* GraphVC.swift in Sources */,
 				E1648E141C4975ED002A3ED4 /* ShoesEditorVC.swift in Sources */,
 				E14175A91C877AC1001F402C /* BroadcastDelegate.swift in Sources */,

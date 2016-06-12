@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     SoundManager.enableBackgroundAudio()
     Fabric.with([Answers.self])
     //Fabric.sharedSDK().debug = true
+    LowMemoryHandler.appStarted()
     return true
   }
     

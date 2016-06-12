@@ -52,6 +52,14 @@ class SettingsManager {
   private var audibleSplits: Bool
   private static let audibleSplitsKey = "audibleSplits"
   private static let audibleSplitsDefault = true
+
+  private var warnedUserAboutLowRam: Bool
+  private static let warnedUserAboutLowRamKey = "warnedUserAboutLowRam"
+  private static let warnedUserAboutLowRamDefault = false
+  
+  private var realRunInProgress: Bool
+  private static let realRunInProgressKey = "realRunInProgress"
+  private static let realRunInProgressDefault = false
   
   private var multiplier: Double
   private static let multiplierKey = "multiplier"
@@ -185,7 +193,25 @@ class SettingsManager {
       userDefaults.setObject("\(showedForecastCredit)", forKey: SettingsManager.showedForecastCreditKey)
       userDefaults.synchronize()
     }
-    
+
+    if let warnedUserAboutLowRamString = userDefaults.stringForKey(SettingsManager.warnedUserAboutLowRamKey) {
+      warnedUserAboutLowRam = (warnedUserAboutLowRamString as NSString).boolValue
+    }
+    else {
+      warnedUserAboutLowRam = SettingsManager.warnedUserAboutLowRamDefault
+      userDefaults.setObject("\(warnedUserAboutLowRam)", forKey: SettingsManager.warnedUserAboutLowRamKey)
+      userDefaults.synchronize()
+    }
+
+    if let realRunInProgressString = userDefaults.stringForKey(SettingsManager.realRunInProgressKey) {
+      realRunInProgress = (realRunInProgressString as NSString).boolValue
+    }
+    else {
+      realRunInProgress = SettingsManager.realRunInProgressDefault
+      userDefaults.setObject("\(realRunInProgress)", forKey: SettingsManager.realRunInProgressKey)
+      userDefaults.synchronize()
+    }
+
     if let storedBroadcastNameString = userDefaults.stringForKey(SettingsManager.broadcastNameKey) {
       broadcastName = storedBroadcastNameString
     }
@@ -379,6 +405,30 @@ class SettingsManager {
     if alreadyMadeSampleRun != settingsManager.alreadyMadeSampleRun {
       settingsManager.alreadyMadeSampleRun = alreadyMadeSampleRun
       settingsManager.userDefaults.setObject("\(alreadyMadeSampleRun)", forKey: SettingsManager.alreadyMadeSampleRunKey)
+      settingsManager.userDefaults.synchronize()
+    }
+  }
+  
+  class func getRealRunInProgress() -> Bool {
+    return settingsManager.realRunInProgress
+  }
+  
+  class func setRealRunInProgress(realRunInProgress: Bool) {
+    if realRunInProgress != settingsManager.realRunInProgress {
+      settingsManager.realRunInProgress = realRunInProgress
+      settingsManager.userDefaults.setObject("\(realRunInProgress)", forKey: SettingsManager.realRunInProgressKey)
+      settingsManager.userDefaults.synchronize()
+    }
+  }
+  
+  class func getWarnedUserAboutLowRam() -> Bool {
+    return settingsManager.warnedUserAboutLowRam
+  }
+  
+  class func setWarnedUserAboutLowRam(warnedUserAboutLowRam: Bool) {
+    if warnedUserAboutLowRam != settingsManager.warnedUserAboutLowRam {
+      settingsManager.warnedUserAboutLowRam = warnedUserAboutLowRam
+      settingsManager.userDefaults.setObject("\(warnedUserAboutLowRam)", forKey: SettingsManager.warnedUserAboutLowRamKey)
       settingsManager.userDefaults.synchronize()
     }
   }

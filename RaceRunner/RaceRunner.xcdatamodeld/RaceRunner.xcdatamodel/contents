@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F1504" minimumToolsVersion="Xcode 4.3">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15F34" minimumToolsVersion="Xcode 4.3">
     <entity name="Location" representedClassName="RaceRunner.Location" syncable="YES">
         <attribute name="altitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="run" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Run" inverseName="locations" inverseEntity="Run" syncable="YES"/>
+        <relationship name="runInProgress" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RunInProgress" inverseName="tempLocations" inverseEntity="RunInProgress" syncable="YES"/>
     </entity>
     <entity name="Run" representedClassName="RaceRunner.Run" syncable="YES">
         <attribute name="altitudeGained" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
@@ -26,6 +27,24 @@
         <attribute name="weight" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <relationship name="locations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Location" inverseName="run" inverseEntity="Location" syncable="YES"/>
     </entity>
+    <entity name="RunInProgress" representedClassName="RaceRunner.RunInProgress" syncable="YES">
+        <attribute name="altGained" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="altLost" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
+        <attribute name="currentAltitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="currentSplitDistance" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="lastDistance" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="lastSeconds" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="maxAlt" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="maxLat" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="maxLong" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="minAlt" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="minLat" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="minLong" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="oldSplitAltitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="totalDistance" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="totalSeconds" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="tempLocations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Location" inverseName="runInProgress" inverseEntity="Location" syncable="YES"/>
+    </entity>
     <entity name="Shoes" representedClassName="RaceRunner.Shoes" syncable="YES">
         <attribute name="isCurrent" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="kilometers" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -34,8 +53,9 @@
         <attribute name="thumbnail" attributeType="Binary" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Location" positionX="-63" positionY="-18" width="128" height="120"/>
+        <element name="Location" positionX="-63" positionY="-18" width="128" height="135"/>
         <element name="Run" positionX="214" positionY="-0" width="128" height="300"/>
+        <element name="RunInProgress" positionX="72" positionY="126" width="128" height="285"/>
         <element name="Shoes" positionX="72" positionY="126" width="128" height="120"/>
     </elements>
 </model>

@@ -20,7 +20,6 @@ class PanSegue: UIStoryboardSegue {
 
     let window = UIApplication.sharedApplication().keyWindow
     // Swizzle to avoid spurious call to viewWillAppear().
-//    method_exchangeImplementations(class_getInstanceMethod(destinationViewController.classForCoder, "viewWillAppear:"), class_getInstanceMethod(UIViewController.classForCoder(), "viewWillAppearNoOp:"))
     method_exchangeImplementations(class_getInstanceMethod(destinationViewController.classForCoder, #selector(UIViewController.viewWillAppear)), class_getInstanceMethod(UIViewController.classForCoder(), #selector(UIViewController.viewWillAppearNoOp)))
     
     

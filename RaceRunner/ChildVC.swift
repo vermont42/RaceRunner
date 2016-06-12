@@ -13,6 +13,10 @@ class ChildVC: UIViewController {
     setupSwipeGestureRecognizer()
   }
   
+  override func didReceiveMemoryWarning() {
+    LowMemoryHandler.handleLowMemory(self)
+  }
+  
   func setupSwipeGestureRecognizer() {
     let swipeGestureRecognizer: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(ChildVC.showMenu))
     swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirection.Right

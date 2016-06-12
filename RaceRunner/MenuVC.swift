@@ -16,7 +16,14 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
   var panSegues = ["pan run", "pan log", "pan GPX run", "pan log", "pan spectate", "pan settings", "pan shoes", "pan help", "pan game"]
   var selectedMenuItem: Int = 0
   var logTypeToShow: LogVC.LogType!
+  private var firstAppearance = true
 
+  private static let resumeRunLabel = "Resume Run"
+  private static let startRunLabel = "Start Run"
+  private static let historyLabel = "History"
+  private static let simulateLabel = "Simulate"
+  private static let demoLabel = "Demo"
+  
   private static let rowHeight: CGFloat = 50.0
   private static let realRunMessage = "There is a real run in progress. Please tap the Continue menu item and stop the run before attempting to simulate a run."
   private static let okButtonText = "OK"
@@ -38,6 +45,23 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
     menuTable.reloadData()
+  }
+  
+  override func viewDidAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    if firstAppearance {
+      firstAppearance = false
+      if SettingsManager.getRealRunInProgress() {
+        LowMemoryHandler.askWhetherToResumeRun(self, completion: {
+          self.updateRunButton()
+          self.menuTable.reloadData()
+        })
+      }
+    }
+  }
+  
+  override func didReceiveMemoryWarning() {
+    LowMemoryHandler.handleLowMemory(self)
   }
   
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -65,12 +89,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
       cell!.selectedBackgroundView = selectedBackgroundView
       cell!.textLabel?.font = UIFont(name: UiConstants.globalFont, size: MenuVC.menuFontSize)
     }
-    if RunModel.runModel.status == .PreRun && controllerLabels[0] == "Continue" {
-      controllerLabels[0] = "Start Run"
-    }
-    else if RunModel.runModel.status != .PreRun && controllerLabels[0] == "Start Run" {
-      controllerLabels[0] = "Continue"
-    }
+    updateRunButton()
     cell!.textLabel?.text = controllerLabels[indexPath.row]
     cell!.textLabel?.attributedText = UiHelpers.letterPressedText(controllerLabels[indexPath.row])
     return cell!
@@ -81,17 +100,26 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
   }
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    if controllerLabels[indexPath.row] == "History" {
+    if controllerLabels[indexPath.row] == MenuVC.historyLabel {
       logTypeToShow = .History
     }
-    else if controllerLabels[indexPath.row] == "Simulate" || controllerLabels[indexPath.row] == "Demo" {
+    else if controllerLabels[indexPath.row] == MenuVC.simulateLabel || controllerLabels[indexPath.row] == MenuVC.demoLabel {
       logTypeToShow = .Simulate
     }
-    if (controllerLabels[indexPath.row] == "Simulate" || controllerLabels[indexPath.row] == "Demo") && RunModel.runModel.realRunInProgress {
+    if (controllerLabels[indexPath.row] == MenuVC.simulateLabel || controllerLabels[indexPath.row] == MenuVC.demoLabel) && SettingsManager.getRealRunInProgress() {
       UIAlertController.showMessage(MenuVC.realRunMessage, title: MenuVC.sadFaceTitle)
     }
     else {
       performSegueWithIdentifier(panSegues[indexPath.row], sender: self)
+    }
+  }
+  
+  private func updateRunButton() {
+    if RunModel.runModel.status == .PreRun && controllerLabels[0] == MenuVC.resumeRunLabel {
+      controllerLabels[0] = MenuVC.startRunLabel
+    }
+    else if RunModel.runModel.status != .PreRun && controllerLabels[0] == MenuVC.startRunLabel {
+      controllerLabels[0] = MenuVC.resumeRunLabel
     }
   }
 

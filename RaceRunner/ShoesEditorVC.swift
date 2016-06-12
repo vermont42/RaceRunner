@@ -80,6 +80,10 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
     }
   }
   
+  override func didReceiveMemoryWarning() {
+    LowMemoryHandler.handleLowMemory(self)
+  }
+  
   override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
     view.endEditing(true)
     super.touchesBegan(touches, withEvent: event)
