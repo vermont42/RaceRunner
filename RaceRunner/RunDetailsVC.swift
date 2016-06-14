@@ -270,6 +270,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     }
     alertController.view.tintColor = UiConstants.intermediate1Color
     presentViewController(alertController, animated: true, completion: nil)
+    alertController.view.tintColor = UiConstants.intermediate1Color    
   }
   
   @IBAction func changeOverlay(sender: UISegmentedControl) {

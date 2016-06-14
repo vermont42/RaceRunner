@@ -35,9 +35,11 @@ class LowMemoryHandler {
   static func askWhetherToResumeRun(viewController: UIViewController, completion: () -> Void) {
     LowMemoryHandler.completion = completion
     viewController.presentViewController(resumeController, animated: true, completion: nil)
+    resumeController.view.tintColor = UiConstants.intermediate1Color
   }
   
   static func appStarted() {
+    SettingsManager.setWarnedUserAboutLowRam(false)
     if SettingsManager.getRealRunInProgress() {
       let resumeAction = UIAlertAction(title: resumeButtonTitle, style: UIAlertActionStyle.Default, handler: { (action) in
         RunModel.loadStateAndStart()
@@ -46,11 +48,9 @@ class LowMemoryHandler {
       })
       resumeController.addAction(resumeAction)
       let discardAction = UIAlertAction(title: discardButtonTitle, style: UIAlertActionStyle.Cancel, handler: { (action) in
-        print("discarding run")
-        SettingsManager.setRealRunInProgress(false)
+        RunModel.deleteSavedRun()
       })
       resumeController.addAction(discardAction)
-      resumeController.view.tintColor = UiConstants.intermediate1Color
     }
   }
 }

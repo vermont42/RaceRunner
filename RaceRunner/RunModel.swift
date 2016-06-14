@@ -468,6 +468,24 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     }
   }
   
+  static func deleteSavedRun() {
+    SettingsManager.setRealRunInProgress(false)
+    SettingsManager.setWarnedUserAboutLowRam(false)
+    let fetchRequest = NSFetchRequest()
+    let context = CDManager.sharedCDManager.context
+    fetchRequest.entity = NSEntityDescription.entityForName("RunInProgress", inManagedObjectContext: context)
+    do {
+      let runsInProgress = (try context.executeFetchRequest(fetchRequest)) as? [RunInProgress]
+      if let runsInProgress = runsInProgress {
+        if runsInProgress.count > 0 {
+          context.deleteObject(runsInProgress[0])
+          CDManager.saveContext()
+        }
+      }
+    }
+    catch _ as NSError {}
+  }
+  
   func stop() {
     timer.invalidate()
     locationManager.stopUpdatingLocation()
@@ -477,21 +495,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
       SettingsManager.setBroadcastNextRun(false)
     }
     if runToSimulate == nil && gpxFile == nil {
-      SettingsManager.setRealRunInProgress(false)
-      SettingsManager.setWarnedUserAboutLowRam(false)
-      let fetchRequest = NSFetchRequest()
-      let context = CDManager.sharedCDManager.context
-      fetchRequest.entity = NSEntityDescription.entityForName("RunInProgress", inManagedObjectContext: context)
-      do {
-        let runsInProgress = (try context.executeFetchRequest(fetchRequest)) as? [RunInProgress]
-        if let runsInProgress = runsInProgress {
-          if runsInProgress.count > 0 {
-            context.deleteObject(runsInProgress[0])
-            CDManager.saveContext()
-          }
-        }
-      }
-      catch _ as NSError {}
+      RunModel.deleteSavedRun()
     }
     if runToSimulate == nil && gpxFile == nil && totalDistance > RunModel.minDistance {
       var customName = ""

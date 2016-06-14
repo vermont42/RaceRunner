@@ -1,37 +1,3 @@
-When starting a real new run, set the preference "realRunInProgress" to true. It defaults to false. DONE
-
-In ChildVC.swift, override didReceiveMemoryWarning. Call LowMemoryHandler.handleLowMemory(). DONE
-
-Confirm that this is called in low-memory situations. DONE
-
-Override that method in non-ChildVC VC classes and call LowMemoryHandler.handleLowMemory(). DONE
-
-When LowMemoryHandler.handleLowMemory() is called, check whether realRunInProgress is true. DONE
-
-If it is false, do nothing. DONE
-
-If it is true, do two things:
-
-First, audibly warn the user unless warnedUserAboutLowRam is true, "Your iPhone is running out of RAM. Your iPhone may therefore cause RaceRunner to stop recording your run. No prob if it does. RaceRunner has saved the progress of your run. If your iPhone causes RaceRunner to stop recording, RaceRunner will restore your run the next time you launch the app." After warning, set warnedUserAboutLowRam to true. DONE
-
-Second, persist to CoreData everything needed to restore a run in progress.
-
-In AppDelegate.appLaunched(), call LowMemoryHandler.appStarted(). DONE
-
-In that method, check whether realRunInProgress is true.
-
-If false, do nothing.
-
-If true, ask the user the following: "You iPhone forced RaceRunner to stop recording your run because of a low-RAM situation. Before quitting, RaceRunner saved the state of your run in progress. Would you like to resume this run or discard the saved state?"
-
-If discard, do nothing but set runInProgress to false. Delete saved run.
-
-If resume, grab the state of the run from CoreData and appropriately initialize the Run model. If grabbing the state fails because no data or some other error, warn user. Delete saved run.
-
-NOTE: At the time that AppDelegate calls the LowMemoryHandler method, there is no VC to present a dialog on. But the menu VC always appears after a crash/termination. So LowMemoryHandler could remember that there was a crash, and MenuVC could check with it. If so, MenuVC can display the dialog.
-
 Only restore run if difference between run start time and current time is less than some reasonable value, for example one day. If greater, warn user.
-
-When stopping a real run, set realRunInProgress and warnedUser to false.
 
 Correctly handle the situation where, on app launch, realRunInProgress is true, but there is no saved state, which means the app was killed before it could persist state. In this case, just set realRunInProgress and warnedUserAboutLowRam to false.
