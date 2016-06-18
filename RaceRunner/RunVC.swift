@@ -189,7 +189,7 @@ class RunVC: ChildVC, RunDelegate {
   @IBAction func startStop() {
     switch RunModel.runModel.status {
     case .PreRun:
-      if RunModel.gpsIsAvailable() {
+      if runToSimulate != nil || gpxFile != nil || RunModel.gpsIsAvailable() {
         showLabels()
         startStopButton.backgroundColor = UiConstants.intermediate1Color
         startStopButton.setTitle("  Stop  ", forState: UIControlState.Normal)

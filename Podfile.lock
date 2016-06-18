@@ -1,24 +1,24 @@
 PODS:
-  - Answers (1.2.0):
+  - Answers (1.2.1):
     - Fabric (~> 1.6.3)
-  - COBezierTableView (0.1.6)
-  - CocoaLumberjack (2.2.0):
-    - CocoaLumberjack/Default (= 2.2.0)
-    - CocoaLumberjack/Extensions (= 2.2.0)
-  - CocoaLumberjack/Core (2.2.0)
-  - CocoaLumberjack/Default (2.2.0):
+  - COBezierTableView (1.0.0)
+  - CocoaLumberjack (2.3.0):
+    - CocoaLumberjack/Default (= 2.3.0)
+    - CocoaLumberjack/Extensions (= 2.3.0)
+  - CocoaLumberjack/Core (2.3.0)
+  - CocoaLumberjack/Default (2.3.0):
     - CocoaLumberjack/Core
-  - CocoaLumberjack/Extensions (2.2.0):
+  - CocoaLumberjack/Extensions (2.3.0):
     - CocoaLumberjack/Default
   - DLRadioButton (1.4.8)
   - Fabric (1.6.7)
-  - GoogleMaps (1.13.0)
+  - GoogleMaps (1.13.2)
   - MGSwipeTableCell (1.5.5)
-  - PubNub (4.3.0):
-    - CocoaLumberjack (= 2.2.0)
-    - PubNub/Core (= 4.3.0)
-  - PubNub/Core (4.3.0):
-    - CocoaLumberjack (= 2.2.0)
+  - PubNub (4.3.3):
+    - CocoaLumberjack (= 2.3.0)
+    - PubNub/Core (= 4.3.3)
+  - PubNub/Core (4.3.3):
+    - CocoaLumberjack (= 2.3.0)
 
 DEPENDENCIES:
   - Answers
@@ -30,13 +30,13 @@ DEPENDENCIES:
   - PubNub
 
 SPEC CHECKSUMS:
-  Answers: f47bc44937ab00fe5a119b16df28e1d1aeadcf84
-  COBezierTableView: e8fa8ac961f213fe0c4b3e8e9708478df04930de
-  CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0
+  Answers: 57ee6bcc9bd3c6710862065c9251365a2a404920
+  COBezierTableView: 1c15594cb34f7b7b7de2a61ac97b7f6347c084fd
+  CocoaLumberjack: 97fab7ee5f507fe54445cca7ea80f926729cfd15
   DLRadioButton: 8fe4865b3ea8a5236e1d114dd283dd0884d3dc46
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
-  GoogleMaps: 7a6caeb8336d7cb42982e969fc9b1b20a889fe79
+  GoogleMaps: b20a103ff307f58392e603cf142e59d7e30374c1
   MGSwipeTableCell: bafeb5f351124544c9364ecbdf24c7b06a37d340
-  PubNub: a05f2a2c6cc1f637a0c473f236c4671c0b8c09b1
+  PubNub: 51acd937c947d931a75d2caef654fd12f7573e09
 
 COCOAPODS: 0.39.0
