@@ -10,8 +10,8 @@ import UIKit
 import SpriteKit
 
 class GameVC: ChildVC {
-  private static let lowMemoryTitle = "Ended Game"
-  private static let lowMemoryMessage = "RaceRunner had to end your game because of a RAM shortage on your iPhone. Apologies."
+  fileprivate static let lowMemoryTitle = "Ended Game"
+  fileprivate static let lowMemoryMessage = "RaceRunner had to end your game because of a RAM shortage on your iPhone. Apologies."
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -21,20 +21,20 @@ class GameVC: ChildVC {
     skView.ignoresSiblingOrder = true
     let scene = GameScene(size: skView.frame.size)
     skView.presentScene(scene)
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(GameVC.handleApplicationWillResignActive(_:)), name: UIApplicationWillResignActiveNotification, object: nil)
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(GameVC.handleApplicationDidBecomeActive(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(GameVC.handleApplicationWillResignActive(_:)), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(GameVC.handleApplicationDidBecomeActive(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
   }
   
-  @IBAction func showMenu(sender: UIButton) {
+  @IBAction func showMenu(_ sender: UIButton) {
     showMenu()
   }
   
-  override func shouldAutorotate() -> Bool {
+  override var shouldAutorotate : Bool {
     return true
   }
   
-  override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-    return UIInterfaceOrientationMask.Portrait
+  override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+    return UIInterfaceOrientationMask.portrait
   }
   
   override func didReceiveMemoryWarning() {
@@ -43,17 +43,17 @@ class GameVC: ChildVC {
     showMenu()
   }
   
-  func handleApplicationWillResignActive (note: NSNotification) {
+  func handleApplicationWillResignActive (_ note: Notification) {
     pauseGame()
   }
   
-  func handleApplicationDidBecomeActive (note: NSNotification) {
+  func handleApplicationDidBecomeActive (_ note: Notification) {
     let skView = view as! SKView
-    skView.paused = false
+    skView.isPaused = false
   }
   
-  private func pauseGame() {
+  fileprivate func pauseGame() {
     let skView = view as! SKView
-    skView.paused = true
+    skView.isPaused = true
   }
 }

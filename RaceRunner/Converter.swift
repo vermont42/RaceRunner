@@ -9,48 +9,48 @@
 import Foundation
 
 class Converter {
-  private static let feetInMeter: Double = 3.281
-  private static let fahrenheitMultiplier: Float = 9.0 / 5.0
-  private static let celsiusFraction: Float = 5.0 / 9.0
-  private static let fahrenheitAmountToAdd: Float = 32.0
-  private static let celsiusMultiplier: Float = 1.0
-  private static let celsiusAmountToAdd: Float = 0.0
-  private static let altitudeFudge: Double = 5.0
-  private static let secondsPerMinute: Int = 60
-  private static let minutesPerHour: Int = 60
-  private static let secondsPerHour: Int = 3600
-  private static let netCaloriesPerKiloPerMeter = 0.00086139598517
-  private static let totalCaloriesPerKiloPerMeter = 0.00102547141092
-  private static let fahrenheitAbbr: String = "F"
-  private static let celsiusAbbr: String = "C"
-  private static let mileAbbr: String = "mi"
-  private static let kilometerAbbr: String = "km"
-  private static let feetAbbr: String = "ft"
-  private static let metersAbbr: String = "m"
-  private static let feet: String = "feet"
-  private static let meters: String = "meters"
-  private static let mile: String = "mile"
-  private static let kilometer: String = "kilometer"
-  private static let miles: String = "miles"
-  private static let kilometers: String = "kilometers"
+  fileprivate static let feetInMeter: Double = 3.281
+  fileprivate static let fahrenheitMultiplier: Float = 9.0 / 5.0
+  fileprivate static let celsiusFraction: Float = 5.0 / 9.0
+  fileprivate static let fahrenheitAmountToAdd: Float = 32.0
+  fileprivate static let celsiusMultiplier: Float = 1.0
+  fileprivate static let celsiusAmountToAdd: Float = 0.0
+  fileprivate static let altitudeFudge: Double = 5.0
+  fileprivate static let secondsPerMinute: Int = 60
+  fileprivate static let minutesPerHour: Int = 60
+  fileprivate static let secondsPerHour: Int = 3600
+  fileprivate static let netCaloriesPerKiloPerMeter = 0.00086139598517
+  fileprivate static let totalCaloriesPerKiloPerMeter = 0.00102547141092
+  fileprivate static let fahrenheitAbbr: String = "F"
+  fileprivate static let celsiusAbbr: String = "C"
+  fileprivate static let mileAbbr: String = "mi"
+  fileprivate static let kilometerAbbr: String = "km"
+  fileprivate static let feetAbbr: String = "ft"
+  fileprivate static let metersAbbr: String = "m"
+  fileprivate static let feet: String = "feet"
+  fileprivate static let meters: String = "meters"
+  fileprivate static let mile: String = "mile"
+  fileprivate static let kilometer: String = "kilometer"
+  fileprivate static let miles: String = "miles"
+  fileprivate static let kilometers: String = "kilometers"
   static let metersInMile: Double = 1609.344
   static let metersInKilometer: Double = 1000.0
   static let kilometersPerMile: Float = 1.609344
   static let poundsPerKilogram = 2.2
   
-  class func netCaloriesAsString(distance: Double, weight: Double) -> String {
+  class func netCaloriesAsString(_ distance: Double, weight: Double) -> String {
     return String(format: "%.0f Cal", weight * distance * netCaloriesPerKiloPerMeter)
   }
   
-  class func totalCaloriesAsString(distance: Double, weight: Double) -> String {
+  class func totalCaloriesAsString(_ distance: Double, weight: Double) -> String {
     return String(format: "%.0f Cal", weight * distance * totalCaloriesPerKiloPerMeter)
   }
   
-  class func announceProgress(totalSeconds: Int, lastSeconds: Int, totalDistance: Double, lastDistance: Double, newAltitude: Double, oldAltitude: Double) {
+  class func announceProgress(_ totalSeconds: Int, lastSeconds: Int, totalDistance: Double, lastDistance: Double, newAltitude: Double, oldAltitude: Double) {
     let totalLongDistance = convertMetersToLongDistance(totalDistance)
     var roundedDistance = NSString(format: "%.2f", totalLongDistance) as String
     if roundedDistance.characters.last! == "0" {
-      roundedDistance = roundedDistance.substringToIndex(roundedDistance.endIndex.predecessor())
+      roundedDistance = roundedDistance.substring(to: roundedDistance.characters.index(before: roundedDistance.endIndex))
     }
     var progressString = "total distance \(roundedDistance) \(pluralizedCurrentLongUnit(totalLongDistance)), total time \(stringifySecondCount(totalSeconds, useLongFormat: true)), split pace"
     let distanceDelta = totalDistance - lastDistance
@@ -69,7 +69,7 @@ class Converter {
     Utterer.utter(progressString)
   }
   
-  class func pluralizedCurrentLongUnit(value: Double) -> String {
+  class func pluralizedCurrentLongUnit(_ value: Double) -> String {
     switch SettingsManager.getUnitType() {
     case .Imperial:
       if value <= 1.0 {
@@ -88,7 +88,7 @@ class Converter {
     }
   }
 
-  class func convertLongDistanceToMeters(longDistance: Double) -> Double {
+  class func convertLongDistanceToMeters(_ longDistance: Double) -> Double {
     switch SettingsManager.getUnitType() {
     case .Imperial:
       return longDistance * metersInMile
@@ -97,7 +97,7 @@ class Converter {
     }
   }
 
-  class func convertMetersToLongDistance(meters: Double) -> Double {
+  class func convertMetersToLongDistance(_ meters: Double) -> Double {
     switch SettingsManager.getUnitType() {
     case .Imperial:
       return meters / metersInMile
@@ -106,7 +106,7 @@ class Converter {
     }
   }
   
-  class func stringifyKilometers(kilometers: Float, includeUnits: Bool = false) -> String {
+  class func stringifyKilometers(_ kilometers: Float, includeUnits: Bool = false) -> String {
     var number = kilometers
     var units = ""
     if SettingsManager.getUnitType() == .Metric {
@@ -123,7 +123,7 @@ class Converter {
     return output
   }
   
-  class func floatifyMileage(mileage: String) -> Float {
+  class func floatifyMileage(_ mileage: String) -> Float {
     if SettingsManager.getUnitType() == .Metric {
       return Float(mileage)!
     }
@@ -144,11 +144,11 @@ class Converter {
     return SettingsManager.getUnitType() == .Imperial ? "miles" : "kms"
   }
   
-  class func convertFahrenheitToCelsius(temperature: Float) -> Float {
+  class func convertFahrenheitToCelsius(_ temperature: Float) -> Float {
     return celsiusFraction * (temperature - fahrenheitAmountToAdd)
   }
   
-  class func stringifyDistance(meters: Double) -> String {
+  class func stringifyDistance(_ meters: Double) -> String {
     var unitDivider: Double
     var unitName: String
     if SettingsManager.getUnitType() == .Metric {
@@ -162,7 +162,7 @@ class Converter {
     return NSString(format: "%.2f %@", meters / unitDivider, unitName) as String
   }
   
-  class func stringifySecondCount(seconds: Int, useLongFormat: Bool, useLongUnits: Bool = false) -> String {
+  class func stringifySecondCount(_ seconds: Int, useLongFormat: Bool, useLongUnits: Bool = false) -> String {
     var remainingSeconds = seconds
     let hours = remainingSeconds / secondsPerHour
     remainingSeconds -= hours * secondsPerHour
@@ -199,7 +199,7 @@ class Converter {
     }
   }
   
-  class func stringifyPace(meters: Double, seconds:Int, forSpeaking:Bool = false, includeUnit: Bool = true) -> String {
+  class func stringifyPace(_ meters: Double, seconds:Int, forSpeaking:Bool = false, includeUnit: Bool = true) -> String {
     if seconds == 0 || meters == 0.0 {
       return "0"
     }
@@ -240,7 +240,7 @@ class Converter {
     }
   }
 
-  class func stringifyAltitude(meters: Double, unabbreviated: Bool = false, includeUnit: Bool = true) -> String {
+  class func stringifyAltitude(_ meters: Double, unabbreviated: Bool = false, includeUnit: Bool = true) -> String {
     var unitMultiplier: Double
     var unitName: String
     if SettingsManager.getUnitType() == .Metric {
@@ -267,7 +267,7 @@ class Converter {
     return NSString(format: "%.0f %@", meters * unitMultiplier, unitName) as String
   }
   
-  class func stringifyTemperature(temperature: Float) -> String {
+  class func stringifyTemperature(_ temperature: Float) -> String {
     var unitName: String
     var multiplier: Float
     var amountToAdd: Float

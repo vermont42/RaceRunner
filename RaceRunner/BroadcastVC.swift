@@ -20,25 +20,25 @@ class BroadcastVC: UIViewController, UITextFieldDelegate {
     nameField.delegate = self
   }
   
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
-    stopToggle.on = SettingsManager.getAllowStop()
+    stopToggle.isOn = SettingsManager.getAllowStop()
     nameField.text = SettingsManager.getBroadcastName()
     setupDoneButton()
   }
 
   @IBAction func cancel() {
     broadcastDelegate.userWantsToBroadcast(false)
-    performSegueWithIdentifier("unwind pan", sender: self)
+    performSegue(withIdentifier: "unwind pan", sender: self)
   }
   
   @IBAction func done() {
     broadcastDelegate.userWantsToBroadcast(true)
-    performSegueWithIdentifier("unwind pan", sender: self)
+    performSegue(withIdentifier: "unwind pan", sender: self)
   }
   
-  override func prefersStatusBarHidden() -> Bool {
+  override var prefersStatusBarHidden : Bool {
     return true
   }
   
@@ -57,17 +57,17 @@ class BroadcastVC: UIViewController, UITextFieldDelegate {
   
   func disableDoneButton() {
     doneButton.alpha = UiConstants.notDoneAlpha
-    doneButton.enabled = false
+    doneButton.isEnabled = false
   }
   
   func enableDoneButton() {
     doneButton.alpha = 1.0
-    doneButton.enabled = true
+    doneButton.isEnabled = true
   }
   
-  func textFieldShouldReturn(textField: UITextField) -> Bool {
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     nameField.resignFirstResponder()
-    nameField.text! = nameField.text!.removeWhitespace()
+    nameField.text! = nameField.text!.stringByRemovingWhitespace
     if nameField.text! != "" {
       SettingsManager.setBroadcastName(nameField.text!)
     }

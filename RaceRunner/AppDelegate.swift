@@ -16,7 +16,7 @@ import Answers
 class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   
-  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     Config.checkKeys()
     GMSServices.provideAPIKey(Config.googleMapsKey)
     SoundManager.enableBackgroundAudio()
@@ -26,15 +26,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     return true
   }
     
-  func applicationWillResignActive(application: UIApplication) {
+  func applicationWillResignActive(_ application: UIApplication) {
     CDManager.saveContext()
   }
 
-  func applicationWillTerminate(application: UIApplication) {
+  func applicationWillTerminate(_ application: UIApplication) {
     CDManager.saveContext()
   }
     
-  func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+  func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
     return RunModel.addRun(url)
   }
 }

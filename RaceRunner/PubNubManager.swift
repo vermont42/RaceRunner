@@ -11,14 +11,14 @@ import PubNub
 import CoreLocation
 
 class PubNubManager: NSObject, PNObjectEventListener {
-  private let pubNub: PubNub?
-  private var pubNubSubscriber: PubNubSubscriber?
-  private var pubNubPublisher: PubNubPublisher?
+  fileprivate let pubNub: PubNub?
+  fileprivate var pubNubSubscriber: PubNubSubscriber?
+  fileprivate var pubNubPublisher: PubNubPublisher?
   static let sharedNub = PubNubManager()
   static let publicChannel = "foo"
   static let stopped = "stopped"
-  private static let stopRun = "stop run"
-  private static let messageLabel = "message: "
+  fileprivate static let stopRun = "stop run"
+  fileprivate static let messageLabel = "message: "
 
   override init() {
     pubNub = PubNub.clientWithConfiguration(PNConfiguration(publishKey: Config.pubNubPublishKey, subscribeKey: Config.pubNubSubscribeKey))
@@ -26,7 +26,7 @@ class PubNubManager: NSObject, PNObjectEventListener {
     pubNub?.addListener(self)
   }
   
-  func client(client: PubNub, didReceiveMessage message: PNMessageResult) {
+  func client(_ client: PubNub, didReceiveMessage message: PNMessageResult) {
     let messageString = "\(message.data.message!)"
     if messageString == PubNubManager.stopped {
       pubNubSubscriber?.runStopped()
@@ -34,18 +34,18 @@ class PubNubManager: NSObject, PNObjectEventListener {
     else if messageString == PubNubManager.stopRun {
       pubNubPublisher?.stopRun()
     }
-    else if (messageString as NSString).substringToIndex(PubNubManager.messageLabel.characters.count) == PubNubManager.messageLabel {
-      pubNubPublisher?.receiveMessage((messageString as NSString).substringFromIndex(PubNubManager.messageLabel.characters.count))
+    else if (messageString as NSString).substring(to: PubNubManager.messageLabel.characters.count) == PubNubManager.messageLabel {
+      pubNubPublisher?.receiveMessage((messageString as NSString).substring(from: PubNubManager.messageLabel.characters.count))
     }
     else {
       pubNubSubscriber?.receiveProgress(messageString)
     }
   }
 
-  class func publishLocation(location: CLLocation, distance: Double, seconds: Int, publisher: String) {
+  class func publishLocation(_ location: CLLocation, distance: Double, seconds: Int, publisher: String) {
     let message = "\(location.coordinate.latitude) \(location.coordinate.longitude) \(location.altitude) \(distance) \(seconds) \(SettingsManager.getAllowStop())"
     sharedNub.pubNub?.publish(message, toChannel: publisher, storeInHistory: false, compressed: false, withCompletion: { (status) -> Void in
-      if !status.error {
+      if !status.isError {
           //print("Successfully published.")
       }
       else {
@@ -58,11 +58,11 @@ class PubNubManager: NSObject, PNObjectEventListener {
     })
   }
   
-  class func publishRunStoppage(publisher: String) {
+  class func publishRunStoppage(_ publisher: String) {
     sharedNub.pubNub?.publish(PubNubManager.stopRun, toChannel: publisher, storeInHistory: false, compressed: false, withCompletion: nil)
   }
 
-  class func publishMessage(message: String, publisher: String) {
+  class func publishMessage(_ message: String, publisher: String) {
     sharedNub.pubNub?.publish(PubNubManager.messageLabel + message, toChannel: publisher, storeInHistory: false, compressed: false, withCompletion: nil)
   }
   
@@ -70,17 +70,17 @@ class PubNubManager: NSObject, PNObjectEventListener {
     sharedNub.pubNub?.publish(PubNubManager.stopped, toChannel: PubNubManager.publicChannel, storeInHistory: false, compressed: false, withCompletion: nil)
   }
   
-  class func subscribeToChannel(pubNubSubscriber: PubNubSubscriber, publisher: String) {
+  class func subscribeToChannel(_ pubNubSubscriber: PubNubSubscriber, publisher: String) {
     sharedNub.pubNubSubscriber = pubNubSubscriber
     sharedNub.pubNub?.subscribeToChannels([publisher], withPresence: true)
   }
   
-  class func subscribeToChannel(pubNubPublisher: PubNubPublisher, publisher: String) {
+  class func subscribeToChannel(_ pubNubPublisher: PubNubPublisher, publisher: String) {
     sharedNub.pubNubPublisher = pubNubPublisher
     sharedNub.pubNub?.subscribeToChannels([publisher], withPresence: true)
   }
   
-  class func unsubscribeFromChannel(publisher: String) {
+  class func unsubscribeFromChannel(_ publisher: String) {
     if let _ = sharedNub.pubNubSubscriber {
       sharedNub.pubNub?.unsubscribeFromChannels([publisher], withPresence: true)
       sharedNub.pubNubSubscriber = nil

@@ -16,6 +16,6 @@ extension Shoes {
   @NSManaged var name: String
   @NSManaged var kilometers: NSNumber
   @NSManaged var maxKilometers: NSNumber
-  @NSManaged var thumbnail: NSData
+  @NSManaged var thumbnail: Data
   @NSManaged var isCurrent: NSNumber
 }

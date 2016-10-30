@@ -14,7 +14,7 @@ extension Run {
   @NSManaged var duration: NSNumber
   @NSManaged var temperature: NSNumber
   @NSManaged var weather: NSString
-  @NSManaged var timestamp: NSDate
+  @NSManaged var timestamp: Date
   @NSManaged var locations: NSOrderedSet
   @NSManaged var autoName: NSString
   @NSManaged var customName: NSString

@@ -21,11 +21,11 @@ class UiConstants {
   static let globalFontBold = "AvenirNext-Heavy"
   static let bodyFontSize: CGFloat = 18.0
   static let cellButtonTitleSize: CGFloat = 17.0
-  static let panDuration: NSTimeInterval = 0.4
+  static let panDuration: TimeInterval = 0.4
   static let polylineWidth: CGFloat = 8.0
   static let cameraZoom: Float = 16.0
   static let longitudeCushion: Double = 0.00851970939493185
   static let applauseSampleCount: UInt32 = 3
-  static let messageDelay: Int64 = 2
+  static let messageDelay: Double = 2.0
   static let notDoneAlpha: CGFloat = 0.50
 }

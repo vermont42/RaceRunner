@@ -6,6 +6,8 @@
 //  Copyright © 2016 Josh Adams. All rights reserved.
 //
 
+import Foundation
+
 enum LogSortField: String {
   case Date = "Date"
   case Name = "Name"
@@ -21,7 +23,7 @@ enum LogSortField: String {
     return [LogSortField.Date.asString(), LogSortField.Name.asString(), LogSortField.Pace.asString(), LogSortField.Distance.asString(), LogSortField.Duration.asString()]
   }
   
-  static func sortFieldForPosition(position: Int) -> LogSortField {
+  static func sortFieldForPosition(_ position: Int) -> LogSortField {
     switch position {
     case 0:
       return .Date
@@ -69,19 +71,19 @@ enum LogSortField: String {
     }
   }
   
-  static func compare(run1: Run, run2: Run) -> Bool {
+  static func compare(_ run1: Run, run2: Run) -> Bool {
     let sortType = SettingsManager.getSortType()
     let sortField = SettingsManager.getLogSortField()
-    var ordering: NSComparisonResult
+    var ordering: ComparisonResult
     switch sortType {
     case .Normal:
-      ordering = .OrderedDescending
+      ordering = .orderedDescending
     case .Reverse:
-      ordering = .OrderedAscending
+      ordering = .orderedAscending
     }
     switch sortField {
     case .Date:
-      return run1.timestamp.compare(run2.timestamp) == ordering
+      return run1.timestamp.compare(run2.timestamp as Date) == ordering
     case .Name:
       let name1: String = run1.displayName()
       let name2: String = run2.displayName()
@@ -90,19 +92,19 @@ enum LogSortField: String {
       let pace1 = run1.duration.doubleValue / run1.distance.doubleValue
       let pace2 = run2.duration.doubleValue / run2.distance.doubleValue
       var result = pace1 < pace2
-      if ordering == .OrderedDescending {
+      if ordering == .orderedDescending {
         result = !result
       }
       return result
     case .Distance:
       var result = run1.distance.doubleValue < run2.distance.doubleValue
-      if ordering == .OrderedDescending {
+      if ordering == .orderedDescending {
         result = !result
       }
       return result
     case .Duration:
-      var result = run1.duration.intValue < run2.duration.intValue
-      if ordering == .OrderedDescending {
+      var result = run1.duration.int32Value < run2.duration.int32Value
+      if ordering == .orderedDescending {
         result = !result
       }
       return result

@@ -30,7 +30,7 @@ class PersistentMapState {
     currentCoordinate = nil
     pin = GMSMarker()
     runnerIcons = RunnerIcons()
-    latestDirection = .Stationary
+    latestDirection = .stationary
     latestAltitudeStrokeColor = UiConstants.intermediate2ColorDarkened
     latestPaceStrokeColor = UiConstants.intermediate2ColorDarkened
   }

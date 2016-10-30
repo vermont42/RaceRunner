@@ -8,6 +8,7 @@
 
 import UIKit
 import GoogleMaps
+import MarqueeLabel
 
 class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, GMSMapViewDelegate {
   @IBOutlet var map: GMSMapView!
@@ -30,27 +31,27 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   @IBOutlet var customTitleButton: UIButton!
   @IBOutlet var exportButton: UIButton!
   var run: Run!
-  private var paceSpans: [GMSStyleSpan] = []
-  private var altitudeSpans: [GMSStyleSpan] = []
-  private var smoothSpeeds: [Double]?
-  private var maxSmoothSpeed = 0.0
-  private var minSmoothSpeed = Double(LONG_MAX)
-  private var addedOverlays: Bool = false
-  private var latestStrokeColor = UiConstants.intermediate2ColorDarkened
-  private var path = GMSMutablePath()
-  private var polyline = GMSPolyline()
+  fileprivate var paceSpans: [GMSStyleSpan] = []
+  fileprivate var altitudeSpans: [GMSStyleSpan] = []
+  fileprivate var smoothSpeeds: [Double]?
+  fileprivate var maxSmoothSpeed = 0.0
+  fileprivate var minSmoothSpeed = Double(LONG_MAX)
+  fileprivate var addedOverlays: Bool = false
+  fileprivate var latestStrokeColor = UiConstants.intermediate2ColorDarkened
+  fileprivate var path = GMSMutablePath()
+  fileprivate var polyline = GMSPolyline()
   
-  private static let newRunNamePrompt = "Enter a new name for this run."
-  private static let newRunNameTitle = "Run Name"
-  private static let setRunNameButtonTitle = "Set"
-  private static let noLocationsError = "Attempted to display details of run with zero locations."
-  private static let cancel = "Cancel"
-  private static let name = "Name"
-  private static let forecastMessage = "Weather data powered by Forecast. http://forecast.io/"
-  private static let forecastTitle = "Credit"
-  private static let forecastOkay = "Got It"
+  fileprivate static let newRunNamePrompt = "Enter a new name for this run."
+  fileprivate static let newRunNameTitle = "Run Name"
+  fileprivate static let setRunNameButtonTitle = "Set"
+  fileprivate static let noLocationsError = "Attempted to display details of run with zero locations."
+  fileprivate static let cancel = "Cancel"
+  fileprivate static let name = "Name"
+  fileprivate static let forecastMessage = "Weather data powered by Forecast. http://forecast.io/"
+  fileprivate static let forecastTitle = "Credit"
+  fileprivate static let forecastOkay = "Got It"
   
-  func mapView(mapView:GMSMapView,idleAtCameraPosition position:GMSCameraPosition) {
+  func mapView(_ mapView:GMSMapView,idleAt position:GMSCameraPosition) {
     if !addedOverlays {
       addOverlays()
     }
@@ -69,7 +70,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     polyline.strokeWidth = UiConstants.polylineWidth
   }
   
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     if !SettingsManager.getShowedForecastCredit() {
       UIAlertController.showMessage(RunDetailsVC.forecastMessage, title: RunDetailsVC.forecastTitle, okTitle: RunDetailsVC.forecastOkay)
@@ -82,14 +83,14 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     var southwest = CLLocationCoordinate2D(latitude: run.minLatitude.doubleValue, longitude: run.minLongitude.doubleValue)
     northeast.longitude += UiConstants.longitudeCushion
     southwest.longitude -= UiConstants.longitudeCushion
-    map.animateWithCameraUpdate(GMSCameraUpdate.fitBounds(GMSCoordinateBounds(coordinate: northeast, coordinate: southwest)))
-    let dateFormatter = NSDateFormatter()
-    dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
-    dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
-    date.text = dateFormatter.stringFromDate(run.timestamp)
+    map.animate(with: GMSCameraUpdate.fit(GMSCoordinateBounds(coordinate: northeast, coordinate: southwest)))
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateStyle = DateFormatter.Style.short
+    dateFormatter.timeStyle = DateFormatter.Style.short
+    date.text = dateFormatter.string(from: run.timestamp as Date)
     distance.text = "Dist: \(Converter.stringifyDistance(run.distance.doubleValue))"
-    time.text = "Time: \(Converter.stringifySecondCount(run.duration.integerValue, useLongFormat: false))"
-    pace.text = "Pace: \(Converter.stringifyPace(run.distance.doubleValue, seconds: run.duration.integerValue))"
+    time.text = "Time: \(Converter.stringifySecondCount(run.duration.intValue, useLongFormat: false))"
+    pace.text = "Pace: \(Converter.stringifyPace(run.distance.doubleValue, seconds: run.duration.intValue))"
     minAlt.text = "Min Alt: \(Converter.stringifyAltitude(run.minAltitude.doubleValue))"
     maxAlt.text = "Max Alt: \(Converter.stringifyAltitude(run.maxAltitude.doubleValue))"
     gain.text = "Gained: \(Converter.stringifyAltitude(run.altitudeGained.doubleValue))"
@@ -146,7 +147,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     }
   }
   
-  private func makeSpans(areSpeeds areSpeeds: Bool) {
+  fileprivate func makeSpans(areSpeeds: Bool) {
     var rawValues: [Double] = []
     if areSpeeds {
       for i in 1 ..< run.locations.count {
@@ -154,8 +155,8 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
         let secondLoc = run.locations[i] as! Location
         let firstLocCL = CLLocation(latitude: firstLoc.latitude.doubleValue, longitude: firstLoc.longitude.doubleValue)
         let secondLocCL = CLLocation(latitude: secondLoc.latitude.doubleValue, longitude: secondLoc.longitude.doubleValue)
-        let distance = secondLocCL.distanceFromLocation(firstLocCL)
-        let time = secondLoc.timestamp.timeIntervalSinceDate(firstLoc.timestamp)
+        let distance = secondLocCL.distance(from: firstLocCL)
+        let time = secondLoc.timestamp.timeIntervalSince(firstLoc.timestamp as Date)
         let speed = distance / time
         rawValues.append(speed)
       }
@@ -180,7 +181,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
       var range = NSRange()
       range.location = lowerBound
       range.length = upperBound - lowerBound
-      let indexSet = NSMutableIndexSet(indexesInRange: range)
+      let indexSet = NSMutableIndexSet(indexesIn: range)
       var relevantValues: [Double] = []
       for index in indexSet {
         relevantValues.append(rawValues[index])
@@ -205,7 +206,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     }
     
     var sortedValues = smoothValues
-    sortedValues.sortInPlace { $0 < $1 }
+    sortedValues.sort { $0 < $1 }
     for i in 1 ..< run.locations.count {
       let firstLoc = run.locations[i - 1] as! Location
       let secondLoc = run.locations[i] as! Location
@@ -213,15 +214,15 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
       let secondLocCL = CLLocation(latitude: secondLoc.latitude.doubleValue, longitude: secondLoc.longitude.doubleValue)
       var coords = [firstLocCL.coordinate, secondLocCL.coordinate]
       let value = smoothValues[i - 1]
-      var index = sortedValues.indexOf(value)
+      var index = sortedValues.index(of: value)
       if index == nil {
         index = 0
       }
       if !addedOverlays {
-        path.addCoordinate(coords[1])
+        path.add(coords[1])
       }
       let color = UiHelpers.colorForValue(value, sortedArray: sortedValues, index: index!)
-      let gradient = GMSStrokeStyle.gradientFromColor(latestStrokeColor, toColor: color)
+      let gradient = GMSStrokeStyle.gradient(from: latestStrokeColor, to: color)
       latestStrokeColor = color
       if areSpeeds {
         paceSpans.append(GMSStyleSpan(style: gradient))
@@ -232,16 +233,16 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     }
   }
   
-  @IBAction func returnFromSegueActions(sender: UIStoryboardSegue) {}
+  @IBAction func returnFromSegueActions(_ sender: UIStoryboardSegue) {}
   
-  override func segueForUnwindingToViewController(toViewController: UIViewController, fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
+  override func segueForUnwinding(to toViewController: UIViewController, from fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
     return UnwindPanSegue(identifier: identifier!, source: fromViewController, destination: toViewController, performHandler: { () -> Void in
     })
   }
   
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "pan graphs from details" {
-      let graphVC: GraphVC = segue.destinationViewController as! GraphVC
+      let graphVC: GraphVC = segue.destination as! GraphVC
       graphVC.run = run
       if smoothSpeeds == nil {
         makeSpans(areSpeeds: true)
@@ -255,34 +256,34 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   }
 
   @IBAction func setCustomName() {
-    let alertController = UIAlertController(title: RunDetailsVC.newRunNameTitle, message: RunDetailsVC.newRunNamePrompt, preferredStyle: UIAlertControllerStyle.Alert)
-    let setAction = UIAlertAction(title: RunDetailsVC.setRunNameButtonTitle, style: UIAlertActionStyle.Default, handler: { (action) in
+    let alertController = UIAlertController(title: RunDetailsVC.newRunNameTitle, message: RunDetailsVC.newRunNamePrompt, preferredStyle: UIAlertControllerStyle.alert)
+    let setAction = UIAlertAction(title: RunDetailsVC.setRunNameButtonTitle, style: UIAlertActionStyle.default, handler: { (action) in
       let textFields = alertController.textFields!
       self.route.text = "\(RunDetailsVC.name): \(textFields[0].text!)"
-      self.run.customName = textFields[0].text!
+      self.run.customName = textFields[0].text! as NSString
       CDManager.saveContext()
     })
     alertController.addAction(setAction)
-    let cancelAction = UIAlertAction(title: RunDetailsVC.cancel, style: UIAlertActionStyle.Cancel, handler: { (action) in })
+    let cancelAction = UIAlertAction(title: RunDetailsVC.cancel, style: UIAlertActionStyle.cancel, handler: { (action) in })
     alertController.addAction(cancelAction)
-    alertController.addTextFieldWithConfigurationHandler { (textField) in
+    alertController.addTextField { (textField) in
       textField.placeholder = "Name"
     }
     alertController.view.tintColor = UiConstants.intermediate1Color
-    presentViewController(alertController, animated: true, completion: nil)
+    present(alertController, animated: true, completion: nil)
     alertController.view.tintColor = UiConstants.intermediate1Color    
   }
   
-  @IBAction func changeOverlay(sender: UISegmentedControl) {
+  @IBAction func changeOverlay(_ sender: UISegmentedControl) {
     addOverlays()
   }
   
-  @IBAction func changeCalorieType(sender: UISegmentedControl) {
+  @IBAction func changeCalorieType(_ sender: UISegmentedControl) {
     updateCalories()
   }
   
-  @IBAction func back(sender: UIButton) {
-    performSegueWithIdentifier("unwind pan log", sender: self)
+  @IBAction func back(_ sender: UIButton) {
+    performSegue(withIdentifier: "unwind pan log", sender: self)
   }
   
   @IBAction func export() {
@@ -290,10 +291,10 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   }
   
   @IBAction func graph() {
-    performSegueWithIdentifier("pan graphs from details", sender: self)
+    performSegue(withIdentifier: "pan graphs from details", sender: self)
   }
   
-  override func prefersStatusBarHidden() -> Bool {
+  override var prefersStatusBarHidden : Bool {
     return true
   }
 }

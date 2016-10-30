@@ -8,27 +8,27 @@
 import Foundation
 import CoreLocation
 
-public class DarkSky {
-  private static let basePath = "https://api.forecast.io/forecast/"
-  private static let apiKey = Config.darkSkyKey
-  private static let noApiKey = "This app cannot query Dark Sky for current temperature and weather until you obtain an API key and put it in Config.swift. Here is the website to get an API key: https://developer.forecast.io/register You can ignore the following error message, which Dark Sky returned due to the empty API key."
+open class DarkSky {
+  fileprivate static let basePath = "https://api.forecast.io/forecast/"
+  fileprivate static let apiKey = Config.darkSkyKey
+  fileprivate static let noApiKey = "This app cannot query Dark Sky for current temperature and weather until you obtain an API key and put it in Config.swift. Here is the website to get an API key: https://developer.forecast.io/register You can ignore the following error message, which Dark Sky returned due to the empty API key."
   
   public enum Result {
-    case Success(NSURLResponse!, NSDictionary!)
-    case Error(NSURLResponse!, NSError!)
+    case success(URLResponse?, NSDictionary?)
+    case Error(URLResponse?, NSError?)
     
     public func data() -> NSDictionary? {
       switch self {
-      case .Success(_, let dictionary):
+      case .success(_, let dictionary):
         return dictionary
       case .Error(_, _):
         return nil
       }
     }
     
-    public func response() -> NSURLResponse? {
+    public func response() -> URLResponse? {
       switch self {
-      case .Success(let response, _):
+      case .success(let response, _):
         return response
       case .Error(let response, _):
         return response
@@ -37,7 +37,7 @@ public class DarkSky {
     
     public func error() -> NSError? {
       switch self {
-      case .Success(_, _):
+      case .success(_, _):
         return nil
       case .Error(_, let error):
         return error
@@ -45,37 +45,37 @@ public class DarkSky {
     }
   }
   
-  private var queue: NSOperationQueue;
+  fileprivate var queue: OperationQueue;
   
   public init() {
-    self.queue = NSOperationQueue()
+    self.queue = OperationQueue()
   }
   
-  public func currentWeather(coordinate: CLLocationCoordinate2D, callback: (Result) -> ()) {
+  open func currentWeather(_ coordinate: CLLocationCoordinate2D, callback: @escaping (Result) -> ()) {
     let coordinateString = "\(coordinate.latitude),\(coordinate.longitude)"
     call(coordinateString, callback: callback);
   }
   
-  private func call(method: String, callback: (Result) -> ()) {    
+  fileprivate func call(_ method: String, callback: @escaping (Result) -> ()) {    
     if DarkSky.apiKey == "" {
       fatalError(DarkSky.noApiKey)
     }
-    let currentQueue = NSOperationQueue.currentQueue();
-    let url = NSURL(string: DarkSky.basePath + DarkSky.apiKey + "/" + method)
-    NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: {(data, response, error) in
-      let error: NSError? = error
+    let currentQueue = OperationQueue.current;
+    let url = URL(string: DarkSky.basePath + DarkSky.apiKey + "/" + method)
+    URLSession.shared.dataTask(with: url!, completionHandler: {(data, response, error) in
+      let error: NSError? = error as NSError?
       var dictionary: NSDictionary?
 
       if let data = data {
         do {
-          try dictionary = NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSDictionary
+          try dictionary = JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? NSDictionary
         }
         catch let error as NSError {
           print(error.localizedDescription)
         }
       }
-      currentQueue?.addOperationWithBlock {
-        var result = Result.Success(response, dictionary)
+      currentQueue?.addOperation {
+        var result = Result.success(response, dictionary)
         if error != nil {
           result = Result.Error(response, error)
         }

@@ -6,6 +6,8 @@
 //  Copyright © 2016 Josh Adams. All rights reserved.
 //
 
+import Foundation
+
 enum ShoesSortField: String {
   case Name = "Name"
   case Kilometers = "Kilometers"
@@ -19,7 +21,7 @@ enum ShoesSortField: String {
     return [ShoesSortField.Name.asString(), ShoesSortField.Kilometers.asString(), ShoesSortField.MaxKilometers.asString()]
   }
   
-  static func sortFieldForPosition(position: Int) -> ShoesSortField {
+  static func sortFieldForPosition(_ position: Int) -> ShoesSortField {
     switch position {
     case 0:
       return .Name
@@ -64,15 +66,15 @@ enum ShoesSortField: String {
     }
   }
   
-  static func compare(shoes1: Shoes, shoes2: Shoes) -> Bool {
+  static func compare(_ shoes1: Shoes, shoes2: Shoes) -> Bool {
     let sortType = SettingsManager.getSortType()
     let sortField = SettingsManager.getShoesSortField()
-    var ordering: NSComparisonResult
+    var ordering: ComparisonResult
     switch sortType {
     case .Normal:
-      ordering = .OrderedDescending
+      ordering = .orderedDescending
     case .Reverse:
-      ordering = .OrderedAscending
+      ordering = .orderedAscending
     }
     switch sortField {
     case .Name:
@@ -81,13 +83,13 @@ enum ShoesSortField: String {
       return name1.localizedCaseInsensitiveCompare(name2) == ordering
     case .Kilometers:
       var result = shoes1.kilometers.floatValue < shoes2.kilometers.floatValue
-      if ordering == .OrderedDescending {
+      if ordering == .orderedDescending {
         result = !result
       }
       return result
     case .MaxKilometers:
       var result = shoes1.maxKilometers.floatValue < shoes2.maxKilometers.floatValue
-      if ordering == .OrderedDescending {
+      if ordering == .orderedDescending {
         result = !result
       }
       return result

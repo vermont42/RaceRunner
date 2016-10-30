@@ -22,14 +22,14 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
   @IBOutlet var pickerToolbar: UIToolbar!
   @IBOutlet var fieldPicker: UIPickerView!
   
-  private static let rowHeight: CGFloat = 92.0
-  private static let tapToAdd = "Tap + to add a pair of shoes."
-  private static let delete = "Delete"
-  private static let edit = "Edit"
-  private var oldShoesSortField: Int!
+  fileprivate static let rowHeight: CGFloat = 92.0
+  fileprivate static let tapToAdd = "Tap + to add a pair of shoes."
+  fileprivate static let delete = "Delete"
+  fileprivate static let edit = "Edit"
+  fileprivate var oldShoesSortField: Int!
   static let tapFontSize: CGFloat = 18.0
   
-  private var shoesToEdit: Shoes?
+  fileprivate var shoesToEdit: Shoes?
   var pairs: [Shoes] = []
 
   override func viewDidLoad() {
@@ -40,42 +40,43 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
     tableView.allowsSelection = false
     fieldPicker.dataSource = self
     fieldPicker.delegate = self
-    tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-    pickerToolbar.hidden = true
-    fieldPicker.hidden = true
+    tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+    pickerToolbar.isHidden = true
+    fieldPicker.isHidden = true
     fieldPicker.selectRow(SettingsManager.getShoesSortField().pickerPosition(), inComponent: 0, animated: false)
   }
   
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     if pairs.count == 0 {
       fetchPairs()
     }
-    showPickerButton.setTitle(SettingsManager.getShoesSortField().asString(), forState: .Normal)
+    showPickerButton.setTitle(SettingsManager.getShoesSortField().asString(), for: UIControlState())
     viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
-    pairs.sortInPlace { ShoesSortField.compare($0, shoes2: $1) }
+    pairs.sort { ShoesSortField.compare($0, shoes2: $1) }
     tableView.reloadData()
   }
   
-  private func fetchPairs() {
-    let fetchRequest = NSFetchRequest()
-    let context = CDManager.sharedCDManager.context
-    fetchRequest.entity = NSEntityDescription.entityForName("Shoes", inManagedObjectContext: context)
+  fileprivate func fetchPairs() {
+    //let fetchRequest = NSFetchRequest()
+    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Shoes")
+    let context = CDManager.sharedCDManager.context!
+    fetchRequest.entity = NSEntityDescription.entity(forEntityName: "Shoes", in: context)
     let sortDescriptor = NSSortDescriptor(key: "name", ascending: false)
     fetchRequest.sortDescriptors = [sortDescriptor]
-    pairs = (try? context.executeFetchRequest(fetchRequest)) as! [Shoes]
+    pairs = (try? context.fetch(fetchRequest)) as! [Shoes]
   }
 
   
-  @IBAction func showMenu(sender: UIButton) {
+  @IBAction func showMenu(_ sender: UIButton) {
     showMenu()
   }
       
-  func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+  func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }
   
-  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if pairs.count > 0 {
       return pairs.count
     }
@@ -84,75 +85,75 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
     }
   }
   
-  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     if pairs.count > 0 {
-      let cell = tableView.dequeueReusableCellWithIdentifier("ShoesCell") as? ShoesCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: "ShoesCell") as? ShoesCell
       
       let deleteButton = MGSwipeButton(title: ShoesBrowserVC.delete, backgroundColor: UiConstants.intermediate1Color, callback: {
           (sender: MGSwipeTableCell!) -> Bool in
-        CDManager.sharedCDManager.context.deleteObject(self.pairs[indexPath.row])
+        CDManager.sharedCDManager.context.delete(self.pairs[(indexPath as NSIndexPath).row])
         CDManager.saveContext()
-        self.pairs.removeAtIndex(indexPath.row)
+        self.pairs.remove(at: (indexPath as NSIndexPath).row)
         self.tableView.reloadData()
         return true
       })
       deleteButton.titleLabel!.font = UIFont(name: UiConstants.globalFont, size: UiConstants.cellButtonTitleSize)!
-      deleteButton.setTitleColor(UiConstants.darkColor, forState: .Normal)
+      deleteButton.setTitleColor(UiConstants.darkColor, for: UIControlState())
       let editButton = MGSwipeButton(title: ShoesBrowserVC.edit, backgroundColor: UiConstants.intermediate2Color, callback: {
           (sender: MGSwipeTableCell!) -> Bool in
-        self.shoesToEdit = self.pairs[indexPath.row]
-        self.performSegueWithIdentifier("pan new shoes", sender: self)
+        self.shoesToEdit = self.pairs[(indexPath as NSIndexPath).row]
+        self.performSegue(withIdentifier: "pan new shoes", sender: self)
         return true
       })
       editButton.titleLabel!.font = UIFont(name: UiConstants.globalFont, size: UiConstants.cellButtonTitleSize)!
-      editButton.setTitleColor(UiConstants.darkColor, forState: .Normal)
+      editButton.setTitleColor(UiConstants.darkColor, for: UIControlState())
       cell!.rightButtons = [deleteButton, editButton]
-      cell!.rightSwipeSettings.transition = MGSwipeTransition.Rotate3D
-      cell?.displayShoes(pairs[indexPath.row], shoesDelegate: self)
-      instructionsLabel.hidden = false
-      sortFieldButton.hidden = false
-      sortFieldLabel.hidden = false
-      reverseSortButton.hidden = false
+      cell!.rightSwipeSettings.transition = MGSwipeTransition.rotate3D
+      cell?.displayShoes(pairs[(indexPath as NSIndexPath).row], shoesDelegate: self)
+      instructionsLabel.isHidden = false
+      sortFieldButton.isHidden = false
+      sortFieldLabel.isHidden = false
+      reverseSortButton.isHidden = false
       return cell!
     }
     else {
-      let cell = UITableViewCell(style: .Default, reuseIdentifier: "EmptyShoesCell")
+      let cell = UITableViewCell(style: .default, reuseIdentifier: "EmptyShoesCell")
       cell.textLabel?.textColor = UiConstants.intermediate1Color
       cell.textLabel?.font = UIFont(name: UiConstants.globalFont, size: ShoesBrowserVC.tapFontSize)
       cell.textLabel?.text = ShoesBrowserVC.tapToAdd
       cell.backgroundColor = UiConstants.darkColor
-      instructionsLabel.hidden = true
-      sortFieldButton.hidden = true
-      sortFieldLabel.hidden = true
-      reverseSortButton.hidden = true
+      instructionsLabel.isHidden = true
+      sortFieldButton.isHidden = true
+      sortFieldLabel.isHidden = true
+      reverseSortButton.isHidden = true
       return cell
     }
   }
   
-  func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return ShoesBrowserVC.rowHeight
   }
   
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "pan new shoes" {
-      (segue.destinationViewController as! ShoesEditorVC).shoes = shoesToEdit
+      (segue.destination as! ShoesEditorVC).shoes = shoesToEdit
       shoesToEdit = nil
-      (segue.destinationViewController as! ShoesEditorVC).shoesDelegate = self
+      (segue.destination as! ShoesEditorVC).shoesDelegate = self
     }
   }
   
   @IBAction func addShoes() {
-    performSegueWithIdentifier("pan new shoes", sender: self)
+    performSegue(withIdentifier: "pan new shoes", sender: self)
   }
   
-  @IBAction func returnFromSegueActions(sender: UIStoryboardSegue) {}
+  @IBAction func returnFromSegueActions(_ sender: UIStoryboardSegue) {}
 
-  override func segueForUnwindingToViewController(toViewController: UIViewController, fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
+  override func segueForUnwinding(to toViewController: UIViewController, from fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
     return UnwindPanSegue(identifier: identifier!, source: fromViewController, destination: toViewController, performHandler: { () -> Void in
     })
   }
   
-  func receiveShoes(shoes: Shoes, isNew: Bool) {
+  func receiveShoes(_ shoes: Shoes, isNew: Bool) {
     if isNew {
       pairs.append(shoes)
     }
@@ -164,19 +165,19 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
     }
   }
   
-  func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+  func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1
   }
   
-  func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+  func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
     return ShoesSortField.all().count;
   }
   
-  func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+  func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
     return NSAttributedString(string: ShoesSortField.sortFieldForPosition(row).asString(), attributes: [NSForegroundColorAttributeName: UiConstants.intermediate3Color])
   }
   
-  func makeNewIsCurrent(newIsCurrent: Shoes) {
+  func makeNewIsCurrent(_ newIsCurrent: Shoes) {
     for shoes in pairs {
       if shoes != newIsCurrent && shoes.isCurrent.boolValue {
         shoes.isCurrent = false
@@ -186,32 +187,32 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
     tableView.reloadData()
   }
   
-  override func prefersStatusBarHidden() -> Bool {
+  override var prefersStatusBarHidden : Bool {
     return true
   }
   
   @IBAction func reverseSort() {
     SettingsManager.setSortType(SortType.reverse(SettingsManager.getSortType()))
-    pairs.sortInPlace { ShoesSortField.compare($0, shoes2: $1) }
+    pairs.sort { ShoesSortField.compare($0, shoes2: $1) }
     tableView.reloadData()
   }
   
   
   @IBAction func showPicker() {
-    pickerToolbar.hidden = false
-    fieldPicker.hidden = false
-    oldShoesSortField = fieldPicker.selectedRowInComponent(0)
+    pickerToolbar.isHidden = false
+    fieldPicker.isHidden = false
+    oldShoesSortField = fieldPicker.selectedRow(inComponent: 0)
   }
   
   
-  @IBAction func dismissPicker(sender: UIBarButtonItem) {
-    pickerToolbar.hidden = true
-    fieldPicker.hidden = true
-    let newShoesSortField = fieldPicker.selectedRowInComponent(0)
+  @IBAction func dismissPicker(_ sender: UIBarButtonItem) {
+    pickerToolbar.isHidden = true
+    fieldPicker.isHidden = true
+    let newShoesSortField = fieldPicker.selectedRow(inComponent: 0)
     if newShoesSortField != oldShoesSortField {
       SettingsManager.setShoesSortField(ShoesSortField.sortFieldForPosition(newShoesSortField))
-      showPickerButton.setTitle(SettingsManager.getShoesSortField().asString(), forState: .Normal)
-      pairs.sortInPlace { ShoesSortField.compare($0, shoes2: $1) }
+      showPickerButton.setTitle(SettingsManager.getShoesSortField().asString(), for: UIControlState())
+      pairs.sort { ShoesSortField.compare($0, shoes2: $1) }
       tableView.reloadData()
     }
   }

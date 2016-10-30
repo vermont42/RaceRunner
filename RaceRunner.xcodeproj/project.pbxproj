@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7333C6D291F714851431A2E3 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E91D4B24A52C1C5D97BD0CF /* Pods.framework */; };
+		780ADDCF5F549BC94E7E819D /* Pods_RaceRunner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3684E5DECEABCEB4FF305C39 /* Pods_RaceRunner.framework */; };
 		E10356451C02A1CB006E8FEC /* applause2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E10356441C02A1CB006E8FEC /* applause2.mp3 */; };
 		E10356471C02A1EB006E8FEC /* applause3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E10356461C02A1EB006E8FEC /* applause3.mp3 */; };
 		E10B704A1C455C4F00C70283 /* UIApplication+topViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B70491C455C4F00C70283 /* UIApplication+topViewController.swift */; };
@@ -69,7 +69,6 @@
 		E18B6C811C0D1AEC005865BA /* GpxActivityItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18B6C801C0D1AEC005865BA /* GpxActivityItemProvider.swift */; };
 		E1A41B4E1BF7D83100E31943 /* PubNubManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A41B4D1BF7D83100E31943 /* PubNubManager.swift */; };
 		E1B45F071AE96EFC00AF73AB /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B45F061AE96EFC00AF73AB /* LocationManager.swift */; };
-		E1C22BCC1AF05DA1003A5712 /* MarqueeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C22BCA1AF05DA1003A5712 /* MarqueeLabel.m */; };
 		E1C2ED501AB63BE200A29728 /* LogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C2ED4F1AB63BE200A29728 /* LogCell.swift */; };
 		E1CBD2D71AC4D616006F0B85 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CBD2D61AC4D616006F0B85 /* SettingsManager.swift */; };
 		E1D38F491B9E6AFE00380643 /* Runmeter.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E1D38F481B9E6AFE00380643 /* Runmeter.gpx */; };
@@ -109,10 +108,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1E75B6B8819120E7009CF8E0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		3684E5DECEABCEB4FF305C39 /* Pods_RaceRunner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RaceRunner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E91D4B24A52C1C5D97BD0CF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BAE29B09F03FADB483809E0 /* SuggestedColors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SuggestedColors.plist; sourceTree = "<group>"; };
-		B007871155F27C6F21413ECF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		A41757580ADFC544CF71E348 /* Pods-RaceRunner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RaceRunner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RaceRunner/Pods-RaceRunner.debug.xcconfig"; sourceTree = "<group>"; };
+		CA4036EE9B1AE5C8327853A4 /* Pods-RaceRunner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RaceRunner.release.xcconfig"; path = "Pods/Target Support Files/Pods-RaceRunner/Pods-RaceRunner.release.xcconfig"; sourceTree = "<group>"; };
 		E10356441C02A1CB006E8FEC /* applause2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = applause2.mp3; sourceTree = "<group>"; };
 		E10356461C02A1EB006E8FEC /* applause3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = applause3.mp3; sourceTree = "<group>"; };
 		E10B70491C455C4F00C70283 /* UIApplication+topViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+topViewController.swift"; sourceTree = "<group>"; };
@@ -175,9 +175,6 @@
 		E18B6C801C0D1AEC005865BA /* GpxActivityItemProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxActivityItemProvider.swift; sourceTree = "<group>"; };
 		E1A41B4D1BF7D83100E31943 /* PubNubManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubNubManager.swift; sourceTree = "<group>"; };
 		E1B45F061AE96EFC00AF73AB /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		E1C22BC71AF05D39003A5712 /* RaceRunner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RaceRunner-Bridging-Header.h"; sourceTree = "<group>"; };
-		E1C22BCA1AF05DA1003A5712 /* MarqueeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarqueeLabel.m; sourceTree = "<group>"; };
-		E1C22BCB1AF05DA1003A5712 /* MarqueeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarqueeLabel.h; sourceTree = "<group>"; };
 		E1C2ED4F1AB63BE200A29728 /* LogCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogCell.swift; sourceTree = "<group>"; };
 		E1CBD2D61AC4D616006F0B85 /* SettingsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		E1D38F481B9E6AFE00380643 /* Runmeter.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Runmeter.gpx; sourceTree = "<group>"; };
@@ -225,7 +222,7 @@
 			files = (
 				E162397C1C7A9D0300739B7F /* CloudKit.framework in Frameworks */,
 				E1D5A01C1AC5170F008A3806 /* AVFoundation.framework in Frameworks */,
-				7333C6D291F714851431A2E3 /* Pods.framework in Frameworks */,
+				780ADDCF5F549BC94E7E819D /* Pods_RaceRunner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,15 +235,16 @@
 				E162397B1C7A9D0300739B7F /* CloudKit.framework */,
 				E1D5A01B1AC5170E008A3806 /* AVFoundation.framework */,
 				3E91D4B24A52C1C5D97BD0CF /* Pods.framework */,
+				3684E5DECEABCEB4FF305C39 /* Pods_RaceRunner.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		816917CFC733A377F94FFA5A /* Pods */ = {
+		92816E23800A661738028C95 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				B007871155F27C6F21413ECF /* Pods.debug.xcconfig */,
-				1E75B6B8819120E7009CF8E0 /* Pods.release.xcconfig */,
+				A41757580ADFC544CF71E348 /* Pods-RaceRunner.debug.xcconfig */,
+				CA4036EE9B1AE5C8327853A4 /* Pods-RaceRunner.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -316,8 +314,8 @@
 			children = (
 				E1E8B9201AAB73F000D04E38 /* RaceRunner */,
 				E1E8B91F1AAB73F000D04E38 /* Products */,
-				816917CFC733A377F94FFA5A /* Pods */,
 				4BF0F840305CCC95E1CE5907 /* Frameworks */,
+				92816E23800A661738028C95 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -360,8 +358,6 @@
 				E1C2ED4F1AB63BE200A29728 /* LogCell.swift */,
 				E17016521D09DA3A00CF5825 /* LowMemoryHandler.swift */,
 				E1E8B9271AAB73F000D04E38 /* Main.storyboard */,
-				E1C22BCB1AF05DA1003A5712 /* MarqueeLabel.h */,
-				E1C22BCA1AF05DA1003A5712 /* MarqueeLabel.m */,
 				E1E8B9431AAB742E00D04E38 /* MenuVC.swift */,
 				E12E44F11C58BAAB0065AE66 /* Overlay.swift */,
 				E1E8B9461AAB742E00D04E38 /* PanSegue.swift */,
@@ -410,7 +406,6 @@
 				E1E8B92A1AAB73F000D04E38 /* Images.xcassets */,
 				E1E8B9221AAB73F000D04E38 /* Info.plist */,
 				E1E8B92C1AAB73F000D04E38 /* LaunchScreen.xib */,
-				E1C22BC71AF05D39003A5712 /* RaceRunner-Bridging-Header.h */,
 				6BAE29B09F03FADB483809E0 /* SuggestedColors.plist */,
 				E1103F261C00DB0D00E18D2E /* Sounds */,
 			);
@@ -424,13 +419,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E1E8B93D1AAB73F000D04E38 /* Build configuration list for PBXNativeTarget "RaceRunner" */;
 			buildPhases = (
-				EB23060F82A6451B60124C70 /* Check Pods Manifest.lock */,
+				5713F7B4BE2F4E0669449729 /* [CP] Check Pods Manifest.lock */,
 				E1E8B91A1AAB73F000D04E38 /* Sources */,
 				E1E8B91B1AAB73F000D04E38 /* Frameworks */,
 				E1E8B91C1AAB73F000D04E38 /* Resources */,
-				D715CC45AA7F9A8E201F2287 /* Embed Pods Frameworks */,
-				46F956E5D2E09E1DC84A29E7 /* Copy Pods Resources */,
 				E14503301C80B04F00631139 /* ShellScript */,
+				E3805A546D750C7E6281FAE7 /* [CP] Embed Pods Frameworks */,
+				D9E8A38E5F0F54E229FCC39E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -449,12 +444,13 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Josh Adams";
 				TargetAttributes = {
 					E1E8B91D1AAB73F000D04E38 = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = V3L2PL4QC9;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.iCloud = {
 								enabled = 1;
@@ -518,34 +514,34 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		46F956E5D2E09E1DC84A29E7 /* Copy Pods Resources */ = {
+		5713F7B4BE2F4E0669449729 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		D715CC45AA7F9A8E201F2287 /* Embed Pods Frameworks */ = {
+		D9E8A38E5F0F54E229FCC39E /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RaceRunner/Pods-RaceRunner-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E14503301C80B04F00631139 /* ShellScript */ = {
@@ -561,19 +557,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" 3835fee2cf704d70edbfdc3210412d698fac6f91 b02f2a3d4fbb6a68768d614d1c14a8492675804a2852693a30e22fadeb6e1fc5";
 		};
-		EB23060F82A6451B60124C70 /* Check Pods Manifest.lock */ = {
+		E3805A546D750C7E6281FAE7 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RaceRunner/Pods-RaceRunner-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -587,7 +583,6 @@
 				E13C763F1C1A01520046021A /* Array+insertionIndexOf.swift in Sources */,
 				E13B48B51B911BDA001C997A /* UiConstants.swift in Sources */,
 				E15195F81C0BD41A00BD52FB /* HumanWeight.swift in Sources */,
-				E1C22BCC1AF05DA1003A5712 /* MarqueeLabel.m in Sources */,
 				E13B48B71B921A9F001C997A /* UiHelpers.swift in Sources */,
 				E137AC9E1C87BEB600A3148D /* String+removeWhitespace.swift in Sources */,
 				E13B39931ABA705E007F61ED /* DarkSky.swift in Sources */,
@@ -691,8 +686,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -737,8 +734,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -758,14 +757,16 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		E1E8B93E1AAB73F000D04E38 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B007871155F27C6F21413ECF /* Pods.debug.xcconfig */;
+			baseConfigurationReference = A41757580ADFC544CF71E348 /* Pods-RaceRunner.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = RaceRunner/RaceRunner.entitlements;
@@ -779,16 +780,17 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "biz.joshadams.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "RaceRunner/RaceRunner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		E1E8B93F1AAB73F000D04E38 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1E75B6B8819120E7009CF8E0 /* Pods.release.xcconfig */;
+			baseConfigurationReference = CA4036EE9B1AE5C8327853A4 /* Pods-RaceRunner.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = RaceRunner/RaceRunner.entitlements;
@@ -802,7 +804,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "biz.joshadams.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "RaceRunner/RaceRunner-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

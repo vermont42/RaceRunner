@@ -28,7 +28,7 @@ enum Overlay: String {
     }
   }
   
-  static func stringToOVerlay(overlay: String) -> Overlay {
+  static func stringToOVerlay(_ overlay: String) -> Overlay {
     switch overlay {
     case "Both":
       return .Both

@@ -10,40 +10,40 @@ import Foundation
 import UIKit
 
 class UiHelpers {
-  private static let headerDelimiter = "^"
-  private static let boldDelimiter = "​" // http://www.fileformat.info/info/unicode/char/200B/browsertest.htm
+  fileprivate static let headerDelimiter = "^"
+  fileprivate static let boldDelimiter = "​" // http://www.fileformat.info/info/unicode/char/200B/browsertest.htm
   
-  class func maskedImageNamed(name:String, color:UIColor) -> UIImage {
+  class func maskedImageNamed(_ name:String, color:UIColor) -> UIImage {
     let image = UIImage(named: name)
     let rect:CGRect = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: image!.size.width, height: image!.size.height))
     UIGraphicsBeginImageContextWithOptions(rect.size, false, image!.scale)
-    let c:CGContextRef = UIGraphicsGetCurrentContext()!
-    image?.drawInRect(rect)
-    CGContextSetFillColorWithColor(c, color.CGColor)
-    CGContextSetBlendMode(c, CGBlendMode.SourceAtop)
-    CGContextFillRect(c, rect)
-    let result:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+    let c:CGContext = UIGraphicsGetCurrentContext()!
+    image?.draw(in: rect)
+    c.setFillColor(color.cgColor)
+    c.setBlendMode(CGBlendMode.sourceAtop)
+    c.fill(rect)
+    let result:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
     UIGraphicsEndImageContext()
     return result
   }
   
-  class func letterPressedText(plainText: String) -> NSAttributedString {
+  class func letterPressedText(_ plainText: String) -> NSAttributedString {
     return NSAttributedString(string: plainText, attributes: [NSTextEffectAttributeName: NSTextEffectLetterpressStyle])
   }
 
-  class func colorForValue(value: Double, sortedArray: [Double], index: Int) -> UIColor {
+  class func colorForValue(_ value: Double, sortedArray: [Double], index: Int) -> UIColor {
     if (sortedArray.count < 2) {
       return UiConstants.intermediate2ColorDarkened
     }
-    let rRed = CGColorGetComponents(UiConstants.intermediate1Color.CGColor)[0] * UiConstants.darkening
-    let rGreen = CGColorGetComponents(UiConstants.intermediate1Color.CGColor)[1] * UiConstants.darkening
-    let rBlue = CGColorGetComponents(UiConstants.intermediate1Color.CGColor)[2] * UiConstants.darkening
-    let yRed = CGColorGetComponents(UiConstants.intermediate2Color.CGColor)[0] * UiConstants.darkening
-    let yGreen = CGColorGetComponents(UiConstants.intermediate2Color.CGColor)[1] * UiConstants.darkening
-    let yBlue = CGColorGetComponents(UiConstants.intermediate2Color.CGColor)[2] * UiConstants.darkening
-    let gRed = CGColorGetComponents(UiConstants.intermediate3Color.CGColor)[0] * UiConstants.darkening
-    let gGreen = CGColorGetComponents(UiConstants.intermediate3Color.CGColor)[1] * UiConstants.darkening
-    let gBlue = CGColorGetComponents(UiConstants.intermediate3Color.CGColor)[2] * UiConstants.darkening
+    let rRed = (UiConstants.intermediate1Color.cgColor.components?[0])! * UiConstants.darkening
+    let rGreen = (UiConstants.intermediate1Color.cgColor.components?[1])! * UiConstants.darkening
+    let rBlue = (UiConstants.intermediate1Color.cgColor.components?[2])! * UiConstants.darkening
+    let yRed = (UiConstants.intermediate2Color.cgColor.components?[0])! * UiConstants.darkening
+    let yGreen = (UiConstants.intermediate2Color.cgColor.components?[1])! * UiConstants.darkening
+    let yBlue = (UiConstants.intermediate2Color.cgColor.components?[2])! * UiConstants.darkening
+    let gRed = (UiConstants.intermediate3Color.cgColor.components?[0])! * UiConstants.darkening
+    let gGreen = (UiConstants.intermediate3Color.cgColor.components?[1])! * UiConstants.darkening
+    let gBlue = (UiConstants.intermediate3Color.cgColor.components?[2])! * UiConstants.darkening
     let medianValue = sortedArray[sortedArray.count / 2]
     if value < medianValue {
       let ratio = CGFloat(index) / (CGFloat(sortedArray.count) / 2.0)
@@ -61,19 +61,19 @@ class UiHelpers {
     }
   }
   
-  class func styleText(text: String) -> NSAttributedString {
+  class func styleText(_ text: String) -> NSAttributedString {
     let matText = NSMutableAttributedString(string: text)
     matText.addAttributes([NSForegroundColorAttributeName: UiConstants.lightColor, NSFontAttributeName: UIFont(name: UiConstants.globalFont, size: UiConstants.bodyFontSize)!], range: NSMakeRange(0, matText.length))
     let centeredStyle = NSMutableParagraphStyle()
-    centeredStyle.alignment = .Center
-    let headerAttributes = [NSForegroundColorAttributeName: UiConstants.intermediate1Color, NSTextEffectAttributeName: NSTextEffectLetterpressStyle]
+    centeredStyle.alignment = .center
+    let headerAttributes = [NSForegroundColorAttributeName: UiConstants.intermediate1Color, NSTextEffectAttributeName: NSTextEffectLetterpressStyle] as [String : Any]
     let textAsNsString = text as NSString
     var i: Int = 0
     var insideHeading = false
     var insideBold = false
     var startIndex = 0
     while i < textAsNsString.length {
-      if textAsNsString.substringWithRange(NSMakeRange(i, 1)) == UiHelpers.headerDelimiter {
+      if textAsNsString.substring(with: NSMakeRange(i, 1)) == UiHelpers.headerDelimiter {
         if insideHeading {
           let headerWithDelimitersRange = NSMakeRange(startIndex, (i - startIndex) + 1)
           matText.addAttribute(NSParagraphStyleAttributeName, value: centeredStyle, range: headerWithDelimitersRange)
@@ -90,7 +90,7 @@ class UiHelpers {
           startIndex = i
         }
       }
-      else if textAsNsString.substringWithRange(NSMakeRange(i, 1)) == UiHelpers.boldDelimiter {
+      else if textAsNsString.substring(with: NSMakeRange(i, 1)) == UiHelpers.boldDelimiter {
         if insideBold {
           let boldRange = NSMakeRange(startIndex, i - startIndex)
           matText.addAttribute(NSFontAttributeName, value: UIFont(name: UiConstants.globalFontBold, size: UiConstants.bodyFontSize)!, range: boldRange)

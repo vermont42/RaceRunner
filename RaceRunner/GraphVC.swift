@@ -19,17 +19,17 @@ class GraphVC: ChildVC {
   var maxSmoothSpeed: Double!
   var minSmoothSpeed: Double!
   
-  override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+  override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
     graphView.setNeedsDisplay()
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
-    overlays[SettingsManager.getOverlay().radioButtonPosition()].sendActionsForControlEvents(UIControlEvents.TouchUpInside)    
+    overlays[SettingsManager.getOverlay().radioButtonPosition()].sendActions(for: UIControlEvents.touchUpInside)    
   }
   
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     graphView.run = run
     graphView.smoothSpeeds = smoothSpeeds
@@ -39,15 +39,15 @@ class GraphVC: ChildVC {
   }
   
   @IBAction func back() {
-    performSegueWithIdentifier("unwind pan", sender: self)
+    performSegue(withIdentifier: "unwind pan", sender: self)
   }
   
-  override func prefersStatusBarHidden() -> Bool {
+  override var prefersStatusBarHidden : Bool {
     return true
   }
   
-  @IBAction func changeOverlay(sender: DLRadioButton) {
-    let selectedOverlay = sender.selectedButton()!.titleLabel?.text
+  @IBAction func changeOverlay(_ sender: DLRadioButton) {
+    let selectedOverlay = sender.selected()!.titleLabel?.text
     if let selectedOverlay = selectedOverlay {
       SettingsManager.setOverlay(Overlay.stringToOVerlay(selectedOverlay))
       graphView.setNeedsDisplay()

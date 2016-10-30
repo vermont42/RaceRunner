@@ -7,11 +7,12 @@
 //
 
 import CoreLocation
+import UIKit
 
 protocol RunDelegate {
-  func showInitialCoordinate(coordinate: CLLocationCoordinate2D)
-  func plotToCoordinate(coordinate: CLLocationCoordinate2D, altitudeColor: UIColor, paceColor: UIColor)
-  func receiveProgress(totalDistance: Double, totalSeconds: Int, altitude: Double, altGained: Double, altLost: Double)
+  func showInitialCoordinate(_ coordinate: CLLocationCoordinate2D)
+  func plotToCoordinate(_ coordinate: CLLocationCoordinate2D, altitudeColor: UIColor, paceColor: UIColor)
+  func receiveProgress(_ totalDistance: Double, totalSeconds: Int, altitude: Double, altGained: Double, altLost: Double)
   func stopRun()
 }
 

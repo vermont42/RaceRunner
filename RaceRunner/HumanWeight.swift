@@ -19,7 +19,7 @@ struct HumanWeight {
     return weightAsString(SettingsManager.getWeight(), unitType: SettingsManager.getUnitType())
   }
   
-  static func weightAsString(weight: Double, unitType: UnitType) -> String {
+  static func weightAsString(_ weight: Double, unitType: UnitType) -> String {
     switch unitType {
     case .Metric:
       return String(format: "%.0f kg", weight)

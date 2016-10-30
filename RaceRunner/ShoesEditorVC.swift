@@ -19,17 +19,17 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
   @IBOutlet var isCurrent: UIImageView!
   @IBOutlet var currentMileageLabel: UILabel!
   @IBOutlet var maximumMileageLabel: UILabel!
-  private let imagePicker = UIImagePickerController()
+  fileprivate let imagePicker = UIImagePickerController()
   var shoes: Shoes?
   weak var shoesDelegate: ShoesDelegate!
   
-  private static let imperialMileageLabel = "Current Mileage:"
-  private static let imperialMaxMileageLabel = "Maximum Mileage:"
-  private static let metricMileageLabel = "Current Klicks:"
-  private static let metricMaxMileageLabel = "Maximum Klicks:"
-  private static let editShoes = "Edit Shoes"
-  private static let newShoes = "New Shoes"
-  private var choosingThumbnail = false
+  fileprivate static let imperialMileageLabel = "Current Mileage:"
+  fileprivate static let imperialMaxMileageLabel = "Maximum Mileage:"
+  fileprivate static let metricMileageLabel = "Current Klicks:"
+  fileprivate static let metricMaxMileageLabel = "Maximum Klicks:"
+  fileprivate static let editShoes = "Edit Shoes"
+  fileprivate static let newShoes = "New Shoes"
+  fileprivate var choosingThumbnail = false
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -38,12 +38,12 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
     maximumMileage.delegate = self
     imagePicker.delegate = self
     thumbnail.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ShoesEditorVC.chooseThumbnail)))
-    thumbnail.userInteractionEnabled = true
+    thumbnail.isUserInteractionEnabled = true
     isCurrent.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ShoesEditorVC.toggleIsCurrent)))
-    isCurrent.userInteractionEnabled = true
+    isCurrent.isUserInteractionEnabled = true
   }
   
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     if !choosingThumbnail {
       if SettingsManager.getUnitType() == .Imperial {
@@ -64,7 +64,7 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
         else {
           isCurrent.image = Shoes.unchecked
         }
-        thumbnail.image = UIImage(data: shoes.thumbnail)
+        thumbnail.image = UIImage(data: shoes.thumbnail as Data)
         viewControllerTitle.text = ShoesEditorVC.editShoes
       }
       else {
@@ -84,24 +84,24 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
     LowMemoryHandler.handleLowMemory(self)
   }
   
-  override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     view.endEditing(true)
-    super.touchesBegan(touches, withEvent: event)
+    super.touchesBegan(touches, with: event)
   }
   
   @IBAction func cancel() {
-    performSegueWithIdentifier("unwind pan", sender: self)
+    performSegue(withIdentifier: "unwind pan", sender: self)
   }
   
   @IBAction func done() {
     var isNew = false
     if shoes == nil {
-      shoes = NSEntityDescription.insertNewObjectForEntityForName("Shoes", inManagedObjectContext: CDManager.sharedCDManager.context) as? Shoes
+      shoes = NSEntityDescription.insertNewObject(forEntityName: "Shoes", into: CDManager.sharedCDManager.context) as? Shoes
       isNew = true
     }
     shoes!.name = name.text!
-    shoes!.kilometers = Converter.floatifyMileage(currentMileage.text!)
-    shoes!.maxKilometers = Converter.floatifyMileage(maximumMileage.text!)
+    shoes!.kilometers = NSNumber(value: Converter.floatifyMileage(currentMileage.text!))
+    shoes!.maxKilometers = NSNumber(value: Converter.floatifyMileage(maximumMileage.text!))
     if isCurrent.image!.isEqual(Shoes.checked) {
       shoes!.isCurrent = true
     }
@@ -111,16 +111,16 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
     shoes!.thumbnail = UIImagePNGRepresentation(thumbnail.image!)!
     CDManager.saveContext()
     shoesDelegate.receiveShoes(shoes!, isNew: isNew)
-    performSegueWithIdentifier("unwind pan", sender: self)
+    performSegue(withIdentifier: "unwind pan", sender: self)
   }
   
-  override func prefersStatusBarHidden() -> Bool {
+  override var prefersStatusBarHidden : Bool {
     return true
   }
   
-  func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
     if textField == currentMileage || textField == maximumMileage {
-      if let _ = Int(string) where textField.text!.characters.count < Shoes.maxNumberLength + 1 {
+      if let _ = Int(string) , textField.text!.characters.count < Shoes.maxNumberLength + 1 {
         return true
       }
       else {
@@ -130,7 +130,7 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
     return true
   }
   
-  func textFieldShouldReturn(textField: UITextField) -> Bool {
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     if name.text! != "" && currentMileage.text! != "" && maximumMileage.text! != "" {
       enableDoneButton()
     }
@@ -143,28 +143,28 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
       
   func disableDoneButton() {
     doneButton.alpha = UiConstants.notDoneAlpha
-    doneButton.enabled = false
+    doneButton.isEnabled = false
   }
   
   func enableDoneButton() {
     doneButton.alpha = 1.0
-    doneButton.enabled = true
+    doneButton.isEnabled = true
   }
   
-  func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-    dismissViewControllerAnimated(true, completion: { self.choosingThumbnail = false })
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    dismiss(animated: true, completion: { self.choosingThumbnail = false })
     if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
       thumbnail.image = pickedImage
     }
   }
   
-  func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-    dismissViewControllerAnimated(true, completion: { self.choosingThumbnail = false })
+  func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    dismiss(animated: true, completion: { self.choosingThumbnail = false })
   }
       
   @IBAction func chooseThumbnail() {
     choosingThumbnail = true
-    presentViewController(imagePicker, animated: true, completion: nil)
+    present(imagePicker, animated: true, completion: nil)
   }
   
   func toggleIsCurrent() {

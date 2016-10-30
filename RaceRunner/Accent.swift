@@ -44,7 +44,7 @@ enum Accent: String {
     }
   }
   
-  static func stringToAccent(accent: String) -> Accent {
+  static func stringToAccent(_ accent: String) -> Accent {
     switch accent {
     case "🇺🇸":
       return .🇺🇸

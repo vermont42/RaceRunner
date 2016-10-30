@@ -8,5 +8,5 @@
 
 protocol PubNubPublisher {
   func stopRun()
-  func receiveMessage(message: String)
+  func receiveMessage(_ message: String)
 }

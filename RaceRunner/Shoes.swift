@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 class Shoes: NSManagedObject {
   static let defaultKilometers: Float = 0.0
@@ -23,23 +24,24 @@ class Shoes: NSManagedObject {
   static let gotIt = "Got It"
   static let shoesAreOkay = "shoes are okay"
   
-  class func addMeters(meters: Double) -> String {
-    let fetchRequest = NSFetchRequest()
+  class func addMeters(_ meters: Double) -> String {
+    //let fetchRequest = NSFetchRequest()
+    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Shoes")
     let context = CDManager.sharedCDManager.context
-    fetchRequest.entity = NSEntityDescription.entityForName("Shoes", inManagedObjectContext: context)
+    fetchRequest.entity = NSEntityDescription.entity(forEntityName: "Shoes", in: context!)
     let sortDescriptor = NSSortDescriptor(key: "name", ascending: false)
     fetchRequest.sortDescriptors = [sortDescriptor]
-    let pairs = (try? context.executeFetchRequest(fetchRequest)) as! [Shoes]
+    let pairs = (try? context!.fetch(fetchRequest)) as! [Shoes]
     for shoes in pairs {
       if shoes.isCurrent.boolValue {
         let currentKilometers = shoes.kilometers.doubleValue
         let newKilometers = currentKilometers + (meters / Converter.metersInKilometer)
-        shoes.kilometers = newKilometers
+        shoes.kilometers = NSNumber(value: newKilometers)
         CDManager.saveContext()
         if newKilometers > shoes.maxKilometers.doubleValue {
           //UIAlertController.showMessage(NSString(format: Shoes.shoesWarning, shoes.name, Converter.stringifyKilometers(Float(newKilometers), includeUnits: true), Converter.stringifyKilometers(shoes.maxKilometers.floatValue, includeUnits: true)) as String, title: Shoes.warningTitle, okTitle: Shoes.gotIt)
 
-          return NSString(format: Shoes.shoesWarning, shoes.name, Converter.stringifyKilometers(Float(newKilometers), includeUnits: true), Converter.stringifyKilometers(shoes.maxKilometers.floatValue, includeUnits: true)) as String
+          return NSString(format: Shoes.shoesWarning as NSString, shoes.name, Converter.stringifyKilometers(Float(newKilometers), includeUnits: true), Converter.stringifyKilometers(shoes.maxKilometers.floatValue, includeUnits: true)) as String
         }
       }
     }

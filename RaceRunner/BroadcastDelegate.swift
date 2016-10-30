@@ -9,5 +9,5 @@
 import Foundation
 
 protocol BroadcastDelegate: class {
-  func userWantsToBroadcast(userWantsToBroadcast: Bool)
+  func userWantsToBroadcast(_ userWantsToBroadcast: Bool)
 }

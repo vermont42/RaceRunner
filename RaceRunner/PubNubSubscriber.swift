@@ -7,7 +7,7 @@
 //
 
 protocol PubNubSubscriber {
-  func receiveProgress(progress: String)
+  func receiveProgress(_ progress: String)
   func runStopped()
 }
 

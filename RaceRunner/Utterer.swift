@@ -10,16 +10,16 @@ import Foundation
 import AVFoundation
 
 class Utterer {
-  private static let synth = AVSpeechSynthesizer()
-  private static let rate: Float = 0.5
-  private static let pitchMultiplier: Float = 0.8
+  fileprivate static let synth = AVSpeechSynthesizer()
+  fileprivate static let rate: Float = 0.5
+  fileprivate static let pitchMultiplier: Float = 0.8
   
-  static func utter(thingToUtter: String) {
+  static func utter(_ thingToUtter: String) {
     let utterance = AVSpeechUtterance(string: thingToUtter)
     utterance.rate = Utterer.rate
     utterance.voice = AVSpeechSynthesisVoice(language: "en-\(SettingsManager.getAccent().languageCode())")
     utterance.pitchMultiplier = Utterer.pitchMultiplier
-    synth.speakUtterance(utterance)
+    synth.speak(utterance)
     SoundManager.play(.Silence) // https://forums.developer.apple.com/thread/23160
   }
 }

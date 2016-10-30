@@ -10,7 +10,7 @@ enum SortType: String {
   case Normal = "Normal"
   case Reverse = "Reverse"
   
-  static func reverse(sortType: SortType) -> SortType {
+  static func reverse(_ sortType: SortType) -> SortType {
     if sortType == .Normal {
       return .Reverse
     }

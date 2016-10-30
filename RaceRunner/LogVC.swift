@@ -26,13 +26,13 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
   var runs: [Run]?
   var selectedRun = 0
   enum LogType {
-    case History
-    case Simulate
+    case history
+    case simulate
   }
   var logType: LogType!
   var locFile = "Runmeter"
-  private static let rowHeight: CGFloat = 92.0
-  private var oldLogSortField: Int!
+  fileprivate static let rowHeight: CGFloat = 92.0
+  fileprivate var oldLogSortField: Int!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -40,29 +40,29 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
     tableView.delegate = self
     fieldPicker.dataSource = self
     fieldPicker.delegate = self
-    tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-    pickerToolbar.hidden = true
-    fieldPicker.hidden = true
+    tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+    pickerToolbar.isHidden = true
+    fieldPicker.isHidden = true
     fieldPicker.selectRow(SettingsManager.getLogSortField().pickerPosition(), inComponent: 0, animated: false)
   }
   
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.viewControllerTitle.text = viewControllerTitleText
-    if logType == LogVC.LogType.History {
+    if logType == LogVC.LogType.history {
       viewControllerTitle.text = "History"
     }
-    else if logType == LogVC.LogType.Simulate {
+    else if logType == LogVC.LogType.simulate {
       viewControllerTitle.text = "Simulate"
     }
-    showPickerButton.setTitle(SettingsManager.getLogSortField().rawValue, forState: .Normal)
+    showPickerButton.setTitle(SettingsManager.getLogSortField().rawValue, for: UIControlState())
     viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
     fetchRuns()
-    runs?.sortInPlace { LogSortField.compare($0, run2: $1) }
+    runs?.sort { LogSortField.compare($0, run2: $1) }
     RunModel.registerForImportedRunNotifications(self)
   }
   
-  override func viewWillDisappear(animated: Bool) {
+  override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     RunModel.deregisterForImportedRunNotifications()
   }
@@ -72,29 +72,30 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
     tableView.reloadData()
   }
   
-  private func fetchRuns() {
-    let fetchRequest = NSFetchRequest()
-    let context = CDManager.sharedCDManager.context
-    fetchRequest.entity = NSEntityDescription.entityForName("Run", inManagedObjectContext: context)
+  fileprivate func fetchRuns() {
+    //let fetchRequest = NSFetchRequest()
+    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Run")
+    let context = CDManager.sharedCDManager.context!
+    fetchRequest.entity = NSEntityDescription.entity(forEntityName: "Run", in: context)
     let sortDescriptor = NSSortDescriptor(key: "timestamp", ascending: false)
     fetchRequest.sortDescriptors = [sortDescriptor]
-    runs = (try? context.executeFetchRequest(fetchRequest)) as? [Run]
+    runs = (try? context.fetch(fetchRequest)) as? [Run]
   }
   
-  override func viewDidAppear(animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
     tableView.reloadData()
     super.viewDidAppear(animated)
   }
   
-  @IBAction func showMenu(sender: UIButton) {
+  @IBAction func showMenu(_ sender: UIButton) {
     showMenu()
   }
   
-  func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+  func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }
   
-  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if let runs = runs {
       return runs.count
     }
@@ -114,93 +115,93 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
     }
   }
   
-  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("LogCell") as? LogCell
-    cell?.displayRun(runs![indexPath.row])
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "LogCell") as? LogCell
+    cell?.displayRun(runs![(indexPath as NSIndexPath).row])
     return cell!
   }
   
-  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    selectedRun = indexPath.row
-    if logType == .History {
-      performSegueWithIdentifier("pan details from log", sender: self)
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    selectedRun = (indexPath as NSIndexPath).row
+    if logType == .history {
+      performSegue(withIdentifier: "pan details from log", sender: self)
     }
-    else if logType == .Simulate {
-      performSegueWithIdentifier("pan run from log", sender: self)
+    else if logType == .simulate {
+      performSegue(withIdentifier: "pan run from log", sender: self)
     }
   }
 
-  func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    if editingStyle == UITableViewCellEditingStyle.Delete {
-      CDManager.sharedCDManager.context.deleteObject(runs![indexPath.row])
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    if editingStyle == UITableViewCellEditingStyle.delete {
+      CDManager.sharedCDManager.context.delete(runs![(indexPath as NSIndexPath).row])
       CDManager.saveContext()
-      runs!.removeAtIndex(indexPath.row)
-      tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+      runs!.remove(at: (indexPath as NSIndexPath).row)
+      tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
     }
   }
   
-  func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return LogVC.rowHeight
   }
   
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "pan details from log" {
-      let runDetailsVC: RunDetailsVC = segue.destinationViewController as! RunDetailsVC
+      let runDetailsVC: RunDetailsVC = segue.destination as! RunDetailsVC
       runDetailsVC.run = runs![selectedRun]
     }
     else if segue.identifier == "pan run from log" {
-      let runVC: RunVC = segue.destinationViewController as! RunVC
+      let runVC: RunVC = segue.destination as! RunVC
       runVC.runToSimulate = runs![selectedRun]
     }
   }
   
-  func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+  func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1
   }
   
-  func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+  func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
     return LogSortField.all().count;
   }
   
-  func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+  func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
     return LogSortField.all()[row]
   }
   
-  func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+  func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
     return NSAttributedString(string: LogSortField.all()[row], attributes: [NSForegroundColorAttributeName: UiConstants.intermediate3Color])
   }
   
   @IBAction func importRuns() {
-    performSegueWithIdentifier("pan import from log", sender: self)
+    performSegue(withIdentifier: "pan import from log", sender: self)
   }
   
-  @IBAction func returnFromSegueActions(sender: UIStoryboardSegue) {}
+  @IBAction func returnFromSegueActions(_ sender: UIStoryboardSegue) {}
   
-  override func segueForUnwindingToViewController(toViewController: UIViewController, fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
+  override func segueForUnwinding(to toViewController: UIViewController, from fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
     return UnwindPanSegue(identifier: identifier!, source: fromViewController, destination: toViewController, performHandler: { () -> Void in
     })
   }
   
   @IBAction func reverseSort() {
     SettingsManager.setSortType(SortType.reverse(SettingsManager.getSortType()))
-    runs?.sortInPlace { LogSortField.compare($0, run2: $1) }
+    runs?.sort { LogSortField.compare($0, run2: $1) }
     tableView.reloadData()
   }
   
   @IBAction func showPicker() {
-    pickerToolbar.hidden = false
-    fieldPicker.hidden = false
-    oldLogSortField = fieldPicker.selectedRowInComponent(0)
+    pickerToolbar.isHidden = false
+    fieldPicker.isHidden = false
+    oldLogSortField = fieldPicker.selectedRow(inComponent: 0)
   }
   
-  @IBAction func dismissPicker(sender: UIBarButtonItem) {
-    pickerToolbar.hidden = true
-    fieldPicker.hidden = true
-    let newLogSortField = fieldPicker.selectedRowInComponent(0)
+  @IBAction func dismissPicker(_ sender: UIBarButtonItem) {
+    pickerToolbar.isHidden = true
+    fieldPicker.isHidden = true
+    let newLogSortField = fieldPicker.selectedRow(inComponent: 0)
     if newLogSortField != oldLogSortField {
       SettingsManager.setLogSortField(LogSortField.sortFieldForPosition(newLogSortField))
-      showPickerButton.setTitle(SettingsManager.getLogSortField().rawValue, forState: .Normal)
-      runs?.sortInPlace { LogSortField.compare($0, run2: $1) }
+      showPickerButton.setTitle(SettingsManager.getLogSortField().rawValue, for: UIControlState())
+      runs?.sort { LogSortField.compare($0, run2: $1) }
       tableView.reloadData()
     }
   }

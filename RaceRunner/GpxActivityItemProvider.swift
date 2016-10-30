@@ -10,22 +10,22 @@ import Foundation
 import UIKit
 
 class GpxActivityItemProvider: UIActivityItemProvider {
-  override func item() -> AnyObject {
+  override var item : Any {
     // The following approach would be appropriate for a gpx file in the main bundle.
     //
-    if let filePath = NSBundle.mainBundle().pathForResource("Runmeter", ofType: "gpx") {
-      if let fileData = NSData(contentsOfFile: filePath) {
-        return fileData
+    if let filePath = Bundle.main.path(forResource: "Runmeter", ofType: "gpx") {
+      if let fileData = try? Data(contentsOf: URL(fileURLWithPath: filePath)) {
+        return fileData as AnyObject
       }
     }
     return NSString(string: "error")
   }
   
-  override func activityViewController(activityViewController: UIActivityViewController, dataTypeIdentifierForActivityType activityType: String?) -> String {
+  override func activityViewController(_ activityViewController: UIActivityViewController, dataTypeIdentifierForActivityType activityType: UIActivityType?) -> String {
     return "com.topografix.gpx"
   }
   
-  override func activityViewController(activityViewController: UIActivityViewController, subjectForActivityType activityType: String?) -> String {
+  override func activityViewController(_ activityViewController: UIActivityViewController, subjectForActivityType activityType: UIActivityType?) -> String {
     return "run recorded by Runmeter"
   }
 }

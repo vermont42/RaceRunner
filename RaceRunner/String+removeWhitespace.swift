@@ -7,11 +7,7 @@
 //
 
 extension String {
-  func replace(string:String, replacement:String) -> String {
-    return self.stringByReplacingOccurrencesOfString(string, withString: replacement, options: NSStringCompareOptions.LiteralSearch, range: nil)
-  }
-  
-  func removeWhitespace() -> String {
-    return self.replace(" ", replacement: "")
+  var stringByRemovingWhitespace: String {
+    return components(separatedBy: .whitespaces).joined(separator: "")
   }
 }

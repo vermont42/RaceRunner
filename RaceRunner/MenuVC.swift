@@ -16,38 +16,37 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
   var panSegues = ["pan run", "pan log", "pan GPX run", "pan log", "pan spectate", "pan settings", "pan shoes", "pan help", "pan game"]
   var selectedMenuItem: Int = 0
   var logTypeToShow: LogVC.LogType!
-  private var firstAppearance = true
+  fileprivate var firstAppearance = true
 
-  private static let resumeRunLabel = "Resume Run"
-  private static let startRunLabel = "Start Run"
-  private static let historyLabel = "History"
-  private static let simulateLabel = "Simulate"
-  private static let demoLabel = "Demo"
+  fileprivate static let resumeRunLabel = "Resume Run"
+  fileprivate static let startRunLabel = "Start Run"
+  fileprivate static let historyLabel = "History"
+  fileprivate static let simulateLabel = "Simulate"
+  fileprivate static let demoLabel = "Demo"
   
-  private static let rowHeight: CGFloat = 50.0
-  private static let realRunMessage = "There is a real run in progress. Please tap the Continue menu item and stop the run before attempting to simulate a run."
-  private static let okButtonText = "OK"
-  private static let gpxFile = "iSmoothRun"
-  private static let sadFaceTitle = "😢"
+  fileprivate static let rowHeight: CGFloat = 50.0
+  fileprivate static let realRunMessage = "There is a real run in progress. Please tap the Continue menu item and stop the run before attempting to simulate a run."
+  fileprivate static let okButtonText = "OK"
+  fileprivate static let gpxFile = "iSmoothRun"
+  fileprivate static let sadFaceTitle = "😢"
   static let menuFontSize: CGFloat = 42.0
   
   override func viewDidLoad() {
     super.viewDidLoad()
     viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
-    menuTable.separatorStyle = .None
-    menuTable.backgroundColor = UIColor.clearColor()
+    menuTable.separatorStyle = .none
+    menuTable.backgroundColor = UIColor.clear
     menuTable.scrollsToTop = false
     menuTable.delegate = self
     menuTable.dataSource = self
-    SettingsManager.getUnitType()
   }
   
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     menuTable.reloadData()
   }
   
-  override func viewDidAppear(animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     if firstAppearance {
       firstAppearance = false
@@ -64,84 +63,84 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     LowMemoryHandler.handleLowMemory(self)
   }
   
-  func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+  func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }
   
-  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return controllerLabels.count
   }
 
-  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    var cell = tableView.dequeueReusableCellWithIdentifier("Cell")
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    var cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
     if cell == nil {
-      cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
-      cell!.backgroundColor = UIColor.clearColor()
-      if indexPath.row % 2 == 0 {
+      cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "Cell")
+      cell!.backgroundColor = UIColor.clear
+      if (indexPath as NSIndexPath).row % 2 == 0 {
         cell!.textLabel?.textColor = UiConstants.intermediate2Color
       }
       else {
         cell!.textLabel?.textColor = UiConstants.intermediate3Color
       }
-      let selectedBackgroundView = UIView(frame: CGRectMake(0, 0, cell!.frame.size.width, cell!.frame.size.height))
-      selectedBackgroundView.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.2)
-      cell!.textLabel?.textAlignment = NSTextAlignment.Center
+      let selectedBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: cell!.frame.size.width, height: cell!.frame.size.height))
+      selectedBackgroundView.backgroundColor = UIColor.gray.withAlphaComponent(0.2)
+      cell!.textLabel?.textAlignment = NSTextAlignment.center
       cell!.selectedBackgroundView = selectedBackgroundView
       cell!.textLabel?.font = UIFont(name: UiConstants.globalFont, size: MenuVC.menuFontSize)
     }
     updateRunButton()
-    cell!.textLabel?.text = controllerLabels[indexPath.row]
-    cell!.textLabel?.attributedText = UiHelpers.letterPressedText(controllerLabels[indexPath.row])
+    cell!.textLabel?.text = controllerLabels[(indexPath as NSIndexPath).row]
+    cell!.textLabel?.attributedText = UiHelpers.letterPressedText(controllerLabels[(indexPath as NSIndexPath).row])
     return cell!
   }
 
-  func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return MenuVC.rowHeight
   }
   
-  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    if controllerLabels[indexPath.row] == MenuVC.historyLabel {
-      logTypeToShow = .History
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    if controllerLabels[(indexPath as NSIndexPath).row] == MenuVC.historyLabel {
+      logTypeToShow = .history
     }
-    else if controllerLabels[indexPath.row] == MenuVC.simulateLabel || controllerLabels[indexPath.row] == MenuVC.demoLabel {
-      logTypeToShow = .Simulate
+    else if controllerLabels[(indexPath as NSIndexPath).row] == MenuVC.simulateLabel || controllerLabels[(indexPath as NSIndexPath).row] == MenuVC.demoLabel {
+      logTypeToShow = .simulate
     }
-    if (controllerLabels[indexPath.row] == MenuVC.simulateLabel || controllerLabels[indexPath.row] == MenuVC.demoLabel) && SettingsManager.getRealRunInProgress() {
+    if (controllerLabels[(indexPath as NSIndexPath).row] == MenuVC.simulateLabel || controllerLabels[(indexPath as NSIndexPath).row] == MenuVC.demoLabel) && SettingsManager.getRealRunInProgress() {
       UIAlertController.showMessage(MenuVC.realRunMessage, title: MenuVC.sadFaceTitle)
     }
     else {
-      performSegueWithIdentifier(panSegues[indexPath.row], sender: self)
+      performSegue(withIdentifier: panSegues[(indexPath as NSIndexPath).row], sender: self)
     }
   }
   
-  private func updateRunButton() {
-    if RunModel.runModel.status == .PreRun && controllerLabels[0] == MenuVC.resumeRunLabel {
+  fileprivate func updateRunButton() {
+    if RunModel.runModel.status == .preRun && controllerLabels[0] == MenuVC.resumeRunLabel {
       controllerLabels[0] = MenuVC.startRunLabel
     }
-    else if RunModel.runModel.status != .PreRun && controllerLabels[0] == MenuVC.startRunLabel {
+    else if RunModel.runModel.status != .preRun && controllerLabels[0] == MenuVC.startRunLabel {
       controllerLabels[0] = MenuVC.resumeRunLabel
     }
   }
 
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "pan log" {
-      let logVC: LogVC = segue.destinationViewController as! LogVC
+      let logVC: LogVC = segue.destination as! LogVC
       logVC.logType = logTypeToShow
     }
     else if segue.identifier == "pan GPX run" {
-      let runVC: RunVC = segue.destinationViewController as! RunVC
+      let runVC: RunVC = segue.destination as! RunVC
       runVC.gpxFile = MenuVC.gpxFile
     }
   }
   
-  @IBAction func returnFromSegueActions(sender: UIStoryboardSegue) {}
+  @IBAction func returnFromSegueActions(_ sender: UIStoryboardSegue) {}
   
-  override func segueForUnwindingToViewController(toViewController: UIViewController, fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
+  override func segueForUnwinding(to toViewController: UIViewController, from fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
     return UnwindPanSegue(identifier: identifier!, source: fromViewController, destination: toViewController, performHandler: { () -> Void in
     })
   }
   
-  override func prefersStatusBarHidden() -> Bool {
+  override var prefersStatusBarHidden : Bool {
     return true
   }
 }

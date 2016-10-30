@@ -27,25 +27,25 @@ struct ParseResult {
   }
 }
 
-class GpxParser: NSObject, NSXMLParserDelegate {
-  private var parser: NSXMLParser?
-  private var autoName = Run.noAutoName
-  private var customName = Run.noCustomName
-  private var weather = Run.noWeather
-  private var temperature = Run.noTemperature
-  private var weight = Run.noWeight
-  private var locations: [CLLocation] = []
-  private var buffer = ""
-  private let dateFormatter = NSDateFormatter()
-  private var curLatString: NSString = ""
-  private var curLonString: NSString = ""
-  private var curEleString: NSString = ""
-  private var curTimeString: String = ""
-  private var startedTrackPoints = false
-  private var isRuntastic = false
-  private static let dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-  private static let accuracy: CLLocationAccuracy = 5.0
-  private enum ParsingState: String {
+class GpxParser: NSObject, XMLParserDelegate {
+  fileprivate var parser: XMLParser?
+  fileprivate var autoName = Run.noAutoName
+  fileprivate var customName = Run.noCustomName
+  fileprivate var weather = Run.noWeather
+  fileprivate var temperature = Run.noTemperature
+  fileprivate var weight = Run.noWeight
+  fileprivate var locations: [CLLocation] = []
+  fileprivate var buffer = ""
+  fileprivate let dateFormatter = DateFormatter()
+  fileprivate var curLatString: NSString = ""
+  fileprivate var curLonString: NSString = ""
+  fileprivate var curEleString: NSString = ""
+  fileprivate var curTimeString: String = ""
+  fileprivate var startedTrackPoints = false
+  fileprivate var isRuntastic = false
+  fileprivate static let dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+  fileprivate static let accuracy: CLLocationAccuracy = 5.0
+  fileprivate enum ParsingState: String {
     case Trkpt = "trkpt"
     case AutoName = "name"
     case CustomName = "customName"
@@ -59,15 +59,15 @@ class GpxParser: NSObject, NSXMLParserDelegate {
       self = .AutoName
     }
   }
-  private var alreadySetName = false
-  private var parsingState: ParsingState = .AutoName
-  private static let runtastic = "runtastic"
-  private static let runtasticGarbage = ".000"
-  private static let runtasticRunName = "Runtastic Run"
+  fileprivate var alreadySetName = false
+  fileprivate var parsingState: ParsingState = .AutoName
+  fileprivate static let runtastic = "runtastic"
+  fileprivate static let runtasticGarbage = ".000"
+  fileprivate static let runtasticRunName = "Runtastic Run"
   static let parseError = "An error occurred during GPX parsing."
   
   convenience init?(file: String) {
-    if let url = NSBundle.mainBundle().URLForResource(file, withExtension: "gpx") {
+    if let url = Bundle.main.url(forResource: file, withExtension: "gpx") {
       self.init(url: url)
     }
     else {
@@ -75,9 +75,9 @@ class GpxParser: NSObject, NSXMLParserDelegate {
     }
   }
   
-  init?(url: NSURL) {
+  init?(url: URL) {
     super.init()
-    parser = NSXMLParser(contentsOfURL: url)
+    parser = XMLParser(contentsOf: url)
     if parser == nil {
       return nil
     }
@@ -90,11 +90,11 @@ class GpxParser: NSObject, NSXMLParserDelegate {
     return ParseResult(autoName: autoName, customName: customName, locations: locations, weather: weather, temperature: temperature, weight: weight)
   }
   
-  func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+  func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
     switch elementName {
     case ParsingState.Trkpt.rawValue:
-      curLatString = attributeDict["lat"]!
-      curLonString = attributeDict["lon"]!
+      curLatString = attributeDict["lat"]! as NSString
+      curLonString = attributeDict["lon"]! as NSString
       parsingState = .Trkpt
       startedTrackPoints = true
     case ParsingState.AutoName.rawValue:
@@ -128,7 +128,7 @@ class GpxParser: NSObject, NSXMLParserDelegate {
     }
   }
   
-  func parser(parser: NSXMLParser, foundCharacters string: String) {
+  func parser(_ parser: XMLParser, foundCharacters string: String) {
     if !startedTrackPoints {
       if string == GpxParser.runtastic {
         isRuntastic = true
@@ -139,10 +139,10 @@ class GpxParser: NSObject, NSXMLParserDelegate {
     }
   }
   
-  func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+  func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
     switch elementName {
     case ParsingState.Trkpt.rawValue:
-      locations.append(CLLocation(coordinate: CLLocationCoordinate2D(latitude: curLatString.doubleValue, longitude: curLonString.doubleValue), altitude: curEleString.doubleValue, horizontalAccuracy: GpxParser.accuracy, verticalAccuracy: GpxParser.accuracy, timestamp: dateFormatter.dateFromString(curTimeString)!))
+      locations.append(CLLocation(coordinate: CLLocationCoordinate2D(latitude: curLatString.doubleValue, longitude: curLonString.doubleValue), altitude: curEleString.doubleValue, horizontalAccuracy: GpxParser.accuracy, verticalAccuracy: GpxParser.accuracy, timestamp: dateFormatter.date(from: curTimeString)!))
     case ParsingState.AutoName.rawValue:
       if !alreadySetName {
         autoName = buffer
@@ -151,7 +151,7 @@ class GpxParser: NSObject, NSXMLParserDelegate {
     case ParsingState.CustomName.rawValue:
       customName = buffer
     case ParsingState.Ele.rawValue:
-      curEleString = buffer
+      curEleString = buffer as NSString
     case ParsingState.Temperature.rawValue:
       temperature = Float(buffer) ?? temperature
     case ParsingState.Weather.rawValue:
@@ -162,7 +162,7 @@ class GpxParser: NSObject, NSXMLParserDelegate {
       if startedTrackPoints {
         curTimeString = buffer
         if isRuntastic {
-          curTimeString = curTimeString.stringByReplacingOccurrencesOfString(GpxParser.runtasticGarbage, withString: "")
+          curTimeString = curTimeString.replacingOccurrences(of: GpxParser.runtasticGarbage, with: "")
           autoName = GpxParser.runtasticRunName
         }
       }

@@ -7,19 +7,20 @@
 //
 
 import Foundation
-import AVFoundation.AVAudioPlayer
-import AVFoundation.AVAudioSession
+//import AVFoundation.AVAudioPlayer
+//import AVFoundation.AVAudioSession
+import AVFoundation
 
 class SoundManager {
   // MARK: properties
   
-  private static let soundManager = SoundManager()
-  private var sounds: [String: AVAudioPlayer]
-  private static let soundExtension = "mp3"
+  fileprivate static let soundManager = SoundManager()
+  fileprivate var sounds: [String: AVAudioPlayer]
+  fileprivate static let soundExtension = "mp3"
   
   // MARK: methods
   
-  private init () {
+  fileprivate init () {
     sounds = Dictionary()
     do {
       try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback) // was ambient
@@ -28,11 +29,11 @@ class SoundManager {
     }
   }
   
-  static func play(sound: Sound) {
+  static func play(_ sound: Sound) {
     if soundManager.sounds[sound.rawValue] == nil {
-      if let audioUrl = NSBundle.mainBundle().URLForResource(sound.rawValue, withExtension: soundExtension) {
+      if let audioUrl = Bundle.main.url(forResource: sound.rawValue, withExtension: soundExtension) {
         do {
-          try soundManager.sounds[sound.rawValue] = AVAudioPlayer.init(contentsOfURL: audioUrl)
+          try soundManager.sounds[sound.rawValue] = AVAudioPlayer.init(contentsOf: audioUrl)
         } catch let error as NSError {
           print("\(error.localizedDescription)")
         }
@@ -45,7 +46,7 @@ class SoundManager {
   static func enableBackgroundAudio() {
     let session = AVAudioSession.sharedInstance()
     do {
-      try session.setCategory(AVAudioSessionCategoryPlayback, withOptions: AVAudioSessionCategoryOptions.MixWithOthers)
+      try session.setCategory(AVAudioSessionCategoryPlayback, with: AVAudioSessionCategoryOptions.mixWithOthers)
     }
     catch let error as NSError {
       print("\(error.localizedDescription)")
