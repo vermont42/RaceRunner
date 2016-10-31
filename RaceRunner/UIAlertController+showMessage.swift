@@ -9,9 +9,10 @@
 import UIKit
 
 extension UIAlertController {
-  static var okTitle: String { get { return "OK" } } // static let causes compilation error
+  // See http://stackoverflow.com/a/39975404/2084036 for why this needs to be a class method rather than a class property.
+  static func okTitle() -> String { return "OK" }
   
-  class func showMessage(_ message: String, title: String, okTitle: String = UIAlertController.okTitle, handler: ((UIAlertAction) -> Void)? = nil) {
+  class func showMessage(_ message: String, title: String, okTitle: String = UIAlertController.okTitle(), handler: ((UIAlertAction) -> Void)? = nil) {
     if let topController = UIApplication.topViewController() {
       let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
       let okAction = UIAlertAction(title: okTitle, style: UIAlertActionStyle.default, handler: handler)
