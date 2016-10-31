@@ -6,9 +6,11 @@ RaceRunner
 
 **RaceRunner** is a run-tracking iPhone app focused on racing. Spectators can track the progress of runners during races. Spectators can start and stop timing of runs. Spectators can send messages to runners which are read aloud by the runner's phone. The app can stop timing a run automatically after a certain distance, which is useful for the time trials that runners conduct in preparation for races. The app can track shoe mileage and warn the user when mileage limits are exceeded.
 
-I released **RaceRunner** to the [App Store](https://itunes.apple.com/us/app/racerunner-run-tracking-app/id1065017082) on April 21, 2016.
+I released **RaceRunner** to the [App Store](https://itunes.apple.com/us/app/racerunner-run-tracking-app/id1065017082) on April 21, 2016. Since then, a Chinese open-source-app website, [iOSCodeHub](http://www.ioscodehub.com/2016/06/06/开源app推荐-racerunner-跑步跟踪记录app/), featured **RaceRunner**!
 
-Notwithstanding my previous, positive [experience](https://itunes.apple.com/us/app/immigration/id777319358) with the pay-up-front business model, I decided to explore freemium with **RaceRunner**. The app is therefore free to download but two features, broadcasting of runs to spectators and use of an animated [horse](https://en.wikipedia.org/wiki/Eadweard_Muybridge#Stanford_and_horse_gaits) to represent the runner, are available via in-app purchases.
+Notwithstanding my previous, positive [experience](https://itunes.apple.com/us/app/immigration/id777319358) with the pay-up-front business model, I decided to try freemium with **RaceRunner**. The app is therefore free to download but two features, broadcasting of runs to spectators and use of an animated [horse](https://en.wikipedia.org/wiki/Eadweard_Muybridge#Stanford_and_horse_gaits) to represent the runner, are available via in-app purchases.
+
+The full source code for **RaceRunner** is here on GitHub for two reasons. First, open source seems appropriate in light of **RaceRunner**'s open-source [heritage](https://github.com/mluedke2/moonrunner). Second, I wish to advance the state of the art in run-tracking apps.
 
 If you would like to build **RaceRunner** for yourself, follow these four easy steps:
 
