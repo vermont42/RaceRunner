@@ -31,60 +31,60 @@ If you would like to build **RaceRunner** for yourself, follow these four easy s
     }
 ```
 
-###Run in Progress
+### Run in Progress
 
 Colors of the route indicate altitude changes.
 
 ![RaceRunner](RaceRunner/RaceRunner1.png "Run in Progress")
 
 
-###Run Details
+### Run Details
 
 Colors of the route indicate pace changes.
 
 ![RaceRunner](RaceRunner/RaceRunner2.png "Run Details")
 
 
-###Run Details
+### Run Details
 
 App looks great in landscape mode.
 
 ![RaceRunner](RaceRunner/RaceRunner2-1.png "Run Details")
 
 
-###Graph of Pace and Altitude
+### Graph of Pace and Altitude
 ![RaceRunner](RaceRunner/RaceRunner8.png "Graph of Pace and Altitude")
 
 
-###Settings
+### Settings
 ![RaceRunner](RaceRunner/RaceRunner3.png "Settings")
 
 
-###Spectating a Race in Germany from California
+### Spectating a Race in Germany from California
 ![RaceRunner](RaceRunner/RaceRunner4.png "Spectating a Race in Germany from California")
 
 
-###Spectating a Walk in Vermont from California
+### Spectating a Walk in Vermont from California
 ![RaceRunner](RaceRunner/RaceRunner5.png "Spectating a Walk in Vermont from California")
 
-###A Ski Run in the French Alps
+### A Ski Run in the French Alps
 ![RaceRunner](RaceRunner/RaceRunner9.png "A Ski Run in the French Alps")
 
 
-###Shoes
+### Shoes
 ![RaceRunner](RaceRunner/RaceRunner6.png "Shoes")
 
 
-###Horse IAP
+### Horse IAP
 
 User can unlock animated-horse IAP.
 
 ![RaceRunner](RaceRunner/RaceRunner10.png "Horse IAP")
 
 
-###Main Menu
+### Main Menu
 ![RaceRunner](RaceRunner/RaceRunner7.png "Main Menu")
 
 
-##Chromatic Inspiration
+### Chromatic Inspiration
 ![Miami Vice](http://images2.fanpop.com/image/photos/9300000/Miami-VIce-Season-2-opener-miami-vice-9384840-765-580.jpg "Miami Vice")
