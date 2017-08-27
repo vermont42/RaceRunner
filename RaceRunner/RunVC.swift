@@ -40,7 +40,7 @@ class RunVC: ChildVC, RunDelegate {
   fileprivate var modelStoppedRun = false
   
   override func viewDidLoad() {
-    map.mapType = kGMSTypeTerrain
+    map.mapType = .terrain
     map.isHidden = true
     paceOrAltitude.isHidden = true
     view.sendSubview(toBack: map)

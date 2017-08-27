@@ -65,7 +65,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     else {
       fatalError(RunDetailsVC.noLocationsError)
     }
-    map.mapType = kGMSTypeTerrain
+    map.mapType = .terrain
     map.delegate = self
     polyline.strokeWidth = UiConstants.polylineWidth
   }
