@@ -10,8 +10,8 @@ import Foundation
 import CoreLocation
 
 open class LocationManager {
-  fileprivate var gpxLocationManager: GpxLocationManager!
-  fileprivate var cLLocationManager: CLLocationManager!
+  private var gpxLocationManager: GpxLocationManager!
+  private var cLLocationManager: CLLocationManager!
   
   public enum LocationManagerType {
     case gpx, coreLocation

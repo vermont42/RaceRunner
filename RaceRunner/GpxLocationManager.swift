@@ -48,18 +48,18 @@ open class GpxLocationManager {
   open var location: CLLocation! { get { return locations[lastLocation] } }
   open weak var delegate: CLLocationManagerDelegate!
   open var shouldKill = false
-  fileprivate var locations: [CLLocation] = []
-  fileprivate var lastLocation = 0
-  fileprivate var hasStarted = false
-  fileprivate var isPaused = false
-  fileprivate var callerQueue: DispatchQueue!
-  fileprivate var updateQueue: DispatchQueue!
-  fileprivate var dateFormatter = DateFormatter()
-  fileprivate var dummyCLLocationManager: CLLocationManager!
+  private var locations: [CLLocation] = []
+  private var lastLocation = 0
+  private var hasStarted = false
+  private var isPaused = false
+  private var callerQueue: DispatchQueue!
+  private var updateQueue: DispatchQueue!
+  private var dateFormatter = DateFormatter()
+  private var dummyCLLocationManager: CLLocationManager!
   static let dateFudge: TimeInterval = 1.0
-  fileprivate static let dateFormat = "yyyy-MM-dd HH:mm:ss"
-  fileprivate static let initWithNoArgumentsMessage = "Attempted to initialize GpxLocationManager with no arguments."
-  fileprivate static let gpxParseErrorMessage = "Parsing of GPX file failed."
+  private static let dateFormat = "yyyy-MM-dd HH:mm:ss"
+  private static let initWithNoArgumentsMessage = "Attempted to initialize GpxLocationManager with no arguments."
+  private static let gpxParseErrorMessage = "Parsing of GPX file failed."
   
   open func startUpdatingLocation() {
     if !hasStarted {
@@ -130,7 +130,7 @@ open class GpxLocationManager {
     self.locations = locations
   }
   
-  fileprivate func makeLoc(_ latitude: NSString, longitude: NSString, altitude: NSString, timestamp: NSString) -> CLLocation {
+  private func makeLoc(_ latitude: NSString, longitude: NSString, altitude: NSString, timestamp: NSString) -> CLLocation {
     return CLLocation(coordinate: CLLocationCoordinate2D(latitude: latitude.doubleValue, longitude: longitude.doubleValue), altitude: altitude.doubleValue, horizontalAccuracy: 5.0, verticalAccuracy: 5.0, timestamp: dateFormatter.date(from: timestamp as String)!)
   }
 }

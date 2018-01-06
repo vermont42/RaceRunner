@@ -1,0 +1,6 @@
+framework module COBezierTableView {
+  umbrella header "COBezierTableView-umbrella.h"
+
+  export *
+  module * { export * }
+}

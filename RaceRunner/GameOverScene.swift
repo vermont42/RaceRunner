@@ -9,17 +9,17 @@ import UIKit
 import SpriteKit
 
 class GameOverScene: SKScene {
-  fileprivate var contentCreated = false
-  fileprivate let oldHighScore: Int
-  fileprivate let adjustedScore: Int
-  fileprivate let gameOverText = "Game Over"
-  fileprivate let newHighScoreString = "New high score: "
-  fileprivate let notNewHighScoreString = "Score: "
-  fileprivate let tapPrompt = "Tap to play again."
-  fileprivate let largeFontSize: CGFloat = 50.0
-  fileprivate let smallFontSize: CGFloat = 25.0
-  fileprivate let gameOverYOffset: CGFloat = 2.0 / 3.0
-  fileprivate let labelYOffset: CGFloat = 40.0
+  private var contentCreated = false
+  private let oldHighScore: Int
+  private let adjustedScore: Int
+  private let gameOverText = "Game Over"
+  private let newHighScoreString = "New high score: "
+  private let notNewHighScoreString = "Score: "
+  private let tapPrompt = "Tap to play again."
+  private let largeFontSize: CGFloat = 50.0
+  private let smallFontSize: CGFloat = 25.0
+  private let gameOverYOffset: CGFloat = 2.0 / 3.0
+  private let labelYOffset: CGFloat = 40.0
   
   init(size: CGSize, adjustedScore: Int, oldHighScore: Int) {
     self.oldHighScore = oldHighScore
@@ -38,7 +38,7 @@ class GameOverScene: SKScene {
     }
   }
     
-  fileprivate func createContent() {
+  private func createContent() {
     let gameOverLabel = SKLabelNode(fontNamed: UiConstants.globalFont)
     gameOverLabel.fontSize = largeFontSize
     gameOverLabel.fontColor = UiConstants.intermediate2Color

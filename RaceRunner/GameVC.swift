@@ -10,8 +10,8 @@ import UIKit
 import SpriteKit
 
 class GameVC: ChildVC {
-  fileprivate static let lowMemoryTitle = "Ended Game"
-  fileprivate static let lowMemoryMessage = "RaceRunner had to end your game because of a RAM shortage on your iPhone. Apologies."
+  private static let lowMemoryTitle = "Ended Game"
+  private static let lowMemoryMessage = "RaceRunner had to end your game because of a RAM shortage on your iPhone. Apologies."
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -43,16 +43,16 @@ class GameVC: ChildVC {
     showMenu()
   }
   
-  func handleApplicationWillResignActive (_ note: Notification) {
+  @objc func handleApplicationWillResignActive (_ note: Notification) {
     pauseGame()
   }
   
-  func handleApplicationDidBecomeActive (_ note: Notification) {
+  @objc func handleApplicationDidBecomeActive (_ note: Notification) {
     let skView = view as! SKView
     skView.isPaused = false
   }
   
-  fileprivate func pauseGame() {
+  private func pauseGame() {
     let skView = view as! SKView
     skView.isPaused = true
   }

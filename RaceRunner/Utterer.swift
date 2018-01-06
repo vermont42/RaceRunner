@@ -10,9 +10,9 @@ import Foundation
 import AVFoundation
 
 class Utterer {
-  fileprivate static let synth = AVSpeechSynthesizer()
-  fileprivate static let rate: Float = 0.5
-  fileprivate static let pitchMultiplier: Float = 0.8
+  private static let synth = AVSpeechSynthesizer()
+  private static let rate: Float = 0.5
+  private static let pitchMultiplier: Float = 0.8
   
   static func utter(_ thingToUtter: String) {
     let utterance = AVSpeechUtterance(string: thingToUtter)

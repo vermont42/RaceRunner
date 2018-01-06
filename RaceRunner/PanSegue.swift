@@ -20,11 +20,11 @@ class PanSegue: UIStoryboardSegue {
 
     let window = UIApplication.shared.keyWindow
     // Swizzle to avoid spurious call to viewWillAppear().
-    method_exchangeImplementations(class_getInstanceMethod(destination.classForCoder, #selector(UIViewController.viewWillAppear)), class_getInstanceMethod(UIViewController.classForCoder(), #selector(UIViewController.viewWillAppearNoOp)))
+    method_exchangeImplementations(class_getInstanceMethod(destination.classForCoder, #selector(UIViewController.viewWillAppear))!, class_getInstanceMethod(UIViewController.classForCoder(), #selector(UIViewController.viewWillAppearNoOp))!)
     
     window?.insertSubview(secondVCView!, aboveSubview: firstVCView!)
     // Unswizzle.
-    method_exchangeImplementations(class_getInstanceMethod(UIViewController.classForCoder(), #selector(UIViewController.viewWillAppearNoOp)), class_getInstanceMethod(destination.classForCoder, #selector(UIViewController.viewWillAppear)))
+    method_exchangeImplementations(class_getInstanceMethod(UIViewController.classForCoder(), #selector(UIViewController.viewWillAppearNoOp))!, class_getInstanceMethod(destination.classForCoder, #selector(UIViewController.viewWillAppear))!)
     UIView.animate(withDuration: UiConstants.panDuration, animations: { () -> Void in
         firstVCView!.frame = firstVCView!.frame.offsetBy(dx: -screenWidth, dy: 0)
         secondVCView!.frame = secondVCView!.frame.offsetBy(dx: -screenWidth, dy: 0)

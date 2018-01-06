@@ -1,0 +1,446 @@
+/**
+ @author Sergey Mamontov
+ @since 4.0
+ @copyright © 2009-2017 PubNub, Inc.
+ */
+#import "PubNub+PresencePrivate.h"
+#import "PNAPICallBuilder+Private.h"
+#import "PNPrivateStructures.h"
+#import "PNRequestParameters.h"
+#import "PubNub+CorePrivate.h"
+#import "PNStatus+Private.h"
+#import "PNConfiguration.h"
+#import "PNLogMacro.h"
+#import "PNHelpers.h"
+
+
+NS_ASSUME_NONNULL_BEGIN
+
+#pragma mark Protected interface declaration
+
+@interface PubNub (PresenceProtected)
+
+
+#pragma mark - Channel/Channel group here now
+
+/**
+ @brief  Request information about subscribers on specific remote data object live feeds.
+ @note   This API will retrieve only list of UUIDs for specified remote data object and number of
+         subscribers on it.
+ 
+ @param level     Reference on one of \b PNHereNowVerbosityLevel fields to instruct what exactly data it
+                  expected in response.
+ @param object    Reference on remote data object for which here now information should be received.
+ @param operation Reference on one of \b PNOperationType fields to identify which kind on of presence 
+                  operation should be performed.
+ @param block     Here now processing completion block which pass two arguments: \c result - in case of
+                  successful request processing \c data field will contain results of here now operation; 
+                  \c status - in case if error occurred during request processing.
+ 
+ @since 4.0
+ */
+- (void)hereNowWithVerbosity:(PNHereNowVerbosityLevel)level forObject:(nullable NSString *)object 
+           withOperationType:(PNOperationType)operation completionBlock:(id)block;
+
+
+#pragma mark - Heartbeat
+
+/**
+ * @brief      Send request to change client's presence at specified \c channels and/or \c groups.
+ * @discussion Depending from \c connected flag value, heartbeat can be used for passed objects
+ *             (channels/groups) to trigger \a join event or use presence \a leave API to trigger
+ *             \a leave event.
+ *
+ * @param connected     Whether \c join or \c leave events should be generated for client.
+ * @param channels      Reference on list of \c channels for which client should change it's presence
+ *                      state according to \c connected flag value.
+ * @param channelGroups Reference on list of channel \c groups for which client should change it's
+ *                      presence state according to \c connected flag value.
+ * @param states        Reference on client's state which should be set for passed objects (same as
+ *                      state passed during subscription or using state change API).
+ *
+ * @since 4.7.5
+ */
+- (void)setConnected:(BOOL)connected
+         forChannels:(nonnull NSArray<NSString *> *)channels
+       channelGroups:(nonnull NSArray<NSString *> *)channelGroups
+           withState:(nonnull NSDictionary<NSString*, NSDictionary *> *)states
+     completionBlock:(nonnull PNStatusBlock)block;
+
+/**
+ * @brief      Reference on list of channels which should be used with heartbeat request.
+ * @discussion Use subscriber's and heartbeat managers information about active channels to create full
+ *             list which should be passed to heartbeat request.
+ *
+ * @return Reference on full list of active channels.
+ *
+ * @since 4.7.5
+ */
+- (NSArray<NSString *> *)channelsForHeartbeat;
+
+/**
+ * @brief      Reference on list of channel groups which should be used with heartbeat request.
+ * @discussion Use subscriber's and heartbeat managers information about active channel groups to
+ *             create full list which should be passed to heartbeat request.
+ *
+ * @return Reference on full list of active channel groups.
+ *
+ * @since 4.7.5
+ */
+- (NSArray<NSString *> *)channelGroupsForHeartbeat;
+
+/**
+ * @brief  Clean up list of channels for whch client's presence state has been changed.
+ * @discussion Clean up happen each time when heartbeat request should be populated with list of channels.
+ *             Clean up required to remove from list channels on which client has been actually subscribed.
+ *
+ * @param subscribedChannels Reference on list of channels on which client currently subscribed.
+ *
+ * @since 4.7.5
+ */
+- (void)cleanUpPresenceChannels:(NSArray<NSString *> *)subscribedChannels;
+
+/**
+ * @brief  Clean up list of channel groups for whch client's presence state has been changed.
+ * @discussion Clean up happen each time when heartbeat request should be populated with list of channel
+ *             groups.
+ *             Clean up required to remove from list channel groups on which client has been actually
+ *             subscribed.
+ *
+ * @param subscribedChannelGroups Reference on list of channel groups on which client currently subscribed.
+ *
+ * @since 4.7.5
+ */
+- (void)cleanUpPresenceChannelGroups:(NSArray<NSString *> *)subscribedChannelGroups;
+
+#pragma mark -
+
+
+@end
+
+NS_ASSUME_NONNULL_END
+
+
+#pragma mark - Interface implementation
+
+@implementation PubNub (Presence)
+
+
+#pragma mark - API Builder support
+
+- (PNPresenceAPICallBuilder *(^)(void))presence {
+    
+    PNPresenceAPICallBuilder *builder = nil;
+    builder = [PNPresenceAPICallBuilder builderWithExecutionBlock:^(NSArray<NSString *> *flags, 
+                                                                    NSDictionary *parameters) {
+
+        if ([flags containsObject:NSStringFromSelector(@selector(connected))]) {
+            BOOL connected = ((NSNumber *)parameters[NSStringFromSelector(@selector(connected))]).boolValue;
+            NSArray<NSString *> *channels = parameters[NSStringFromSelector(@selector(channels))];
+            NSArray<NSString *> *channelGroups = parameters[NSStringFromSelector(@selector(channelGroups))];
+            NSDictionary<NSString *, NSDictionary *> *state = parameters[NSStringFromSelector(@selector(state))];
+
+            id block = parameters[@"block"];
+            [self setConnected:connected
+                   forChannels:channels
+                 channelGroups:channelGroups
+                     withState:state
+               completionBlock:block];
+        } else {
+            NSString *object = (parameters[NSStringFromSelector(@selector(channel))]?:
+                                parameters[NSStringFromSelector(@selector(channelGroup))]);
+            PNOperationType type = PNHereNowGlobalOperation;
+            if (object) {
+
+                type = PNHereNowForChannelOperation;
+                if (parameters[NSStringFromSelector(@selector(channelGroup))]) {
+
+                    type = PNHereNowForChannelGroupOperation;
+                }
+            }
+            PNHereNowVerbosityLevel level = PNHereNowState;
+            if (parameters[NSStringFromSelector(@selector(verbosity))]) {
+
+                level = ((NSNumber *)parameters[NSStringFromSelector(@selector(verbosity))]).integerValue;
+            }
+            id block = parameters[@"block"];
+            [self hereNowWithVerbosity:level forObject:object withOperationType:type completionBlock:block];
+        }
+    }];
+    
+    return ^PNPresenceAPICallBuilder *{ return builder; };
+}
+
+
+#pragma mark - Global here now
+
+- (void)hereNowWithCompletion:(PNGlobalHereNowCompletionBlock)block {
+
+    [self hereNowWithVerbosity:PNHereNowState completion:block];
+}
+
+- (void)hereNowWithVerbosity:(PNHereNowVerbosityLevel)level
+                  completion:(PNGlobalHereNowCompletionBlock)block {
+
+    [self hereNowWithVerbosity:level forObject:nil withOperationType:PNHereNowGlobalOperation 
+               completionBlock:block];
+}
+
+
+#pragma mark - Channel here now
+
+- (void)hereNowForChannel:(NSString *)channel withCompletion:(PNHereNowCompletionBlock)block {
+
+    [self hereNowForChannel:channel withVerbosity:PNHereNowState completion:block];
+}
+
+- (void)hereNowForChannel:(NSString *)channel withVerbosity:(PNHereNowVerbosityLevel)level
+               completion:(PNHereNowCompletionBlock)block {
+    
+    [self hereNowWithVerbosity:level forObject:channel withOperationType:PNHereNowForChannelOperation
+               completionBlock:block];
+}
+
+
+#pragma mark - Channel group here now
+
+- (void)hereNowForChannelGroup:(NSString *)group
+                withCompletion:(PNChannelGroupHereNowCompletionBlock)block {
+
+    [self hereNowForChannelGroup:group withVerbosity:PNHereNowState completion:block];
+}
+
+- (void)hereNowForChannelGroup:(NSString *)group withVerbosity:(PNHereNowVerbosityLevel)level
+                    completion:(PNChannelGroupHereNowCompletionBlock)block {
+    
+    [self hereNowWithVerbosity:level forObject:group withOperationType:PNHereNowForChannelGroupOperation
+               completionBlock:block];
+}
+
+- (void)hereNowWithVerbosity:(PNHereNowVerbosityLevel)level forObject:(NSString *)object 
+           withOperationType:(PNOperationType)operation completionBlock:(id)block {
+
+    PNRequestParameters *parameters = [PNRequestParameters new];
+    [parameters addQueryParameter:@"1" forFieldName:@"disable_uuids"];
+    [parameters addQueryParameter:@"0" forFieldName:@"state"];
+    if (level == PNHereNowUUID || level == PNHereNowState){
+        
+        [parameters addQueryParameter:@"0" forFieldName:@"disable_uuids"];
+        if (level == PNHereNowState) { [parameters addQueryParameter:@"1" forFieldName:@"state"]; }
+    }
+    
+    if (operation == PNHereNowGlobalOperation) {
+        
+        PNLogAPICall(self.logger, @"<PubNub::API> Global 'here now' information with %@ data.",
+                     PNHereNowDataStrings[level]);
+    }
+    else {
+        
+        if ([object length]) {
+            
+            [parameters addPathComponent:(operation == PNHereNowForChannelOperation ? 
+                                          [PNString percentEscapedString:object] : @",")
+                          forPlaceholder:@"{channel}"];
+            if (operation == PNHereNowForChannelGroupOperation) {
+                
+                [parameters addQueryParameter:[PNString percentEscapedString:object] 
+                                 forFieldName:@"channel-group"];
+            }
+        }
+        PNLogAPICall(self.logger, @"<PubNub::API> Channel%@ 'here now' information for %@ with %@ data.",
+                     (operation == PNHereNowForChannelGroupOperation ? @" group" : @""), (object?: @"<error>"),
+                     PNHereNowDataStrings[level]);
+    }
+    
+    __weak __typeof(self) weakSelf = self;
+    [self processOperation:operation withParameters:parameters 
+           completionBlock:^(PNResult *result, PNStatus *status) {
+        if (status.isError) {
+
+            status.retryBlock = ^{
+
+                [weakSelf hereNowWithVerbosity:level forObject:object withOperationType:operation 
+                              completionBlock:block];
+            };
+        }
+        [weakSelf callBlock:block status:NO withResult:result andStatus:status];
+    }];
+}
+
+
+#pragma mark - Client where now
+
+- (void)whereNowUUID:(NSString *)uuid withCompletion:(PNWhereNowCompletionBlock)block {
+
+    PNRequestParameters *parameters = [PNRequestParameters new];
+    if (uuid.length) {
+        
+        [parameters addPathComponent:[PNString percentEscapedString:uuid] forPlaceholder:@"{uuid}"];
+    }
+    PNLogAPICall(self.logger, @"<PubNub::API> 'Where now' presence information for %@.", (uuid?: @"<error>"));
+
+    __weak __typeof(self) weakSelf = self;
+    [self processOperation:PNWhereNowOperation withParameters:parameters
+           completionBlock:^(PNResult *result, PNStatus *status) {
+        if (status.isError) {
+
+            status.retryBlock = ^{ [weakSelf whereNowUUID:uuid withCompletion:block]; };
+        }
+        [weakSelf callBlock:block status:NO withResult:result andStatus:status];
+    }];
+}
+
+
+#pragma mark - Heartbeat
+
+- (void)setConnected:(BOOL)connected
+         forChannels:(NSArray<NSString *> *)channels
+       channelGroups:(NSArray<NSString *> *)channelGroups
+           withState:(NSDictionary<NSString*, NSDictionary *> *)states
+     completionBlock:(PNStatusBlock)block {
+
+    NSArray *subscribedChannels = [self.subscriberManager channels];
+    NSArray *subscribedChannelGroups = [PNChannel objectsWithOutPresenceFrom:[self.subscriberManager channelGroups]];
+    NSMutableArray *presenceChannels = nil;
+    NSMutableArray *presenceChannelGroups = nil;
+
+    if (channels) {
+        presenceChannels = [NSMutableArray array];
+
+        [channels enumerateObjectsUsingBlock:^(NSString *channel, NSUInteger channelIdx, BOOL *enumeratorStop) {
+            if (![subscribedChannels containsObject:channel]) {
+                [presenceChannels addObject:channel];
+            }
+        }];
+    }
+
+    if (channelGroups) {
+        presenceChannelGroups = [NSMutableArray array];
+
+        [channelGroups enumerateObjectsUsingBlock:^(NSString *group, NSUInteger groupIdx, BOOL *enumeratorStop) {
+            if (![subscribedChannelGroups containsObject:group]) {
+                [presenceChannelGroups addObject:group];
+            }
+        }];
+    }
+
+    [self.heartbeatManager setConnected:connected forChannels:presenceChannels];
+    [self.heartbeatManager setConnected:connected forChannelGroups:presenceChannelGroups];
+    NSMutableArray<NSString *> *allPresenceObjects = [NSMutableArray arrayWithArray:presenceChannels];
+    [allPresenceObjects addObjectsFromArray:presenceChannelGroups];
+
+    if (states != nil) {
+
+        [allPresenceObjects enumerateObjectsUsingBlock:^(NSString *object, NSUInteger objectIdx, BOOL *enumeratorStop) {
+            [self.clientStateManager setState:states[object] forObject:object];
+        }];
+    }
+
+    if (allPresenceObjects.count) {
+        if (connected) {
+            [self heartbeatWithCompletion:block];
+            [self.heartbeatManager startHeartbeatIfRequired];
+        } else {
+            [self.subscriberManager unsubscribeFromChannels:presenceChannels
+                                                     groups:presenceChannelGroups
+                                                 completion:^(PNSubscribeStatus *status) {
+
+                if (block) {
+                    block((PNStatus *)status);
+                }
+            }];
+        }
+    }
+}
+
+- (void)heartbeatWithCompletion:(PNStatusBlock)block {
+    
+    __weak __typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSArray *channels = [self channelsForHeartbeat];
+        NSArray *groups = [self channelGroupsForHeartbeat];
+        if (self.configuration.presenceHeartbeatValue > 0 && (channels.count || groups.count)) {
+            
+            PNRequestParameters *parameters = [PNRequestParameters new];
+            [parameters addPathComponent:[PNChannel namesForRequest:channels defaultString:@","]
+                          forPlaceholder:@"{channels}"];
+            if (groups.count) {
+                
+                [parameters addQueryParameter:[PNChannel namesForRequest:groups]
+                                 forFieldName:@"channel-group"];
+            }
+            [parameters addQueryParameter:@(self.configuration.presenceHeartbeatValue).stringValue
+                             forFieldName:@"heartbeat"];
+            NSDictionary *state = [self.clientStateManager state];
+            if (state.count) {
+                
+                NSString *stateString = [PNJSON JSONStringFrom:state withError:nil];
+                if (stateString.length) {
+                    
+                    [parameters addQueryParameter:[PNString percentEscapedString:stateString]
+                                     forFieldName:@"state"];
+                }
+            }
+            
+            PNLogAPICall(weakSelf.logger, @"<PubNub::API> Heartbeat for %@%@%@.",
+                         (channels.count ? [NSString stringWithFormat:@"channel%@ '%@'", 
+                                            (channels.count > 1 ? @"s" : @""),
+                                            [channels componentsJoinedByString:@", "]] : @""),
+                         (channels.count && groups.count ? @" and " : @""), 
+                         (groups.count ? [NSString stringWithFormat:@"group%@ '%@'", 
+                                          (groups.count > 1 ? @"s" : @""),
+                                          [groups componentsJoinedByString:@", "]] : @""));
+            
+            [self processOperation:PNHeartbeatOperation withParameters:parameters
+                   completionBlock:^(PNStatus *status) {
+               [weakSelf callBlock:block status:YES withResult:nil andStatus:status];
+           }];
+        }
+    });
+}
+
+- (NSArray<NSString *> *)channelsForHeartbeat {
+
+    NSArray *subscribedChannels = [self.subscriberManager channels];
+    [self cleanUpPresenceChannels:subscribedChannels];
+
+    if (![self.heartbeatManager channels].count) {
+        return subscribedChannels;
+    }
+
+    NSMutableArray *channels = [subscribedChannels mutableCopy];
+    [channels addObjectsFromArray:[self.heartbeatManager channels]];
+
+    return channels;
+}
+
+- (NSArray<NSString *> *)channelGroupsForHeartbeat {
+
+    NSArray *subscribedChannelGroups = [PNChannel objectsWithOutPresenceFrom:[self.subscriberManager channelGroups]];
+    [self cleanUpPresenceChannelGroups:subscribedChannelGroups];
+
+    if (![self.heartbeatManager channelGroups].count) {
+        return subscribedChannelGroups;
+    }
+
+    NSMutableArray *channelGroups = [subscribedChannelGroups mutableCopy];
+    [channelGroups addObjectsFromArray:[self.heartbeatManager channelGroups]];
+
+    return channelGroups;
+}
+
+- (void)cleanUpPresenceChannels:(NSArray<NSString *> *)subscribedChannels {
+
+    [self.heartbeatManager removeChannels:subscribedChannels];
+}
+
+- (void)cleanUpPresenceChannelGroups:(NSArray<NSString *> *)subscribedChannelGroups {
+
+    [self.heartbeatManager removeChannelGroups:subscribedChannelGroups];
+}
+
+#pragma mark -
+
+
+@end

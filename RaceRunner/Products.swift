@@ -8,10 +8,10 @@
 
 public enum Products {
   
-  fileprivate static let Prefix = "biz.joshadams.RaceRunner."
+  private static let Prefix = "biz.joshadams.RaceRunner."
   public static let runningHorse = Prefix + "runninghorse"
   public static let broadcastRuns = Prefix + "broadcastruns"
-  fileprivate static let productIdentifiers: Set<ProductIdentifier> = [Products.runningHorse, Products.broadcastRuns]
+  private static let productIdentifiers: Set<ProductIdentifier> = [Products.runningHorse, Products.broadcastRuns]
   public static let store = IapHelper(productIdentifiers: Products.productIdentifiers)
 }
 

@@ -31,25 +31,25 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   @IBOutlet var customTitleButton: UIButton!
   @IBOutlet var exportButton: UIButton!
   var run: Run!
-  fileprivate var paceSpans: [GMSStyleSpan] = []
-  fileprivate var altitudeSpans: [GMSStyleSpan] = []
-  fileprivate var smoothSpeeds: [Double]?
-  fileprivate var maxSmoothSpeed = 0.0
-  fileprivate var minSmoothSpeed = Double(LONG_MAX)
-  fileprivate var addedOverlays: Bool = false
-  fileprivate var latestStrokeColor = UiConstants.intermediate2ColorDarkened
-  fileprivate var path = GMSMutablePath()
-  fileprivate var polyline = GMSPolyline()
+  private var paceSpans: [GMSStyleSpan] = []
+  private var altitudeSpans: [GMSStyleSpan] = []
+  private var smoothSpeeds: [Double]?
+  private var maxSmoothSpeed = 0.0
+  private var minSmoothSpeed = Double(LONG_MAX)
+  private var addedOverlays: Bool = false
+  private var latestStrokeColor = UiConstants.intermediate2ColorDarkened
+  private var path = GMSMutablePath()
+  private var polyline = GMSPolyline()
   
-  fileprivate static let newRunNamePrompt = "Enter a new name for this run."
-  fileprivate static let newRunNameTitle = "Run Name"
-  fileprivate static let setRunNameButtonTitle = "Set"
-  fileprivate static let noLocationsError = "Attempted to display details of run with zero locations."
-  fileprivate static let cancel = "Cancel"
-  fileprivate static let name = "Name"
-  fileprivate static let forecastMessage = "Weather data powered by Forecast. http://forecast.io/"
-  fileprivate static let forecastTitle = "Credit"
-  fileprivate static let forecastOkay = "Got It"
+  private static let newRunNamePrompt = "Enter a new name for this run."
+  private static let newRunNameTitle = "Run Name"
+  private static let setRunNameButtonTitle = "Set"
+  private static let noLocationsError = "Attempted to display details of run with zero locations."
+  private static let cancel = "Cancel"
+  private static let name = "Name"
+  private static let forecastMessage = "Weather data powered by Forecast. http://forecast.io/"
+  private static let forecastTitle = "Credit"
+  private static let forecastOkay = "Got It"
   
   func mapView(_ mapView:GMSMapView,idleAt position:GMSCameraPosition) {
     if !addedOverlays {
@@ -147,7 +147,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     }
   }
   
-  fileprivate func makeSpans(areSpeeds: Bool) {
+  private func makeSpans(areSpeeds: Bool) {
     var rawValues: [Double] = []
     if areSpeeds {
       for i in 1 ..< run.locations.count {

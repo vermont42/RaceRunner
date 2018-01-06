@@ -16,10 +16,10 @@ class ShoesCell: MGSwipeTableCell {
   @IBOutlet var maxKilometers: UILabel!
   @IBOutlet var thumbnail: UIImageView!
   @IBOutlet var isCurrentImage: UIImageView!
-  fileprivate weak var shoesDelegate: ShoesDelegate!
-  fileprivate var shoes: Shoes!
-  fileprivate static let curLabel = "Cur: "
-  fileprivate static let maxLabel = "Max: "
+  private weak var shoesDelegate: ShoesDelegate!
+  private var shoes: Shoes!
+  private static let curLabel = "Cur: "
+  private static let maxLabel = "Max: "
   
   func displayShoes(_ shoes: Shoes, shoesDelegate: ShoesDelegate) {
     name.text = shoes.name
@@ -33,7 +33,7 @@ class ShoesCell: MGSwipeTableCell {
     isCurrentImage.isUserInteractionEnabled = true
   }
   
-  func toggleIsCurrent() {
+  @objc func toggleIsCurrent() {
     shoes.isCurrent = NSNumber(value: !(shoes.isCurrent.boolValue) as Bool)
     updateIsCurrentImage(shoes.isCurrent.boolValue)
     if shoes.isCurrent.boolValue {
@@ -41,7 +41,7 @@ class ShoesCell: MGSwipeTableCell {
     }
   }
   
-  fileprivate func updateIsCurrentImage(_ isCurrent: Bool) {
+  private func updateIsCurrentImage(_ isCurrent: Bool) {
     if isCurrent {
       isCurrentImage.image = Shoes.checked
     }

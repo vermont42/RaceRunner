@@ -19,17 +19,17 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
   @IBOutlet var isCurrent: UIImageView!
   @IBOutlet var currentMileageLabel: UILabel!
   @IBOutlet var maximumMileageLabel: UILabel!
-  fileprivate let imagePicker = UIImagePickerController()
+  private let imagePicker = UIImagePickerController()
   var shoes: Shoes?
   weak var shoesDelegate: ShoesDelegate!
   
-  fileprivate static let imperialMileageLabel = "Current Mileage:"
-  fileprivate static let imperialMaxMileageLabel = "Maximum Mileage:"
-  fileprivate static let metricMileageLabel = "Current Klicks:"
-  fileprivate static let metricMaxMileageLabel = "Maximum Klicks:"
-  fileprivate static let editShoes = "Edit Shoes"
-  fileprivate static let newShoes = "New Shoes"
-  fileprivate var choosingThumbnail = false
+  private static let imperialMileageLabel = "Current Mileage:"
+  private static let imperialMaxMileageLabel = "Maximum Mileage:"
+  private static let metricMileageLabel = "Current Klicks:"
+  private static let metricMaxMileageLabel = "Maximum Klicks:"
+  private static let editShoes = "Edit Shoes"
+  private static let newShoes = "New Shoes"
+  private var choosingThumbnail = false
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -120,7 +120,7 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
   
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
     if textField == currentMileage || textField == maximumMileage {
-      if let _ = Int(string) , textField.text!.characters.count < Shoes.maxNumberLength + 1 {
+      if let _ = Int(string) , textField.text!.count < Shoes.maxNumberLength + 1 {
         return true
       }
       else {
@@ -167,7 +167,7 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
     present(imagePicker, animated: true, completion: nil)
   }
   
-  func toggleIsCurrent() {
+  @objc func toggleIsCurrent() {
     if isCurrent.image!.isEqual(Shoes.checked) {
       isCurrent.image = Shoes.unchecked
     }

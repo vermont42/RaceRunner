@@ -35,23 +35,22 @@ class SettingsVC: ChildVC, BroadcastDelegate {
   @IBOutlet var broadcastRunsButton: UIButton!
   @IBOutlet var priceLabel: UILabel!
   @IBOutlet var restoreButton: UIButton!
-  fileprivate var products = [SKProduct]()
-  fileprivate static let distancePrompt = " To begin inputting, tap \"123\" on the bottom-left corner of your virtual keyboard."
-  fileprivate static let bummerTitle = "😓"
-  fileprivate static let noHorseMessage = "RaceRunner cannot display the animated horse during your runs because you have not purchased that feature. If you would like to buy it, tap the Running Horse button in the Buy section below."
-  fileprivate static let noBroadcastMessage = "RaceRunner cannot broadcast your runs to spectators because you have not bought that feature. If you would like to buy it, tap the Broadcast Runs button in the Buy section below."
-  fileprivate static let promoCodeTitle = "Input Promo Code"
-  fileprivate static let promoCodePrompt = "To unlock RaceRunner's in-app purchases, input a promo code and tap Unlock."
-  fileprivate static let promoCodeUnlock = "Unlock"
-  fileprivate static let cancel = "Cancel"
-  fileprivate static let promoCode = "Promo Code"
-  fileprivate static let sweetTitle = "Sweet"
-  fileprivate static let unlockedMessage = "In-app purchases unlocked!"
-  fileprivate static let invalidPromoCodeMessage = "In-app purchases not unlocked. Promo code is invalid."
-  fileprivate static let unlockErrorMessage = "Could not unlock in-app purchases"
-  fileprivate static let broadcastNextRunTitle = "Broadcast Next Run"
-  fileprivate static let stopBroadcastingTitle = "Stop Broadcasting"
-  
+  private var products = [SKProduct]()
+  private static let distancePrompt = " To begin inputting, tap \"123\" on the bottom-left corner of your virtual keyboard."
+  private static let bummerTitle = "😓"
+  private static let noHorseMessage = "RaceRunner cannot display the animated horse during your runs because you have not purchased that feature. If you would like to buy it, tap the Running Horse button in the Buy section below."
+  private static let noBroadcastMessage = "RaceRunner cannot broadcast your runs to spectators because you have not bought that feature. If you would like to buy it, tap the Broadcast Runs button in the Buy section below."
+  private static let promoCodeTitle = "Input Promo Code"
+  private static let promoCodePrompt = "To unlock RaceRunner's in-app purchases, input a promo code and tap Unlock."
+  private static let promoCodeUnlock = "Unlock"
+  private static let cancel = "Cancel"
+  private static let promoCode = "Promo Code"
+  private static let sweetTitle = "Sweet"
+  private static let unlockedMessage = "In-app purchases unlocked!"
+  private static let invalidPromoCodeMessage = "In-app purchases not unlocked. Promo code is invalid."
+  private static let unlockErrorMessage = "Could not unlock in-app purchases"
+  private static let broadcastNextRunTitle = "Broadcast Next Run"
+  private static let stopBroadcastingTitle = "Stop Broadcasting"
   
   @IBAction func showMenu(_ sender: UIButton) {
     showMenu()
@@ -95,7 +94,7 @@ class SettingsVC: ChildVC, BroadcastDelegate {
     broadcastNextRunButton.setTitle(SettingsManager.getBroadcastNextRun() ? SettingsVC.stopBroadcastingTitle : SettingsVC.broadcastNextRunTitle, for: UIControlState())
   }
   
-  func unlockIaps() {
+  @objc func unlockIaps() {
     let purchasedHorse = Products.store.isProductPurchased(Products.runningHorse)
     let purchasedBroadcast = Products.store.isProductPurchased(Products.broadcastRuns)
     if !purchasedBroadcast || !purchasedHorse {
@@ -184,7 +183,7 @@ class SettingsVC: ChildVC, BroadcastDelegate {
     }
   }
   
-  func productPurchased(_ notification: Notification) {
+  @objc func productPurchased(_ notification: Notification) {
 //    let productIdentifier = notification.object as! String
 //    for (index, product) in products.enumerate() {
 //      if product.productIdentifier == productIdentifier {

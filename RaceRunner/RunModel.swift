@@ -10,7 +10,8 @@ import Foundation
 import MapKit
 import CoreLocation
 import CoreData
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+
+private func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
     return l < r
@@ -21,7 +22,7 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+private func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
     return l > r
@@ -42,49 +43,49 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   var importedRunDelegate: ImportedRunDelegate?
   var run: Run!
   var totalDistance = 0.0
-  fileprivate var currentAltitude = 0.0
-  fileprivate var oldSplitAltitude = 0.0
-  fileprivate var currentSplitDistance = 0.0
-  fileprivate var totalSeconds = 0
-  fileprivate var shouldReportSplits = false
-  fileprivate var lastDistance = 0.0
-  fileprivate var lastSeconds = 0
-  fileprivate var reportEvery = SettingsManager.never
-  fileprivate var temperature: Float = 0.0
-  fileprivate var weather = ""
-  fileprivate var timer: Timer!
-  fileprivate var initialLocation: CLLocation!
-  fileprivate var locationManager: LocationManager!
-  fileprivate var autoName = Run.noAutoName
-  fileprivate var didSetAutoNameAndFirstLoc = false
-  fileprivate var altGained  = 0.0
-  fileprivate var altLost = 0.0
-  fileprivate var minLong = 0.0
-  fileprivate var maxLong = 0.0
-  fileprivate var minLat = 0.0
-  fileprivate var maxLat = 0.0
-  fileprivate var minAlt = 0.0
-  fileprivate var maxAlt = 0.0
-  fileprivate var curAlt = 0.0
-  fileprivate var runToSimulate: Run!
-  fileprivate var gpxFile: String!
-  fileprivate var secondLength = 1.0
-  fileprivate var spectatorStoppedRun = false
-  fileprivate (set) var sortedAltitudes: [Double] = []
-  fileprivate (set) var sortedPaces: [Double] = []
+  private var currentAltitude = 0.0
+  private var oldSplitAltitude = 0.0
+  private var currentSplitDistance = 0.0
+  private var totalSeconds = 0
+  private var shouldReportSplits = false
+  private var lastDistance = 0.0
+  private var lastSeconds = 0
+  private var reportEvery = SettingsManager.never
+  private var temperature: Float = 0.0
+  private var weather = ""
+  private var timer: Timer!
+  private var initialLocation: CLLocation!
+  private var locationManager: LocationManager!
+  private var autoName = Run.noAutoName
+  private var didSetAutoNameAndFirstLoc = false
+  private var altGained  = 0.0
+  private var altLost = 0.0
+  private var minLong = 0.0
+  private var maxLong = 0.0
+  private var minLat = 0.0
+  private var maxLat = 0.0
+  private var minAlt = 0.0
+  private var maxAlt = 0.0
+  private var curAlt = 0.0
+  private var runToSimulate: Run!
+  private var gpxFile: String!
+  private var secondLength = 1.0
+  private var spectatorStoppedRun = false
+  private (set) var sortedAltitudes: [Double] = []
+  private (set) var sortedPaces: [Double] = []
   static let altFudge: Double = 0.1
-  static let minDistance = 400.0
-  fileprivate static let distanceTolerance: Double = 0.05
-  fileprivate static let coordinateTolerance: Double = 0.0000050
-  fileprivate static let minAccuracy: CLLocationDistance = 20.0
-  fileprivate static let distanceFilter: CLLocationDistance = 10.0
-  fileprivate static let freezeDriedAccuracy: CLLocationAccuracy = 5.0
-  fileprivate static let defaultTemperature: Float = 25.0
-  fileprivate static let defaultWeather = "sunny"
-  fileprivate static let importSucceededMessage = "Successfully imported run"
-  fileprivate static let importFailedMessage = "Run import failed."
-  fileprivate static let importRunTitle = "Import Run"
-  fileprivate static let ok = "OK"
+  static let minDistance = 100.0
+  private static let distanceTolerance: Double = 0.05
+  private static let coordinateTolerance: Double = 0.0000050
+  private static let minAccuracy: CLLocationDistance = 20.0
+  private static let distanceFilter: CLLocationDistance = 10.0
+  private static let freezeDriedAccuracy: CLLocationAccuracy = 5.0
+  private static let defaultTemperature: Float = 25.0
+  private static let defaultWeather = "sunny"
+  private static let importSucceededMessage = "Successfully imported run"
+  private static let importFailedMessage = "Run import failed."
+  private static let importRunTitle = "Import Run"
+  private static let ok = "OK"
   
   enum Status {
     case preRun
@@ -257,7 +258,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     }
   }
   
-  func eachSecond() {
+  @objc func eachSecond() {
     if status == .inProgress {
       totalSeconds += 1
       if SettingsManager.getBroadcastNextRun() && locations.count > 0 && SettingsManager.getRealRunInProgress() {
@@ -396,7 +397,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     return succeeded
   }
   
-  fileprivate class func addRun(_ coordinates: [CLLocation], customName: String, autoName: String, timestamp: Date, weather: String, temperature: Float, distance: Double, maxAltitude: Double, minAltitude: Double, maxLongitude: Double, minLongitude: Double, maxLatitude: Double, minLatitude: Double, altitudeGained: Double, altitudeLost: Double, weight: Double) -> Run {
+  private class func addRun(_ coordinates: [CLLocation], customName: String, autoName: String, timestamp: Date, weather: String, temperature: Float, distance: Double, maxAltitude: Double, minAltitude: Double, maxLongitude: Double, minLongitude: Double, maxLatitude: Double, minLatitude: Double, altitudeGained: Double, altitudeLost: Double, weight: Double) -> Run {
     let newRun: Run = NSEntityDescription.insertNewObject(forEntityName: "Run", into: CDManager.sharedCDManager.context) as! Run
     newRun.distance = NSNumber(value: distance)
     newRun.duration = NSNumber(value: coordinates[coordinates.count - 1].timestamp.timeIntervalSince(coordinates[0].timestamp))

@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 class UiHelpers {
-  fileprivate static let headerDelimiter = "^"
-  fileprivate static let boldDelimiter = "​" // http://www.fileformat.info/info/unicode/char/200B/browsertest.htm
+  private static let headerDelimiter = "^"
+  private static let boldDelimiter = "​" // http://www.fileformat.info/info/unicode/char/200B/browsertest.htm
   
   class func maskedImageNamed(_ name:String, color:UIColor) -> UIImage {
     let image = UIImage(named: name)
@@ -28,7 +28,7 @@ class UiHelpers {
   }
   
   class func letterPressedText(_ plainText: String) -> NSAttributedString {
-    return NSAttributedString(string: plainText, attributes: [NSTextEffectAttributeName: NSTextEffectLetterpressStyle])
+    return NSAttributedString(string: plainText, attributes: [NSAttributedStringKey.textEffect: NSAttributedString.TextEffectStyle.letterpressStyle])
   }
 
   class func colorForValue(_ value: Double, sortedArray: [Double], index: Int) -> UIColor {
@@ -63,12 +63,12 @@ class UiHelpers {
   
   class func styleText(_ text: String) -> NSAttributedString {
     let matText = NSMutableAttributedString(string: text)
-    matText.addAttributes([NSForegroundColorAttributeName: UiConstants.lightColor, NSFontAttributeName: UIFont(name: UiConstants.globalFont, size: UiConstants.bodyFontSize)!], range: NSMakeRange(0, matText.length))
+    matText.addAttributes([NSAttributedStringKey.foregroundColor: UiConstants.lightColor, NSAttributedStringKey.font: UIFont(name: UiConstants.globalFont, size: UiConstants.bodyFontSize)!], range: NSMakeRange(0, matText.length))
     let centeredStyle = NSMutableParagraphStyle()
     centeredStyle.alignment = .center
-    let headerAttributes = [NSForegroundColorAttributeName: UiConstants.intermediate1Color, NSTextEffectAttributeName: NSTextEffectLetterpressStyle] as [String : Any]
+    let headerAttributes = [NSAttributedStringKey.foregroundColor: UiConstants.intermediate1Color, NSAttributedStringKey.textEffect: NSAttributedString.TextEffectStyle.letterpressStyle] as [NSAttributedStringKey : Any]
     let textAsNsString = text as NSString
-    var i: Int = 0
+    var i = 0
     var insideHeading = false
     var insideBold = false
     var startIndex = 0
@@ -76,13 +76,13 @@ class UiHelpers {
       if textAsNsString.substring(with: NSMakeRange(i, 1)) == UiHelpers.headerDelimiter {
         if insideHeading {
           let headerWithDelimitersRange = NSMakeRange(startIndex, (i - startIndex) + 1)
-          matText.addAttribute(NSParagraphStyleAttributeName, value: centeredStyle, range: headerWithDelimitersRange)
+          matText.addAttribute(NSAttributedStringKey.paragraphStyle, value: centeredStyle, range: headerWithDelimitersRange)
           let headerRange = NSMakeRange(startIndex + 1, (i - startIndex) - 1)
           matText.addAttributes(headerAttributes, range: headerRange)
           let leadingRange = NSMakeRange(startIndex, 1)
-          matText.addAttribute(NSForegroundColorAttributeName, value: UiConstants.darkColor, range: leadingRange)
+          matText.addAttribute(NSAttributedStringKey.foregroundColor, value: UiConstants.darkColor, range: leadingRange)
           let trailingRange = NSMakeRange(i, 1)
-          matText.addAttribute(NSForegroundColorAttributeName, value: UiConstants.darkColor, range: trailingRange)
+          matText.addAttribute(NSAttributedStringKey.foregroundColor, value: UiConstants.darkColor, range: trailingRange)
           insideHeading = false
         }
         else {
@@ -93,7 +93,7 @@ class UiHelpers {
       else if textAsNsString.substring(with: NSMakeRange(i, 1)) == UiHelpers.boldDelimiter {
         if insideBold {
           let boldRange = NSMakeRange(startIndex, i - startIndex)
-          matText.addAttribute(NSFontAttributeName, value: UIFont(name: UiConstants.globalFontBold, size: UiConstants.bodyFontSize)!, range: boldRange)
+          matText.addAttribute(NSAttributedStringKey.font, value: UIFont(name: UiConstants.globalFontBold, size: UiConstants.bodyFontSize)!, range: boldRange)
           insideBold = false
         }
         else {

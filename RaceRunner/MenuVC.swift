@@ -16,19 +16,19 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
   var panSegues = ["pan run", "pan log", "pan GPX run", "pan log", "pan spectate", "pan settings", "pan shoes", "pan help", "pan game"]
   var selectedMenuItem: Int = 0
   var logTypeToShow: LogVC.LogType!
-  fileprivate var firstAppearance = true
+  private var firstAppearance = true
 
-  fileprivate static let resumeRunLabel = "Resume Run"
-  fileprivate static let startRunLabel = "Start Run"
-  fileprivate static let historyLabel = "History"
-  fileprivate static let simulateLabel = "Simulate"
-  fileprivate static let demoLabel = "Demo"
+  private static let resumeRunLabel = "Resume Run"
+  private static let startRunLabel = "Start Run"
+  private static let historyLabel = "History"
+  private static let simulateLabel = "Simulate"
+  private static let demoLabel = "Demo"
   
-  fileprivate static let rowHeight: CGFloat = 50.0
-  fileprivate static let realRunMessage = "There is a real run in progress. Please tap the Continue menu item and stop the run before attempting to simulate a run."
-  fileprivate static let okButtonText = "OK"
-  fileprivate static let gpxFile = "iSmoothRun"
-  fileprivate static let sadFaceTitle = "😢"
+  private static let rowHeight: CGFloat = 50.0
+  private static let realRunMessage = "There is a real run in progress. Please tap the Continue menu item and stop the run before attempting to simulate a run."
+  private static let okButtonText = "OK"
+  private static let gpxFile = "iSmoothRun"
+  private static let sadFaceTitle = "😢"
   static let menuFontSize: CGFloat = 42.0
   
   override func viewDidLoad() {
@@ -113,7 +113,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
   }
   
-  fileprivate func updateRunButton() {
+  private func updateRunButton() {
     if RunModel.runModel.status == .preRun && controllerLabels[0] == MenuVC.resumeRunLabel {
       controllerLabels[0] = MenuVC.startRunLabel
     }

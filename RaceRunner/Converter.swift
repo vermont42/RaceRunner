@@ -9,30 +9,30 @@
 import Foundation
 
 class Converter {
-  fileprivate static let feetInMeter: Double = 3.281
-  fileprivate static let fahrenheitMultiplier: Float = 9.0 / 5.0
-  fileprivate static let celsiusFraction: Float = 5.0 / 9.0
-  fileprivate static let fahrenheitAmountToAdd: Float = 32.0
-  fileprivate static let celsiusMultiplier: Float = 1.0
-  fileprivate static let celsiusAmountToAdd: Float = 0.0
-  fileprivate static let altitudeFudge: Double = 5.0
-  fileprivate static let secondsPerMinute: Int = 60
-  fileprivate static let minutesPerHour: Int = 60
-  fileprivate static let secondsPerHour: Int = 3600
-  fileprivate static let netCaloriesPerKiloPerMeter = 0.00086139598517
-  fileprivate static let totalCaloriesPerKiloPerMeter = 0.00102547141092
-  fileprivate static let fahrenheitAbbr: String = "F"
-  fileprivate static let celsiusAbbr: String = "C"
-  fileprivate static let mileAbbr: String = "mi"
-  fileprivate static let kilometerAbbr: String = "km"
-  fileprivate static let feetAbbr: String = "ft"
-  fileprivate static let metersAbbr: String = "m"
-  fileprivate static let feet: String = "feet"
-  fileprivate static let meters: String = "meters"
-  fileprivate static let mile: String = "mile"
-  fileprivate static let kilometer: String = "kilometer"
-  fileprivate static let miles: String = "miles"
-  fileprivate static let kilometers: String = "kilometers"
+  private static let feetInMeter: Double = 3.281
+  private static let fahrenheitMultiplier: Float = 9.0 / 5.0
+  private static let celsiusFraction: Float = 5.0 / 9.0
+  private static let fahrenheitAmountToAdd: Float = 32.0
+  private static let celsiusMultiplier: Float = 1.0
+  private static let celsiusAmountToAdd: Float = 0.0
+  private static let altitudeFudge: Double = 5.0
+  private static let secondsPerMinute: Int = 60
+  private static let minutesPerHour: Int = 60
+  private static let secondsPerHour: Int = 3600
+  private static let netCaloriesPerKiloPerMeter = 0.00086139598517
+  private static let totalCaloriesPerKiloPerMeter = 0.00102547141092
+  private static let fahrenheitAbbr: String = "F"
+  private static let celsiusAbbr: String = "C"
+  private static let mileAbbr: String = "mi"
+  private static let kilometerAbbr: String = "km"
+  private static let feetAbbr: String = "ft"
+  private static let metersAbbr: String = "m"
+  private static let feet: String = "feet"
+  private static let meters: String = "meters"
+  private static let mile: String = "mile"
+  private static let kilometer: String = "kilometer"
+  private static let miles: String = "miles"
+  private static let kilometers: String = "kilometers"
   static let metersInMile: Double = 1609.344
   static let metersInKilometer: Double = 1000.0
   static let kilometersPerMile: Float = 1.609344
@@ -49,8 +49,8 @@ class Converter {
   class func announceProgress(_ totalSeconds: Int, lastSeconds: Int, totalDistance: Double, lastDistance: Double, newAltitude: Double, oldAltitude: Double) {
     let totalLongDistance = convertMetersToLongDistance(totalDistance)
     var roundedDistance = NSString(format: "%.2f", totalLongDistance) as String
-    if roundedDistance.characters.last! == "0" {
-      roundedDistance = roundedDistance.substring(to: roundedDistance.characters.index(before: roundedDistance.endIndex))
+    if roundedDistance.last! == "0" {
+      roundedDistance = String(roundedDistance[..<roundedDistance.index(before: roundedDistance.endIndex)])
     }
     var progressString = "total distance \(roundedDistance) \(pluralizedCurrentLongUnit(totalLongDistance)), total time \(stringifySecondCount(totalSeconds, useLongFormat: true)), split pace"
     let distanceDelta = totalDistance - lastDistance

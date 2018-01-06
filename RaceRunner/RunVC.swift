@@ -24,20 +24,20 @@ class RunVC: ChildVC, RunDelegate {
   @IBOutlet var map: GMSMapView!
   @IBOutlet var paceOrAltitude: UISegmentedControl!
   
-  fileprivate static let gpxTitle = "Berkeley Hills"
-  fileprivate static let didNotSaveMessage = "RaceRunner did not save this run because it was so short. The run, not RaceRunner. As a collection of electrons on your phone, RaceRunner has no physical height."
-  fileprivate static let noGpsMessage = "RaceRunner cannot record your run because you have not given it permission to access the GPS sensors. You can give this permission in the Settings app."
-  fileprivate static let pauseError = "Attempted to display details of run with zero locations."
-  fileprivate static let bummerButtonTitle = "Bummer"
-  fileprivate static let sadFaceTitle = "😢"
-  fileprivate static let startTitle = " Start "
-  fileprivate static let pauseTitle = " Pause "
-  fileprivate static let stopTitle = " Stop "
-  fileprivate static let resumeTitle = " Resume "
+  private static let gpxTitle = "Berkeley Hills"
+  private static let didNotSaveMessage = "RaceRunner did not save this run because it was so short. The run, not RaceRunner. As a collection of electrons on your phone, RaceRunner has no physical height."
+  private static let noGpsMessage = "RaceRunner cannot record your run because you have not given it permission to access the GPS sensors. You can give this permission in the Settings app."
+  private static let pauseError = "Attempted to display details of run with zero locations."
+  private static let bummerButtonTitle = "Bummer"
+  private static let sadFaceTitle = "😢"
+  private static let startTitle = " Start "
+  private static let pauseTitle = " Pause "
+  private static let stopTitle = " Stop "
+  private static let resumeTitle = " Resume "
   
   var runToSimulate: Run?
   var gpxFile: String?
-  fileprivate var modelStoppedRun = false
+  private var modelStoppedRun = false
   
   override func viewDidLoad() {
     map.mapType = .terrain

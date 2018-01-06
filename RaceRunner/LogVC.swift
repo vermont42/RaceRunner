@@ -31,8 +31,8 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
   }
   var logType: LogType!
   var locFile = "Runmeter"
-  fileprivate static let rowHeight: CGFloat = 92.0
-  fileprivate var oldLogSortField: Int!
+  private static let rowHeight: CGFloat = 92.0
+  private var oldLogSortField: Int!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -72,8 +72,7 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
     tableView.reloadData()
   }
   
-  fileprivate func fetchRuns() {
-    //let fetchRequest = NSFetchRequest()
+  private func fetchRuns() {
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Run")
     let context = CDManager.sharedCDManager.context!
     fetchRequest.entity = NSEntityDescription.entity(forEntityName: "Run", in: context)
@@ -168,7 +167,7 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
   }
   
   func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-    return NSAttributedString(string: LogSortField.all()[row], attributes: [NSForegroundColorAttributeName: UiConstants.intermediate3Color])
+    return NSAttributedString(string: LogSortField.all()[row], attributes: [NSAttributedStringKey.foregroundColor: UiConstants.intermediate3Color])
   }
   
   @IBAction func importRuns() {

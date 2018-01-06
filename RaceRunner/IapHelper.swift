@@ -23,12 +23,12 @@ open class IapHelper : NSObject  {
   /// MARK: - Private Properties
   
   // Used to keep track of the possible products and which ones have been purchased.
-  fileprivate let productIdentifiers: Set<ProductIdentifier>
-  fileprivate var purchasedProductIdentifiers = Set<ProductIdentifier>()
+  private let productIdentifiers: Set<ProductIdentifier>
+  private var purchasedProductIdentifiers = Set<ProductIdentifier>()
   
   // Used by SKProductsRequestDelegate
-  fileprivate var productsRequest: SKProductsRequest?
-  fileprivate var completionHandler: RequestProductsCompletionHandler?
+  private var productsRequest: SKProductsRequest?
+  private var completionHandler: RequestProductsCompletionHandler?
   
   /// MARK: - User-facing API
   
@@ -98,7 +98,7 @@ extension IapHelper: SKProductsRequestDelegate {
     clearRequest()
   }
   
-  fileprivate func clearRequest() {
+  private func clearRequest() {
     productsRequest = nil
     completionHandler = nil
   }
@@ -128,13 +128,13 @@ extension IapHelper: SKPaymentTransactionObserver {
     }
   }
   
-  fileprivate func completeTransaction(_ transaction: SKPaymentTransaction) {
+  private func completeTransaction(_ transaction: SKPaymentTransaction) {
     //print("completeTransaction...")
     provideContentForProductIdentifier(transaction.payment.productIdentifier)
     SKPaymentQueue.default().finishTransaction(transaction)
   }
   
-  fileprivate func restoreTransaction(_ transaction: SKPaymentTransaction) {
+  private func restoreTransaction(_ transaction: SKPaymentTransaction) {
     let productIdentifier = transaction.original!.payment.productIdentifier
     //print("restoreTransaction... \(productIdentifier)")
     provideContentForProductIdentifier(productIdentifier)
@@ -142,7 +142,7 @@ extension IapHelper: SKPaymentTransactionObserver {
   }
   
   // Helper: Saves the fact that the product has been purchased and posts a notification.
-  fileprivate func provideContentForProductIdentifier(_ productIdentifier: String) {
+  private func provideContentForProductIdentifier(_ productIdentifier: String) {
     purchasedProductIdentifiers.insert(productIdentifier)
     UserDefaults.standard.set(true, forKey: productIdentifier)
     UserDefaults.standard.synchronize()
@@ -155,7 +155,7 @@ extension IapHelper: SKPaymentTransactionObserver {
     }
   }
   
-  fileprivate func failedTransaction(_ transaction: SKPaymentTransaction) {
+  private func failedTransaction(_ transaction: SKPaymentTransaction) {
     //print("failedTransaction...")
     if (transaction.error! as NSError).code != SKError.paymentCancelled.rawValue {
       //print("Transaction error: \(transaction.error!.localizedDescription)")

@@ -21,34 +21,34 @@ class SpectateVC: ChildVC, PubNubSubscriber {
   @IBOutlet var paceLabel: UILabel!
   @IBOutlet var timeLabel: UILabel!
   @IBOutlet var altitudeLabel: UILabel!
-  fileprivate var publisher: String = ""
-  fileprivate var previousLongitude: Double?
-  fileprivate var runnerIcons = RunnerIcons()
-  fileprivate var pin: GMSMarker = GMSMarker()
-  fileprivate var counter = 0
-  fileprivate var canStopRun = false
-  fileprivate static let runEnded = "Run ended."
-  fileprivate static let runEndedTitle = "Ended"
-  fileprivate static let broadcasterTitle = "Select Runner"
-  fileprivate static let broadcasterPrompt = "Whose run would you like to spectate?"
-  fileprivate static let subscribeAlertTitle = "Start Spectating"
-  fileprivate static let stopBothPrompt = "Would you like to stop spectating or stop the run?"
-  fileprivate static let stopSpectatingPrompt = "Stop spectating?"
-  fileprivate static let stopSpectatingButtonTitle = "Stop Spectating"
-  fileprivate static let stopRunButtonTitle = "Stop Run"
-  fileprivate static let sendMessageTitle = "Send Message"
-  fileprivate static let sendMessagePrompt = "Enter a message for the runner and tap Send."
-  fileprivate static let sendAlertTitle = "Send"
-  fileprivate static let message = "Message"
-  fileprivate static let runner = "Runner"
-  fileprivate static let cancel = "Cancel"
-  fileprivate static let start = "Start"
-  fileprivate static let stop = "Stop"
-  fileprivate static let spectate = "Spectate"
-  fileprivate static let spectating = "Spectating"
-  fileprivate static let centerLatitude = 39.8333
-  fileprivate static let centerLongitude = -98.5833
-  fileprivate static let initialZoom: Float = 2.0
+  private var publisher: String = ""
+  private var previousLongitude: Double?
+  private var runnerIcons = RunnerIcons()
+  private var pin: GMSMarker = GMSMarker()
+  private var counter = 0
+  private var canStopRun = false
+  private static let runEnded = "Run ended."
+  private static let runEndedTitle = "Ended"
+  private static let broadcasterTitle = "Select Runner"
+  private static let broadcasterPrompt = "Whose run would you like to spectate?"
+  private static let subscribeAlertTitle = "Start Spectating"
+  private static let stopBothPrompt = "Would you like to stop spectating or stop the run?"
+  private static let stopSpectatingPrompt = "Stop spectating?"
+  private static let stopSpectatingButtonTitle = "Stop Spectating"
+  private static let stopRunButtonTitle = "Stop Run"
+  private static let sendMessageTitle = "Send Message"
+  private static let sendMessagePrompt = "Enter a message for the runner and tap Send."
+  private static let sendAlertTitle = "Send"
+  private static let message = "Message"
+  private static let runner = "Runner"
+  private static let cancel = "Cancel"
+  private static let start = "Start"
+  private static let stop = "Stop"
+  private static let spectate = "Spectate"
+  private static let spectating = "Spectating"
+  private static let centerLatitude = 39.8333
+  private static let centerLongitude = -98.5833
+  private static let initialZoom: Float = 2.0
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -70,7 +70,7 @@ class SpectateVC: ChildVC, PubNubSubscriber {
     startStopButton.setTitle(SpectateVC.start, for: UIControlState())
   }
   
-  fileprivate func clearLabels() {
+  private func clearLabels() {
     distanceLabel.text = ""
     timeLabel.text = ""
     paceLabel.text = ""
@@ -82,7 +82,7 @@ class SpectateVC: ChildVC, PubNubSubscriber {
     spectationLabel.text = ""
   }
   
-  fileprivate func getBroadcasterAndSubscribe() {
+  private func getBroadcasterAndSubscribe() {
     let alertController = UIAlertController(title: SpectateVC.broadcasterTitle, message: SpectateVC.broadcasterPrompt, preferredStyle: UIAlertControllerStyle.alert)
     let subscribeAction = UIAlertAction(title: SpectateVC.subscribeAlertTitle, style: UIAlertActionStyle.default, handler: { (action) in
       let textFields = alertController.textFields!
@@ -140,7 +140,7 @@ class SpectateVC: ChildVC, PubNubSubscriber {
     clearLabels()
   }
   
-  fileprivate func unsubscribe() {
+  private func unsubscribe() {
     PubNubManager.unsubscribeFromChannel(publisher)
     pin.map = nil
     publisher = ""
@@ -196,7 +196,7 @@ class SpectateVC: ChildVC, PubNubSubscriber {
     present(alertController, animated: true, completion: nil)
   }
   
-  fileprivate func stopSpectating() {
+  private func stopSpectating() {
     unsubscribe()
     pin.icon = nil
     clearLabels()

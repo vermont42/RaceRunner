@@ -23,7 +23,7 @@ class ChildVC: UIViewController {
     self.view.addGestureRecognizer(swipeGestureRecognizer)
   }
   
-  func showMenu() {
+  @objc func showMenu() {
     self.performSegue(withIdentifier: "unwind pan", sender: self)
   }
   

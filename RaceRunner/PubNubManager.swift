@@ -11,14 +11,14 @@ import PubNub
 import CoreLocation
 
 class PubNubManager: NSObject, PNObjectEventListener {
-  fileprivate let pubNub: PubNub?
-  fileprivate var pubNubSubscriber: PubNubSubscriber?
-  fileprivate var pubNubPublisher: PubNubPublisher?
+  private let pubNub: PubNub?
+  private var pubNubSubscriber: PubNubSubscriber?
+  private var pubNubPublisher: PubNubPublisher?
   static let sharedNub = PubNubManager()
   static let publicChannel = "foo"
   static let stopped = "stopped"
-  fileprivate static let stopRun = "stop run"
-  fileprivate static let messageLabel = "message: "
+  private static let stopRun = "stop run"
+  private static let messageLabel = "message: "
 
   override init() {
     pubNub = PubNub.clientWithConfiguration(PNConfiguration(publishKey: Config.pubNubPublishKey, subscribeKey: Config.pubNubSubscribeKey))
@@ -34,8 +34,8 @@ class PubNubManager: NSObject, PNObjectEventListener {
     else if messageString == PubNubManager.stopRun {
       pubNubPublisher?.stopRun()
     }
-    else if (messageString as NSString).substring(to: PubNubManager.messageLabel.characters.count) == PubNubManager.messageLabel {
-      pubNubPublisher?.receiveMessage((messageString as NSString).substring(from: PubNubManager.messageLabel.characters.count))
+    else if (messageString as NSString).substring(to: PubNubManager.messageLabel.count) == PubNubManager.messageLabel {
+      pubNubPublisher?.receiveMessage((messageString as NSString).substring(from: PubNubManager.messageLabel.count))
     }
     else {
       pubNubSubscriber?.receiveProgress(messageString)

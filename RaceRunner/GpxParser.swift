@@ -28,24 +28,24 @@ struct ParseResult {
 }
 
 class GpxParser: NSObject, XMLParserDelegate {
-  fileprivate var parser: XMLParser?
-  fileprivate var autoName = Run.noAutoName
-  fileprivate var customName = Run.noCustomName
-  fileprivate var weather = Run.noWeather
-  fileprivate var temperature = Run.noTemperature
-  fileprivate var weight = Run.noWeight
-  fileprivate var locations: [CLLocation] = []
-  fileprivate var buffer = ""
-  fileprivate let dateFormatter = DateFormatter()
-  fileprivate var curLatString: NSString = ""
-  fileprivate var curLonString: NSString = ""
-  fileprivate var curEleString: NSString = ""
-  fileprivate var curTimeString: String = ""
-  fileprivate var startedTrackPoints = false
-  fileprivate var isRuntastic = false
-  fileprivate static let dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-  fileprivate static let accuracy: CLLocationAccuracy = 5.0
-  fileprivate enum ParsingState: String {
+  private var parser: XMLParser?
+  private var autoName = Run.noAutoName
+  private var customName = Run.noCustomName
+  private var weather = Run.noWeather
+  private var temperature = Run.noTemperature
+  private var weight = Run.noWeight
+  private var locations: [CLLocation] = []
+  private var buffer = ""
+  private let dateFormatter = DateFormatter()
+  private var curLatString: NSString = ""
+  private var curLonString: NSString = ""
+  private var curEleString: NSString = ""
+  private var curTimeString: String = ""
+  private var startedTrackPoints = false
+  private var isRuntastic = false
+  private static let dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+  private static let accuracy: CLLocationAccuracy = 5.0
+  private enum ParsingState: String {
     case Trkpt = "trkpt"
     case AutoName = "name"
     case CustomName = "customName"
@@ -59,11 +59,11 @@ class GpxParser: NSObject, XMLParserDelegate {
       self = .AutoName
     }
   }
-  fileprivate var alreadySetName = false
-  fileprivate var parsingState: ParsingState = .AutoName
-  fileprivate static let runtastic = "runtastic"
-  fileprivate static let runtasticGarbage = ".000"
-  fileprivate static let runtasticRunName = "Runtastic Run"
+  private var alreadySetName = false
+  private var parsingState: ParsingState = .AutoName
+  private static let runtastic = "runtastic"
+  private static let runtasticGarbage = ".000"
+  private static let runtasticRunName = "Runtastic Run"
   static let parseError = "An error occurred during GPX parsing."
   
   convenience init?(file: String) {

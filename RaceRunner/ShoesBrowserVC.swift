@@ -22,14 +22,14 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
   @IBOutlet var pickerToolbar: UIToolbar!
   @IBOutlet var fieldPicker: UIPickerView!
   
-  fileprivate static let rowHeight: CGFloat = 92.0
-  fileprivate static let tapToAdd = "Tap + to add a pair of shoes."
-  fileprivate static let delete = "Delete"
-  fileprivate static let edit = "Edit"
-  fileprivate var oldShoesSortField: Int!
+  private static let rowHeight: CGFloat = 92.0
+  private static let tapToAdd = "Tap + to add a pair of shoes."
+  private static let delete = "Delete"
+  private static let edit = "Edit"
+  private var oldShoesSortField: Int!
   static let tapFontSize: CGFloat = 18.0
   
-  fileprivate var shoesToEdit: Shoes?
+  private var shoesToEdit: Shoes?
   var pairs: [Shoes] = []
 
   override func viewDidLoad() {
@@ -57,8 +57,7 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
     tableView.reloadData()
   }
   
-  fileprivate func fetchPairs() {
-    //let fetchRequest = NSFetchRequest()
+  private func fetchPairs() {
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Shoes")
     let context = CDManager.sharedCDManager.context!
     fetchRequest.entity = NSEntityDescription.entity(forEntityName: "Shoes", in: context)
@@ -174,7 +173,7 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
   }
   
   func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-    return NSAttributedString(string: ShoesSortField.sortFieldForPosition(row).asString(), attributes: [NSForegroundColorAttributeName: UiConstants.intermediate3Color])
+    return NSAttributedString(string: ShoesSortField.sortFieldForPosition(row).asString(), attributes: [NSAttributedStringKey.foregroundColor: UiConstants.intermediate3Color])
   }
   
   func makeNewIsCurrent(_ newIsCurrent: Shoes) {
