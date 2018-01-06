@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>RaceRunner would like to access your location in order to record your run(s). Background use of location allows you to use other apps while RaceRunner is recording run(s).</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>RaceRunner would like to access your location in order to record your run(s). Background use of location allows you to use other apps while RaceRunner is recording run(s).</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>RaceRunner would like to access your location in order to record your run(s).</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDocumentTypes</key>
@@ -60,8 +66,6 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>RaceRunner would like to access your location.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
