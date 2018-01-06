@@ -201,7 +201,7 @@ class SettingsVC: ChildVC, BroadcastDelegate {
     else {
       unitsToggle.isOn = true
     }
-    if SettingsManager.getIconType() == RunnerIcons.IconType.Human {
+    if SettingsManager.getIconType() == RunnerIcons.IconType.human {
       iconToggle.isOn = false
     }
     else {
@@ -280,10 +280,10 @@ class SettingsVC: ChildVC, BroadcastDelegate {
     }
     else {
       if sender.isOn {
-        SettingsManager.setIconType(RunnerIcons.IconType.Horse)
+        SettingsManager.setIconType(RunnerIcons.IconType.horse)
       }
       else {
-        SettingsManager.setIconType(RunnerIcons.IconType.Human)
+        SettingsManager.setIconType(RunnerIcons.IconType.human)
       }
     }
   }

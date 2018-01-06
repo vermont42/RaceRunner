@@ -9,21 +9,21 @@
 import Foundation
 
 enum Overlay: String {
-  case Both = "Both"
-  case Pace = "Pace"
-  case Altitude = "Altitude"
+  case both = "Both"
+  case pace = "Pace"
+  case altitude = "Altitude"
   
   init() {
-    self = .Both
+    self = .both
   }
   
   func radioButtonPosition() -> Int {
     switch self {
-    case .Both:
+    case .both:
       return 0
-    case .Pace:
+    case .pace:
       return 1
-    case .Altitude:
+    case .altitude:
       return 2
     }
   }
@@ -31,13 +31,13 @@ enum Overlay: String {
   static func stringToOVerlay(_ overlay: String) -> Overlay {
     switch overlay {
     case "Both":
-      return .Both
+      return .both
     case "Pace":
-      return .Pace
+      return .pace
     case "Altitude":
-      return .Altitude
+      return .altitude
     default:
-      return .Both
+      return .both
     }
   }
 }

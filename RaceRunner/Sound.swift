@@ -10,15 +10,15 @@ import Foundation
 
 enum Sound: String {
   static let applauseCount: UInt32 = 3
-  case Applause1 = "applause1"
-  case Applause2 = "applause2"
-  case Applause3 = "applause3"
-  case Click = "click"
-  case Gun = "gun"
-  case Gun2 = "gun2"
-  case Neigh = "neigh"
-  case SadTrombone = "sadTrombone"
-  case Scream1 = "scream1"
-  case Scream2 = "scream2"
-  case Silence = "silence"
+  case applause1 = "applause1"
+  case applause2 = "applause2"
+  case applause3 = "applause3"
+  case click = "click"
+  case gun = "gun"
+  case gun2 = "gun2"
+  case neigh = "neigh"
+  case sadTrombone = "sadTrombone"
+  case scream1 = "scream1"
+  case scream2 = "scream2"
+  case silence = "silence"
 }

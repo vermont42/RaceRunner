@@ -17,11 +17,11 @@ class RunnerIcons {
   }
   
   enum IconType: String {
-    case Human = "Human"
-    case Horse = "Horse"
+    case human = "Human"
+    case horse = "Horse"
     
     init() {
-      self = .Human
+      self = .human
     }
   }
   
@@ -44,7 +44,7 @@ class RunnerIcons {
     let iconType = SettingsManager.getIconType()
     switch direction {
     case .stationary:
-      if iconType == IconType.Human {
+      if iconType == IconType.human {
         return stationaryIcon
       }
       else {
@@ -52,7 +52,7 @@ class RunnerIcons {
       }
     case .west:
       let westIcon: UIImage
-      if iconType == IconType.Human {
+      if iconType == IconType.human {
         if currentIndex > westIcons.count - 1 {
           currentIndex = westIcons.count - 1
         }
@@ -79,7 +79,7 @@ class RunnerIcons {
       return westIcon
     case .east:
       let eastIcon: UIImage
-      if iconType == IconType.Human {
+      if iconType == IconType.human {
         if currentIndex > eastIcons.count - 1 {
           currentIndex = eastIcons.count - 1
         }

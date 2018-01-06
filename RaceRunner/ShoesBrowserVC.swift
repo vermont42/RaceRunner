@@ -191,7 +191,7 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
   }
   
   @IBAction func reverseSort() {
-    SettingsManager.setSortType(SortType.reverse(SettingsManager.getSortType()))
+    SettingsManager.setSortType(SortType.reverseSortType(SettingsManager.getSortType()))
     pairs.sort { ShoesSortField.compare($0, shoes2: $1) }
     tableView.reloadData()
   }

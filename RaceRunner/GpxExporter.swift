@@ -73,7 +73,7 @@ class GpxExporter: NSObject, MFMailComposeViewControllerDelegate {
       UIApplication.topViewController()?.present(mailComposer, animated: true, completion: nil)
     }
     else {
-      SoundManager.play(.SadTrombone)
+      SoundManager.play(.sadTrombone)
       UIAlertController.showMessage(GpxExporter.failureMessage, title: failureTitle)
     }
   }

@@ -64,8 +64,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   static let invaderHeight: CGFloat = 16.0 // must be static to be used in enum
 
   enum InvaderType: String {
-    case Horse = "Horse"
-    case Runner = "Runner"
+    case horse = "Horse"
+    case runner = "Runner"
     
     static var size: CGSize {
       return CGSize(width: GameScene.invaderWidth, height: GameScene.invaderHeight)
@@ -119,9 +119,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   func makeInvaderOfType(_ invaderType: InvaderType, direction: InvaderMovementDirection) -> SKNode {
     let texture: SKTexture
     switch(invaderType) {
-    case .Horse:
+    case .horse:
       texture = westHorses[0]
-    case .Runner:
+    case .runner:
       texture = westRunners[0]
     }
     let invader = SKSpriteNode(texture: texture)
@@ -139,9 +139,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     for row in 0 ..< invaderRowCount {
       var invaderType: InvaderType
       if row % 2 == 0 {
-        invaderType = .Runner
+        invaderType = .runner
       } else {
-        invaderType = .Horse
+        invaderType = .horse
       }
       let invaderPositionY = CGFloat(row) * (InvaderType.size.height * 2) + baseOrigin.y
       var invaderPosition = CGPoint(x: baseOrigin.x, y: invaderPositionY)
@@ -227,24 +227,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       return
     }
     determineInvaderMovementDirection()
-    enumerateChildNodes(withName: InvaderType.Horse.rawValue) { node, stop in
-      self.updateInvader(node, invaderType: .Horse, currentTime: currentTime)
+    enumerateChildNodes(withName: InvaderType.horse.rawValue) { node, stop in
+      self.updateInvader(node, invaderType: .horse, currentTime: currentTime)
     }
-    enumerateChildNodes(withName: InvaderType.Runner.rawValue) { node, stop in
-      self.updateInvader(node, invaderType: .Runner, currentTime: currentTime)
+    enumerateChildNodes(withName: InvaderType.runner.rawValue) { node, stop in
+      self.updateInvader(node, invaderType: .runner, currentTime: currentTime)
     }
   }
   
   func updateInvader(_ invader: SKNode, invaderType: InvaderType, currentTime: CFTimeInterval) {
     let textures: [SKTexture]
     if invaderMovementDirection == .left || invaderMovementDirection == .downThenLeft {
-      if invaderType == .Horse {
+      if invaderType == .horse {
         textures = self.westHorses
       } else {
         textures = self.westRunners
       }
     } else /* if invaderMovementDirection == .Right || invaderMovementDirection == .DownThenRight */ {
-      if invaderType == .Horse {
+      if invaderType == .horse {
         textures = self.eastHorses
       } else {
         textures = self.eastRunners
@@ -376,7 +376,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
           x: runner.position.x,
           y: frame.size.height + bullet.frame.size.height / 2
         )
-        fireBullet(bullet, toDestination: bulletDestination, withDuration: runnerBulletDuration, andSoundFileName: Sound.Gun.rawValue)
+        fireBullet(bullet, toDestination: bulletDestination, withDuration: runnerBulletDuration, andSoundFileName: Sound.gun.rawValue)
       }
     }
   }
@@ -392,11 +392,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   
   func enumerateAllInvaders() -> [SKNode] {
     var allInvaders: [SKNode] = []
-    enumerateChildNodes(withName: InvaderType.Horse.rawValue) {
+    enumerateChildNodes(withName: InvaderType.horse.rawValue) {
       node, stop in
       allInvaders.append(node)
     }
-    enumerateChildNodes(withName: InvaderType.Runner.rawValue) {
+    enumerateChildNodes(withName: InvaderType.runner.rawValue) {
       node, stop in
       allInvaders.append(node)
     }
@@ -416,7 +416,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
           y: invader.position.y - invader.frame.size.height / 2 + bullet.frame.size.height / 2
         )
         let bulletDestination = CGPoint(x: invader.position.x, y: -(bullet.frame.size.height / 2))
-        fireBullet(bullet, toDestination: bulletDestination, withDuration: invaderBulletDuration, andSoundFileName: Sound.Gun2.rawValue)
+        fireBullet(bullet, toDestination: bulletDestination, withDuration: invaderBulletDuration, andSoundFileName: Sound.gun2.rawValue)
       }
     }
   }
@@ -431,7 +431,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     let nodeNames = [contact.bodyA.node!.name!, contact.bodyB.node!.name!]
     if nodeNames.contains(runnerName) && nodeNames.contains(invaderFiredBulletName) {
-      run(SKAction.playSoundFileNamed(Sound.Scream1.rawValue, waitForCompletion: false))
+      run(SKAction.playSoundFileNamed(Sound.scream1.rawValue, waitForCompletion: false))
       adjustrunnerHealthBy(healthAdjustment)
       if runnerHealth <= 0.0 {
         contact.bodyA.node!.removeFromParent()
@@ -447,12 +447,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
       }
       
-    } else if (nodeNames.contains(InvaderType.Horse.rawValue) || nodeNames.contains(InvaderType.Runner.rawValue)) && nodeNames.contains(runnerFiredBulletName) {
+    } else if (nodeNames.contains(InvaderType.horse.rawValue) || nodeNames.contains(InvaderType.runner.rawValue)) && nodeNames.contains(runnerFiredBulletName) {
       let scream: String
-      if nodeNames.contains(InvaderType.Horse.rawValue) {
-        scream = Sound.Neigh.rawValue // TODO: credit http://www.orangefreesounds.com/horse-neighing/
+      if nodeNames.contains(InvaderType.horse.rawValue) {
+        scream = Sound.neigh.rawValue // TODO: credit http://www.orangefreesounds.com/horse-neighing/
       } else {
-        scream = Sound.Scream2.rawValue
+        scream = Sound.scream2.rawValue
       }
       run(SKAction.playSoundFileNamed(scream, waitForCompletion: false))
       contact.bodyA.node!.removeFromParent()
@@ -462,12 +462,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   }
   
   func isGameOver() -> Bool {
-    var invader = childNode(withName: InvaderType.Horse.rawValue)
+    var invader = childNode(withName: InvaderType.horse.rawValue)
     if invader == nil {
-      invader = childNode(withName: InvaderType.Runner.rawValue)
+      invader = childNode(withName: InvaderType.runner.rawValue)
     }
     var invaderTooLow = false
-    enumerateChildNodes(withName: InvaderType.Runner.rawValue) {
+    enumerateChildNodes(withName: InvaderType.runner.rawValue) {
       node, stop in
       
       if (Float(node.frame.minY) <= self.minInvaderBottomHeight)   {

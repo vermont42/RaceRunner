@@ -20,6 +20,6 @@ class Utterer {
     utterance.voice = AVSpeechSynthesisVoice(language: "en-\(SettingsManager.getAccent().languageCode())")
     utterance.pitchMultiplier = Utterer.pitchMultiplier
     synth.speak(utterance)
-    SoundManager.play(.Silence) // https://forums.developer.apple.com/thread/23160
+    SoundManager.play(.silence) // https://forums.developer.apple.com/thread/23160
   }
 }

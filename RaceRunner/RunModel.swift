@@ -164,7 +164,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
           latitude: initialLocation.coordinate.latitude,
           longitude: initialLocation.coordinate.longitude) ) { result in
             switch result {
-            case .Error(_, _):
+            case .error(_, _):
               self.temperature = Run.noTemperature
               self.weather = Run.noWeather
             case .success(_, let dictionary):

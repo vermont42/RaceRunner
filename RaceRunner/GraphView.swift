@@ -61,7 +61,7 @@ class GraphView: UIView {
       xAxisPath.stroke()
 
       let overlay = SettingsManager.getOverlay()
-      if overlay == .Both || overlay == .Altitude {
+      if overlay == .both || overlay == .altitude {
         let yAxisPath = UIBezierPath()
         yAxisPath.move(to: CGPoint(x: GraphView.chartOffset, y: GraphView.chartOffset))
         yAxisPath.addLine(to: CGPoint(x: GraphView.chartOffset, y: chartHeight + GraphView.chartOffset))
@@ -72,7 +72,7 @@ class GraphView: UIView {
           return (run.locations[self.xToIndex(x)] as! Location).altitude.doubleValue
         })
       }
-      if overlay == .Both || overlay == .Pace {
+      if overlay == .both || overlay == .pace {
         let yAxisPath = UIBezierPath()
         yAxisPath.move(to: CGPoint(x: GraphView.chartOffset + chartWidth, y: GraphView.chartOffset))
         yAxisPath.addLine(to: CGPoint(x: GraphView.chartOffset + chartWidth, y: chartHeight + GraphView.chartOffset))
@@ -112,7 +112,7 @@ class GraphView: UIView {
       let altChunkSpan = (run.maxAltitude.doubleValue - run.minAltitude.doubleValue) / Double(yTics + 1)
       let paceChunkSpan = (maxSmoothSpeed - minSmoothSpeed) / Double(yTics)
       for y in 0 ..< yTics + 1 {
-        if overlay == .Both || overlay == .Altitude {
+        if overlay == .both || overlay == .altitude {
           UiConstants.darkColor.setStroke()
           ticPath.move(to: CGPoint(x: GraphView.chartOffset, y: GraphView.chartOffset + (CGFloat(y) * chunkHeight)))
           ticPath.addLine(to: CGPoint(x: GraphView.chartOffset - GraphView.ticLength, y: GraphView.chartOffset + (CGFloat(y) * chunkHeight)))
@@ -122,7 +122,7 @@ class GraphView: UIView {
           let label = Converter.stringifyAltitude(run.maxAltitude.doubleValue - ((Double(y) * altChunkSpan)), unabbreviated: true, includeUnit: false)
           label.draw(at: CGPoint(x: labelX, y: labelY), withAttributes: [NSAttributedStringKey.foregroundColor: UiConstants.intermediate3Color])
         }
-        if overlay == .Both || overlay == .Pace {
+        if overlay == .both || overlay == .pace {
           UiConstants.darkColor.setStroke()
           ticPath.move(to: CGPoint(x: GraphView.chartOffset + chartWidth, y: GraphView.chartOffset + (CGFloat(y) * chunkHeight)))
           ticPath.addLine(to: CGPoint(x: GraphView.chartOffset + chartWidth + GraphView.ticLength, y: GraphView.chartOffset + (CGFloat(y) * chunkHeight)))

@@ -196,13 +196,13 @@ class RunVC: ChildVC, RunDelegate {
         pauseResume.isHidden = false
         pauseResume.setTitle("  Pause  ", for: UIControlState())
         RunModel.runModel.start()
-        SoundManager.play(.Gun)
+        SoundManager.play(.gun)
         map.isHidden = false
         paceOrAltitude.isHidden = false
       }
       else {
         UIAlertController.showMessage(RunVC.noGpsMessage, title: RunVC.sadFaceTitle, okTitle: RunVC.bummerButtonTitle, handler: {(action) in
-          SoundManager.play(.SadTrombone)
+          SoundManager.play(.sadTrombone)
         })
       }
     case .inProgress, .paused:
@@ -229,11 +229,11 @@ class RunVC: ChildVC, RunDelegate {
         let randomApplause = arc4random_uniform(Sound.applauseCount) + 1
         switch randomApplause {
         case 1:
-          SoundManager.play(.Applause1)
+          SoundManager.play(.applause1)
         case 2:
-          SoundManager.play(.Applause2)
+          SoundManager.play(.applause2)
         case 3:
-          SoundManager.play(.Applause3)
+          SoundManager.play(.applause3)
         default:
           break
         }
@@ -241,7 +241,7 @@ class RunVC: ChildVC, RunDelegate {
       }
       else {
         UIAlertController.showMessage(RunVC.didNotSaveMessage, title: RunVC.sadFaceTitle, okTitle: RunVC.bummerButtonTitle, handler: {(action) in
-          SoundManager.play(.SadTrombone)
+          SoundManager.play(.sadTrombone)
           self.showMenu()
         })
       }
@@ -255,7 +255,7 @@ class RunVC: ChildVC, RunDelegate {
   }
   
   @IBAction func pauseResume(_ sender: UIButton) {
-    SoundManager.play(.Click)
+    SoundManager.play(.click)
     let runModel = RunModel.runModel
     switch runModel.status {
     case .preRun:

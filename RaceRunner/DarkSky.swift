@@ -15,13 +15,13 @@ open class DarkSky {
   
   public enum Result {
     case success(URLResponse?, NSDictionary?)
-    case Error(URLResponse?, NSError?)
+    case error(URLResponse?, NSError?)
     
     public func data() -> NSDictionary? {
       switch self {
       case .success(_, let dictionary):
         return dictionary
-      case .Error(_, _):
+      case .error(_, _):
         return nil
       }
     }
@@ -30,16 +30,16 @@ open class DarkSky {
       switch self {
       case .success(let response, _):
         return response
-      case .Error(let response, _):
+      case .error(let response, _):
         return response
       }
     }
     
-    public func error() -> NSError? {
+    public func nSError() -> NSError? {
       switch self {
       case .success(_, _):
         return nil
-      case .Error(_, let error):
+      case .error(_, let error):
         return error
       }
     }
@@ -77,7 +77,7 @@ open class DarkSky {
       currentQueue?.addOperation {
         var result = Result.success(response, dictionary)
         if error != nil {
-          result = Result.Error(response, error)
+          result = Result.error(response, error)
         }
         callback(result)
       }

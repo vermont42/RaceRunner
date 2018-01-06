@@ -14,7 +14,9 @@ open class LocationManager {
   private var cLLocationManager: CLLocationManager!
   
   public enum LocationManagerType {
-    case gpx, coreLocation
+    case gpx
+    case coreLocation
+    
     init() {
       self = .coreLocation
     }

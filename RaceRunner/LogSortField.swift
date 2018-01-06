@@ -9,64 +9,64 @@
 import Foundation
 
 enum LogSortField: String {
-  case Date = "Date"
-  case Name = "Name"
-  case Pace = "Pace"
-  case Distance = "Distance"
-  case Duration = "Duration"
+  case date = "Date"
+  case name = "Name"
+  case pace = "Pace"
+  case distance = "Distance"
+  case duration = "Duration"
   
   init() {
-    self = .Date
+    self = .date
   }
   
   static func all() -> [String] {
-    return [LogSortField.Date.asString(), LogSortField.Name.asString(), LogSortField.Pace.asString(), LogSortField.Distance.asString(), LogSortField.Duration.asString()]
+    return [LogSortField.date.asString(), LogSortField.name.asString(), LogSortField.pace.asString(), LogSortField.distance.asString(), LogSortField.duration.asString()]
   }
   
   static func sortFieldForPosition(_ position: Int) -> LogSortField {
     switch position {
     case 0:
-      return .Date
+      return .date
     case 1:
-      return .Name
+      return .name
     case 2:
-      return .Pace
+      return .pace
     case 3:
-      return .Distance
+      return .distance
     case 4:
-      return .Duration
+      return .duration
     default:
-      return .Date
+      return .date
     }
   }
   
   // This method exists in case I internationalize at some point.
   func asString() -> String {
     switch self {
-    case .Date:
+    case .date:
       return self.rawValue
-    case .Name:
+    case .name:
       return self.rawValue
-    case .Pace:
+    case .pace:
       return self.rawValue
-    case .Distance:
+    case .distance:
       return self.rawValue
-    case .Duration:
+    case .duration:
       return self.rawValue
     }
   }
   
   func pickerPosition() -> Int {
     switch self {
-    case .Date:
+    case .date:
       return 0
-    case .Name:
+    case .name:
       return 1
-    case .Pace:
+    case .pace:
       return 2
-    case .Distance:
+    case .distance:
       return 3
-    case .Duration:
+    case .duration:
       return 4
     }
   }
@@ -76,19 +76,19 @@ enum LogSortField: String {
     let sortField = SettingsManager.getLogSortField()
     var ordering: ComparisonResult
     switch sortType {
-    case .Normal:
+    case .normal:
       ordering = .orderedDescending
-    case .Reverse:
+    case .reverse:
       ordering = .orderedAscending
     }
     switch sortField {
-    case .Date:
+    case .date:
       return run1.timestamp.compare(run2.timestamp as Date) == ordering
-    case .Name:
+    case .name:
       let name1: String = run1.displayName()
       let name2: String = run2.displayName()
       return name1.localizedCaseInsensitiveCompare(name2) == ordering
-    case .Pace:
+    case .pace:
       let pace1 = run1.duration.doubleValue / run1.distance.doubleValue
       let pace2 = run2.duration.doubleValue / run2.distance.doubleValue
       var result = pace1 < pace2
@@ -96,13 +96,13 @@ enum LogSortField: String {
         result = !result
       }
       return result
-    case .Distance:
+    case .distance:
       var result = run1.distance.doubleValue < run2.distance.doubleValue
       if ordering == .orderedDescending {
         result = !result
       }
       return result
-    case .Duration:
+    case .duration:
       var result = run1.duration.int32Value < run2.duration.int32Value
       if ordering == .orderedDescending {
         result = !result

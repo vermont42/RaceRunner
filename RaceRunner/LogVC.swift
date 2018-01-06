@@ -182,7 +182,7 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
   }
   
   @IBAction func reverseSort() {
-    SettingsManager.setSortType(SortType.reverse(SettingsManager.getSortType()))
+    SettingsManager.setSortType(SortType.reverseSortType(SettingsManager.getSortType()))
     runs?.sort { LogSortField.compare($0, run2: $1) }
     tableView.reloadData()
   }

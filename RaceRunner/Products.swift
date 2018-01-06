@@ -7,7 +7,6 @@
 //
 
 public enum Products {
-  
   private static let Prefix = "biz.joshadams.RaceRunner."
   public static let runningHorse = Prefix + "runninghorse"
   public static let broadcastRuns = Prefix + "broadcastruns"

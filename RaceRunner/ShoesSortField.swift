@@ -9,43 +9,43 @@
 import Foundation
 
 enum ShoesSortField: String {
-  case Name = "Name"
-  case Kilometers = "Kilometers"
-  case MaxKilometers = "MaxKilometers"
+  case name = "Name"
+  case kilometers = "Kilometers"
+  case maxKilometers = "MaxKilometers"
   
   init() {
-    self = .Name
+    self = .name
   }
   
   static func all() -> [String] {
-    return [ShoesSortField.Name.asString(), ShoesSortField.Kilometers.asString(), ShoesSortField.MaxKilometers.asString()]
+    return [ShoesSortField.name.asString(), ShoesSortField.kilometers.asString(), ShoesSortField.maxKilometers.asString()]
   }
   
   static func sortFieldForPosition(_ position: Int) -> ShoesSortField {
     switch position {
     case 0:
-      return .Name
+      return .name
     case 1:
-      return .Kilometers
+      return .kilometers
     case 2:
-      return .MaxKilometers
+      return .maxKilometers
     default:
-      return .Name
+      return .name
     }
   }
   
   func asString() -> String {
     switch self {
-    case .Name:
+    case .name:
       return self.rawValue
-    case .Kilometers:
+    case .kilometers:
       if SettingsManager.getUnitType() == .Metric {
         return "Current Kilometers"
       }
       else {
         return "Current Miles"
       }
-    case .MaxKilometers:
+    case .maxKilometers:
       if SettingsManager.getUnitType() == .Metric {
         return "Maximum Kilometers"
       }
@@ -57,11 +57,11 @@ enum ShoesSortField: String {
   
   func pickerPosition() -> Int {
     switch self {
-    case .Name:
+    case .name:
       return 0
-    case .Kilometers:
+    case .kilometers:
       return 1
-    case .MaxKilometers:
+    case .maxKilometers:
       return 2
     }
   }
@@ -71,23 +71,23 @@ enum ShoesSortField: String {
     let sortField = SettingsManager.getShoesSortField()
     var ordering: ComparisonResult
     switch sortType {
-    case .Normal:
+    case .normal:
       ordering = .orderedDescending
-    case .Reverse:
+    case .reverse:
       ordering = .orderedAscending
     }
     switch sortField {
-    case .Name:
+    case .name:
       let name1: String = shoes1.name
       let name2: String = shoes2.name
       return name1.localizedCaseInsensitiveCompare(name2) == ordering
-    case .Kilometers:
+    case .kilometers:
       var result = shoes1.kilometers.floatValue < shoes2.kilometers.floatValue
       if ordering == .orderedDescending {
         result = !result
       }
       return result
-    case .MaxKilometers:
+    case .maxKilometers:
       var result = shoes1.maxKilometers.floatValue < shoes2.maxKilometers.floatValue
       if ordering == .orderedDescending {
         result = !result

@@ -46,21 +46,21 @@ class GpxParser: NSObject, XMLParserDelegate {
   private static let dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
   private static let accuracy: CLLocationAccuracy = 5.0
   private enum ParsingState: String {
-    case Trkpt = "trkpt"
-    case AutoName = "name"
-    case CustomName = "customName"
-    case Weight = "weight"
-    case Ele = "ele"
-    case Time = "time"
-    case Temperature = "temperature"
-    case Weather = "weather"
-    case Other = "other"
+    case trkpt = "trkpt"
+    case autoName = "name"
+    case customName = "customName"
+    case weight = "weight"
+    case ele = "ele"
+    case time = "time"
+    case temperature = "temperature"
+    case weather = "weather"
+    case other = "other"
     init() {
-      self = .AutoName
+      self = .autoName
     }
   }
   private var alreadySetName = false
-  private var parsingState: ParsingState = .AutoName
+  private var parsingState: ParsingState = .autoName
   private static let runtastic = "runtastic"
   private static let runtasticGarbage = ".000"
   private static let runtasticRunName = "Runtastic Run"
@@ -92,38 +92,38 @@ class GpxParser: NSObject, XMLParserDelegate {
   
   func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
     switch elementName {
-    case ParsingState.Trkpt.rawValue:
+    case ParsingState.trkpt.rawValue:
       curLatString = attributeDict["lat"]! as NSString
       curLonString = attributeDict["lon"]! as NSString
-      parsingState = .Trkpt
+      parsingState = .trkpt
       startedTrackPoints = true
-    case ParsingState.AutoName.rawValue:
+    case ParsingState.autoName.rawValue:
       if !alreadySetName {
         buffer = ""
-        parsingState = .AutoName
+        parsingState = .autoName
       }
-    case ParsingState.CustomName.rawValue:
+    case ParsingState.customName.rawValue:
       buffer = ""
-      parsingState = .CustomName
-    case ParsingState.Ele.rawValue:
+      parsingState = .customName
+    case ParsingState.ele.rawValue:
       buffer = ""
-      parsingState = .Ele
-    case ParsingState.Temperature.rawValue:
+      parsingState = .ele
+    case ParsingState.temperature.rawValue:
       buffer = ""
-      parsingState = .Temperature
-    case ParsingState.Weather.rawValue:
+      parsingState = .temperature
+    case ParsingState.weather.rawValue:
       buffer = ""
-      parsingState = .Weather
-    case ParsingState.Time.rawValue:
+      parsingState = .weather
+    case ParsingState.time.rawValue:
       if startedTrackPoints {
         buffer = ""
-        parsingState = .Time
+        parsingState = .time
       }
-    case ParsingState.Weight.rawValue:
+    case ParsingState.weight.rawValue:
       buffer = ""
-      parsingState = .Weight
+      parsingState = .weight
     default:
-      parsingState = .Other
+      parsingState = .other
       break
     }
   }
@@ -134,31 +134,31 @@ class GpxParser: NSObject, XMLParserDelegate {
         isRuntastic = true
       }
     }
-    if (startedTrackPoints || (parsingState == .AutoName && !alreadySetName) || (parsingState == .CustomName) || (parsingState == .Weight) || (parsingState == .Temperature) || (parsingState == .Weather)) && string != "\n" {
+    if (startedTrackPoints || (parsingState == .autoName && !alreadySetName) || (parsingState == .customName) || (parsingState == .weight) || (parsingState == .temperature) || (parsingState == .weather)) && string != "\n" {
       buffer = buffer + string
     }
   }
   
   func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
     switch elementName {
-    case ParsingState.Trkpt.rawValue:
+    case ParsingState.trkpt.rawValue:
       locations.append(CLLocation(coordinate: CLLocationCoordinate2D(latitude: curLatString.doubleValue, longitude: curLonString.doubleValue), altitude: curEleString.doubleValue, horizontalAccuracy: GpxParser.accuracy, verticalAccuracy: GpxParser.accuracy, timestamp: dateFormatter.date(from: curTimeString)!))
-    case ParsingState.AutoName.rawValue:
+    case ParsingState.autoName.rawValue:
       if !alreadySetName {
         autoName = buffer
         alreadySetName = true
       }
-    case ParsingState.CustomName.rawValue:
+    case ParsingState.customName.rawValue:
       customName = buffer
-    case ParsingState.Ele.rawValue:
+    case ParsingState.ele.rawValue:
       curEleString = buffer as NSString
-    case ParsingState.Temperature.rawValue:
+    case ParsingState.temperature.rawValue:
       temperature = Float(buffer) ?? temperature
-    case ParsingState.Weather.rawValue:
+    case ParsingState.weather.rawValue:
       weather = buffer
-    case ParsingState.Weight.rawValue:
+    case ParsingState.weight.rawValue:
       weight = Double(buffer) ?? weight
-    case ParsingState.Time.rawValue:
+    case ParsingState.time.rawValue:
       if startedTrackPoints {
         curTimeString = buffer
         if isRuntastic {
