@@ -24,7 +24,7 @@ class RunVC: ChildVC, RunDelegate {
   @IBOutlet var map: GMSMapView!
   @IBOutlet var paceOrAltitude: UISegmentedControl!
   
-  private static let gpxTitle = "Berkeley Hills"
+  private static let gpxTitle = "Berkeley Hills "
   private static let didNotSaveMessage = "RaceRunner did not save this run because it was so short. The run, not RaceRunner. As a collection of electrons on your phone, RaceRunner has no physical height."
   private static let noGpsMessage = "RaceRunner cannot record your run because you have not given it permission to access the GPS sensors. You can give this permission in the Settings app."
   private static let pauseError = "Attempted to display details of run with zero locations."
@@ -44,6 +44,7 @@ class RunVC: ChildVC, RunDelegate {
     map.isHidden = true
     paceOrAltitude.isHidden = true
     view.sendSubview(toBack: map)
+    view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(RunVC.announceCurrentPace)))
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -109,6 +110,10 @@ class RunVC: ChildVC, RunDelegate {
     if (runToSimulate != nil || gpxFile != nil) && (RunModel.runModel.status != .preRun)  {
       RunModel.runModel.stop()
     }
+  }
+
+  @objc func announceCurrentPace() {
+    RunModel.runModel.announceCurrentPace()
   }
 
   func addPolylineAndPin() {

@@ -11,31 +11,6 @@ import MapKit
 import CoreLocation
 import CoreData
 
-private func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-private func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
-
-
-protocol ImportedRunDelegate {
-  func runWasImported()
-}
-
 class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   var locations: [CLLocation]! = []
   var status : Status = .preRun
@@ -67,6 +42,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   private var minAlt = 0.0
   private var maxAlt = 0.0
   private var curAlt = 0.0
+  private var curPace = 0.0
   private var runToSimulate: Run!
   private var gpxFile: String!
   private var secondLength = 1.0
@@ -185,10 +161,10 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
             let distanceDelta = newLocation.distance(from: self.locations.last!)
             totalDistance += distanceDelta
             let timeDelta = newLocation.timestamp.timeIntervalSince(self.locations.last!.timestamp)
-            let pace = distanceDelta / timeDelta
-            let paceIndex = sortedPaces.insertionIndexOf(pace) { $0 < $1 }
-            sortedPaces.insert(pace, at: paceIndex)
-            let paceColor = UiHelpers.colorForValue(pace, sortedArray: sortedPaces, index: paceIndex)
+            curPace = distanceDelta / timeDelta
+            let paceIndex = sortedPaces.insertionIndexOf(curPace) { $0 < $1 }
+            sortedPaces.insert(curPace, at: paceIndex)
+            let paceColor = UiHelpers.colorForValue(curPace, sortedArray: sortedPaces, index: paceIndex)
             runDelegate?.plotToCoordinate(newLocation.coordinate, altitudeColor: altitudeColor, paceColor: paceColor)
           }
           else {
@@ -276,6 +252,10 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
         oldSplitAltitude = curAlt
       }
     }
+  }
+
+  internal func announceCurrentPace() {
+    Converter.announceCurrentPace(curPace)
   }
   
   static func loadStateAndStart() {
@@ -608,4 +588,27 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   }
 }
 
+private func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
+private func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+
+protocol ImportedRunDelegate {
+  func runWasImported()
+}

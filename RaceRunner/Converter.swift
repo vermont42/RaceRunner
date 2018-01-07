@@ -68,6 +68,10 @@ class Converter {
     }
     Utterer.utter(progressString)
   }
+
+  class func announceCurrentPace(_ pace: Double) {
+    Utterer.utter(stringifyPace(pace, seconds: 1, forSpeaking: true))
+  }
   
   class func pluralizedCurrentLongUnit(_ value: Double) -> String {
     switch SettingsManager.getUnitType() {
@@ -233,7 +237,7 @@ class Converter {
       unitName = ""
     }
     if forSpeaking {
-      return NSString(format: "%d minutes %02d seconds per %@", paceMin, paceSec, unitName) as String
+      return NSString(format: "%d minutes %d seconds per %@", paceMin, paceSec, unitName) as String
     }
     else {
       return NSString(format: "%d:%02d %@", paceMin, paceSec, unitName) as String
