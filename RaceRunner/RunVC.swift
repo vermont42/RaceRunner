@@ -242,6 +242,7 @@ class RunVC: ChildVC, RunDelegate {
         default:
           break
         }
+        ReviewPrompter.promptableActionHappened()
         performSegue(withIdentifier: "pan details from run", sender: self)
       }
       else {

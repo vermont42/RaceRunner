@@ -70,6 +70,7 @@
 		E1A41B4E1BF7D83100E31943 /* PubNubManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A41B4D1BF7D83100E31943 /* PubNubManager.swift */; };
 		E1B45F071AE96EFC00AF73AB /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B45F061AE96EFC00AF73AB /* LocationManager.swift */; };
 		E1B93F822002B8D800D4A3D7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1B93F812002B8D800D4A3D7 /* Main.storyboard */; };
+		E1B93F842003BEF800D4A3D7 /* ReviewPrompter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B93F832003BEF700D4A3D7 /* ReviewPrompter.swift */; };
 		E1C2ED501AB63BE200A29728 /* LogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C2ED4F1AB63BE200A29728 /* LogCell.swift */; };
 		E1CBD2D71AC4D616006F0B85 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CBD2D61AC4D616006F0B85 /* SettingsManager.swift */; };
 		E1D38F491B9E6AFE00380643 /* Runmeter.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E1D38F481B9E6AFE00380643 /* Runmeter.gpx */; };
@@ -176,6 +177,7 @@
 		E1A41B4D1BF7D83100E31943 /* PubNubManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubNubManager.swift; sourceTree = "<group>"; };
 		E1B45F061AE96EFC00AF73AB /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		E1B93F812002B8D800D4A3D7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		E1B93F832003BEF700D4A3D7 /* ReviewPrompter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewPrompter.swift; sourceTree = "<group>"; };
 		E1C2ED4F1AB63BE200A29728 /* LogCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogCell.swift; sourceTree = "<group>"; };
 		E1CBD2D61AC4D616006F0B85 /* SettingsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		E1D38F481B9E6AFE00380643 /* Runmeter.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Runmeter.gpx; sourceTree = "<group>"; };
@@ -366,6 +368,7 @@
 				E1A41B4D1BF7D83100E31943 /* PubNubManager.swift */,
 				E12F33CA1C8B7929008BA8D8 /* PubNubPublisher.swift */,
 				E14175AA1C87A322001F402C /* PubNubSubscriber.swift */,
+				E1B93F832003BEF700D4A3D7 /* ReviewPrompter.swift */,
 				E12F33C81C8B7490008BA8D8 /* RunDelegate.swift */,
 				E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */,
 				E11655AB1AEAFB5200633C16 /* RunModel.swift */,
@@ -652,6 +655,7 @@
 				E1E8B9571AAB742E00D04E38 /* SpectateVC.swift in Sources */,
 				E1D521691ABA93CD00B46300 /* Run.swift in Sources */,
 				E12F33CB1C8B7929008BA8D8 /* PubNubPublisher.swift in Sources */,
+				E1B93F842003BEF800D4A3D7 /* ReviewPrompter.swift in Sources */,
 				E14175AB1C87A322001F402C /* PubNubSubscriber.swift in Sources */,
 				E1E7F7D61C03F8E500F108B6 /* Double+roundToPlaces.swift in Sources */,
 				E1B45F071AE96EFC00AF73AB /* LocationManager.swift in Sources */,

@@ -91,7 +91,16 @@ class SettingsManager {
   private var highScore: Int
   private static let highScoreDefault = 0
   private static let highScoreKey = "highScore"
-  
+
+  private var lastReviewPromptDate: Date
+  private static let lastReviewPromptDateKey = "lastReviewPromptDate"
+  private static let lastReviewPromptDateDefault = Date(timeIntervalSince1970: 0.0)
+  private static let formatter = DateFormatter()
+
+  private var promptActionCount: Int
+  private static let promptActionCountKey = "promptActionCount"
+  private static let promptActionCountDefault = 0
+
   private init() {
     userDefaults = UserDefaults.standard
     
@@ -281,6 +290,24 @@ class SettingsManager {
     else {
       highScore = SettingsManager.highScoreDefault
       userDefaults.set(String(format:"%d", highScore), forKey: SettingsManager.highScoreKey)
+      userDefaults.synchronize()
+    }
+
+    if let lastReviewPromptDateString = userDefaults.string(forKey: SettingsManager.lastReviewPromptDateKey) {
+      lastReviewPromptDate = SettingsManager.formatter.date(from: lastReviewPromptDateString) ?? Date()
+    }
+    else {
+      lastReviewPromptDate = SettingsManager.lastReviewPromptDateDefault
+      userDefaults.set(SettingsManager.formatter.string(from: lastReviewPromptDate), forKey: SettingsManager.lastReviewPromptDateKey)
+      userDefaults.synchronize()
+    }
+
+    if let promptActionCountString = userDefaults.string(forKey: SettingsManager.promptActionCountKey) {
+      promptActionCount = Int((promptActionCountString as NSString).intValue)
+    }
+    else {
+      promptActionCount = SettingsManager.promptActionCountDefault
+      userDefaults.set("\(promptActionCount)", forKey: SettingsManager.promptActionCountKey)
       userDefaults.synchronize()
     }
   }
@@ -537,6 +564,30 @@ class SettingsManager {
     if showWeight != settingsManager.showWeight {
       settingsManager.showWeight = showWeight
       settingsManager.userDefaults.set("\(showWeight)", forKey: SettingsManager.showWeightKey)
+      settingsManager.userDefaults.synchronize()
+    }
+  }
+
+  class func getLastReviewPromptDate() -> Date {
+    return settingsManager.lastReviewPromptDate
+  }
+
+  class func setLastReviewPromptDate(_ lastReviewPromptDate: Date) {
+    if lastReviewPromptDate != settingsManager.lastReviewPromptDate {
+      settingsManager.lastReviewPromptDate = lastReviewPromptDate
+      settingsManager.userDefaults.set(SettingsManager.formatter.string(from: lastReviewPromptDate), forKey: SettingsManager.lastReviewPromptDateKey)
+      settingsManager.userDefaults.synchronize()
+    }
+  }
+
+  class func getPromptActionCount() -> Int {
+    return settingsManager.promptActionCount
+  }
+
+  class func setPromptActionCount(_ promptActionCount: Int) {
+    if promptActionCount != settingsManager.promptActionCount {
+      settingsManager.promptActionCount = promptActionCount
+      settingsManager.userDefaults.set("\(promptActionCount)", forKey: SettingsManager.promptActionCountKey)
       settingsManager.userDefaults.synchronize()
     }
   }
