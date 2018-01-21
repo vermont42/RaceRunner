@@ -766,14 +766,14 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checked" translatesAutoresizingMaskIntoConstraints="NO" id="YrN-Ag-Bia">
-                                                    <rect key="frame" x="198" y="27" width="38" height="38"/>
+                                                    <rect key="frame" x="143" y="27" width="38" height="38"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="38" id="3Sw-1c-Ros"/>
                                                         <constraint firstAttribute="height" constant="38" id="bRf-RD-jN7"/>
                                                     </constraints>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shoe" translatesAutoresizingMaskIntoConstraints="NO" id="0Oe-Lo-f4n">
-                                                    <rect key="frame" x="244" y="15" width="83" height="62"/>
+                                                    <rect key="frame" x="189" y="15" width="83" height="62"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="62" id="3Ry-cs-F08"/>
                                                         <constraint firstAttribute="width" constant="83" id="zWh-JY-B1L"/>
@@ -1184,12 +1184,12 @@
                                 <exclude reference="5Q5-7Z-GZq"/>
                                 <exclude reference="hJ6-H7-Iei"/>
                                 <exclude reference="pJJ-4j-fRb"/>
-                                <exclude reference="0ft-2P-h9G"/>
-                                <exclude reference="muX-kN-FzZ"/>
                                 <exclude reference="N7e-MV-caw"/>
                                 <exclude reference="NLj-lm-X2b"/>
                                 <exclude reference="qNK-Nw-Jgv"/>
                                 <exclude reference="vHT-yB-Gxm"/>
+                                <exclude reference="0ft-2P-h9G"/>
+                                <exclude reference="muX-kN-FzZ"/>
                                 <exclude reference="4sP-XX-vkE"/>
                                 <exclude reference="SLh-8u-0dM"/>
                                 <exclude reference="ifq-Af-HCm"/>
@@ -1224,12 +1224,6 @@
                                 <include reference="hJ6-H7-Iei"/>
                                 <include reference="pJJ-4j-fRb"/>
                                 <exclude reference="rLU-2L-ye0"/>
-                                <include reference="0ft-2P-h9G"/>
-                                <exclude reference="7dv-XC-moa"/>
-                                <exclude reference="I06-tZ-TO2"/>
-                                <exclude reference="aCy-cG-5Zc"/>
-                                <exclude reference="cBb-5h-zc1"/>
-                                <include reference="muX-kN-FzZ"/>
                                 <exclude reference="JXI-Ek-oEh"/>
                                 <include reference="N7e-MV-caw"/>
                                 <include reference="NLj-lm-X2b"/>
@@ -1238,6 +1232,12 @@
                                 <exclude reference="l1b-7E-NZt"/>
                                 <include reference="qNK-Nw-Jgv"/>
                                 <include reference="vHT-yB-Gxm"/>
+                                <include reference="0ft-2P-h9G"/>
+                                <exclude reference="7dv-XC-moa"/>
+                                <exclude reference="I06-tZ-TO2"/>
+                                <exclude reference="aCy-cG-5Zc"/>
+                                <exclude reference="cBb-5h-zc1"/>
+                                <include reference="muX-kN-FzZ"/>
                                 <exclude reference="0bp-SX-ovU"/>
                                 <include reference="4sP-XX-vkE"/>
                                 <include reference="SLh-8u-0dM"/>
@@ -1468,7 +1468,7 @@
                                 <color key="backgroundColor" red="0.29019607843137257" green="0.3411764705882353" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.29019607843137257" green="0.3411764705882353" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" misplaced="YES" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LogCell" rowHeight="92" id="ISz-V0-DCh" customClass="LogCell" customModule="RaceRunner">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LogCell" rowHeight="92" id="ISz-V0-DCh" customClass="LogCell" customModule="RaceRunner">
                                         <rect key="frame" x="0.0" y="26" width="288" height="92"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ISz-V0-DCh" id="XUs-S4-oDg">
