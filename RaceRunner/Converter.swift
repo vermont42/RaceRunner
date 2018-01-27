@@ -75,14 +75,14 @@ class Converter {
   
   class func pluralizedCurrentLongUnit(_ value: Double) -> String {
     switch SettingsManager.getUnitType() {
-    case .Imperial:
+    case .imperial:
       if value <= 1.0 {
         return mile
       }
       else {
         return miles
       }
-    case .Metric:
+    case .metric:
       if value <= 1.0 {
         return kilometer
       }
@@ -94,18 +94,18 @@ class Converter {
 
   class func convertLongDistanceToMeters(_ longDistance: Double) -> Double {
     switch SettingsManager.getUnitType() {
-    case .Imperial:
+    case .imperial:
       return longDistance * metersInMile
-    case .Metric:
+    case .metric:
       return longDistance * metersInKilometer
     }
   }
 
   class func convertMetersToLongDistance(_ meters: Double) -> Double {
     switch SettingsManager.getUnitType() {
-    case .Imperial:
+    case .imperial:
       return meters / metersInMile
-    case .Metric:
+    case .metric:
       return meters / metersInKilometer
     }
   }
@@ -113,7 +113,7 @@ class Converter {
   class func stringifyKilometers(_ kilometers: Float, includeUnits: Bool = false) -> String {
     var number = kilometers
     var units = ""
-    if SettingsManager.getUnitType() == .Metric {
+    if SettingsManager.getUnitType() == .metric {
       units = Converter.kilometerAbbr
     }
     else {
@@ -128,7 +128,7 @@ class Converter {
   }
   
   class func floatifyMileage(_ mileage: String) -> Float {
-    if SettingsManager.getUnitType() == .Metric {
+    if SettingsManager.getUnitType() == .metric {
       return Float(mileage)!
     }
     else {
@@ -137,25 +137,26 @@ class Converter {
   }
   
   class func getCurrentLongUnitName() -> String {
-    return SettingsManager.getUnitType() == .Imperial ? "mile" : "kilometer"
+    return SettingsManager.getUnitType() == .imperial ? "mile" : "kilometer"
   }
 
   class func getCurrentAbbreviatedLongUnitName() -> String {
-    return SettingsManager.getUnitType() == .Imperial ? "mile" : "km"
+    return SettingsManager.getUnitType() == .imperial ? "mile" : "km"
   }
   
   class func getCurrentPluralLongUnitName() -> String {
-    return SettingsManager.getUnitType() == .Imperial ? "miles" : "kms"
+    return SettingsManager.getUnitType() == .imperial ? "miles" : "kms"
   }
   
   class func convertFahrenheitToCelsius(_ temperature: Float) -> Float {
     return celsiusFraction * (temperature - fahrenheitAmountToAdd)
   }
   
-  class func stringifyDistance(_ meters: Double) -> String {
+  class func stringifyDistance(_ meters: Double, format: NSString = "%.2f", omitUnits: Bool = false) -> String {
+    var distance: NSString
     var unitDivider: Double
     var unitName: String
-    if SettingsManager.getUnitType() == .Metric {
+    if SettingsManager.getUnitType() == .metric {
       unitName = kilometerAbbr
       unitDivider = metersInKilometer
     }
@@ -163,7 +164,11 @@ class Converter {
       unitName = mileAbbr
       unitDivider = metersInMile
     }
-    return NSString(format: "%.2f %@", meters / unitDivider, unitName) as String
+    distance = NSString(format: format, meters / unitDivider)
+    if !omitUnits {
+      distance = NSString(format: "%@ %@", distance, unitName)
+    }
+    return distance as String
   }
   
   class func stringifySecondCount(_ seconds: Int, useLongFormat: Bool, useLongUnits: Bool = false) -> String {
@@ -212,7 +217,7 @@ class Converter {
     var unitMultiplier: Double
     var unitName: String
     if forSpeaking {
-      if SettingsManager.getUnitType() == .Metric {
+      if SettingsManager.getUnitType() == .metric {
         unitName = getCurrentLongUnitName()
         unitMultiplier = metersInKilometer
       }
@@ -222,7 +227,7 @@ class Converter {
       }
     }
     else {
-      if SettingsManager.getUnitType() == .Metric {
+      if SettingsManager.getUnitType() == .metric {
         unitName = "min/" + kilometerAbbr
         unitMultiplier = metersInKilometer
       }
@@ -247,7 +252,7 @@ class Converter {
   class func stringifyAltitude(_ meters: Double, unabbreviated: Bool = false, includeUnit: Bool = true) -> String {
     var unitMultiplier: Double
     var unitName: String
-    if SettingsManager.getUnitType() == .Metric {
+    if SettingsManager.getUnitType() == .metric {
       unitMultiplier = 1.0
       if !unabbreviated {
         unitName = metersAbbr
@@ -275,7 +280,7 @@ class Converter {
     var unitName: String
     var multiplier: Float
     var amountToAdd: Float
-    if SettingsManager.getUnitType() == .Metric {
+    if SettingsManager.getUnitType() == .metric {
       unitName = celsiusAbbr
       multiplier = celsiusMultiplier
       amountToAdd = celsiusAmountToAdd

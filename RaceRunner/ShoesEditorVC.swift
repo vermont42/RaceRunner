@@ -46,7 +46,7 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     if !choosingThumbnail {
-      if SettingsManager.getUnitType() == .Imperial {
+      if SettingsManager.getUnitType() == .imperial {
         currentMileageLabel.text = ShoesEditorVC.imperialMileageLabel
         maximumMileageLabel.text = ShoesEditorVC.imperialMaxMileageLabel
       }

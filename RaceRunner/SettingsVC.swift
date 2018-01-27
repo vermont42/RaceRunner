@@ -195,7 +195,7 @@ class SettingsVC: ChildVC, BroadcastDelegate {
   }
   
   func updateToggles() {
-    if SettingsManager.getUnitType() == .Imperial {
+    if SettingsManager.getUnitType() == .imperial {
       unitsToggle.isOn = false
     }
     else {
@@ -213,11 +213,11 @@ class SettingsVC: ChildVC, BroadcastDelegate {
   
   func updateWeightStepper() {
     switch SettingsManager.getUnitType() {
-    case .Imperial:
+    case .imperial:
       weightStepper.maximumValue = HumanWeight.maxImperial
       weightStepper.minimumValue = HumanWeight.minImperial
       weightStepper.value = SettingsManager.getWeight() * Converter.poundsPerKilogram
-    case .Metric:
+    case .metric:
       weightStepper.maximumValue = HumanWeight.maxMetric
       weightStepper.minimumValue = HumanWeight.minMetric
       weightStepper.value = SettingsManager.getWeight()
@@ -262,10 +262,10 @@ class SettingsVC: ChildVC, BroadcastDelegate {
   
   @IBAction func toggleUnitType(_ sender: UISwitch) {
     if sender.isOn {
-      SettingsManager.setUnitType(.Metric)
+      SettingsManager.setUnitType(.metric)
     }
     else {
-      SettingsManager.setUnitType(.Imperial)
+      SettingsManager.setUnitType(.imperial)
     }
     updateSplitsWidgets()
     updateAutoStopWidgets()
@@ -399,9 +399,9 @@ class SettingsVC: ChildVC, BroadcastDelegate {
   
   @IBAction func weightChanged(_ sender: UIStepper) {
     switch SettingsManager.getUnitType() {
-    case .Imperial:
+    case .imperial:
       SettingsManager.setWeight(sender.value / Converter.poundsPerKilogram)
-    case .Metric:
+    case .metric:
       SettingsManager.setWeight(sender.value)
     }
     updateWeightLabel()

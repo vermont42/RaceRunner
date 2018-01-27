@@ -21,9 +21,9 @@ struct HumanWeight {
   
   static func weightAsString(_ weight: Double, unitType: UnitType) -> String {
     switch unitType {
-    case .Metric:
+    case .metric:
       return String(format: "%.0f kg", weight)
-    case .Imperial:
+    case .imperial:
       return String(format: "%.0f lb", weight * Converter.poundsPerKilogram)
     }
   }
