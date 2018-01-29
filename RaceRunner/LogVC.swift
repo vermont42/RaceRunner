@@ -90,10 +90,6 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
     showMenu()
   }
   
-  func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-  }
-  
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if let runs = runs {
       return runs.count

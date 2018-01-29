@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
   @IBOutlet var menuTable: UITableView!
   @IBOutlet var viewControllerTitle: UILabel!
   
@@ -62,11 +62,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
   override func didReceiveMemoryWarning() {
     LowMemoryHandler.handleLowMemory(self)
   }
-  
-  func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-  }
-  
+    
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return controllerLabels.count
   }
@@ -111,6 +107,12 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     else {
       performSegue(withIdentifier: panSegues[(indexPath as NSIndexPath).row], sender: self)
     }
+  }
+
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    let shimmerDivisor: CGFloat = 2.0
+    let shimmerReducer: CGFloat = 10.0
+    viewControllerTitle.alpha = 1.0 + sin(scrollView.contentOffset.y / shimmerDivisor) / shimmerReducer
   }
   
   private func updateRunButton() {

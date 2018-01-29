@@ -915,7 +915,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="trd-AD-civ" customClass="COBezierTableView" customModule="COBezierTableView">
-                                <rect key="frame" x="16" y="97" width="288" height="451"/>
+                                <rect key="frame" x="16" y="98" width="288" height="450"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RaceRunner" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIr-Th-QMM">
@@ -924,10 +924,20 @@
                                 <color key="textColor" red="0.92941176469999998" green="0.68627450980000004" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2oC-Tk-GLt">
+                                <rect key="frame" x="16" y="89" width="288" height="1"/>
+                                <color key="backgroundColor" red="0.67475020885467529" green="0.74959570169448853" blue="0.68002772331237793" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="0oz-O7-VIF"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.22352941179999999" green="0.27058823529999998" blue="0.2784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="trd-AD-civ" firstAttribute="top" secondItem="DIr-Th-QMM" secondAttribute="bottom" constant="8" id="7Cd-N3-bTU"/>
+                            <constraint firstItem="2oC-Tk-GLt" firstAttribute="leading" secondItem="2sd-gR-2AF" secondAttribute="leading" constant="16" id="1Fk-jc-XKi"/>
+                            <constraint firstItem="trd-AD-civ" firstAttribute="top" secondItem="2oC-Tk-GLt" secondAttribute="bottom" constant="8" id="8Ce-aY-Z2x"/>
+                            <constraint firstAttribute="trailing" secondItem="2oC-Tk-GLt" secondAttribute="trailing" constant="16" id="MVf-df-hRR"/>
+                            <constraint firstItem="2oC-Tk-GLt" firstAttribute="top" secondItem="DIr-Th-QMM" secondAttribute="bottom" id="QmK-Vm-ljk"/>
                             <constraint firstAttribute="bottom" secondItem="trd-AD-civ" secondAttribute="bottom" constant="20" id="R8a-xo-eXD"/>
                             <constraint firstItem="DIr-Th-QMM" firstAttribute="top" secondItem="LwI-qT-UPG" secondAttribute="bottom" id="U5a-In-2QV"/>
                             <constraint firstItem="trd-AD-civ" firstAttribute="leading" secondItem="2sd-gR-2AF" secondAttribute="leading" constant="16" id="WZB-el-Bze"/>
@@ -2525,6 +2535,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="BKi-dk-66y"/>
-        <segue reference="Tpz-hV-a4w"/>
+        <segue reference="ltM-iX-wfX"/>
     </inferredMetricsTieBreakers>
 </document>

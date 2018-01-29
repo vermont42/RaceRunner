@@ -70,10 +70,6 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
   @IBAction func showMenu(_ sender: UIButton) {
     showMenu()
   }
-      
-  func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-  }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if pairs.count > 0 {
