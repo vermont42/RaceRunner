@@ -26,7 +26,6 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   @IBOutlet var calories: UILabel!
   @IBOutlet var paceOrAltitude: UISegmentedControl!
   @IBOutlet var netOrTotalCals: UISegmentedControl!
-  
   @IBOutlet var route: MarqueeLabel!
   @IBOutlet var customTitleButton: UIButton!
   @IBOutlet var exportButton: UIButton!
@@ -40,7 +39,6 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   private var latestStrokeColor = UiConstants.intermediate2ColorDarkened
   private var path = GMSMutablePath()
   private var polyline = GMSPolyline()
-  
   private static let newRunNamePrompt = "Enter a new name for this run."
   private static let newRunNameTitle = "Run Name"
   private static let setRunNameButtonTitle = "Set"
