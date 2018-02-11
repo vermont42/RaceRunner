@@ -34,4 +34,5 @@
 #import "GMSPanoramaLayer.h"
 #import "GMSPanoramaLink.h"
 #import "GMSPanoramaService.h"
+#import "GMSPanoramaSource.h"
 #import "GMSPanoramaView.h"

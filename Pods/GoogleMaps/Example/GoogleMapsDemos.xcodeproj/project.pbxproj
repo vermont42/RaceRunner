@@ -59,10 +59,10 @@
 		A0519847128EE65F32DFC710 /* MarkerEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9450C49DDD49AF9182779EB /* MarkerEventsViewController.m */; };
 		A1D6465072A5166D4F9DE0DA /* MapZoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3D673FA7036FA5D07CB287 /* MapZoomViewController.m */; };
 		A1F2D1C33D98B28D454849A2 /* step2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F955F74654756E7F7DBD9C1 /* step2@2x.png */; };
-		A3AD48A0ED08A1058818A8EC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F4C119D42CF37317FA0DFA9 /* UIKit.framework */; };
 		B646C0BAD2A245557B519931 /* step1.png in Resources */ = {isa = PBXBuildFile; fileRef = D66EF243066A58A0D10280D4 /* step1.png */; };
 		B6FD2D297FB38A36DF99D9D7 /* MyLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0878372A9A7274B74BCBE0 /* MyLocationViewController.m */; };
 		B7739DA0E40B29386E103FBD /* BasicMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FC5AD93CD72DE8F5B004A621 /* BasicMapViewController.m */; };
+		B96B00239590850A49AC33AD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F4C119D42CF37317FA0DFA9 /* UIKit.framework */; };
 		BA2D028BE5ED8042FEB05D8F /* bulgaria.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BC67BDB51522BC85EBFED8E /* bulgaria.png */; };
 		BB8A8CE2A1D1FBEA6A4CE003 /* GestureControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71CE23C2A26FD3C29E6AEEA7 /* GestureControlViewController.m */; };
 		C0210C5B8B348A0348D92DA9 /* step8@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5E5AF68BBC86BA530755A20 /* step8@2x.png */; };
@@ -236,7 +236,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3AD48A0ED08A1058818A8EC /* UIKit.framework in Frameworks */,
+				B96B00239590850A49AC33AD /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,7 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				3F84FF5646DF0F79669A6A34 /* Source */,
-				5D746A04C18655A0D40C68B8 /* Frameworks */,
+				89188BA529E9696AD04AD794 /* Frameworks */,
 				9C667AD7285A7D36180D29BE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -276,7 +276,7 @@
 			path = GoogleMapsDemos;
 			sourceTree = "<group>";
 		};
-		5D746A04C18655A0D40C68B8 /* Frameworks */ = {
+		89188BA529E9696AD04AD794 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				6F4C119D42CF37317FA0DFA9 /* UIKit.framework */,
@@ -461,7 +461,6 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 0900;
 			};
 			buildConfigurationList = 80C3BB6A64A9375104C7ACB9 /* Build configuration list for PBXProject "GoogleMapsDemos" */;
 			compatibilityVersion = "Xcode 3.2";

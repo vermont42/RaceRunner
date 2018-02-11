@@ -1,3 +1,23 @@
+Version 2.6.0 - February 2017
+=============================
+Features:
+  - Added a mechanism for Developers to enable experimental features.
+  - Added a click listener to the My Location dot. This allows developers to
+    respond to interactions with the My Location dot.
+  - Added a Source attribute to Panorama searches allowing them to be restricted
+    to outdoor-only results. Note that this feature is experimental and some
+    searches may still include indoor panoramas.
+
+Improvements:
+  - Updated the default marker to match the new Google Maps marker.
+  - iOS 11 OpenGL crash reduction.
+
+Resolved Issues:
+  - Fixed a compile error when the -Wobjc-property-no-attribute flag is used.
+
+Note:
+  - CoreImage has been added as a dependency.
+
 Version 2.5.0 - October 2017
 ============================
 Features:

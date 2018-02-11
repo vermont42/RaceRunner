@@ -184,6 +184,13 @@ NS_ASSUME_NONNULL_BEGIN;
 - (BOOL)didTapMyLocationButtonForMapView:(GMSMapView *)mapView;
 
 /**
+ * Called when the My Location Dot is tapped.
+ *
+ * @param location The location of the user when the location dot was tapped.
+ */
+- (void)mapView:(GMSMapView *)mapView didTapMyLocation:(CLLocationCoordinate2D)location;
+
+/**
  * Called when tiles have just been requested or labels have just started rendering.
  */
 - (void)mapViewDidStartTileRendering:(GMSMapView *)mapView;
@@ -434,7 +441,7 @@ typedef NS_ENUM(NSUInteger, GMSMapViewPaddingAdjustmentBehavior) {
  * If not nil, constrains the camera target so that gestures cannot cause it to leave the specified
  * bounds.
  */
-@property(nonatomic, nullable) GMSCoordinateBounds *cameraTargetBounds;
+@property(nonatomic, strong, nullable) GMSCoordinateBounds *cameraTargetBounds;
 
 /**
  * Builds and returns a GMSMapView, with a frame and camera target.
