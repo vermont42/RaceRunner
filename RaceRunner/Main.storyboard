@@ -732,7 +732,7 @@
                                         <rect key="frame" x="0.0" y="28" width="280" height="92"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ESc-Jz-tXG" id="NPG-hG-5XC">
-                                            <rect key="frame" x="0.0" y="0.0" width="280" height="91.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="280" height="92"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3nL-gh-2MV">
@@ -1458,7 +1458,7 @@
                                         <rect key="frame" x="0.0" y="26" width="288" height="92"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ISz-V0-DCh" id="XUs-S4-oDg">
-                                            <rect key="frame" x="0.0" y="0.0" width="288" height="91.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="92"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ks-Ok-tDF">
