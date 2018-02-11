@@ -76,7 +76,7 @@ class SettingsVC: ChildVC, BroadcastDelegate {
     setUpProducts()
     let secretSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(SettingsVC.unlockIaps))
     secretSwipeRecognizer.numberOfTouchesRequired = 2
-    secretSwipeRecognizer.direction = .down
+    secretSwipeRecognizer.direction = .left
     view.addGestureRecognizer(secretSwipeRecognizer)
     SettingsManager.setBroadcastNextRun(false)
   }
