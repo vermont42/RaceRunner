@@ -96,5 +96,3 @@ enum ShoesSortField: String {
     }
   }
 }
-
-

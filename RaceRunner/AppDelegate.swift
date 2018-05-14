@@ -34,8 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     CDManager.saveContext()
   }
     
-  func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
+  func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey: Any]) -> Bool {
     return RunModel.addRun(url)
   }
 }
-

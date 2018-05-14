@@ -141,10 +141,9 @@ class SettingsVC: ChildVC, BroadcastDelegate {
     Products.store.requestProductsWithCompletionHandler { success, products in
       if success {
         self.products = products
-        //print("retrieved products")
       }
       else {
-        print("failed to retrieve products")
+        print("Failed to retrieve IAP products.")
       }
     }
     updatePurchaseWidgets()

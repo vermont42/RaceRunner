@@ -142,7 +142,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
     })
   }
   
-  override var prefersStatusBarHidden : Bool {
+  override var prefersStatusBarHidden: Bool {
     return true
   }
 }

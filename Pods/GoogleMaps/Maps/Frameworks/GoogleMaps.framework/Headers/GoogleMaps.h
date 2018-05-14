@@ -22,6 +22,7 @@
 #import "GMSMarker.h"
 #import "GMSMarkerLayer.h"
 #import "GMSOverlay.h"
+#import "GMSOverlayLayer.h"
 #import "GMSPolygon.h"
 #import "GMSPolyline.h"
 #import "GMSSyncTileLayer.h"

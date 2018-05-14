@@ -45,7 +45,7 @@ open class DarkSky {
     }
   }
   
-  private var queue: OperationQueue;
+  private var queue: OperationQueue
   
   public init() {
     self.queue = OperationQueue()

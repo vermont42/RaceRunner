@@ -99,13 +99,13 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     else {
       weather.text = "Weather: \(run.weather as String)"
     }
-    if run.temperature.floatValue == Run.noTemperature {
+    if run.temperature.doubleValue == Run.noTemperature {
       temp.text = Run.noTemperatureText
     }
     else {
-      temp.text = "Temp: \(Converter.stringifyTemperature(run.temperature.floatValue))"
+      temp.text = "Temp: \(Converter.stringifyTemperature(run.temperature.doubleValue))"
     }
-    route.text = "Name: \(run.displayName())"
+    route.text = "\(RunDetailsVC.name): \(run.displayName()) "
     if SettingsManager.getShowWeight() && run.weight.doubleValue != Run.noWeight {
       weight.text = "Weight: \(HumanWeight.weightAsString(run.weight.doubleValue, unitType: SettingsManager.getUnitType()))"
     }
@@ -265,7 +265,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     let cancelAction = UIAlertAction(title: RunDetailsVC.cancel, style: UIAlertActionStyle.cancel, handler: { (action) in })
     alertController.addAction(cancelAction)
     alertController.addTextField { (textField) in
-      textField.placeholder = "Name"
+      textField.placeholder = "\(RunDetailsVC.name)"
     }
     alertController.view.tintColor = UiConstants.intermediate1Color
     present(alertController, animated: true, completion: nil)
@@ -292,8 +292,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     performSegue(withIdentifier: "pan graphs from details", sender: self)
   }
   
-  override var prefersStatusBarHidden : Bool {
+  override var prefersStatusBarHidden: Bool {
     return true
   }
 }
-

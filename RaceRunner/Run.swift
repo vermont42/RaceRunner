@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 class Run: NSManagedObject {
-  static let noTemperature: Float = -99.0
+  static let noTemperature: Double = -99.0
   static let noTemperatureText = "Unknown Temp"
   static let noWeather = "Unknown Weather"
   static let noAutoName = "Unnamed Route"

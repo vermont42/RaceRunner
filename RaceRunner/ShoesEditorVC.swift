@@ -114,7 +114,7 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
     performSegue(withIdentifier: "unwind pan", sender: self)
   }
   
-  override var prefersStatusBarHidden : Bool {
+  override var prefersStatusBarHidden: Bool {
     return true
   }
   
@@ -151,7 +151,7 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
     doneButton.isEnabled = true
   }
   
-  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
     dismiss(animated: true, completion: { self.choosingThumbnail = false })
     if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
       thumbnail.image = pickedImage

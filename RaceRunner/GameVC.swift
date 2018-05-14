@@ -29,11 +29,11 @@ class GameVC: ChildVC {
     showMenu()
   }
   
-  override var shouldAutorotate : Bool {
+  override var shouldAutorotate: Bool {
     return true
   }
   
-  override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+  override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
     return UIInterfaceOrientationMask.portrait
   }
   

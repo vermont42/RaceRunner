@@ -10,11 +10,11 @@ import Foundation
 
 class Converter {
   private static let feetInMeter: Double = 3.281
-  private static let fahrenheitMultiplier: Float = 9.0 / 5.0
-  private static let celsiusFraction: Float = 5.0 / 9.0
-  private static let fahrenheitAmountToAdd: Float = 32.0
-  private static let celsiusMultiplier: Float = 1.0
-  private static let celsiusAmountToAdd: Float = 0.0
+  private static let fahrenheitMultiplier: Double = 9.0 / 5.0
+  private static let celsiusFraction: Double = 5.0 / 9.0
+  private static let fahrenheitAmountToAdd: Double = 32.0
+  private static let celsiusMultiplier: Double = 1.0
+  private static let celsiusAmountToAdd: Double = 0.0
   private static let altitudeFudge: Double = 5.0
   private static let secondsPerMinute: Int = 60
   private static let minutesPerHour: Int = 60
@@ -36,7 +36,7 @@ class Converter {
   static let metersInMile: Double = 1609.344
   static let metersInKilometer: Double = 1000.0
   static let kilometersPerMile: Float = 1.609344
-  static let poundsPerKilogram = 2.2
+  static let poundsPerKilogram: Double = 2.2
   
   class func netCaloriesAsString(_ distance: Double, weight: Double) -> String {
     return String(format: "%.0f Cal", weight * distance * netCaloriesPerKiloPerMeter)
@@ -148,7 +148,7 @@ class Converter {
     return SettingsManager.getUnitType() == .imperial ? "miles" : "kms"
   }
   
-  class func convertFahrenheitToCelsius(_ temperature: Float) -> Float {
+  class func convertFahrenheitToCelsius(_ temperature: Double) -> Double {
     return celsiusFraction * (temperature - fahrenheitAmountToAdd)
   }
   
@@ -276,10 +276,10 @@ class Converter {
     return NSString(format: "%.0f %@", meters * unitMultiplier, unitName) as String
   }
   
-  class func stringifyTemperature(_ temperature: Float) -> String {
+  class func stringifyTemperature(_ temperature: Double) -> String {
     var unitName: String
-    var multiplier: Float
-    var amountToAdd: Float
+    var multiplier: Double
+    var amountToAdd: Double
     if SettingsManager.getUnitType() == .metric {
       unitName = celsiusAbbr
       multiplier = celsiusMultiplier

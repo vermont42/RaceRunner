@@ -10,4 +10,3 @@ protocol PubNubSubscriber {
   func receiveProgress(_ progress: String)
   func runStopped()
 }
-

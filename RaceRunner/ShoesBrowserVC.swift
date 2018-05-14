@@ -66,7 +66,6 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
     pairs = (try? context.fetch(fetchRequest)) as! [Shoes]
   }
 
-  
   @IBAction func showMenu(_ sender: UIButton) {
     showMenu()
   }
@@ -182,7 +181,7 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
     tableView.reloadData()
   }
   
-  override var prefersStatusBarHidden : Bool {
+  override var prefersStatusBarHidden: Bool {
     return true
   }
   

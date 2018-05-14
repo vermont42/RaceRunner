@@ -13,7 +13,7 @@ import CoreData
 
 class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   var locations: [CLLocation]! = []
-  var status : Status = .preRun
+  var status: Status = .preRun
   var runDelegate: RunDelegate?
   var importedRunDelegate: ImportedRunDelegate?
   var run: Run!
@@ -26,7 +26,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   private var lastDistance = 0.0
   private var lastSeconds = 0
   private var reportEvery = SettingsManager.never
-  private var temperature: Float = 0.0
+  private var temperature: Double = 0.0
   private var weather = ""
   private var timer: Timer!
   private var initialLocation: CLLocation!
@@ -56,7 +56,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   private static let minAccuracy: CLLocationDistance = 20.0
   private static let distanceFilter: CLLocationDistance = 10.0
   private static let freezeDriedAccuracy: CLLocationAccuracy = 5.0
-  private static let defaultTemperature: Float = 25.0
+  private static let defaultTemperature: Double = 25.0
   private static let defaultWeather = "sunny"
   private static let importSucceededMessage = "Successfully imported run"
   private static let importFailedMessage = "Run import failed."
@@ -145,7 +145,9 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
               self.weather = Run.noWeather
             case .success(_, let dictionary):
               let currently = dictionary?["currently"] as! NSDictionary
-              self.temperature = Converter.convertFahrenheitToCelsius(currently["apparentTemperature"] as! Float)
+              let temp = currently["temperature"] as! Double
+              print("currently: \(temp)")
+              self.temperature = Converter.convertFahrenheitToCelsius(currently["temperature"] as! Double)
               self.weather = currently["summary"] as! String
             }
           }
@@ -259,7 +261,6 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   }
   
   static func loadStateAndStart() {
-    //let fetchRequest = NSFetchRequest()
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "RunInProgress")
     let context = CDManager.sharedCDManager.context
     fetchRequest.entity = NSEntityDescription.entity(forEntityName: "RunInProgress", in: context!)
@@ -275,8 +276,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     context!.delete(runInProgress)
     CDManager.saveContext()
   }
-  
-  
+
   static func saveState() {
     let runInProgress: RunInProgress = NSEntityDescription.insertNewObject(forEntityName: "RunInProgress", into: CDManager.sharedCDManager.context) as! RunInProgress
     runInProgress.oldSplitAltitude = NSNumber(value: runModel.oldSplitAltitude)
@@ -337,6 +337,8 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     startTimer()
     if runToSimulate == nil && gpxFile == nil {
       SettingsManager.setRealRunInProgress(true)
+    } else {
+      SettingsManager.setRealRunInProgress(false)
     }
     if SettingsManager.getBroadcastNextRun() && SettingsManager.getRealRunInProgress() {
       PubNubManager.subscribeToChannel(self, publisher: SettingsManager.getBroadcastName())
@@ -377,7 +379,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     return succeeded
   }
   
-  private class func addRun(_ coordinates: [CLLocation], customName: String, autoName: String, timestamp: Date, weather: String, temperature: Float, distance: Double, maxAltitude: Double, minAltitude: Double, maxLongitude: Double, minLongitude: Double, maxLatitude: Double, minLatitude: Double, altitudeGained: Double, altitudeLost: Double, weight: Double) -> Run {
+  private class func addRun(_ coordinates: [CLLocation], customName: String, autoName: String, timestamp: Date, weather: String, temperature: Double, distance: Double, maxAltitude: Double, minAltitude: Double, maxLongitude: Double, minLongitude: Double, maxLatitude: Double, minLatitude: Double, altitudeGained: Double, altitudeLost: Double, weight: Double) -> Run {
     let newRun: Run = NSEntityDescription.insertNewObject(forEntityName: "Run", into: CDManager.sharedCDManager.context) as! Run
     newRun.distance = NSNumber(value: distance)
     newRun.duration = NSNumber(value: coordinates[coordinates.count - 1].timestamp.timeIntervalSince(coordinates[0].timestamp))
@@ -409,11 +411,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     return newRun
   }
   
-  class func setMaxAndMinAltLatLon(_ coordinates: [CLLocation]) {
-    
-  }
-  
-  class func addRun(_ coordinates: [CLLocation], autoName: String, customName: String, timestamp: Date, weather: String, temperature: Float, weight: Double) -> Run {
+  class func addRun(_ coordinates: [CLLocation], autoName: String, customName: String, timestamp: Date, weather: String, temperature: Double, weight: Double) -> Run {
     var distance = 0.0
     var altGained  = 0.0
     var altLost = 0.0
@@ -588,7 +586,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   }
 }
 
-private func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
     return l < r
@@ -599,7 +597,7 @@ private func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-private func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
     return l > r
