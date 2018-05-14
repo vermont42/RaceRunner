@@ -7,18 +7,12 @@
 //
 
 import Foundation
-//import AVFoundation.AVAudioPlayer
-//import AVFoundation.AVAudioSession
 import AVFoundation
 
 class SoundManager {
-  // MARK: properties
-  
   private static let soundManager = SoundManager()
   private var sounds: [String: AVAudioPlayer]
   private static let soundExtension = "mp3"
-  
-  // MARK: methods
   
   private init () {
     sounds = Dictionary()

@@ -47,7 +47,8 @@ NS_ASSUME_NONNULL_BEGIN;
  * tapping on the "My Location" button) or by being updated explicitly via the camera or a
  * zero-length animation on layer.
  *
- * @param gesture If YES, this is occuring due to a user gesture.
+ * @param mapView The map view that was tapped.
+ * @param gesture If YES, this is occurring due to a user gesture.
 */
 - (void)mapView:(GMSMapView *)mapView willMove:(BOOL)gesture;
 
@@ -186,6 +187,7 @@ NS_ASSUME_NONNULL_BEGIN;
 /**
  * Called when the My Location Dot is tapped.
  *
+ * @param mapView The map view that was tapped.
  * @param location The location of the user when the location dot was tapped.
  */
 - (void)mapView:(GMSMapView *)mapView didTapMyLocation:(CLLocationCoordinate2D)location;

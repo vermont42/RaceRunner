@@ -12,7 +12,7 @@
 
 /**
  * \defgroup PanoramaSource GMSPanoramaSource
- * {@
+ * @{
  */
 
 /**

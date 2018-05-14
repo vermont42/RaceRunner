@@ -15,4 +15,3 @@ protocol RunDelegate {
   func receiveProgress(_ totalDistance: Double, totalSeconds: Int, altitude: Double, altGained: Double, altLost: Double)
   func stopRun()
 }
-

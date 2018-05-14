@@ -19,9 +19,7 @@ public typealias RequestProductsCompletionHandler = (_ success: Bool, _ products
 
 /// A Helper class for In-App-Purchases. It can fetch products, tell you if a product has been purchased,
 /// purchase products, and restore purchases.  Uses NSUserDefaults to cache if a product has been purchased.
-open class IapHelper : NSObject  {
-  /// MARK: - Private Properties
-  
+open class IapHelper: NSObject  {
   // Used to keep track of the possible products and which ones have been purchased.
   private let productIdentifiers: Set<ProductIdentifier>
   private var purchasedProductIdentifiers = Set<ProductIdentifier>()
@@ -29,8 +27,6 @@ open class IapHelper : NSObject  {
   // Used by SKProductsRequestDelegate
   private var productsRequest: SKProductsRequest?
   private var completionHandler: RequestProductsCompletionHandler?
-  
-  /// MARK: - User-facing API
   
   /// Initialize the helper.  Pass in the set of ProductIdentifiers supported by the app.
   public init(productIdentifiers: Set<ProductIdentifier>) {
@@ -76,8 +72,6 @@ open class IapHelper : NSObject  {
     return SKPaymentQueue.canMakePayments()
   }
 }
-
-// MARK: - SKProductsRequestDelegate
 
 extension IapHelper: SKProductsRequestDelegate {
   public func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {

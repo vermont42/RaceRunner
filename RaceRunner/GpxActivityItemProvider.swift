@@ -10,9 +10,8 @@ import Foundation
 import UIKit
 
 class GpxActivityItemProvider: UIActivityItemProvider {
-  override var item : Any {
+  override var item: Any {
     // The following approach would be appropriate for a gpx file in the main bundle.
-    //
     if let filePath = Bundle.main.path(forResource: "Runmeter", ofType: "gpx") {
       if let fileData = try? Data(contentsOf: URL(fileURLWithPath: filePath)) {
         return fileData as AnyObject

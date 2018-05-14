@@ -66,7 +66,7 @@ class UiHelpers {
     matText.addAttributes([NSAttributedStringKey.foregroundColor: UiConstants.lightColor, NSAttributedStringKey.font: UIFont(name: UiConstants.globalFont, size: UiConstants.bodyFontSize)!], range: NSMakeRange(0, matText.length))
     let centeredStyle = NSMutableParagraphStyle()
     centeredStyle.alignment = .center
-    let headerAttributes = [NSAttributedStringKey.foregroundColor: UiConstants.intermediate1Color, NSAttributedStringKey.textEffect: NSAttributedString.TextEffectStyle.letterpressStyle] as [NSAttributedStringKey : Any]
+    let headerAttributes = [NSAttributedStringKey.foregroundColor: UiConstants.intermediate1Color, NSAttributedStringKey.textEffect: NSAttributedString.TextEffectStyle.letterpressStyle] as [NSAttributedStringKey: Any]
     let textAsNsString = text as NSString
     var i = 0
     var insideHeading = false

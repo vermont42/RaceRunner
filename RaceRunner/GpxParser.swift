@@ -14,10 +14,10 @@ struct ParseResult {
   let customName: String
   let locations: [CLLocation]
   let weather: String
-  let temperature: Float
+  let temperature: Double
   let weight: Double
   
-  init(autoName: String, customName: String, locations: [CLLocation], weather: String, temperature: Float, weight: Double) {
+  init(autoName: String, customName: String, locations: [CLLocation], weather: String, temperature: Double, weight: Double) {
     self.autoName = autoName
     self.customName = customName
     self.locations = locations
@@ -90,7 +90,7 @@ class GpxParser: NSObject, XMLParserDelegate {
     return ParseResult(autoName: autoName, customName: customName, locations: locations, weather: weather, temperature: temperature, weight: weight)
   }
   
-  func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+  func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String: String]) {
     switch elementName {
     case ParsingState.trkpt.rawValue:
       curLatString = attributeDict["lat"]! as NSString
@@ -153,7 +153,7 @@ class GpxParser: NSObject, XMLParserDelegate {
     case ParsingState.ele.rawValue:
       curEleString = buffer as NSString
     case ParsingState.temperature.rawValue:
-      temperature = Float(buffer) ?? temperature
+      temperature = Double(buffer) ?? temperature
     case ParsingState.weather.rawValue:
       weather = buffer
     case ParsingState.weight.rawValue:

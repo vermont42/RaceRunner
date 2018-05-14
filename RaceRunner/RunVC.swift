@@ -25,7 +25,7 @@ class RunVC: ChildVC, RunDelegate {
   @IBOutlet var paceOrAltitude: UISegmentedControl!
   
   private static let gpxTitle = "Berkeley Hills "
-  private static let didNotSaveMessage = "RaceRunner did not save this run because it was so short. The run, not RaceRunner. As a collection of electrons on your phone, RaceRunner has no physical height."
+  private static let didNotSaveMessage = "RaceRunner did not save this run because it was so short. The run, not RaceRunner. As a collection of electrons on your iPhone, RaceRunner has no physical height."
   private static let noGpsMessage = "RaceRunner cannot record your run because you have not given it permission to access the GPS sensors. You can give this permission in the Settings app."
   private static let pauseError = "Attempted to display details of run with zero locations."
   private static let bummerButtonTitle = "Bummer"

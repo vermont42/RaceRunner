@@ -38,7 +38,7 @@ class BroadcastVC: UIViewController, UITextFieldDelegate {
     performSegue(withIdentifier: "unwind pan", sender: self)
   }
   
-  override var prefersStatusBarHidden : Bool {
+  override var prefersStatusBarHidden: Bool {
     return true
   }
   

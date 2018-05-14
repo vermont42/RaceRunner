@@ -30,7 +30,7 @@ class ImportVC: ChildVC {
     self.performSegue(withIdentifier: "unwind pan", sender: self)
   }
   
-  override var prefersStatusBarHidden : Bool {
+  override var prefersStatusBarHidden: Bool {
     return true
   }
 }

@@ -10,14 +10,14 @@ import UIKit
 
 class UnwindPanSegue: UIStoryboardSegue {
   override func perform() {
-    let secondVCView = self.source.view as UIView!
-    let firstVCView = self.destination.view as UIView!
+    let secondVCView = self.source.view as UIView
+    let firstVCView = self.destination.view as UIView
     let screenWidth = UIScreen.main.bounds.size.width
     let window = UIApplication.shared.keyWindow
-    window?.insertSubview(firstVCView!, aboveSubview: secondVCView!)
+    window?.insertSubview(firstVCView, aboveSubview: secondVCView)
     UIView.animate(withDuration: UiConstants.panDuration, animations: { () -> Void in
-      firstVCView!.frame = firstVCView!.frame.offsetBy(dx: screenWidth, dy: 0.0)
-      secondVCView!.frame = secondVCView!.frame.offsetBy(dx: screenWidth, dy: 0.0)
+      firstVCView.frame = firstVCView.frame.offsetBy(dx: screenWidth, dy: 0.0)
+      secondVCView.frame = secondVCView.frame.offsetBy(dx: screenWidth, dy: 0.0)
       }, completion: { (Finished) -> Void in
         self.source.dismiss(animated: false, completion: nil)
     }) 
