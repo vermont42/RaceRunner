@@ -56,8 +56,6 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   private static let minAccuracy: CLLocationDistance = 20.0
   private static let distanceFilter: CLLocationDistance = 10.0
   private static let freezeDriedAccuracy: CLLocationAccuracy = 5.0
-  private static let defaultTemperature: Double = 25.0
-  private static let defaultWeather = "sunny"
   private static let importSucceededMessage = "Successfully imported run"
   private static let importFailedMessage = "Run import failed."
   private static let importRunTitle = "Import Run"
