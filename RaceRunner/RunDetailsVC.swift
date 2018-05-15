@@ -255,16 +255,16 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
 
   @IBAction func setCustomName() {
     let alertController = UIAlertController(title: RunDetailsVC.newRunNameTitle, message: RunDetailsVC.newRunNamePrompt, preferredStyle: UIAlertControllerStyle.alert)
-    let setAction = UIAlertAction(title: RunDetailsVC.setRunNameButtonTitle, style: UIAlertActionStyle.default, handler: { (action) in
+    let setAction = UIAlertAction(title: RunDetailsVC.setRunNameButtonTitle, style: UIAlertActionStyle.default, handler: { action in
       let textFields = alertController.textFields!
       self.route.text = "\(RunDetailsVC.name): \(textFields[0].text!)"
       self.run.customName = textFields[0].text! as NSString
       CDManager.saveContext()
     })
     alertController.addAction(setAction)
-    let cancelAction = UIAlertAction(title: RunDetailsVC.cancel, style: UIAlertActionStyle.cancel, handler: { (action) in })
+    let cancelAction = UIAlertAction(title: RunDetailsVC.cancel, style: UIAlertActionStyle.cancel, handler: { action in })
     alertController.addAction(cancelAction)
-    alertController.addTextField { (textField) in
+    alertController.addTextField { textField in
       textField.placeholder = "\(RunDetailsVC.name)"
     }
     alertController.view.tintColor = UiConstants.intermediate1Color

@@ -42,13 +42,13 @@ class LowMemoryHandler {
   static func appStarted() {
     SettingsManager.setWarnedUserAboutLowRam(false)
     if SettingsManager.getRealRunInProgress() {
-      let resumeAction = UIAlertAction(title: resumeButtonTitle, style: UIAlertActionStyle.default, handler: { (action) in
+      let resumeAction = UIAlertAction(title: resumeButtonTitle, style: UIAlertActionStyle.default, handler: { action in
         RunModel.loadStateAndStart()
         PersistentMapState.initMapState()
         LowMemoryHandler.completion()
       })
       resumeController.addAction(resumeAction)
-      let discardAction = UIAlertAction(title: discardButtonTitle, style: UIAlertActionStyle.cancel, handler: { (action) in
+      let discardAction = UIAlertAction(title: discardButtonTitle, style: UIAlertActionStyle.cancel, handler: { action in
         RunModel.deleteSavedRun()
       })
       resumeController.addAction(discardAction)

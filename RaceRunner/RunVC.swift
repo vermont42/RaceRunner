@@ -206,7 +206,7 @@ class RunVC: ChildVC, RunDelegate {
         paceOrAltitude.isHidden = false
       }
       else {
-        UIAlertController.showMessage(RunVC.noGpsMessage, title: RunVC.sadFaceTitle, okTitle: RunVC.bummerButtonTitle, handler: {(action) in
+        UIAlertController.showMessage(RunVC.noGpsMessage, title: RunVC.sadFaceTitle, okTitle: RunVC.bummerButtonTitle, handler: { action in
           SoundManager.play(.sadTrombone)
         })
       }
@@ -246,7 +246,7 @@ class RunVC: ChildVC, RunDelegate {
         performSegue(withIdentifier: "pan details from run", sender: self)
       }
       else {
-        UIAlertController.showMessage(RunVC.didNotSaveMessage, title: RunVC.sadFaceTitle, okTitle: RunVC.bummerButtonTitle, handler: {(action) in
+        UIAlertController.showMessage(RunVC.didNotSaveMessage, title: RunVC.sadFaceTitle, okTitle: RunVC.bummerButtonTitle, handler: { action in
           SoundManager.play(.sadTrombone)
           self.showMenu()
         })

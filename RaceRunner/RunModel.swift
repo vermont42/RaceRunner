@@ -174,7 +174,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
         if !didSetAutoNameAndFirstLoc {
           didSetAutoNameAndFirstLoc = true
           if runToSimulate == nil && gpxFile == nil {
-            CLGeocoder().reverseGeocodeLocation(newLocation, completionHandler: {(placemarks, error) in
+            CLGeocoder().reverseGeocodeLocation(newLocation, completionHandler: { (placemarks, error) in
               if error == nil {
                 if placemarks?.count > 0 {
                   let placemark = placemarks![0]
