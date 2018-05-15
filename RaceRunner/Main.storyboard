@@ -1064,7 +1064,7 @@
                                 <color key="textColor" red="0.96862745098039216" green="0.88235294117647056" blue="0.84313725490196079" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Run" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ehh-bc-N8p" customClass="MarqueeLabel" customModule="MarqueeLabel">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Run" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ehh-bc-N8p">
                                 <rect key="frame" x="72" y="28" width="163" height="55"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="40"/>
                                 <color key="textColor" red="0.92941176469999998" green="0.68627450980000004" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1423,7 +1423,7 @@
                         <outlet property="messageButton" destination="eNh-Cp-Ply" id="Ety-Sl-WwR"/>
                         <outlet property="paceLabel" destination="6An-ik-hII" id="2z6-cR-zhV"/>
                         <outlet property="showMenuButton" destination="SoM-el-f4R" id="A8z-of-dGS"/>
-                        <outlet property="spectationLabel" destination="FBJ-yc-FTO" id="xmB-GI-hjh"/>
+                        <outlet property="spectationLabel" destination="FBJ-yc-FTO" id="Ab1-qq-pt5"/>
                         <outlet property="startStopButton" destination="rsg-h4-TVv" id="pR9-BK-dvZ"/>
                         <outlet property="timeLabel" destination="9e3-rp-8KK" id="hYy-al-0ks"/>
                         <outlet property="viewControllerTitle" destination="hoJ-1m-kC7" id="ZS9-OQ-Clw"/>
@@ -2490,7 +2490,7 @@
         <image name="shoe" width="69" height="52"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="BKi-dk-66y"/>
+        <segue reference="xed-hc-tXN"/>
         <segue reference="ltM-iX-wfX"/>
     </inferredMetricsTieBreakers>
 </document>

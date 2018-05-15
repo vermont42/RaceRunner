@@ -143,8 +143,6 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
               self.weather = Run.noWeather
             case .success(_, let dictionary):
               let currently = dictionary?["currently"] as! NSDictionary
-              let temp = currently["temperature"] as! Double
-              print("currently: \(temp)")
               self.temperature = Converter.convertFahrenheitToCelsius(currently["temperature"] as! Double)
               self.weather = currently["summary"] as! String
             }
