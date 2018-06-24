@@ -10,6 +10,8 @@
 		780ADDCF5F549BC94E7E819D /* Pods_RaceRunner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3684E5DECEABCEB4FF305C39 /* Pods_RaceRunner.framework */; };
 		E10356451C02A1CB006E8FEC /* applause2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E10356441C02A1CB006E8FEC /* applause2.mp3 */; };
 		E10356471C02A1EB006E8FEC /* applause3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E10356461C02A1EB006E8FEC /* applause3.mp3 */; };
+		E10A245C20B253250073147C /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10A245B20B253250073147C /* IntentHandler.swift */; };
+		E10A247120B253250073147C /* Siri.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E10A245920B253250073147C /* Siri.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E10B704A1C455C4F00C70283 /* UIApplication+topViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B70491C455C4F00C70283 /* UIApplication+topViewController.swift */; };
 		E10B704C1C4563E600C70283 /* UIAlertController+showMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B704B1C4563E600C70283 /* UIAlertController+showMessage.swift */; };
 		E10B704E1C45C09200C70283 /* LogSortField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B704D1C45C09200C70283 /* LogSortField.swift */; };
@@ -24,7 +26,6 @@
 		E12847731C1763320053ED96 /* sadTrombone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E12847721C1763320053ED96 /* sadTrombone.mp3 */; };
 		E12E44F01C572F340065AE66 /* GraphVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12E44EF1C572F340065AE66 /* GraphVC.swift */; };
 		E12E44F21C58BAAB0065AE66 /* Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12E44F11C58BAAB0065AE66 /* Overlay.swift */; };
-		E12F33C91C8B7490008BA8D8 /* RunDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12F33C81C8B7490008BA8D8 /* RunDelegate.swift */; };
 		E12F33CB1C8B7929008BA8D8 /* PubNubPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12F33CA1C8B7929008BA8D8 /* PubNubPublisher.swift */; };
 		E1342BBF1D04F94000ABFCA7 /* scream1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1342BBB1D04F94000ABFCA7 /* scream1.mp3 */; };
 		E1342BC01D04F94000ABFCA7 /* scream2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1342BBC1D04F94000ABFCA7 /* scream2.mp3 */; };
@@ -45,11 +46,12 @@
 		E14175A91C877AC1001F402C /* BroadcastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14175A81C877AC1001F402C /* BroadcastDelegate.swift */; };
 		E14175AB1C87A322001F402C /* PubNubSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14175AA1C87A322001F402C /* PubNubSubscriber.swift */; };
 		E14360C31AE4AAA4003F27B4 /* GpxLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */; };
+		E143C0AE20DFFD310010C9A1 /* ProgressUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E143C0AD20DFFD310010C9A1 /* ProgressUpdate.swift */; };
+		E143C0B020E003E80010C9A1 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E143C0AF20E003E80010C9A1 /* CloudKit.framework */; };
 		E15195F81C0BD41A00BD52FB /* HumanWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15195F71C0BD41A00BD52FB /* HumanWeight.swift */; };
 		E15681F91C52F007008E077C /* GpxExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15681F81C52F007008E077C /* GpxExporter.swift */; };
 		E159C2541AAB8304007C6EA1 /* RaceRunner.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E159C2521AAB8304007C6EA1 /* RaceRunner.xcdatamodeld */; };
 		E161FF2D1CC8529200C92485 /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = E161FF2C1CC8529200C92485 /* Sound.swift */; };
-		E162397C1C7A9D0300739B7F /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E162397B1C7A9D0300739B7F /* CloudKit.framework */; };
 		E1648E0A1C4861EA002A3ED4 /* Run+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E091C4861EA002A3ED4 /* Run+CoreDataProperties.swift */; };
 		E1648E0C1C4863E3002A3ED4 /* Shoes+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E0B1C4863E3002A3ED4 /* Shoes+CoreDataProperties.swift */; };
 		E1648E0E1C486421002A3ED4 /* Shoes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E0D1C486421002A3ED4 /* Shoes.swift */; };
@@ -67,6 +69,8 @@
 		E185F8531AE1CB19008BF394 /* RunnerIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185F8521AE1CB19008BF394 /* RunnerIcons.swift */; };
 		E1863B141CD66A6C00B55CD3 /* silence.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1863B131CD66A6C00B55CD3 /* silence.mp3 */; };
 		E18B6C811C0D1AEC005865BA /* GpxActivityItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18B6C801C0D1AEC005865BA /* GpxActivityItemProvider.swift */; };
+		E1973E1F20D7F22900043736 /* Notification+Names.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1973E1E20D7F22900043736 /* Notification+Names.swift */; };
+		E1973E2120D7F4B600043736 /* RunCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1973E2020D7F4B600043736 /* RunCoordinate.swift */; };
 		E1A41B4E1BF7D83100E31943 /* PubNubManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A41B4D1BF7D83100E31943 /* PubNubManager.swift */; };
 		E1B45F071AE96EFC00AF73AB /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B45F061AE96EFC00AF73AB /* LocationManager.swift */; };
 		E1B93F822002B8D800D4A3D7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1B93F812002B8D800D4A3D7 /* Main.storyboard */; };
@@ -88,6 +92,7 @@
 		E1DBA6DA1C1FC0AB00DE3E4F /* Strava.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E1DBA6D91C1FC0AB00DE3E4F /* Strava.gpx */; };
 		E1E027831B9A34FE00700DE1 /* Runkeeper.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E1E027821B9A34FE00700DE1 /* Runkeeper.gpx */; };
 		E1E7F7D61C03F8E500F108B6 /* Double+roundToPlaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E7F7D51C03F8E500F108B6 /* Double+roundToPlaces.swift */; };
+		E1E8195820B6409000AC1574 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E8195720B6409000AC1574 /* IntentHandler.swift */; };
 		E1E8B9241AAB73F000D04E38 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E8B9231AAB73F000D04E38 /* AppDelegate.swift */; };
 		E1E8B92B1AAB73F000D04E38 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1E8B92A1AAB73F000D04E38 /* Images.xcassets */; };
 		E1E8B92E1AAB73F000D04E38 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1E8B92C1AAB73F000D04E38 /* LaunchScreen.xib */; };
@@ -108,6 +113,30 @@
 		E1FCB00E1AB8F43100B1D803 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FCB00D1AB8F43100B1D803 /* Converter.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		E10A246F20B253250073147C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E1E8B9161AAB73F000D04E38 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E10A245820B253250073147C;
+			remoteInfo = Siri;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E10A247820B253250073147C /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				E10A247120B253250073147C /* Siri.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		3684E5DECEABCEB4FF305C39 /* Pods_RaceRunner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RaceRunner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E91D4B24A52C1C5D97BD0CF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,6 +145,10 @@
 		CA4036EE9B1AE5C8327853A4 /* Pods-RaceRunner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RaceRunner.release.xcconfig"; path = "Pods/Target Support Files/Pods-RaceRunner/Pods-RaceRunner.release.xcconfig"; sourceTree = "<group>"; };
 		E10356441C02A1CB006E8FEC /* applause2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = applause2.mp3; sourceTree = "<group>"; };
 		E10356461C02A1EB006E8FEC /* applause3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = applause3.mp3; sourceTree = "<group>"; };
+		E10A245920B253250073147C /* Siri.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Siri.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E10A245B20B253250073147C /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		E10A245D20B253250073147C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E10A246320B253250073147C /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		E10B70491C455C4F00C70283 /* UIApplication+topViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+topViewController.swift"; sourceTree = "<group>"; };
 		E10B704B1C4563E600C70283 /* UIAlertController+showMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+showMessage.swift"; sourceTree = "<group>"; };
 		E10B704D1C45C09200C70283 /* LogSortField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogSortField.swift; sourceTree = "<group>"; };
@@ -130,7 +163,6 @@
 		E12847721C1763320053ED96 /* sadTrombone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sadTrombone.mp3; sourceTree = "<group>"; };
 		E12E44EF1C572F340065AE66 /* GraphVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphVC.swift; sourceTree = "<group>"; };
 		E12E44F11C58BAAB0065AE66 /* Overlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Overlay.swift; sourceTree = "<group>"; };
-		E12F33C81C8B7490008BA8D8 /* RunDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunDelegate.swift; sourceTree = "<group>"; };
 		E12F33CA1C8B7929008BA8D8 /* PubNubPublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubNubPublisher.swift; sourceTree = "<group>"; };
 		E1342BBB1D04F94000ABFCA7 /* scream1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = scream1.mp3; sourceTree = "<group>"; };
 		E1342BBC1D04F94000ABFCA7 /* scream2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = scream2.mp3; sourceTree = "<group>"; };
@@ -151,12 +183,13 @@
 		E14175A81C877AC1001F402C /* BroadcastDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BroadcastDelegate.swift; sourceTree = "<group>"; };
 		E14175AA1C87A322001F402C /* PubNubSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubNubSubscriber.swift; sourceTree = "<group>"; };
 		E14360C11AE4AAA4003F27B4 /* GpxLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxLocationManager.swift; sourceTree = "<group>"; };
+		E143C0AD20DFFD310010C9A1 /* ProgressUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressUpdate.swift; sourceTree = "<group>"; };
+		E143C0AF20E003E80010C9A1 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		E15195F71C0BD41A00BD52FB /* HumanWeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HumanWeight.swift; sourceTree = "<group>"; };
 		E15681F81C52F007008E077C /* GpxExporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxExporter.swift; sourceTree = "<group>"; };
 		E159C2531AAB8304007C6EA1 /* RaceRunner.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RaceRunner.xcdatamodel; sourceTree = "<group>"; };
 		E161FF2C1CC8529200C92485 /* Sound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
 		E162397A1C7A9CF600739B7F /* RaceRunner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = RaceRunner.entitlements; sourceTree = "<group>"; };
-		E162397B1C7A9D0300739B7F /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		E1648E091C4861EA002A3ED4 /* Run+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Run+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E1648E0B1C4863E3002A3ED4 /* Shoes+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Shoes+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E1648E0D1C486421002A3ED4 /* Shoes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shoes.swift; sourceTree = "<group>"; };
@@ -174,6 +207,8 @@
 		E185F8521AE1CB19008BF394 /* RunnerIcons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunnerIcons.swift; sourceTree = "<group>"; };
 		E1863B131CD66A6C00B55CD3 /* silence.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = silence.mp3; sourceTree = "<group>"; };
 		E18B6C801C0D1AEC005865BA /* GpxActivityItemProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxActivityItemProvider.swift; sourceTree = "<group>"; };
+		E1973E1E20D7F22900043736 /* Notification+Names.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Names.swift"; sourceTree = "<group>"; };
+		E1973E2020D7F4B600043736 /* RunCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunCoordinate.swift; sourceTree = "<group>"; };
 		E1A41B4D1BF7D83100E31943 /* PubNubManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PubNubManager.swift; sourceTree = "<group>"; };
 		E1B45F061AE96EFC00AF73AB /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		E1B93F812002B8D800D4A3D7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -195,6 +230,7 @@
 		E1DBA6D91C1FC0AB00DE3E4F /* Strava.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Strava.gpx; sourceTree = "<group>"; };
 		E1E027821B9A34FE00700DE1 /* Runkeeper.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Runkeeper.gpx; sourceTree = "<group>"; };
 		E1E7F7D51C03F8E500F108B6 /* Double+roundToPlaces.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+roundToPlaces.swift"; sourceTree = "<group>"; };
+		E1E8195720B6409000AC1574 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		E1E8B91E1AAB73F000D04E38 /* RaceRunner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RaceRunner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1E8B9221AAB73F000D04E38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1E8B9231AAB73F000D04E38 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -218,11 +254,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E10A245620B253250073147C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E1E8B91B1AAB73F000D04E38 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E162397C1C7A9D0300739B7F /* CloudKit.framework in Frameworks */,
+				E143C0B020E003E80010C9A1 /* CloudKit.framework in Frameworks */,
 				E1D5A01C1AC5170F008A3806 /* AVFoundation.framework in Frameworks */,
 				780ADDCF5F549BC94E7E819D /* Pods_RaceRunner.framework in Frameworks */,
 			);
@@ -234,10 +277,11 @@
 		4BF0F840305CCC95E1CE5907 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E162397B1C7A9D0300739B7F /* CloudKit.framework */,
+				E143C0AF20E003E80010C9A1 /* CloudKit.framework */,
 				E1D5A01B1AC5170E008A3806 /* AVFoundation.framework */,
 				3E91D4B24A52C1C5D97BD0CF /* Pods.framework */,
 				3684E5DECEABCEB4FF305C39 /* Pods_RaceRunner.framework */,
+				E10A246320B253250073147C /* IntentsUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -249,6 +293,15 @@
 				CA4036EE9B1AE5C8327853A4 /* Pods-RaceRunner.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		E10A245A20B253250073147C /* Siri */ = {
+			isa = PBXGroup;
+			children = (
+				E10A245B20B253250073147C /* IntentHandler.swift */,
+				E10A245D20B253250073147C /* Info.plist */,
+			);
+			path = Siri;
 			sourceTree = "<group>";
 		};
 		E1103F261C00DB0D00E18D2E /* Sounds */ = {
@@ -315,6 +368,7 @@
 			isa = PBXGroup;
 			children = (
 				E1E8B9201AAB73F000D04E38 /* RaceRunner */,
+				E10A245A20B253250073147C /* Siri */,
 				E1E8B91F1AAB73F000D04E38 /* Products */,
 				4BF0F840305CCC95E1CE5907 /* Frameworks */,
 				92816E23800A661738028C95 /* Pods */,
@@ -325,6 +379,7 @@
 			isa = PBXGroup;
 			children = (
 				E1E8B91E1AAB73F000D04E38 /* RaceRunner.app */,
+				E10A245920B253250073147C /* Siri.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -354,6 +409,7 @@
 				E15195F71C0BD41A00BD52FB /* HumanWeight.swift */,
 				E1F354041C7125FC00D6C581 /* IapHelper.swift */,
 				E1DBA6CD1C1F676800DE3E4F /* ImportVC.swift */,
+				E1E8195720B6409000AC1574 /* IntentHandler.swift */,
 				E1B45F061AE96EFC00AF73AB /* LocationManager.swift */,
 				E10B704D1C45C09200C70283 /* LogSortField.swift */,
 				E1E8B9491AAB742E00D04E38 /* LogVC.swift */,
@@ -361,15 +417,17 @@
 				E17016521D09DA3A00CF5825 /* LowMemoryHandler.swift */,
 				E1B93F812002B8D800D4A3D7 /* Main.storyboard */,
 				E1E8B9431AAB742E00D04E38 /* MenuVC.swift */,
+				E1973E1E20D7F22900043736 /* Notification+Names.swift */,
 				E12E44F11C58BAAB0065AE66 /* Overlay.swift */,
 				E1E8B9461AAB742E00D04E38 /* PanSegue.swift */,
 				E1D529CC1C1C80A500E92AD8 /* PersistentMapState.swift */,
 				E1F354021C7124F500D6C581 /* Products.swift */,
+				E143C0AD20DFFD310010C9A1 /* ProgressUpdate.swift */,
 				E1A41B4D1BF7D83100E31943 /* PubNubManager.swift */,
 				E12F33CA1C8B7929008BA8D8 /* PubNubPublisher.swift */,
 				E14175AA1C87A322001F402C /* PubNubSubscriber.swift */,
 				E1B93F832003BEF700D4A3D7 /* ReviewPrompter.swift */,
-				E12F33C81C8B7490008BA8D8 /* RunDelegate.swift */,
+				E1973E2020D7F4B600043736 /* RunCoordinate.swift */,
 				E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */,
 				E11655AB1AEAFB5200633C16 /* RunModel.swift */,
 				E185F8521AE1CB19008BF394 /* RunnerIcons.swift */,
@@ -418,6 +476,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		E10A245820B253250073147C /* Siri */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E10A247520B253250073147C /* Build configuration list for PBXNativeTarget "Siri" */;
+			buildPhases = (
+				E10A245520B253250073147C /* Sources */,
+				E10A245620B253250073147C /* Frameworks */,
+				E10A245720B253250073147C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Siri;
+			productName = Siri;
+			productReference = E10A245920B253250073147C /* Siri.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		E1E8B91D1AAB73F000D04E38 /* RaceRunner */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E1E8B93D1AAB73F000D04E38 /* Build configuration list for PBXNativeTarget "RaceRunner" */;
@@ -426,13 +501,14 @@
 				E1E8B91A1AAB73F000D04E38 /* Sources */,
 				E1E8B91B1AAB73F000D04E38 /* Frameworks */,
 				E1E8B91C1AAB73F000D04E38 /* Resources */,
-				E14503301C80B04F00631139 /* ShellScript */,
 				E3805A546D750C7E6281FAE7 /* [CP] Embed Pods Frameworks */,
 				D9E8A38E5F0F54E229FCC39E /* [CP] Copy Pods Resources */,
+				E10A247820B253250073147C /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				E10A247020B253250073147C /* PBXTargetDependency */,
 			);
 			name = RaceRunner;
 			productName = RaceRunner;
@@ -446,15 +522,26 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 0700;
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0930;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Josh Adams";
 				TargetAttributes = {
+					E10A245820B253250073147C = {
+						CreatedOnToolsVersion = 9.3;
+						DevelopmentTeam = V3L2PL4QC9;
+						ProvisioningStyle = Automatic;
+					};
 					E1E8B91D1AAB73F000D04E38 = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = V3L2PL4QC9;
 						LastSwiftMigration = 0920;
 						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.Siri = {
+								enabled = 1;
+							};
 							com.apple.iCloud = {
 								enabled = 1;
 							};
@@ -476,11 +563,19 @@
 			projectRoot = "";
 			targets = (
 				E1E8B91D1AAB73F000D04E38 /* RaceRunner */,
+				E10A245820B253250073147C /* Siri */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		E10A245720B253250073147C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E1E8B91C1AAB73F000D04E38 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -553,19 +648,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RaceRunner/Pods-RaceRunner-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E14503301C80B04F00631139 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" 3835fee2cf704d70edbfdc3210412d698fac6f91 b02f2a3d4fbb6a68768d614d1c14a8492675804a2852693a30e22fadeb6e1fc5";
-		};
 		E3805A546D750C7E6281FAE7 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -595,11 +677,22 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E10A245520B253250073147C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E10A245C20B253250073147C /* IntentHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E1E8B91A1AAB73F000D04E38 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				E161FF2D1CC8529200C92485 /* Sound.swift in Sources */,
+				E1973E1F20D7F22900043736 /* Notification+Names.swift in Sources */,
+				E1973E2120D7F4B600043736 /* RunCoordinate.swift in Sources */,
+				E1E8195820B6409000AC1574 /* IntentHandler.swift in Sources */,
 				E13C763F1C1A01520046021A /* Array+insertionIndexOf.swift in Sources */,
 				E13B48B51B911BDA001C997A /* UiConstants.swift in Sources */,
 				E15195F81C0BD41A00BD52FB /* HumanWeight.swift in Sources */,
@@ -613,6 +706,7 @@
 				E159C2541AAB8304007C6EA1 /* RaceRunner.xcdatamodeld in Sources */,
 				E1648E181C497997002A3ED4 /* ShoesDelegate.swift in Sources */,
 				E10B70501C45C9BF00C70283 /* SortType.swift in Sources */,
+				E143C0AE20DFFD310010C9A1 /* ProgressUpdate.swift in Sources */,
 				E1648E121C487449002A3ED4 /* ShoesCell.swift in Sources */,
 				E1C2ED501AB63BE200A29728 /* LogCell.swift in Sources */,
 				E1E8B9561AAB742E00D04E38 /* SettingsVC.swift in Sources */,
@@ -667,12 +761,19 @@
 				E1648E0C1C4863E3002A3ED4 /* Shoes+CoreDataProperties.swift in Sources */,
 				E1F354051C7125FC00D6C581 /* IapHelper.swift in Sources */,
 				E1E9E3441C8288CC00F70D79 /* BroadcastVC.swift in Sources */,
-				E12F33C91C8B7490008BA8D8 /* RunDelegate.swift in Sources */,
 				E14360C31AE4AAA4003F27B4 /* GpxLocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E10A247020B253250073147C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E10A245820B253250073147C /* Siri */;
+			targetProxy = E10A246F20B253250073147C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		E1E8B92C1AAB73F000D04E38 /* LaunchScreen.xib */ = {
@@ -686,6 +787,58 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		E10A247620B253250073147C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = V3L2PL4QC9;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = Siri/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = biz.joshadams.RaceRunner.Siri;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E10A247720B253250073147C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V3L2PL4QC9;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = Siri/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = biz.joshadams.RaceRunner.Siri;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		E1E8B93B1AAB73F000D04E38 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -843,6 +996,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E10A247520B253250073147C /* Build configuration list for PBXNativeTarget "Siri" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E10A247620B253250073147C /* Debug */,
+				E10A247720B253250073147C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E1E8B9191AAB73F000D04E38 /* Build configuration list for PBXProject "RaceRunner" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

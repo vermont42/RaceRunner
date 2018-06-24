@@ -41,6 +41,9 @@ class LowMemoryHandler {
   
   static func appStarted() {
     SettingsManager.setWarnedUserAboutLowRam(false)
+    if SettingsManager.getStartedViaSiri() {
+      return
+    }
     if SettingsManager.getRealRunInProgress() {
       let resumeAction = UIAlertAction(title: resumeButtonTitle, style: UIAlertActionStyle.default, handler: { action in
         RunModel.loadStateAndStart()

@@ -25,7 +25,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
   private static let demoLabel = "Demo"
   
   private static let rowHeight: CGFloat = 50.0
-  private static let realRunMessage = "There is a real run in progress. Please tap the Continue menu item and stop the run before attempting to simulate a run."
+  private static let realRunMessage = "There is a real run in progress. Please tap the Resume Run button and stop the run before attempting to simulate a run."
   private static let okButtonText = "OK"
   private static let gpxFile = "iSmoothRun"
   private static let sadFaceTitle = "😢"
@@ -43,22 +43,28 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    menuTable.reloadData()
+    NotificationCenter.default.addObserver(self, selector: #selector(updateRunButton), name: .runDidStart, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(updateRunButton), name: .runDidStop, object: nil)
+    updateRunButton()
   }
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    if firstAppearance {
+    if firstAppearance && !SettingsManager.getStartedViaSiri() {
       firstAppearance = false
       if SettingsManager.getRealRunInProgress() {
         LowMemoryHandler.askWhetherToResumeRun(self, completion: {
           self.updateRunButton()
-          self.menuTable.reloadData()
         })
       }
     }
   }
-  
+
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    NotificationCenter.default.removeObserver(self)
+  }
+
   override func didReceiveMemoryWarning() {
     LowMemoryHandler.handleLowMemory(self)
   }
@@ -84,7 +90,6 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
       cell!.selectedBackgroundView = selectedBackgroundView
       cell!.textLabel?.font = UIFont(name: UiConstants.globalFont, size: MenuVC.menuFontSize)
     }
-    updateRunButton()
     cell!.textLabel?.text = controllerLabels[(indexPath as NSIndexPath).row]
     cell!.textLabel?.attributedText = UiHelpers.letterPressedText(controllerLabels[(indexPath as NSIndexPath).row])
     return cell!
@@ -115,12 +120,15 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
     viewControllerTitle.alpha = 1.0 + sin(scrollView.contentOffset.y / shimmerDivisor) / shimmerReducer
   }
   
-  private func updateRunButton() {
+  @objc private func updateRunButton() {
     if RunModel.runModel.status == .preRun && controllerLabels[0] == MenuVC.resumeRunLabel {
       controllerLabels[0] = MenuVC.startRunLabel
     }
     else if RunModel.runModel.status != .preRun && controllerLabels[0] == MenuVC.startRunLabel {
       controllerLabels[0] = MenuVC.resumeRunLabel
+    }
+    DispatchQueue.main.async {
+      self.menuTable.reloadData()
     }
   }
 

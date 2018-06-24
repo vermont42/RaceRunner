@@ -10,6 +10,7 @@ import UIKit
 import DLRadioButton
 import StoreKit
 import CloudKit
+import Intents
 
 class SettingsVC: ChildVC, BroadcastDelegate {
   @IBOutlet var unitsToggle: UISwitch!

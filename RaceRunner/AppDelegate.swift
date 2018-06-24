@@ -9,8 +9,7 @@
 import UIKit
 import GoogleMaps
 import AVFoundation
-import Fabric
-import Answers
+import Intents
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,8 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     Config.checkKeys()
     GMSServices.provideAPIKey(Config.googleMapsKey)
     SoundManager.enableBackgroundAudio()
-    Fabric.with([Answers.self])
-    //Fabric.sharedSDK().debug = true
     LowMemoryHandler.appStarted()
     return true
   }
@@ -36,5 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
   func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey: Any]) -> Bool {
     return RunModel.addRun(url)
+  }
+
+  func application(_ application: UIApplication, handle intent: INIntent, completionHandler: @escaping (INIntentResponse) -> Void) {
+    completionHandler(IntentHandler.handle(intent: intent))
   }
 }
