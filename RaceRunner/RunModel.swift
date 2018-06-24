@@ -14,7 +14,6 @@ import CoreData
 class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   var locations: [CLLocation]! = []
   var status: Status = .preRun
-  var runDelegate: RunDelegate?
   var importedRunDelegate: ImportedRunDelegate?
   var run: Run!
   var totalDistance = 0.0
@@ -46,7 +45,6 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   private var runToSimulate: Run!
   private var gpxFile: String!
   private var secondLength = 1.0
-  private var spectatorStoppedRun = false
   private (set) var sortedAltitudes: [Double] = []
   private (set) var sortedPaces: [Double] = []
   static let altFudge: Double = 0.1
@@ -131,7 +129,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     switch status {
     case .preRun:
       initialLocation = locations[0]
-      runDelegate?.showInitialCoordinate(initialLocation.coordinate)
+      NotificationCenter.default.post(name: .showInitialCoordinate, object: nil, userInfo: ["\(CLLocationCoordinate2D.self)": initialLocation.coordinate])
       locationManager?.stopUpdatingLocation()
       if runToSimulate == nil && gpxFile == nil {
         DarkSky().currentWeather(CLLocationCoordinate2D(
@@ -163,10 +161,12 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
             let paceIndex = sortedPaces.insertionIndexOf(curPace) { $0 < $1 }
             sortedPaces.insert(curPace, at: paceIndex)
             let paceColor = UiHelpers.colorForValue(curPace, sortedArray: sortedPaces, index: paceIndex)
-            runDelegate?.plotToCoordinate(newLocation.coordinate, altitudeColor: altitudeColor, paceColor: paceColor)
+            let runCoordinate = RunCoordinate(coordinate: newLocation.coordinate, altitudeColor: altitudeColor, paceColor: paceColor)
+            NotificationCenter.default.post(name: .plotToCoordinate, object: nil, userInfo: ["\(RunCoordinate.self)": runCoordinate])
           }
           else {
-            runDelegate?.showInitialCoordinate(newLocation.coordinate)
+            NotificationCenter.default.post(name: .showInitialCoordinate, object: nil, userInfo: ["\(CLLocationCoordinate2D.self)": newLocation.coordinate])
+
           }
           self.locations.append(newLocation)
         }
@@ -238,7 +238,8 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
       if SettingsManager.getBroadcastNextRun() && locations.count > 0 && SettingsManager.getRealRunInProgress() {
         PubNubManager.publishLocation(locations[locations.count - 1], distance: totalDistance, seconds: totalSeconds, publisher: SettingsManager.getBroadcastName())
       }
-      runDelegate?.receiveProgress(totalDistance, totalSeconds: totalSeconds, altitude: curAlt, altGained: altGained, altLost: altLost)
+      let progressUpdate = ProgressUpdate(totalDistance: totalDistance, totalSeconds: totalSeconds, altitude: curAlt, altGained: altGained, altLost: altLost)
+      NotificationCenter.default.post(name: .receiveProgress, object: nil, userInfo: ["\(ProgressUpdate.self)": progressUpdate])
       currentSplitDistance = totalDistance - lastDistance
       if shouldReportSplits && currentSplitDistance >= reportEvery {
         currentSplitDistance -= reportEvery
@@ -305,6 +306,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   
   func start(locations: [CLLocation], oldSplitAltitude: Double, totalSeconds: Int, lastSeconds: Int, totalDistance: Double, lastDistance: Double, currentAltitude: Double, currentSplitDistance: Double, altGained: Double, altLost: Double, maxLong: Double, minLong: Double, maxLat: Double, minLat: Double, maxAlt: Double, minAlt: Double) {
     status = .inProgress
+    NotificationCenter.default.post(name: .runDidStart, object: nil)
     reportEvery = SettingsManager.getReportEvery()
     if reportEvery == SettingsManager.never {
       shouldReportSplits = false
@@ -341,7 +343,10 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     }
   }
   
-  func start() {
+  func start(isViaSiri: Bool = false) {
+    SoundManager.play(.gun)
+    SettingsManager.setStartedViaSiri(isViaSiri)
+    NotificationCenter.default.post(name: .runDidStart, object: nil)
     start(locations: [], oldSplitAltitude: 0.0, totalSeconds: 0, lastSeconds: 0, totalDistance: 0.0, lastDistance: 0.0, currentAltitude: 0.0, currentSplitDistance: 0.0, altGained: 0.0, altLost: 0.0, maxLong: 0.0, minLong: 0.0, maxLat: 0.0, minLat: 0.0, maxAlt: 0.0, minAlt: 0.0)
   }
   
@@ -463,7 +468,6 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   static func deleteSavedRun() {
     SettingsManager.setRealRunInProgress(false)
     SettingsManager.setWarnedUserAboutLowRam(false)
-    //let fetchRequest = NSFetchRequest()
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "RunInProgress")
     let context = CDManager.sharedCDManager.context
     fetchRequest.entity = NSEntityDescription.entity(forEntityName: "RunInProgress", in: context!)
@@ -480,6 +484,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   }
   
   func stop() {
+    SettingsManager.setStartedViaSiri(false)
     timer.invalidate()
     locationManager.stopUpdatingLocation()
     if SettingsManager.getRealRunInProgress() && SettingsManager.getBroadcastNextRun() {
@@ -491,6 +496,17 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
       RunModel.deleteSavedRun()
     }
     if runToSimulate == nil && gpxFile == nil && totalDistance > RunModel.minDistance {
+      let randomApplause = arc4random_uniform(Sound.applauseCount) + 1
+      switch randomApplause {
+      case 1:
+        SoundManager.play(.applause1)
+      case 2:
+        SoundManager.play(.applause2)
+      case 3:
+        SoundManager.play(.applause3)
+      default:
+        break
+      }
       var customName = ""
       //let fetchRequest = NSFetchRequest()
       let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Run")
@@ -517,10 +533,6 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
           UIAlertController.showMessage(result, title: Shoes.warningTitle, okTitle: Shoes.gotIt)
         }
       }
-      if spectatorStoppedRun {
-        runDelegate?.stopRun()
-        spectatorStoppedRun = false
-      }
     }
     else {
       // I don't consider this a magic number because the unadjusted length of a second will never change.
@@ -544,18 +556,23 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     maxAlt = 0.0
     sortedAltitudes = []
     sortedPaces = []
+    NotificationCenter.default.post(name: .runDidStop, object: nil)
   }
   
   func pause() {
+    SoundManager.play(.click)
     status = .paused
     timer.invalidate()
     locationManager.stopUpdatingLocation()
+    NotificationCenter.default.post(name: .runDidPause, object: nil)
   }
   
   func resume() {
+    SoundManager.play(.click)
     status = .inProgress
     locationManager.startUpdatingLocation()
     startTimer()
+    NotificationCenter.default.post(name: .runDidResume, object: nil)
   }
   
   func startTimer() {
@@ -573,7 +590,6 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   }
   
   func stopRun() {
-    spectatorStoppedRun = true
     stop()
   }
   
@@ -601,7 +617,6 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     return rhs < lhs
   }
 }
-
 
 protocol ImportedRunDelegate {
   func runWasImported()

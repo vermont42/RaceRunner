@@ -16,7 +16,6 @@ class SpectateVC: ChildVC, PubNubSubscriber {
   @IBOutlet var map: GMSMapView!
   @IBOutlet var startStopButton: UIButton!
   @IBOutlet var messageButton: UIButton!
-  @IBOutlet var spectationLabel: MarqueeLabel!
   @IBOutlet var distanceLabel: UILabel!
   @IBOutlet var paceLabel: UILabel!
   @IBOutlet var timeLabel: UILabel!
@@ -79,7 +78,6 @@ class SpectateVC: ChildVC, PubNubSubscriber {
     startStopButton.backgroundColor = UiConstants.intermediate3Color
     messageButton.isHidden = true
     viewControllerTitle.text = SpectateVC.spectate
-    spectationLabel.text = ""
   }
   
   private func getBroadcasterAndSubscribe() {
@@ -88,7 +86,6 @@ class SpectateVC: ChildVC, PubNubSubscriber {
       let textFields = alertController.textFields!
       self.publisher = textFields[0].text!.trimmingCharacters(in: CharacterSet.whitespaces)
       if self.publisher != "" {
-        self.spectationLabel.text = self.publisher
         self.viewControllerTitle.text = SpectateVC.spectating
         self.startStopButton.setTitle(SpectateVC.stop, for: UIControlState())
         self.startStopButton.backgroundColor = UiConstants.intermediate1Color

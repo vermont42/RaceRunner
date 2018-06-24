@@ -37,6 +37,10 @@ class SettingsManager {
   private static let broadcastNextRunKey = "broadcastNextRun"
   private static let broadcastNextRunDefault = false
 
+  private var startedViaSiri: Bool
+  private static let startedViaSiriKey = "startedViaSiri"
+  private static let startedViaSiriDefault = false
+
   private var showedForecastCredit: Bool
   private static let showedForecastCreditKey = "showedForecastCredit"
   private static let showedForecastCreditDefault = false
@@ -182,6 +186,15 @@ class SettingsManager {
     else {
       broadcastNextRun = SettingsManager.broadcastNextRunDefault
       userDefaults.set("\(broadcastNextRun)", forKey: SettingsManager.broadcastNextRunKey)
+      userDefaults.synchronize()
+    }
+
+    if let storedStartedViaSiriString = userDefaults.string(forKey: SettingsManager.startedViaSiriKey) {
+      startedViaSiri = (storedStartedViaSiriString as NSString).boolValue
+    }
+    else {
+      startedViaSiri = SettingsManager.startedViaSiriDefault
+      userDefaults.set("\(startedViaSiri)", forKey: SettingsManager.startedViaSiriKey)
       userDefaults.synchronize()
     }
 
@@ -395,7 +408,7 @@ class SettingsManager {
       settingsManager.userDefaults.synchronize()
     }
   }
-  
+
   class func getAccent() -> Accent {
     return settingsManager.accent
   }
@@ -447,7 +460,19 @@ class SettingsManager {
       settingsManager.userDefaults.synchronize()
     }
   }
-  
+
+  class func getStartedViaSiri() -> Bool {
+    return settingsManager.startedViaSiri
+  }
+
+  class func setStartedViaSiri(_ startedViaSiri: Bool) {
+    if startedViaSiri != settingsManager.startedViaSiri {
+      settingsManager.startedViaSiri = startedViaSiri
+      settingsManager.userDefaults.set("\(startedViaSiri)", forKey: SettingsManager.startedViaSiriKey)
+      settingsManager.userDefaults.synchronize()
+    }
+  }
+
   class func getWarnedUserAboutLowRam() -> Bool {
     return settingsManager.warnedUserAboutLowRam
   }

@@ -1,25 +1,20 @@
 PODS:
-  - Answers (1.3.6):
-    - Fabric (~> 1.6.3)
   - COBezierTableView (1.1.0)
   - DLRadioButton (1.4.12)
-  - Fabric (1.6.13)
   - GoogleMaps (2.7.0):
     - GoogleMaps/Maps (= 2.7.0)
   - GoogleMaps/Base (2.7.0)
   - GoogleMaps/Maps (2.7.0):
     - GoogleMaps/Base
-  - MarqueeLabel/Swift (3.1.4)
+  - MarqueeLabel/Swift (3.1.6)
   - MGSwipeTableCell (1.6.7)
-  - PubNub (4.7.8):
-    - PubNub/Core (= 4.7.8)
-  - PubNub/Core (4.7.8)
+  - PubNub (4.8.1):
+    - PubNub/Core (= 4.8.1)
+  - PubNub/Core (4.8.1)
 
 DEPENDENCIES:
-  - Answers
   - COBezierTableView
   - DLRadioButton
-  - Fabric
   - GoogleMaps
   - MarqueeLabel/Swift
   - MGSwipeTableCell
@@ -27,25 +22,21 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
-    - Answers
     - COBezierTableView
     - DLRadioButton
-    - Fabric
     - GoogleMaps
     - MarqueeLabel
     - MGSwipeTableCell
     - PubNub
 
 SPEC CHECKSUMS:
-  Answers: ef6af16bc75366334db6323a87f37ea54e2dab71
   COBezierTableView: 2671d09801a2b66e0d0ada8e097a1838490ef996
   DLRadioButton: d7c4e225ed0e8013cef7be61455230c7557ad7c1
-  Fabric: 2fb5676bc811af011a04513451f463dac6803206
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
-  MarqueeLabel: bf768455fe88d427f71476ebb23f9092b660f40b
+  MarqueeLabel: 0c41f08ef5773e29c0f71064a8fa788a2fd8b365
   MGSwipeTableCell: fb20e983988bde2b8d0df29c2d9e1d8ffd10b74a
-  PubNub: e483fedbcd68ed554dd48276d8bbe9d9e23199a4
+  PubNub: 4958d6f5e3e7592eb6bccf8537310dbc22effcc9
 
-PODFILE CHECKSUM: 89385662e216540c8086af77f7873007fcd72086
+PODFILE CHECKSUM: ef6dc416087b8319ebdb86e569a6eafc1e8a628d
 
 COCOAPODS: 1.5.0

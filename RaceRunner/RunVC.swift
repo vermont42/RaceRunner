@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import GoogleMaps
 
-class RunVC: ChildVC, RunDelegate {
+class RunVC: ChildVC {
   @IBOutlet var viewControllerTitle: UILabel!
   @IBOutlet var distanceLabel: UILabel!
   @IBOutlet var timeLabel: UILabel!
@@ -34,11 +34,11 @@ class RunVC: ChildVC, RunDelegate {
   private static let pauseTitle = " Pause "
   private static let stopTitle = " Stop "
   private static let resumeTitle = " Resume "
+  private var totalDistance: Double = 0.0
   
   var runToSimulate: Run?
   var gpxFile: String?
-  private var modelStoppedRun = false
-  
+
   override func viewDidLoad() {
     map.mapType = .terrain
     map.isHidden = true
@@ -49,8 +49,14 @@ class RunVC: ChildVC, RunDelegate {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    NotificationCenter.default.addObserver(self, selector: #selector(runDidStart), name: .runDidStart, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(runDidStop), name: .runDidStop, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(runDidPause), name: .runDidPause, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(runDidResume), name: .runDidResume, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(plotToCoordinate), name: .plotToCoordinate, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(plotToCoordinate), name: .showInitialCoordinate, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(receiveProgress), name: .receiveProgress, object: nil)
     map.clear()
-
     if let runToSimulate = runToSimulate {
       RunModel.initializeRunModelWithRun(runToSimulate)
       if runToSimulate.customName.isEqual(to: "") {
@@ -60,56 +66,72 @@ class RunVC: ChildVC, RunDelegate {
         viewControllerTitle.text = runToSimulate.customName as String
       }
       PersistentMapState.initMapState()
-      startStop()
+      RunModel.runModel.start()
     }
     else if let gpxFile = gpxFile {
       RunModel.initializeRunModelWithGpxFile(gpxFile)
       viewControllerTitle.text = RunVC.gpxTitle
       PersistentMapState.initMapState()
-      startStop()
+      RunModel.runModel.start()
     }
     else {
       RunModel.initializeRunModel()
       viewControllerTitle.text = "Run"
     }
     viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
-    
-    let runModel = RunModel.runModel
-    runModel.runDelegate = self
-    switch runModel.status {
+
+    switch RunModel.runModel.status {
     case .preRun:
       hideLabels()
       startStopButton.backgroundColor = UiConstants.intermediate3Color
-      startStopButton.setTitle(RunVC.startTitle, for: UIControlState())
       startStopButton.isHidden = false
       pauseResume.isHidden = true
       PersistentMapState.initMapState()
-    case .inProgress:
-      pauseResume.setTitle(RunVC.pauseTitle, for: UIControlState())
-    case .paused:
-      pauseResume.setTitle(RunVC.resumeTitle, for: UIControlState())
-      map.camera = GMSCameraPosition.camera(withLatitude: PersistentMapState.currentCoordinate.latitude, longitude: PersistentMapState.currentCoordinate.longitude, zoom: UiConstants.cameraZoom)
-    }
-    
-    if runModel.status == .inProgress || runModel.status == .paused {
+    case .paused, .inProgress:
       showLabels()
       pauseResume.isHidden = false
       startStopButton.isHidden = false
       startStopButton.backgroundColor = UiConstants.intermediate1Color
-      startStopButton.setTitle(RunVC.stopTitle, for: UIControlState())
-      if runToSimulate == nil && gpxFile == nil {
+      if runToSimulate == nil && gpxFile == nil && !SettingsManager.getStartedViaSiri() {
         addPolylineAndPin()
       }
       map.isHidden = false
       paceOrAltitude.isHidden = false
+      if PersistentMapState.currentCoordinate != nil {
+        map.camera = GMSCameraPosition.camera(withLatitude: PersistentMapState.currentCoordinate.latitude, longitude: PersistentMapState.currentCoordinate.longitude, zoom: UiConstants.cameraZoom)
+      }
+      else if let last = RunModel.runModel.locations.last {
+        showInitialCoordinate(last.coordinate)
+      }
+    }
+    updateButtonLabels()
+  }
+
+  @objc private func updateButtonLabels() {
+    switch RunModel.runModel.status {
+    case .preRun:
+      startStopButton.setTitle(RunVC.startTitle, for: UIControlState())
+      startStopButton.backgroundColor = UiConstants.intermediate3Color
+      pauseResume.isHidden = true
+    case .paused:
+      startStopButton.setTitle(RunVC.stopTitle, for: UIControlState())
+      startStopButton.backgroundColor = UiConstants.intermediate1Color
+      pauseResume.setTitle(RunVC.resumeTitle, for: UIControlState())
+      pauseResume.isHidden = false
+    case .inProgress:
+      startStopButton.setTitle(RunVC.stopTitle, for: UIControlState())
+      startStopButton.backgroundColor = UiConstants.intermediate1Color
+      pauseResume.setTitle(RunVC.pauseTitle, for: UIControlState())
+      pauseResume.isHidden = false
     }
   }
   
-  override func viewDidDisappear(_ animated: Bool) {
-    RunModel.runModel.runDelegate = nil
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
     if (runToSimulate != nil || gpxFile != nil) && (RunModel.runModel.status != .preRun)  {
       RunModel.runModel.stop()
     }
+    NotificationCenter.default.removeObserver(self)
   }
 
   @objc func announceCurrentPace() {
@@ -122,7 +144,14 @@ class RunVC: ChildVC, RunDelegate {
     PersistentMapState.pin.icon = PersistentMapState.runnerIcons.nextIcon()
     PersistentMapState.pin.map = map
   }
-  
+
+  @objc func showInitialCoordinate(_ notification: NSNotification) {
+    guard let initialCoordinate = notification.userInfo?["\(CLLocationCoordinate2D.self)"] as? CLLocationCoordinate2D else {
+      return
+    }
+    showInitialCoordinate(initialCoordinate)
+  }
+
   func showInitialCoordinate(_ coordinate: CLLocationCoordinate2D) {
     map.camera = GMSCameraPosition.camera(withLatitude: coordinate.latitude, longitude: coordinate.longitude, zoom: UiConstants.cameraZoom)
     PersistentMapState.currentCoordinate = coordinate
@@ -131,24 +160,27 @@ class RunVC: ChildVC, RunDelegate {
     PersistentMapState.pin.map = map
   }
   
-  func plotToCoordinate(_ coordinate: CLLocationCoordinate2D, altitudeColor: UIColor, paceColor: UIColor) {
+  @objc func plotToCoordinate(_ notification: NSNotification) {
+    guard let runCoordinate = notification.userInfo?["\(RunCoordinate.self)"] as? RunCoordinate else {
+      return
+    }
     if PersistentMapState.currentCoordinate != nil {
-      if PersistentMapState.currentCoordinate.longitude > coordinate.longitude {
+      if PersistentMapState.currentCoordinate.longitude > runCoordinate.coordinate.longitude {
         PersistentMapState.runnerIcons.direction = .west
         PersistentMapState.latestDirection = .west
       }
-      else if PersistentMapState.currentCoordinate.longitude < coordinate.longitude {
+      else if PersistentMapState.currentCoordinate.longitude < runCoordinate.coordinate.longitude {
         PersistentMapState.runnerIcons.direction = .east
         PersistentMapState.latestDirection = .east
       }
-      var coords: [CLLocationCoordinate2D] = [PersistentMapState.currentCoordinate, coordinate]
-      map.camera = GMSCameraPosition.camera(withLatitude: coordinate.latitude, longitude: coordinate.longitude, zoom: UiConstants.cameraZoom)
+      var coords: [CLLocationCoordinate2D] = [PersistentMapState.currentCoordinate, runCoordinate.coordinate]
+      map.camera = GMSCameraPosition.camera(withLatitude: runCoordinate.coordinate.latitude, longitude: runCoordinate.coordinate.longitude, zoom: UiConstants.cameraZoom)
       PersistentMapState.path.add(coords[1])
       PersistentMapState.polyline.path = PersistentMapState.path
-      let altitudeGradient = GMSStrokeStyle.gradient(from: PersistentMapState.latestAltitudeStrokeColor, to: altitudeColor)
-      let paceGradient = GMSStrokeStyle.gradient(from: PersistentMapState.latestPaceStrokeColor, to: paceColor)
-      PersistentMapState.latestAltitudeStrokeColor = altitudeColor
-      PersistentMapState.latestPaceStrokeColor = paceColor
+      let altitudeGradient = GMSStrokeStyle.gradient(from: PersistentMapState.latestAltitudeStrokeColor, to: runCoordinate.altitudeColor)
+      let paceGradient = GMSStrokeStyle.gradient(from: PersistentMapState.latestPaceStrokeColor, to: runCoordinate.paceColor)
+      PersistentMapState.latestAltitudeStrokeColor = runCoordinate.altitudeColor
+      PersistentMapState.latestPaceStrokeColor = runCoordinate.paceColor
       PersistentMapState.altitudeSpans.append(GMSStyleSpan(style: altitudeGradient))
       PersistentMapState.paceSpans.append(GMSStyleSpan(style: paceGradient))
       if paceOrAltitude.selectedSegmentIndex == 0 {
@@ -159,51 +191,45 @@ class RunVC: ChildVC, RunDelegate {
       }
       PersistentMapState.polyline.map = map
       PersistentMapState.pin.map = nil
-      PersistentMapState.pin.position = coordinate
+      PersistentMapState.pin.position = runCoordinate.coordinate
       PersistentMapState.pin.icon = PersistentMapState.runnerIcons.nextIcon()
       PersistentMapState.pin.map = map
-      PersistentMapState.currentCoordinate = coordinate
+      PersistentMapState.currentCoordinate = runCoordinate.coordinate
     }
     else {
-      showInitialCoordinate(coordinate)
+      showInitialCoordinate(runCoordinate.coordinate)
     }
   }
   
-  func receiveProgress(_ totalDistance: Double, totalSeconds: Int, altitude: Double, altGained: Double, altLost: Double) {
-    timeLabel.text = "Time: \(Converter.stringifySecondCount(totalSeconds, useLongFormat: false))"
-    altLabel.text = "Alt.: " + Converter.stringifyAltitude(altitude)
+  @objc func receiveProgress(_ notification: NSNotification) {
+    guard let progressUpdate = notification.userInfo?["\(ProgressUpdate.self)"] as? ProgressUpdate else {
+      return
+    }
+    totalDistance = progressUpdate.totalDistance
+    timeLabel.text = "Time: \(Converter.stringifySecondCount(progressUpdate.totalSeconds, useLongFormat: false))"
+    altLabel.text = "Alt.: " + Converter.stringifyAltitude(progressUpdate.altitude)
     distanceLabel.text = "Dist.: \(Converter.stringifyDistance(totalDistance))"
-    paceLabel.text = "Pace: " + Converter.stringifyPace(totalDistance, seconds: totalSeconds)
-    altGainedLabel.text = "+: " + Converter.stringifyAltitude(altGained)
-    altLostLabel.text = "-: " + Converter.stringifyAltitude(altLost)
+    paceLabel.text = "Pace: " + Converter.stringifyPace(totalDistance, seconds: progressUpdate.totalSeconds)
+    altGainedLabel.text = "+: " + Converter.stringifyAltitude(progressUpdate.altGained)
+    altLostLabel.text = "-: " + Converter.stringifyAltitude(progressUpdate.altLost)
     let stopAfter = SettingsManager.getStopAfter()
     if (stopAfter != SettingsManager.never) && (totalDistance >= stopAfter) {
-      stop()
+      RunModel.runModel.stop()
     }
   }
   
   @IBAction func showMenu(_ sender: UIButton) {
-    if runToSimulate == nil && gpxFile == nil {
-      showMenu()
+    if runToSimulate != nil || gpxFile != nil {
+      RunModel.runModel.stop()
     }
-    else {
-      stop()
-    }
+    showMenu()
   }
   
-  @IBAction func startStop() {
+  @IBAction func startOrStop() {
     switch RunModel.runModel.status {
     case .preRun:
       if runToSimulate != nil || gpxFile != nil || RunModel.gpsIsAvailable() {
-        showLabels()
-        startStopButton.backgroundColor = UiConstants.intermediate1Color
-        startStopButton.setTitle("  Stop  ", for: UIControlState())
-        pauseResume.isHidden = false
-        pauseResume.setTitle("  Pause  ", for: UIControlState())
         RunModel.runModel.start()
-        SoundManager.play(.gun)
-        map.isHidden = false
-        paceOrAltitude.isHidden = false
       }
       else {
         UIAlertController.showMessage(RunVC.noGpsMessage, title: RunVC.sadFaceTitle, okTitle: RunVC.bummerButtonTitle, handler: { action in
@@ -211,75 +237,22 @@ class RunVC: ChildVC, RunDelegate {
         })
       }
     case .inProgress, .paused:
-      stop()
-      map.isHidden = true
-      paceOrAltitude.isHidden = true
-    }
-  }
-  
-  func stop() {
-    PersistentMapState.runnerIcons.direction = .stationary
-    startStopButton.backgroundColor = UiConstants.intermediate3Color
-    startStopButton.setTitle("  Start  ", for: UIControlState())
-    pauseResume.isHidden = true
-    let totalDistance = RunModel.runModel.totalDistance
-    if !modelStoppedRun {
       RunModel.runModel.stop()
     }
-    else {
-      modelStoppedRun = false
-    }
-    if runToSimulate == nil && gpxFile == nil {
-      if totalDistance > RunModel.minDistance {
-        let randomApplause = arc4random_uniform(Sound.applauseCount) + 1
-        switch randomApplause {
-        case 1:
-          SoundManager.play(.applause1)
-        case 2:
-          SoundManager.play(.applause2)
-        case 3:
-          SoundManager.play(.applause3)
-        default:
-          break
-        }
-        ReviewPrompter.promptableActionHappened()
-        performSegue(withIdentifier: "pan details from run", sender: self)
-      }
-      else {
-        UIAlertController.showMessage(RunVC.didNotSaveMessage, title: RunVC.sadFaceTitle, okTitle: RunVC.bummerButtonTitle, handler: { action in
-          SoundManager.play(.sadTrombone)
-          self.showMenu()
-        })
-      }
-    }
-    else if runToSimulate != nil {
-      self.performSegue(withIdentifier: "unwind pan log", sender: self)
-    }
-    else { // if gpxFile != nil
-      showMenu()
-    }
   }
-  
-  @IBAction func pauseResume(_ sender: UIButton) {
-    SoundManager.play(.click)
+
+  @IBAction func pauseOrResume() {
     let runModel = RunModel.runModel
-    switch runModel.status {
+    switch RunModel.runModel.status {
     case .preRun:
       fatalError(RunVC.pauseError)
     case .inProgress:
-      pauseResume.setTitle(RunVC.resumeTitle, for: UIControlState())
       runModel.pause()
-      PersistentMapState.runnerIcons.direction = .stationary
-      PersistentMapState.pin.map = nil
-      PersistentMapState.pin.icon = PersistentMapState.runnerIcons.nextIcon()
-      PersistentMapState.pin.map = map
     case .paused:
-      pauseResume.setTitle(RunVC.pauseTitle, for: UIControlState())
-      PersistentMapState.runnerIcons.direction = PersistentMapState.latestDirection
       runModel.resume()
     }
   }
-  
+
   @IBAction func returnFromSegueActions(_ sender: UIStoryboardSegue) {
     PersistentMapState.pin.map = map
   }
@@ -327,8 +300,50 @@ class RunVC: ChildVC, RunDelegate {
     altLostLabel.isHidden = false
   }
   
-  func stopRun() {
-    modelStoppedRun = true
-    startStop()
+  @objc func runDidStop() {
+    updateButtonLabels()
+    hideLabels()
+    PersistentMapState.runnerIcons.direction = .stationary
+    pauseResume.isHidden = true
+    if runToSimulate == nil && gpxFile == nil {
+      if totalDistance > RunModel.minDistance {
+        totalDistance = 0.0
+        ReviewPrompter.promptableActionHappened()
+        performSegue(withIdentifier: "pan details from run", sender: self)
+      }
+      else {
+        totalDistance = 0.0
+        UIAlertController.showMessage(RunVC.didNotSaveMessage, title: RunVC.sadFaceTitle, okTitle: RunVC.bummerButtonTitle, handler: { action in
+          SoundManager.play(.sadTrombone)
+          self.showMenu()
+        })
+      }
+    }
+    else if runToSimulate != nil {
+      self.performSegue(withIdentifier: "unwind pan log", sender: self)
+    }
+    else { // if gpxFile != nil
+      showMenu()
+    }
+  }
+
+  @objc func runDidStart() {
+    map.isHidden = false
+    paceOrAltitude.isHidden = false
+    updateButtonLabels()
+    showLabels()
+  }
+
+  @objc func runDidPause() {
+    PersistentMapState.runnerIcons.direction = .stationary
+    PersistentMapState.pin.map = nil
+    PersistentMapState.pin.icon = PersistentMapState.runnerIcons.nextIcon()
+    PersistentMapState.pin.map = map
+    updateButtonLabels()
+  }
+
+  @objc func runDidResume() {
+    PersistentMapState.runnerIcons.direction = PersistentMapState.latestDirection
+    updateButtonLabels()
   }
 }

@@ -840,11 +840,6 @@ open class MarqueeLabel: UILabel, CAAnimationDelegate {
         #endif
         
         scrollCompletionBlock = { [weak self] (finished: Bool) -> () in
-            guard finished else {
-                // Do not continue into the next loop
-                return
-            }
-            
             guard (self != nil) else {
                 return
             }
@@ -853,15 +848,25 @@ open class MarqueeLabel: UILabel, CAAnimationDelegate {
             self!.labelReturnedToHome(true)
             
             // Check to ensure that:
-            // 1) We don't double fire if an animation already exists
-            // 2) The instance is still attached to a window - this completion block is called for
+            
+            // 1) The instance is still attached to a window - this completion block is called for
             //    many reasons, including if the animation is removed due to the view being removed
             //    from the UIWindow (typically when the view controller is no longer the "top" view)
             guard self!.window != nil else {
                 return
             }
-            
+            // 2) We don't double fire if an animation already exists
             guard self!.sublabel.layer.animation(forKey: "position") == nil else {
+                return
+            }
+            // 3) We don't not start automatically if the animation was unexpectedly interrupted
+            guard finished else {
+                // Do not continue into the next loop
+                return
+            }
+            // 4) A completion block still exists for the NEXT loop. A notable case here is if
+            // returnLabelToHome() was called during a subclass's labelReturnToHome() function
+            guard (self!.scrollCompletionBlock != nil) else {
                 return
             }
             
@@ -1138,22 +1143,22 @@ open class MarqueeLabel: UILabel, CAAnimationDelegate {
     
     private var sublabel = UILabel()
     
-    private var homeLabelFrame = CGRect.zero
-    private var awayOffset: CGFloat = 0.0
+    fileprivate var homeLabelFrame = CGRect.zero
+    fileprivate var awayOffset: CGFloat = 0.0
     
     override open class var layerClass: AnyClass {
         return CAReplicatorLayer.self
     }
     
-    private weak var repliLayer: CAReplicatorLayer? {
+    fileprivate weak var repliLayer: CAReplicatorLayer? {
         return self.layer as? CAReplicatorLayer
     }
     
-    private weak var maskLayer: CAGradientLayer? {
+    fileprivate weak var maskLayer: CAGradientLayer? {
         return self.layer.mask as! CAGradientLayer?
     }
     
-    private var scrollCompletionBlock: MLAnimationCompletionBlock?
+    fileprivate var scrollCompletionBlock: MLAnimationCompletionBlock?
     
     override open func draw(_ layer: CALayer, in ctx: CGContext) {
         // Do NOT call super, to prevent UILabel superclass from drawing into context
@@ -1166,14 +1171,14 @@ open class MarqueeLabel: UILabel, CAAnimationDelegate {
         }
     }
     
-    private enum MarqueeKeys: String {
+    fileprivate enum MarqueeKeys: String {
         case Restart = "MLViewControllerRestart"
         case Labelize = "MLShouldLabelize"
         case Animate = "MLShouldAnimate"
         case CompletionClosure = "MLAnimationCompletion"
     }
     
-    class private func notifyController(_ controller: UIViewController, message: MarqueeKeys) {
+    class fileprivate func notifyController(_ controller: UIViewController, message: MarqueeKeys) {
         NotificationCenter.default.post(name: Notification.Name(rawValue: message.rawValue), object: nil, userInfo: ["controller" : controller])
     }
     
@@ -1250,6 +1255,7 @@ open class MarqueeLabel: UILabel, CAAnimationDelegate {
      
      - SeeAlso: restartLabel
      */
+    @available(*, deprecated : 3.1.6, message : "Use the shutdownLabel function instead")
     public func resetLabel() {
         returnLabelToHome()
         homeLabelFrame = CGRect.null
@@ -1572,12 +1578,17 @@ open class MarqueeLabel: UILabel, CAAnimationDelegate {
         }
     }
     
+    open override var isAccessibilityElement: Bool {
+        didSet {
+            sublabel.isAccessibilityElement = self.isAccessibilityElement
+        }
+    }
 
     //
     // MARK: - Support
     //
     
-    private func offsetCGPoint(_ point: CGPoint, offset: CGFloat) -> CGPoint {
+    fileprivate func offsetCGPoint(_ point: CGPoint, offset: CGFloat) -> CGPoint {
         return CGPoint(x: point.x + offset, y: point.y)
     }
     
@@ -1716,13 +1727,13 @@ public struct EdgeFade : OptionSet {
 }
 
 // Define helpful typealiases
-private typealias MLAnimationCompletionBlock = (_ finished: Bool) -> ()
-private typealias MLAnimation = (anim: CAKeyframeAnimation, duration: CGFloat)
+fileprivate typealias MLAnimationCompletionBlock = (_ finished: Bool) -> ()
+fileprivate typealias MLAnimation = (anim: CAKeyframeAnimation, duration: CGFloat)
 
-private class GradientSetupAnimation: CABasicAnimation {
+fileprivate class GradientSetupAnimation: CABasicAnimation {
 }
 
-private extension UIResponder {
+fileprivate extension UIResponder {
     // Thanks to Phil M
     // http://stackoverflow.com/questions/1340434/get-to-uiviewcontroller-from-uiview-on-iphone
     
@@ -1745,7 +1756,7 @@ private extension UIResponder {
     }
 }
 
-private extension CAMediaTimingFunction {
+fileprivate extension CAMediaTimingFunction {
     
     func durationPercentageForPositionPercentage(_ positionPercentage: CGFloat, duration: CGFloat) -> CGFloat {
         // Finds the animation duration percentage that corresponds with the given animation "position" percentage.
