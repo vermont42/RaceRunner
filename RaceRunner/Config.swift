@@ -13,23 +13,23 @@ struct Config {
   static let googleMapsKey = ""
   static let pubNubPublishKey = ""
   static let pubNubSubscribeKey = ""
-  private static let googleMapsError = "Google Maps API key missing from Config.swift."
-  private static let darkSkyError = "Dark Sky API key missing from Config.swift."
-  private static let pubNubPublishError = "PubNub Publish API key missing from Config.swift."
-  private static let pubNubSubscribeError = "PubNub Subscribbe API key missing from Config.swift."
 
   static func checkKeys() {
     if Config.googleMapsKey == "" {
-      fatalError(Config.googleMapsError)
+      let googleMapsError = "Google Maps API key missing from Config.swift."
+      fatalError(googleMapsError)
     }
     if Config.darkSkyKey == "" {
-      fatalError(Config.darkSkyError)
+      let darkSkyError = "Dark Sky API key missing from Config.swift."
+      fatalError(darkSkyError)
     }
     if Config.pubNubPublishKey == "" {
-      fatalError(Config.pubNubPublishError)
+      let pubNubPublishError = "PubNub Publish API key missing from Config.swift."
+      fatalError(pubNubPublishError)
     }
     if Config.pubNubSubscribeKey == "" {
-      fatalError(Config.pubNubSubscribeError)
+      let pubNubSubscribeError = "PubNub Subscribe API key missing from Config.swift."
+      fatalError(pubNubSubscribeError)
     }
   }
 }
