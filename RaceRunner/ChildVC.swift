@@ -8,7 +8,11 @@
 
 import UIKit
 
-class ChildVC: UIViewController {    
+class ChildVC: UIViewController {
+  override var prefersStatusBarHidden: Bool {
+    return true
+  }
+
   override func viewDidLoad() {
     setupSwipeGestureRecognizer()
   }
@@ -25,9 +29,5 @@ class ChildVC: UIViewController {
   
   @objc func showMenu() {
     self.performSegue(withIdentifier: "unwind pan", sender: self)
-  }
-  
-  override var prefersStatusBarHidden: Bool {
-    return true
   }
 }

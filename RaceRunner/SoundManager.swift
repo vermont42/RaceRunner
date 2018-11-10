@@ -11,9 +11,10 @@ import AVFoundation
 
 class SoundManager {
   private static let soundManager = SoundManager()
-  private var sounds: [String: AVAudioPlayer]
   private static let soundExtension = "mp3"
-  
+
+  private var sounds: [String: AVAudioPlayer]
+
   private init () {
     sounds = Dictionary()
     do {

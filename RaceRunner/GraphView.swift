@@ -12,9 +12,10 @@ import CoreGraphics
 // Watch video about Coco and Lucky, the cat and cockatiel.
 class GraphView: UIView {
   var run: Run?
-  var smoothSpeeds: [Double]!
-  var maxSmoothSpeed: Double!
-  var minSmoothSpeed: Double!
+  var smoothSpeeds: [Double] = []
+  var maxSmoothSpeed: Double = 0.0
+  var minSmoothSpeed: Double = 0.0
+  
   private static let minAltRange = 5.0
   private static let minSpeedRange = 0.1
   private static let altitudePoints = 50
@@ -51,8 +52,7 @@ class GraphView: UIView {
       let chartWidth = bounds.size.width - 2 * GraphView.chartOffset
       if chartHeight > chartWidth {
         orientation = .portrait
-      }
-      else {
+      } else {
         orientation = .landscape
       }
       let xAxisPath = UIBezierPath()
@@ -71,7 +71,11 @@ class GraphView: UIView {
         yAxisPath.lineWidth = GraphView.lineWidth
         yAxisPath.stroke()
         drawGraph(color: UiConstants.intermediate3Color, maxVal: run.maxAltitude.doubleValue, minVal: run.minAltitude.doubleValue, minRange: GraphView.minAltRange, getVal: { (x: Int) -> Double in
-          return (run.locations[self.xToIndex(x)] as! Location).altitude.doubleValue
+          if let location = run.locations[self.xToIndex(x)] as? Location {
+            return location.altitude.doubleValue
+          } else {
+            return 0.0
+          }
         })
       }
       if overlay == .both || overlay == .pace {
@@ -89,9 +93,21 @@ class GraphView: UIView {
       let ticPath = UIBezierPath()
       ticPath.lineWidth = GraphView.lineWidth
       let chunkWidth = chartWidth / CGFloat((xTics + 1))
-      let start = (run.locations[0] as! Location).timestamp
-      let end = (run.locations.lastObject as! Location).timestamp
-      let timeSpan = end.timeIntervalSince(start as Date)
+
+      let startDate: Date
+      if let startLocation = run.locations[0] as? Location {
+        startDate = startLocation.timestamp
+      } else {
+        startDate = Date()
+      }
+      let endDate: Date
+      if let endLocation = run.locations.lastObject as? Location {
+        endDate = endLocation.timestamp
+      } else {
+        endDate = Date()
+      }
+      let timeSpan = endDate.timeIntervalSince(startDate)
+      
       let timeChunk = Int(timeSpan) / (xTics + 1)
       let distanceSpan = run.distance.doubleValue
       let distanceChunk = distanceSpan / Double(xTics + 1)
@@ -115,10 +131,12 @@ class GraphView: UIView {
         let distance = Converter.stringifyDistance((Double(x) * distanceChunk) + distanceChunk, format: "%.1f", omitUnits: true)
         distance.draw(at: CGPoint(x: chunkWidth + GraphView.chartOffset + (CGFloat(x) * chunkWidth) - GraphView.distLabelXOffset, y: GraphView.chartOffset + chartHeight + GraphView.distLabelYOffset), withAttributes: [NSAttributedStringKey.foregroundColor: UiConstants.lightColor])
       }
+
       let timeLabel = "Time"
       timeLabel.draw(at: CGPoint(x: GraphView.chartOffset - GraphView.timeLabelXOffset, y: GraphView.chartOffset + chartHeight + GraphView.timeLabelYOffset), withAttributes: [NSAttributedStringKey.foregroundColor: UiConstants.lightColor])
       let distLabel = " Dist."
       distLabel.draw(at: CGPoint(x: GraphView.chartOffset - GraphView.timeLabelXOffset, y: GraphView.chartOffset + chartHeight + GraphView.distLabelYOffset), withAttributes: [NSAttributedStringKey.foregroundColor: UiConstants.lightColor])
+
       let yTics = orientation == .landscape ? GraphView.shortTics : GraphView.longTics
       let chunkHeight = chartHeight / CGFloat((yTics + 1))
       let altChunkSpan = (run.maxAltitude.doubleValue - run.minAltitude.doubleValue) / Double(yTics + 1)
@@ -134,6 +152,7 @@ class GraphView: UIView {
           let label = Converter.stringifyAltitude(run.maxAltitude.doubleValue - ((Double(y) * altChunkSpan)), unabbreviated: true, includeUnit: false)
           label.draw(at: CGPoint(x: labelX, y: labelY), withAttributes: [NSAttributedStringKey.foregroundColor: UiConstants.intermediate3Color])
         }
+
         if overlay == .both || overlay == .pace {
           UiConstants.darkColor.setStroke()
           ticPath.move(to: CGPoint(x: GraphView.chartOffset + chartWidth, y: GraphView.chartOffset + (CGFloat(y) * chunkHeight)))
@@ -145,6 +164,7 @@ class GraphView: UIView {
           let label = Converter.stringifyPace(pace, seconds: 1, forSpeaking: false, includeUnit: false)
           label.draw(at: CGPoint(x: labelX, y: labelY), withAttributes: [NSAttributedStringKey.foregroundColor: UiConstants.intermediate1Color])
         }
+        
         let dashedPath = UIBezierPath()
         UiConstants.lightColor.withAlphaComponent(GraphView.dashAlpha).setStroke()
         dashedPath.lineWidth = GraphView.dashedLineWidth
@@ -171,8 +191,7 @@ class GraphView: UIView {
     if valRange < minRange {
       path.move(to: CGPoint(x: GraphView.chartOffset, y: height / 2))
       path.addLine(to: CGPoint(x: width - GraphView.chartOffset, y: height / 2))
-    }
-    else {
+    } else {
       let firstVal = getVal(0)
       let zeroBasedFirstVal = firstVal - minVal
       let firstY = GraphView.chartOffset + chartHeight - (chartHeight * CGFloat((zeroBasedFirstVal / valRange)))

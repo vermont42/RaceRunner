@@ -22,6 +22,7 @@ open class GpxLocationManager {
   open var heading: CLHeading! { get { return nil } }
   open var allowsBackgroundLocationUpdates = true
   open var secondLength = 1.0
+
   open func requestWhenInUseAuthorization() {}
   open func requestAlwaysAuthorization() {}
   open func startMonitoringSignificantLocationChanges() {}
@@ -38,6 +39,7 @@ open class GpxLocationManager {
   open func stopMonitoringVisits() {}
   open func allowDeferredLocationUpdatesUntilTraveled(_ distance: CLLocationDistance = 0, timeout: TimeInterval) {}
   open func disallowDeferredLocationUpdates() {}
+
   open class func authorizationStatus() -> CLAuthorizationStatus { return CLAuthorizationStatus.authorizedAlways }
   open class func locationServicesEnabled() -> Bool { return true }
   open class func deferredLocationUpdatesAvailable() -> Bool { return true }
@@ -45,9 +47,11 @@ open class GpxLocationManager {
   open class func headingAvailable() -> Bool { return true }
   open class func isMonitoringAvailableForClass(_ regionClass: AnyClass! = nil) -> Bool { return true }
   open class func isRangingAvailable() -> Bool { return true }
+
   open var location: CLLocation! { get { return locations[lastLocation] } }
   open weak var delegate: CLLocationManagerDelegate!
   open var shouldKill = false
+
   private var locations: [CLLocation] = []
   private var lastLocation = 0
   private var hasStarted = false
@@ -56,7 +60,9 @@ open class GpxLocationManager {
   private var updateQueue: DispatchQueue!
   private var dateFormatter = DateFormatter()
   private var dummyCLLocationManager: CLLocationManager!
+
   static let dateFudge: TimeInterval = 1.0
+  
   private static let dateFormat = "yyyy-MM-dd HH:mm:ss"
   private static let initWithNoArgumentsMessage = "Attempted to initialize GpxLocationManager with no arguments."
   private static let gpxParseErrorMessage = "Parsing of GPX file failed."
@@ -99,8 +105,7 @@ open class GpxLocationManager {
           Thread.sleep(forTimeInterval: self.secondLength)
         }
       })
-    }
-    else {
+    } else {
       self.isPaused = false
     }
   }
@@ -120,8 +125,7 @@ open class GpxLocationManager {
   public init(gpxFile: String) {
     if let parser = GpxParser(file: gpxFile) {
       self.locations = parser.parse().locations
-    }
-    else {
+    } else {
       fatalError(GpxLocationManager.gpxParseErrorMessage)
     }
   }

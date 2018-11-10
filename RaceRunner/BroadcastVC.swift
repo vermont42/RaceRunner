@@ -14,6 +14,7 @@ class BroadcastVC: UIViewController, UITextFieldDelegate {
   @IBOutlet var doneButton: UIButton!
   @IBOutlet var nameField: UITextField!
   @IBOutlet var stopToggle: UISwitch!
+  
   weak var broadcastDelegate: BroadcastDelegate!
 
   override func viewDidLoad() {
@@ -49,8 +50,7 @@ class BroadcastVC: UIViewController, UITextFieldDelegate {
   func setupDoneButton() {
     if nameField.text! != "" {
       enableDoneButton()
-    }
-    else {
+    } else {
       disableDoneButton()
     }
   }
@@ -67,9 +67,9 @@ class BroadcastVC: UIViewController, UITextFieldDelegate {
   
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     nameField.resignFirstResponder()
-    nameField.text! = nameField.text!.stringByRemovingWhitespace
-    if nameField.text! != "" {
-      SettingsManager.setBroadcastName(nameField.text!)
+    nameField.text = nameField.text?.stringByRemovingWhitespace
+    if let text = nameField.text, !text.isEmpty {
+      SettingsManager.setBroadcastName(text)
     }
     setupDoneButton()
     return true

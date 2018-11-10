@@ -2,11 +2,15 @@
 //  IapHelper.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 2/14/16.
-//  Copyright © 2016 Josh Adams. All rights reserved.
+//  Adapted by Joshua Adams on 2/14/16.
+//  Copyright © 2016 Ray Wenderlich. All rights reserved.
 //
 
 import StoreKit
+
+// Note: I ordinarily don't comment as heavily, but most of this code is from a tutorial,
+// and I thought it would be helpful to keep the comments as a reminder of how the code
+// works.
 
 /// Notification that is generated when a product is purchased.
 public let IapHelperProductPurchasedNotification = "IAPHelperProductPurchasedNotification"
@@ -51,12 +55,14 @@ open class IapHelper: NSObject  {
     productsRequest?.delegate = self
     productsRequest?.start()
   }
+
   /// Initiates purchase of a product.
   open func purchaseProduct(_ product: SKProduct) {
     print("Buying \(product.productIdentifier)...")
     let payment = SKPayment(product: product)
     SKPaymentQueue.default().add(payment)
   }
+
   /// Given the product identifier, returns true if that product has been purchased.
   open func isProductPurchased(_ productIdentifier: ProductIdentifier) -> Bool {
     return purchasedProductIdentifiers.contains(productIdentifier)
@@ -99,20 +105,20 @@ extension IapHelper: SKProductsRequestDelegate {
 }
 
 extension IapHelper: SKPaymentTransactionObserver {
-  /// This is a function called by the payment queue, not to be called directly.
-  /// For each transaction act accordingly, save in the purchased cache, issue notifications,
-  /// mark the transaction as complete.
+  /// This is a function called by the payment queue, not to be called directly. For
+  /// each transaction act accordingly, save in the purchased cache, issue notifications,
+  /// and mark the transaction as complete.
   public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-    for transaction in transactions {
-      switch (transaction.transactionState) {
+    transactions.forEach {
+      switch $0.transactionState {
       case .purchased:
-        completeTransaction(transaction)
+        completeTransaction($0)
         break
       case .failed:
-        failedTransaction(transaction)
+        failedTransaction($0)
         break
       case .restored:
-        restoreTransaction(transaction)
+        restoreTransaction($0)
         break
       case .deferred:
         break
@@ -129,10 +135,11 @@ extension IapHelper: SKPaymentTransactionObserver {
   }
   
   private func restoreTransaction(_ transaction: SKPaymentTransaction) {
-    let productIdentifier = transaction.original!.payment.productIdentifier
-    //print("restoreTransaction... \(productIdentifier)")
-    provideContentForProductIdentifier(productIdentifier)
-    SKPaymentQueue.default().finishTransaction(transaction)
+    if let productIdentifier = transaction.original?.payment.productIdentifier {
+      //print("restoreTransaction... \(productIdentifier)")
+      provideContentForProductIdentifier(productIdentifier)
+      SKPaymentQueue.default().finishTransaction(transaction)
+    }
   }
   
   // Helper: Saves the fact that the product has been purchased and posts a notification.
@@ -151,8 +158,8 @@ extension IapHelper: SKPaymentTransactionObserver {
   
   private func failedTransaction(_ transaction: SKPaymentTransaction) {
     //print("failedTransaction...")
-    if (transaction.error! as NSError).code != SKError.paymentCancelled.rawValue {
-      //print("Transaction error: \(transaction.error!.localizedDescription)")
+    if let error = transaction.error, (error as NSError).code != SKError.paymentCancelled.rawValue {
+      //print("Transaction error: \(error.localizedDescription)")
     }
     SKPaymentQueue.default().finishTransaction(transaction)
   }

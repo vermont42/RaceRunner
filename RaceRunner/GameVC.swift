@@ -12,7 +12,15 @@ import SpriteKit
 class GameVC: ChildVC {
   private static let lowMemoryTitle = "Ended Game"
   private static let lowMemoryMessage = "RaceRunner had to end your game because of a RAM shortage on your iPhone. Apologies."
-  
+
+  override var shouldAutorotate: Bool {
+    return true
+  }
+
+  override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+    return UIInterfaceOrientationMask.portrait
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     let skView = self.view as! SKView
@@ -24,22 +32,14 @@ class GameVC: ChildVC {
     NotificationCenter.default.addObserver(self, selector: #selector(GameVC.handleApplicationWillResignActive(_:)), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(GameVC.handleApplicationDidBecomeActive(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
   }
-  
-  @IBAction func showMenu(_ sender: UIButton) {
-    showMenu()
-  }
-  
-  override var shouldAutorotate: Bool {
-    return true
-  }
-  
-  override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-    return UIInterfaceOrientationMask.portrait
-  }
-  
+
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     pauseGame()
+    showMenu()
+  }
+
+  @IBAction func showMenu(_ sender: UIButton) {
     showMenu()
   }
   

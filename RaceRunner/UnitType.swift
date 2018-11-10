@@ -11,6 +11,7 @@ import Foundation
 enum UnitType: String {
   case imperial = "Imperial"
   case metric = "Metric"
+  
   init() {
     self = .imperial
   }

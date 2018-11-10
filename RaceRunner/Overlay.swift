@@ -17,7 +17,7 @@ enum Overlay: String {
     self = .both
   }
   
-  func radioButtonPosition() -> Int {
+  var radioButtonPosition: Int {
     switch self {
     case .both:
       return 0

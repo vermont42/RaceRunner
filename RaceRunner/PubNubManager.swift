@@ -11,35 +11,19 @@ import PubNub
 import CoreLocation
 
 class PubNubManager: NSObject, PNObjectEventListener {
-  private let pubNub: PubNub?
-  private var pubNubSubscriber: PubNubSubscriber?
-  private var pubNubPublisher: PubNubPublisher?
   static let sharedNub = PubNubManager()
   static let publicChannel = "foo"
   static let stopped = "stopped"
   private static let stopRun = "stop run"
   private static let messageLabel = "message: "
+  private let pubNub: PubNub?
+  private var pubNubSubscriber: PubNubSubscriber?
+  private var pubNubPublisher: PubNubPublisher?
 
   override init() {
     pubNub = PubNub.clientWithConfiguration(PNConfiguration(publishKey: Config.pubNubPublishKey, subscribeKey: Config.pubNubSubscribeKey))
     super.init()
     pubNub?.addListener(self)
-  }
-  
-  func client(_ client: PubNub, didReceiveMessage message: PNMessageResult) {
-    let messageString = "\(message.data.message!)"
-    if messageString == PubNubManager.stopped {
-      pubNubSubscriber?.runStopped()
-    }
-    else if messageString == PubNubManager.stopRun {
-      pubNubPublisher?.stopRun()
-    }
-    else if (messageString as NSString).substring(to: PubNubManager.messageLabel.count) == PubNubManager.messageLabel {
-      pubNubPublisher?.receiveMessage((messageString as NSString).substring(from: PubNubManager.messageLabel.count))
-    }
-    else {
-      pubNubSubscriber?.receiveProgress(messageString)
-    }
   }
 
   class func publishLocation(_ location: CLLocation, distance: Double, seconds: Int, publisher: String) {
@@ -47,8 +31,7 @@ class PubNubManager: NSObject, PNObjectEventListener {
     sharedNub.pubNub?.publish(message, toChannel: publisher, storeInHistory: false, compressed: false, withCompletion: { (status) -> Void in
       if !status.isError {
           //print("Successfully published.")
-      }
-      else {
+      } else {
           // Handle message publish error. Check 'category' property
           // to find out possible reason because of which request did fail.
           // Review 'errorData' property (which has PNErrorData data type) of status
@@ -84,6 +67,26 @@ class PubNubManager: NSObject, PNObjectEventListener {
     if let _ = sharedNub.pubNubSubscriber {
       sharedNub.pubNub?.unsubscribeFromChannels([publisher], withPresence: true)
       sharedNub.pubNubSubscriber = nil
+    }
+  }
+
+  func client(_ client: PubNub, didReceiveMessage message: PNMessageResult) {
+    let messageString: String
+    if let messageData = message.data.message {
+      messageString = "\(messageData)"
+    } else {
+      messageString = ""
+    }
+    if messageString == PubNubManager.stopped {
+      pubNubSubscriber?.runStopped()
+    }
+    else if messageString == PubNubManager.stopRun {
+      pubNubPublisher?.stopRun()
+    }
+    else if (messageString as NSString).substring(to: PubNubManager.messageLabel.count) == PubNubManager.messageLabel {
+      pubNubPublisher?.receiveMessage((messageString as NSString).substring(from: PubNubManager.messageLabel.count))
+    } else {
+      pubNubSubscriber?.receiveProgress(messageString)
     }
   }
 }

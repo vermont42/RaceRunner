@@ -11,7 +11,7 @@ import StoreKit
 
 struct ReviewPrompter {
   private static let promptModulo = 3
-  private static let promptInterval: TimeInterval = 60 * 60 * 24 * 180
+  private static let promptInterval: TimeInterval = 60 /* seconds */ * 60 /* minutes */ * 24 /* hours */ * 180 /* days */
 
   internal static func promptableActionHappened() {
     var actionCount = SettingsManager.getPromptActionCount()

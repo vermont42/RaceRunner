@@ -14,10 +14,10 @@ class GraphVC: ChildVC {
   @IBOutlet var overlays: [DLRadioButton]!
   @IBOutlet var graphView: GraphView!
   
-  var run: Run!
-  var smoothSpeeds: [Double]!
-  var maxSmoothSpeed: Double!
-  var minSmoothSpeed: Double!
+  var run: Run?
+  var smoothSpeeds: [Double] = []
+  var maxSmoothSpeed: Double = 0.0
+  var minSmoothSpeed: Double = 0.0
   
   override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
     graphView.setNeedsDisplay()
@@ -25,8 +25,8 @@ class GraphVC: ChildVC {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
-    overlays[SettingsManager.getOverlay().radioButtonPosition()].sendActions(for: UIControlEvents.touchUpInside)    
+    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
+    overlays[SettingsManager.getOverlay().radioButtonPosition].sendActions(for: UIControlEvents.touchUpInside)    
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -47,7 +47,7 @@ class GraphVC: ChildVC {
   }
   
   @IBAction func changeOverlay(_ sender: DLRadioButton) {
-    let selectedOverlay = sender.selected()!.titleLabel?.text
+    let selectedOverlay = sender.selected()?.titleLabel?.text
     if let selectedOverlay = selectedOverlay {
       SettingsManager.setOverlay(Overlay.stringToOVerlay(selectedOverlay))
       graphView.setNeedsDisplay()

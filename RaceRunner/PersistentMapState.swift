@@ -10,16 +10,16 @@ import Foundation
 import GoogleMaps
 
 class PersistentMapState {
-  static var pin: GMSMarker!
-  static var currentCoordinate: CLLocationCoordinate2D!
-  static var runnerIcons: RunnerIcons!
-  static var latestDirection: RunnerIcons.Direction!
-  static var latestAltitudeStrokeColor: UIColor!
-  static var latestPaceStrokeColor: UIColor!
-  static var path: GMSMutablePath!
-  static var polyline: GMSPolyline!
-  static var altitudeSpans: [GMSStyleSpan]!
-  static var paceSpans: [GMSStyleSpan]!
+  static var pin: GMSMarker = GMSMarker()
+  static var currentCoordinate: CLLocationCoordinate2D?
+  static var runnerIcons = RunnerIcons()
+  static var latestDirection = RunnerIcons.Direction.stationary
+  static var latestAltitudeStrokeColor = UiConstants.intermediate2ColorDarkened
+  static var latestPaceStrokeColor = UiConstants.intermediate2ColorDarkened
+  static var path = GMSMutablePath()
+  static var polyline = GMSPolyline()
+  static var altitudeSpans: [GMSStyleSpan] = []
+  static var paceSpans: [GMSStyleSpan] = []
   
   static func initMapState() {
     polyline = GMSPolyline()

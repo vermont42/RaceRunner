@@ -18,6 +18,46 @@ enum LogSortField: String {
   init() {
     self = .date
   }
+
+  static func compare(_ run1: Run, run2: Run) -> Bool {
+    let sortType = SettingsManager.getSortType()
+    let sortField = SettingsManager.getLogSortField()
+    var ordering: ComparisonResult
+    switch sortType {
+    case .normal:
+      ordering = .orderedDescending
+    case .reverse:
+      ordering = .orderedAscending
+    }
+    switch sortField {
+    case .date:
+      return run1.timestamp.compare(run2.timestamp as Date) == ordering
+    case .name:
+      let name1: String = run1.displayName()
+      let name2: String = run2.displayName()
+      return name1.localizedCaseInsensitiveCompare(name2) == ordering
+    case .pace:
+      let pace1 = run1.duration.doubleValue / run1.distance.doubleValue
+      let pace2 = run2.duration.doubleValue / run2.distance.doubleValue
+      var result = pace1 < pace2
+      if ordering == .orderedDescending {
+        result = !result
+      }
+      return result
+    case .distance:
+      var result = run1.distance.doubleValue < run2.distance.doubleValue
+      if ordering == .orderedDescending {
+        result = !result
+      }
+      return result
+    case .duration:
+      var result = run1.duration.int32Value < run2.duration.int32Value
+      if ordering == .orderedDescending {
+        result = !result
+      }
+      return result
+    }
+  }
   
   static func all() -> [String] {
     return [LogSortField.date.asString(), LogSortField.name.asString(), LogSortField.pace.asString(), LogSortField.distance.asString(), LogSortField.duration.asString()]
@@ -68,46 +108,6 @@ enum LogSortField: String {
       return 3
     case .duration:
       return 4
-    }
-  }
-  
-  static func compare(_ run1: Run, run2: Run) -> Bool {
-    let sortType = SettingsManager.getSortType()
-    let sortField = SettingsManager.getLogSortField()
-    var ordering: ComparisonResult
-    switch sortType {
-    case .normal:
-      ordering = .orderedDescending
-    case .reverse:
-      ordering = .orderedAscending
-    }
-    switch sortField {
-    case .date:
-      return run1.timestamp.compare(run2.timestamp as Date) == ordering
-    case .name:
-      let name1: String = run1.displayName()
-      let name2: String = run2.displayName()
-      return name1.localizedCaseInsensitiveCompare(name2) == ordering
-    case .pace:
-      let pace1 = run1.duration.doubleValue / run1.distance.doubleValue
-      let pace2 = run2.duration.doubleValue / run2.distance.doubleValue
-      var result = pace1 < pace2
-      if ordering == .orderedDescending {
-        result = !result
-      }
-      return result
-    case .distance:
-      var result = run1.distance.doubleValue < run2.distance.doubleValue
-      if ordering == .orderedDescending {
-        result = !result
-      }
-      return result
-    case .duration:
-      var result = run1.duration.int32Value < run2.duration.int32Value
-      if ordering == .orderedDescending {
-        result = !result
-      }
-      return result
     }
   }
 }

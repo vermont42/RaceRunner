@@ -29,16 +29,9 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   @IBOutlet var route: MarqueeLabel!
   @IBOutlet var customTitleButton: UIButton!
   @IBOutlet var exportButton: UIButton!
-  var run: Run!
-  private var paceSpans: [GMSStyleSpan] = []
-  private var altitudeSpans: [GMSStyleSpan] = []
-  private var smoothSpeeds: [Double]?
-  private var maxSmoothSpeed = 0.0
-  private var minSmoothSpeed = Double(LONG_MAX)
-  private var addedOverlays: Bool = false
-  private var latestStrokeColor = UiConstants.intermediate2ColorDarkened
-  private var path = GMSMutablePath()
-  private var polyline = GMSPolyline()
+
+  var run: Run?
+
   private static let newRunNamePrompt = "Enter a new name for this run."
   private static let newRunNameTitle = "Run Name"
   private static let setRunNameButtonTitle = "Set"
@@ -49,6 +42,17 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   private static let forecastTitle = "Credit"
   private static let forecastOkay = "Got It"
   
+  private let nilMessage = "run was nil in \(RunDetailsVC.self)."
+  private var paceSpans: [GMSStyleSpan] = []
+  private var altitudeSpans: [GMSStyleSpan] = []
+  private var smoothSpeeds: [Double]?
+  private var maxSmoothSpeed = 0.0
+  private var minSmoothSpeed = Double(LONG_MAX)
+  private var addedOverlays: Bool = false
+  private var latestStrokeColor = UiConstants.intermediate2ColorDarkened
+  private var path = GMSMutablePath()
+  private var polyline = GMSPolyline()
+
   func mapView(_ mapView:GMSMapView,idleAt position:GMSCameraPosition) {
     if !addedOverlays {
       addOverlays()
@@ -57,10 +61,12 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    if self.run.locations.count > 0 {
-      configureView()
+    guard let run = run else {
+      fatalError(nilMessage + "viewDidLoad()")
     }
-    else {
+    if run.locations.count > 0 {
+      configureView()
+    } else {
       fatalError(RunDetailsVC.noLocationsError)
     }
     map.mapType = .terrain
@@ -77,6 +83,9 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   }
   
   func configureView() {
+    guard let run = run else {
+      fatalError(nilMessage + "configureView()")
+    }
     var northeast = CLLocationCoordinate2D(latitude: run.maxLatitude.doubleValue, longitude: run.maxLongitude.doubleValue)
     var southwest = CLLocationCoordinate2D(latitude: run.minLatitude.doubleValue, longitude: run.minLongitude.doubleValue)
     northeast.longitude += UiConstants.longitudeCushion
@@ -95,27 +104,27 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     loss.text = "Lost: \(Converter.stringifyAltitude(run.altitudeLost.doubleValue))"
     if run.weather as String == Run.noWeather {
       weather.text = Run.noWeather
-    }
-    else {
+    } else {
       weather.text = "Weather: \(run.weather as String)"
     }
     if run.temperature.doubleValue == Run.noTemperature {
       temp.text = Run.noTemperatureText
-    }
-    else {
+    } else {
       temp.text = "Temp: \(Converter.stringifyTemperature(run.temperature.doubleValue))"
     }
     route.text = "\(RunDetailsVC.name): \(run.displayName()) "
     if SettingsManager.getShowWeight() && run.weight.doubleValue != Run.noWeight {
       weight.text = "Weight: \(HumanWeight.weightAsString(run.weight.doubleValue, unitType: SettingsManager.getUnitType()))"
-    }
-    else {
+    } else {
       weight.text = " "
     }
     updateCalories()
   }
   
   func updateCalories() {
+    guard let run = run else {
+      fatalError(nilMessage + "updateCalories()")
+    }
     let weight = run.weight.doubleValue != Run.noWeight ? run.weight.doubleValue : HumanWeight.defaultWeight
     if netOrTotalCals.selectedSegmentIndex == 0 { // total
       self.calories.text = Converter.totalCaloriesAsString(run.distance.doubleValue, weight: weight)
@@ -126,19 +135,20 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   }
   
   func addOverlays() {
+    guard let run = run else {
+      fatalError(nilMessage + "addOverlays()")
+    }
     if run.locations.count > 1 {
       map.clear()
       let areSpeeds = paceOrAltitude.selectedSegmentIndex == 1 ? true : false
-      if (areSpeeds && paceSpans.count == 0) ||
-          (!areSpeeds && altitudeSpans.count == 0) {
+      if (areSpeeds && paceSpans.count == 0) || (!areSpeeds && altitudeSpans.count == 0) {
         makeSpans(areSpeeds: areSpeeds)
         addedOverlays = true
       }
       polyline.path = path
       if areSpeeds {
         polyline.spans = paceSpans
-      }
-      else {
+      } else {
         polyline.spans = altitudeSpans
       }
       polyline.map = map
@@ -146,11 +156,14 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   }
   
   private func makeSpans(areSpeeds: Bool) {
+    guard let run = run else {
+      fatalError(nilMessage + "makeSpans()")
+    }
     var rawValues: [Double] = []
     if areSpeeds {
       for i in 1 ..< run.locations.count {
-        let firstLoc = run.locations[i - 1] as! Location
-        let secondLoc = run.locations[i] as! Location
+        let firstLoc = run.locations[i - 1] as? Location ?? Location(context: CDManager.sharedCDManager.context)
+        let secondLoc = run.locations[i] as? Location ?? Location(context: CDManager.sharedCDManager.context)
         let firstLocCL = CLLocation(latitude: firstLoc.latitude.doubleValue, longitude: firstLoc.longitude.doubleValue)
         let secondLocCL = CLLocation(latitude: secondLoc.latitude.doubleValue, longitude: secondLoc.longitude.doubleValue)
         let distance = secondLocCL.distance(from: firstLocCL)
@@ -158,11 +171,11 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
         let speed = distance / time
         rawValues.append(speed)
       }
-    }
-    else {
+    } else {
       for i in 0 ..< run.locations.count {
-        let location = run.locations[i] as! Location
-        rawValues.append(location.altitude.doubleValue)
+        if let location = run.locations[i] as? Location {
+          rawValues.append(location.altitude.doubleValue)
+        }
       }
     }
     let idealSmoothReachSize = 33 // about 133 locations/mile
@@ -189,7 +202,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
         total += value
       }
       let smoothAverage = total / Double(upperBound - lowerBound)
-      if (areSpeeds) {
+      if areSpeeds {
         if smoothAverage > maxSmoothSpeed {
           maxSmoothSpeed = smoothAverage
         }
@@ -199,34 +212,33 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
       }
       smoothValues.append(smoothAverage)
     }
-    if (areSpeeds) {
+    if areSpeeds {
       smoothSpeeds = smoothValues
     }
     
     var sortedValues = smoothValues
     sortedValues.sort { $0 < $1 }
     for i in 1 ..< run.locations.count {
-      let firstLoc = run.locations[i - 1] as! Location
-      let secondLoc = run.locations[i] as! Location
-      let firstLocCL = CLLocation(latitude: firstLoc.latitude.doubleValue, longitude: firstLoc.longitude.doubleValue)
-      let secondLocCL = CLLocation(latitude: secondLoc.latitude.doubleValue, longitude: secondLoc.longitude.doubleValue)
-      var coords = [firstLocCL.coordinate, secondLocCL.coordinate]
-      let value = smoothValues[i - 1]
-      var index = sortedValues.index(of: value)
-      if index == nil {
-        index = 0
-      }
-      if !addedOverlays {
-        path.add(coords[1])
-      }
-      let color = UiHelpers.colorForValue(value, sortedArray: sortedValues, index: index!)
-      let gradient = GMSStrokeStyle.gradient(from: latestStrokeColor, to: color)
-      latestStrokeColor = color
-      if areSpeeds {
-        paceSpans.append(GMSStyleSpan(style: gradient))
-      }
-      else {
-        altitudeSpans.append(GMSStyleSpan(style: gradient))
+      if let firstLoc = run.locations[i - 1] as? Location, let secondLoc = run.locations[i] as? Location {
+        let firstLocCL = CLLocation(latitude: firstLoc.latitude.doubleValue, longitude: firstLoc.longitude.doubleValue)
+        let secondLocCL = CLLocation(latitude: secondLoc.latitude.doubleValue, longitude: secondLoc.longitude.doubleValue)
+        var coords = [firstLocCL.coordinate, secondLocCL.coordinate]
+        let value = smoothValues[i - 1]
+        var index = sortedValues.index(of: value)
+        if index == nil {
+          index = 0
+        }
+        if !addedOverlays {
+          path.add(coords[1])
+        }
+        let color = UiHelpers.colorForValue(value, sortedArray: sortedValues, index: index ?? 0)
+        let gradient = GMSStrokeStyle.gradient(from: latestStrokeColor, to: color)
+        latestStrokeColor = color
+        if areSpeeds {
+          paceSpans.append(GMSStyleSpan(style: gradient))
+        } else {
+          altitudeSpans.append(GMSStyleSpan(style: gradient))
+        }
       }
     }
   }
@@ -234,21 +246,22 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   @IBAction func returnFromSegueActions(_ sender: UIStoryboardSegue) {}
   
   override func segueForUnwinding(to toViewController: UIViewController, from fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
-    return UnwindPanSegue(identifier: identifier!, source: fromViewController, destination: toViewController, performHandler: { () -> Void in
+    return UnwindPanSegue(identifier: identifier ?? "", source: fromViewController, destination: toViewController, performHandler: { () -> Void in
     })
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "pan graphs from details" {
-      let graphVC: GraphVC = segue.destination as! GraphVC
-      graphVC.run = run
-      if smoothSpeeds == nil {
-        makeSpans(areSpeeds: true)
-      }
-      if let smoothSpeeds = smoothSpeeds {
-        graphVC.smoothSpeeds = smoothSpeeds
-        graphVC.maxSmoothSpeed = maxSmoothSpeed
-        graphVC.minSmoothSpeed = minSmoothSpeed
+      if let graphVC = segue.destination as? GraphVC {
+        graphVC.run = run
+        if smoothSpeeds == nil {
+          makeSpans(areSpeeds: true)
+        }
+        if let smoothSpeeds = smoothSpeeds {
+          graphVC.smoothSpeeds = smoothSpeeds
+          graphVC.maxSmoothSpeed = maxSmoothSpeed
+          graphVC.minSmoothSpeed = minSmoothSpeed
+        }
       }
     }
   }
@@ -256,10 +269,15 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   @IBAction func setCustomName() {
     let alertController = UIAlertController(title: RunDetailsVC.newRunNameTitle, message: RunDetailsVC.newRunNamePrompt, preferredStyle: UIAlertControllerStyle.alert)
     let setAction = UIAlertAction(title: RunDetailsVC.setRunNameButtonTitle, style: UIAlertActionStyle.default, handler: { action in
-      let textFields = alertController.textFields!
-      self.route.text = "\(RunDetailsVC.name): \(textFields[0].text!)"
-      self.run.customName = textFields[0].text! as NSString
-      CDManager.saveContext()
+      if let textFields = alertController.textFields {
+        let text = textFields[0].text ?? ""
+        self.route.text = "\(RunDetailsVC.name): \(text)"
+        guard let run = self.run else {
+          fatalError(self.nilMessage + "setCustomName()")
+        }
+        run.customName = text as NSString
+        CDManager.saveContext()
+      }
     })
     alertController.addAction(setAction)
     let cancelAction = UIAlertAction(title: RunDetailsVC.cancel, style: UIAlertActionStyle.cancel, handler: { action in })
@@ -285,6 +303,9 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   }
   
   @IBAction func export() {
+    guard let run = run else {
+      fatalError(nilMessage + "export()")
+    }
     GpxExporter.export(run)
   }
   

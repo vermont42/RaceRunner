@@ -7,11 +7,11 @@
 //
 
 public enum Products {
-  private static let Prefix = "biz.joshadams.RaceRunner."
-  public static let runningHorse = Prefix + "runninghorse"
-  public static let broadcastRuns = Prefix + "broadcastruns"
-  private static let productIdentifiers: Set<ProductIdentifier> = [Products.runningHorse, Products.broadcastRuns]
   public static let store = IapHelper(productIdentifiers: Products.productIdentifiers)
+  public static let runningHorse = prefix + "runninghorse"
+  public static let broadcastRuns = prefix + "broadcastruns"
+  private static let productIdentifiers: Set<ProductIdentifier> = [Products.runningHorse, Products.broadcastRuns]
+  private static let prefix = "biz.joshadams.RaceRunner."
 }
 
 func resourceNameForProductIdentifier(_ productIdentifier: String) -> String? {

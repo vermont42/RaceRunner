@@ -20,8 +20,7 @@ struct IntentHandler {
       }
       else if RunModel.runModel.status == .inProgress || RunModel.runModel.status == .paused {
         response = INStartWorkoutIntentResponse(code: .failureOngoingWorkout, userActivity: nil)
-      }
-      else {
+      } else {
         RunModel.initializeRunModel()
         RunModel.runModel.start(isViaSiri: true)
         PersistentMapState.initMapState()
@@ -54,8 +53,7 @@ struct IntentHandler {
         RunModel.runModel.stop()
         response = INPauseWorkoutIntentResponse(code: .success, userActivity: nil)
       }
-    }
-    else {
+    } else {
       response = INStartWorkoutIntentResponse(code: .failure, userActivity: nil)
     }
     return response

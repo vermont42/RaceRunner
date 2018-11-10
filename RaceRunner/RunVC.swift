@@ -23,7 +23,10 @@ class RunVC: ChildVC {
   @IBOutlet var pauseResume: UIButton!
   @IBOutlet var map: GMSMapView!
   @IBOutlet var paceOrAltitude: UISegmentedControl!
-  
+
+  var runToSimulate: Run?
+  var gpxFile: String?
+
   private static let gpxTitle = "Berkeley Hills "
   private static let didNotSaveMessage = "RaceRunner did not save this run because it was so short. The run, not RaceRunner. As a collection of electrons on your iPhone, RaceRunner has no physical height."
   private static let noGpsMessage = "RaceRunner cannot record your run because you have not given it permission to access the GPS sensors. You can give this permission in the Settings app."
@@ -34,10 +37,8 @@ class RunVC: ChildVC {
   private static let pauseTitle = " Pause "
   private static let stopTitle = " Stop "
   private static let resumeTitle = " Resume "
+
   private var totalDistance: Double = 0.0
-  
-  var runToSimulate: Run?
-  var gpxFile: String?
 
   override func viewDidLoad() {
     map.mapType = .terrain
@@ -61,24 +62,21 @@ class RunVC: ChildVC {
       RunModel.initializeRunModelWithRun(runToSimulate)
       if runToSimulate.customName.isEqual(to: "") {
         viewControllerTitle.text = runToSimulate.autoName as String
-      }
-      else {
+      } else {
         viewControllerTitle.text = runToSimulate.customName as String
       }
       PersistentMapState.initMapState()
       RunModel.runModel.start()
-    }
-    else if let gpxFile = gpxFile {
+    } else if let gpxFile = gpxFile {
       RunModel.initializeRunModelWithGpxFile(gpxFile)
       viewControllerTitle.text = RunVC.gpxTitle
       PersistentMapState.initMapState()
       RunModel.runModel.start()
-    }
-    else {
+    } else {
       RunModel.initializeRunModel()
       viewControllerTitle.text = "Run"
     }
-    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
+    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
 
     switch RunModel.runModel.status {
     case .preRun:
@@ -98,9 +96,8 @@ class RunVC: ChildVC {
       map.isHidden = false
       paceOrAltitude.isHidden = false
       if PersistentMapState.currentCoordinate != nil {
-        map.camera = GMSCameraPosition.camera(withLatitude: PersistentMapState.currentCoordinate.latitude, longitude: PersistentMapState.currentCoordinate.longitude, zoom: UiConstants.cameraZoom)
-      }
-      else if let last = RunModel.runModel.locations.last {
+        map.camera = GMSCameraPosition.camera(withLatitude: PersistentMapState.currentCoordinate?.latitude ?? 0.0, longitude: PersistentMapState.currentCoordinate?.longitude ?? 0.0, zoom: UiConstants.cameraZoom)
+      } else if let last = RunModel.runModel.locations.last {
         showInitialCoordinate(last.coordinate)
       }
     }
@@ -140,8 +137,8 @@ class RunVC: ChildVC {
 
   func addPolylineAndPin() {
     PersistentMapState.polyline.map = map
-    PersistentMapState.pin.position = RunModel.runModel.locations.last!.coordinate
-    PersistentMapState.pin.icon = PersistentMapState.runnerIcons.nextIcon()
+    PersistentMapState.pin.position = RunModel.runModel.locations.last?.coordinate ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
+    PersistentMapState.pin.icon = PersistentMapState.runnerIcons.nextIcon
     PersistentMapState.pin.map = map
   }
 
@@ -156,7 +153,7 @@ class RunVC: ChildVC {
     map.camera = GMSCameraPosition.camera(withLatitude: coordinate.latitude, longitude: coordinate.longitude, zoom: UiConstants.cameraZoom)
     PersistentMapState.currentCoordinate = coordinate
     PersistentMapState.pin.position = coordinate
-    PersistentMapState.pin.icon = PersistentMapState.runnerIcons.nextIcon()
+    PersistentMapState.pin.icon = PersistentMapState.runnerIcons.nextIcon
     PersistentMapState.pin.map = map
   }
   
@@ -165,15 +162,14 @@ class RunVC: ChildVC {
       return
     }
     if PersistentMapState.currentCoordinate != nil {
-      if PersistentMapState.currentCoordinate.longitude > runCoordinate.coordinate.longitude {
+      if PersistentMapState.currentCoordinate?.longitude ?? 0.0 > runCoordinate.coordinate.longitude {
         PersistentMapState.runnerIcons.direction = .west
         PersistentMapState.latestDirection = .west
-      }
-      else if PersistentMapState.currentCoordinate.longitude < runCoordinate.coordinate.longitude {
+      } else if PersistentMapState.currentCoordinate?.longitude ?? 0.0 < runCoordinate.coordinate.longitude {
         PersistentMapState.runnerIcons.direction = .east
         PersistentMapState.latestDirection = .east
       }
-      var coords: [CLLocationCoordinate2D] = [PersistentMapState.currentCoordinate, runCoordinate.coordinate]
+      var coords: [CLLocationCoordinate2D] = [PersistentMapState.currentCoordinate ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), runCoordinate.coordinate]
       map.camera = GMSCameraPosition.camera(withLatitude: runCoordinate.coordinate.latitude, longitude: runCoordinate.coordinate.longitude, zoom: UiConstants.cameraZoom)
       PersistentMapState.path.add(coords[1])
       PersistentMapState.polyline.path = PersistentMapState.path
@@ -185,18 +181,16 @@ class RunVC: ChildVC {
       PersistentMapState.paceSpans.append(GMSStyleSpan(style: paceGradient))
       if paceOrAltitude.selectedSegmentIndex == 0 {
         PersistentMapState.polyline.spans = PersistentMapState.altitudeSpans
-      }
-      else {
+      } else {
         PersistentMapState.polyline.spans = PersistentMapState.paceSpans
       }
       PersistentMapState.polyline.map = map
       PersistentMapState.pin.map = nil
       PersistentMapState.pin.position = runCoordinate.coordinate
-      PersistentMapState.pin.icon = PersistentMapState.runnerIcons.nextIcon()
+      PersistentMapState.pin.icon = PersistentMapState.runnerIcons.nextIcon
       PersistentMapState.pin.map = map
       PersistentMapState.currentCoordinate = runCoordinate.coordinate
-    }
-    else {
+    } else {
       showInitialCoordinate(runCoordinate.coordinate)
     }
   }
@@ -230,8 +224,7 @@ class RunVC: ChildVC {
     case .preRun:
       if runToSimulate != nil || gpxFile != nil || RunModel.gpsIsAvailable() {
         RunModel.runModel.start()
-      }
-      else {
+      } else {
         UIAlertController.showMessage(RunVC.noGpsMessage, title: RunVC.sadFaceTitle, okTitle: RunVC.bummerButtonTitle, handler: { action in
           SoundManager.play(.sadTrombone)
         })
@@ -259,23 +252,23 @@ class RunVC: ChildVC {
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "pan details from run" {
-      let runDetailsVC: RunDetailsVC = segue.destination as! RunDetailsVC
-      if runToSimulate == nil && gpxFile == nil {
-        runDetailsVC.run = RunModel.runModel.run
+      if let runDetailsVC = segue.destination as? RunDetailsVC {
+        if runToSimulate == nil && gpxFile == nil {
+          runDetailsVC.run = RunModel.runModel.run
+        }
       }
     }
   }
   
   override func segueForUnwinding(to toViewController: UIViewController, from fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
-    return UnwindPanSegue(identifier: identifier!, source: fromViewController, destination: toViewController, performHandler: { () -> Void in
+    return UnwindPanSegue(identifier: identifier ?? "", source: fromViewController, destination: toViewController, performHandler: { () -> Void in
     })
   }
   
   @IBAction func changeOverlay(_ sender: UISegmentedControl) {
     if paceOrAltitude.selectedSegmentIndex == 0 {
       PersistentMapState.polyline.spans = PersistentMapState.altitudeSpans
-    }
-    else {
+    } else {
       PersistentMapState.polyline.spans = PersistentMapState.paceSpans
     }
     PersistentMapState.polyline.map = nil
@@ -310,19 +303,16 @@ class RunVC: ChildVC {
         totalDistance = 0.0
         ReviewPrompter.promptableActionHappened()
         performSegue(withIdentifier: "pan details from run", sender: self)
-      }
-      else {
+      } else {
         totalDistance = 0.0
         UIAlertController.showMessage(RunVC.didNotSaveMessage, title: RunVC.sadFaceTitle, okTitle: RunVC.bummerButtonTitle, handler: { action in
           SoundManager.play(.sadTrombone)
           self.showMenu()
         })
       }
-    }
-    else if runToSimulate != nil {
+    } else if runToSimulate != nil {
       self.performSegue(withIdentifier: "unwind pan log", sender: self)
-    }
-    else { // if gpxFile != nil
+    } else { // if gpxFile != nil
       showMenu()
     }
   }
@@ -337,7 +327,7 @@ class RunVC: ChildVC {
   @objc func runDidPause() {
     PersistentMapState.runnerIcons.direction = .stationary
     PersistentMapState.pin.map = nil
-    PersistentMapState.pin.icon = PersistentMapState.runnerIcons.nextIcon()
+    PersistentMapState.pin.icon = PersistentMapState.runnerIcons.nextIcon
     PersistentMapState.pin.map = map
     updateButtonLabels()
   }

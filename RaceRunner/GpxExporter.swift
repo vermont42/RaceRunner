@@ -9,7 +9,8 @@
 import MessageUI
 
 class GpxExporter: NSObject, MFMailComposeViewControllerDelegate {
-  private static let failureMessage = "RaceRunner could not export this run because RaceRunner could not open the Mail app. One possible cause is that there are no email accounts configured for Mail."
+  private static let mailFailureMessage = "RaceRunner could not export this run because RaceRunner could not open the Mail app. One possible cause is that there are no email accounts configured for Mail."
+  private static let dataFailureMessage = "RaceRunner could not export this run because of a data-processing error."
   private static let failureTitle = "Export Failed"
   private static let subject = "run exported by RaceRunner"
   private static let body = "This run was recorded by RaceRunner, a run-tracking app designed in Kāʻanapali, Hawaiʻi and coded in Berkeley, California."
@@ -42,7 +43,7 @@ class GpxExporter: NSObject, MFMailComposeViewControllerDelegate {
   private static let weight = ("<weight>", "</weight>\n")
   
   class func export(_ run: Run) {
-    if(MFMailComposeViewController.canSendMail()) {
+    if MFMailComposeViewController.canSendMail() {
       var contents = GpxExporter.prelude
       GpxExporter.dateFormatter.dateFormat = GpxExporter.dateFormat
       contents += autoName.0 + (run.autoName as String) + autoName.1
@@ -59,24 +60,28 @@ class GpxExporter: NSObject, MFMailComposeViewControllerDelegate {
         contents += weight.0 + "\(run.weight.doubleValue.roundTo(places: 0))" + weight.1
       }
       contents += GpxExporter.interlude
-      for location in run.locations {
-        let locationCD = location as! Location
-        let date = locationCD.timestamp
-        let dateString = GpxExporter.dateFormatter.string(from: date)
-        contents += String(format: GpxExporter.trkpt, locationCD.latitude.doubleValue, locationCD.longitude.doubleValue, locationCD.altitude.doubleValue, dateString)
+      run.locations.forEach {
+        if let locationCD = $0 as? Location {
+          let date = locationCD.timestamp
+          let dateString = GpxExporter.dateFormatter.string(from: date)
+          contents += String(format: GpxExporter.trkpt, locationCD.latitude.doubleValue, locationCD.longitude.doubleValue, locationCD.altitude.doubleValue, dateString)
+        }
       }
       contents += GpxExporter.coda
       let mailComposer = MFMailComposeViewController()
       mailComposer.mailComposeDelegate = GpxExporter.gpxExporter
       mailComposer.setSubject(GpxExporter.subject)
       mailComposer.setMessageBody(GpxExporter.body, isHTML: false)
-      let data = contents.data(using: String.Encoding.utf8)
-      mailComposer.addAttachmentData(data!, mimeType: GpxExporter.mimeType, fileName: GpxExporter.fileName)
-      UIApplication.topViewController()?.present(mailComposer, animated: true, completion: nil)
-    }
-    else {
+      if let data = contents.data(using: String.Encoding.utf8) {
+        mailComposer.addAttachmentData(data, mimeType: GpxExporter.mimeType, fileName: GpxExporter.fileName)
+        UIApplication.topViewController()?.present(mailComposer, animated: true, completion: nil)
+      } else {
+        SoundManager.play(.sadTrombone)
+        UIAlertController.showMessage(GpxExporter.dataFailureMessage, title: failureTitle)
+      }
+    } else {
       SoundManager.play(.sadTrombone)
-      UIAlertController.showMessage(GpxExporter.failureMessage, title: failureTitle)
+      UIAlertController.showMessage(GpxExporter.mailFailureMessage, title: failureTitle)
     }
   }
   

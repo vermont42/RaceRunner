@@ -10,27 +10,21 @@ import Foundation
 import UIKit
 
 class RunnerIcons {
-  enum Direction {
-    case stationary
-    case west
-    case east
-  }
-  
-  enum IconType: String {
-    case human = "Human"
-    case horse = "Horse"
-    
-    init() {
-      self = .human
-    }
-  }
-  
-  private let stationaryIcon = UIImage(named: "stationary.png")!
-  private let westIcons = [UIImage(named: "west1.png")!, UIImage(named: "west2.png")!, UIImage(named: "west3.png")!, UIImage(named: "west4.png")!, UIImage(named: "west5.png")!, UIImage(named: "west6.png")!, UIImage(named: "west7.png")!, UIImage(named: "west8.png")!, UIImage(named: "west9.png")!, UIImage(named: "west10.png")!]
-  private let eastIcons = [UIImage(named: "east1.png")!, UIImage(named: "east2.png")!, UIImage(named: "east3.png")!, UIImage(named: "east4.png")!, UIImage(named: "east5.png")!, UIImage(named: "east6.png")!, UIImage(named: "east7.png")!, UIImage(named: "east8.png")!, UIImage(named: "east9.png")!, UIImage(named: "east10.png")!]
-  private let stationaryHorseIcon = UIImage(named: "stationaryHorse.png")!
-  private let westHorseIcons = [UIImage(named: "west1Horse.png")!, UIImage(named: "west2Horse.png")!, UIImage(named: "west3Horse.png")!, UIImage(named: "west4Horse.png")!, UIImage(named: "west5Horse.png")!, UIImage(named: "west6Horse.png")!, UIImage(named: "west7Horse.png")!, UIImage(named: "west8Horse.png")!, UIImage(named: "west9Horse.png")!, UIImage(named: "west10Horse.png")!, UIImage(named: "west11Horse.png")!]
-  private let eastHorseIcons = [UIImage(named: "east1Horse.png")!, UIImage(named: "east2Horse.png")!, UIImage(named: "east3Horse.png")!, UIImage(named: "east4Horse.png")!, UIImage(named: "east5Horse.png")!, UIImage(named: "east6Horse.png")!, UIImage(named: "east7Horse.png")!, UIImage(named: "east8Horse.png")!, UIImage(named: "east9Horse.png")!, UIImage(named: "east10Horse.png")!, UIImage(named: "east11Horse.png")!]
+  static let runnerAvatar = "Runner"
+  static let horseAvatar = "Horse"
+  static let west = "west"
+  static let east = "east"
+  static let stationary = "stationary"
+  static let runnerIconCount = 10
+  static let horseIconCount = 11
+
+  private let stationaryRunnerIcon: UIImage
+  private let stationaryHorseIcon: UIImage
+  private var westRunnerIcons: [UIImage] = []
+  private var eastRunnerIcons: [UIImage] = []
+  private var westHorseIcons: [UIImage] = []
+  private var eastHorseIcons: [UIImage] = []
+
   var currentIndex: Int = 0
   var direction: Direction = .stationary {
     willSet {
@@ -39,13 +33,47 @@ class RunnerIcons {
       }
     }
   }
-      
-  func nextIcon() -> UIImage {
+
+  enum Direction {
+    case stationary
+    case west
+    case east
+  }
+
+  enum IconType: String {
+    case human = "Human"
+    case horse = "Horse"
+
+    init() {
+      self = .human
+    }
+  }
+
+  init() {
+    stationaryRunnerIcon = UIImage.named(RunnerIcons.stationary + RunnerIcons.runnerAvatar)
+    stationaryHorseIcon = UIImage.named(RunnerIcons.stationary + RunnerIcons.horseAvatar)
+
+    westRunnerIcons = iconArray(avatar: RunnerIcons.runnerAvatar, direction: RunnerIcons.west, count: RunnerIcons.runnerIconCount)
+    eastRunnerIcons = iconArray(avatar: RunnerIcons.runnerAvatar, direction: RunnerIcons.east, count: RunnerIcons.runnerIconCount)
+
+    westHorseIcons = iconArray(avatar: RunnerIcons.horseAvatar, direction: RunnerIcons.west, count: RunnerIcons.horseIconCount)
+    eastHorseIcons = iconArray(avatar: RunnerIcons.horseAvatar, direction: RunnerIcons.east, count: RunnerIcons.horseIconCount)
+  }
+
+  private func iconArray(avatar: String, direction: String, count: Int) -> [UIImage] {
+    var array: [UIImage] = []
+    (1...count).forEach {
+      array.append(UIImage.named(direction + "\($0)" + avatar))
+    }
+    return array
+  }
+
+  var nextIcon: UIImage {
     let iconType = SettingsManager.getIconType()
     switch direction {
     case .stationary:
       if iconType == IconType.human {
-        return stationaryIcon
+        return stationaryRunnerIcon
       }
       else {
         return stationaryHorseIcon
@@ -53,11 +81,11 @@ class RunnerIcons {
     case .west:
       let westIcon: UIImage
       if iconType == IconType.human {
-        if currentIndex > westIcons.count - 1 {
-          currentIndex = westIcons.count - 1
+        if currentIndex > westRunnerIcons.count - 1 {
+          currentIndex = westRunnerIcons.count - 1
         }
-        westIcon = westIcons[currentIndex]
-        if currentIndex == westIcons.count - 1 {
+        westIcon = westRunnerIcons[currentIndex]
+        if currentIndex == westRunnerIcons.count - 1 {
           currentIndex = 0
         }
         else {
@@ -80,11 +108,11 @@ class RunnerIcons {
     case .east:
       let eastIcon: UIImage
       if iconType == IconType.human {
-        if currentIndex > eastIcons.count - 1 {
-          currentIndex = eastIcons.count - 1
+        if currentIndex > eastRunnerIcons.count - 1 {
+          currentIndex = eastRunnerIcons.count - 1
         }
-        eastIcon = eastIcons[currentIndex]
-        if currentIndex == eastIcons.count - 1 {
+        eastIcon = eastRunnerIcons[currentIndex]
+        if currentIndex == eastRunnerIcons.count - 1 {
           currentIndex = 0
         }
         else {

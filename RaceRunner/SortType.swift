@@ -13,8 +13,7 @@ enum SortType: String {
   static func reverseSortType(_ sortType: SortType) -> SortType {
     if sortType == .normal {
       return .reverse
-    }
-    else {
+    } else {
       return .normal
     }
   }

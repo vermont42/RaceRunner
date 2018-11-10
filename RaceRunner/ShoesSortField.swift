@@ -41,15 +41,13 @@ enum ShoesSortField: String {
     case .kilometers:
       if SettingsManager.getUnitType() == .metric {
         return "Current Kilometers"
-      }
-      else {
+      } else {
         return "Current Miles"
       }
     case .maxKilometers:
       if SettingsManager.getUnitType() == .metric {
         return "Maximum Kilometers"
-      }
-      else {
+      } else {
         return "Maximum Miles"
       }
     }

@@ -109,63 +109,56 @@ class SettingsManager {
     userDefaults = UserDefaults.standard
     
     if let storedUnitTypeString = userDefaults.string(forKey: SettingsManager.unitTypeKey) {
-      unitType = UnitType(rawValue: storedUnitTypeString)!
-    }
-    else {
+      unitType = UnitType(rawValue: storedUnitTypeString) ?? .imperial
+    } else {
       unitType = UnitType()
       userDefaults.set(unitType.rawValue, forKey: SettingsManager.unitTypeKey)
       userDefaults.synchronize()
     }
     
     if let storedSortTypeString = userDefaults.string(forKey: SettingsManager.sortTypeKey) {
-      sortType = SortType(rawValue: storedSortTypeString)!
-    }
-    else {
+      sortType = SortType(rawValue: storedSortTypeString) ?? .normal
+    } else {
       sortType = SortType()
       userDefaults.set(sortType.rawValue, forKey: SettingsManager.sortTypeKey)
       userDefaults.synchronize()
     }
     
     if let storedIconTypeString = userDefaults.string(forKey: SettingsManager.iconTypeKey) {
-      iconType = RunnerIcons.IconType(rawValue: storedIconTypeString)!
-    }
-    else {
+      iconType = RunnerIcons.IconType(rawValue: storedIconTypeString) ?? .human
+    } else {
       iconType = RunnerIcons.IconType()
       userDefaults.set(iconType.rawValue, forKey: SettingsManager.iconTypeKey)
       userDefaults.synchronize()
     }
     
     if let storedLogSortFieldString = userDefaults.string(forKey: SettingsManager.logSortFieldKey) {
-      logSortField = LogSortField(rawValue: storedLogSortFieldString)!
-    }
-    else {
+      logSortField = LogSortField(rawValue: storedLogSortFieldString) ?? .date
+    } else {
       logSortField = LogSortField()
       userDefaults.set(logSortField.rawValue, forKey: SettingsManager.logSortFieldKey)
       userDefaults.synchronize()
     }
     
     if let storedShoesSortFieldString = userDefaults.string(forKey: SettingsManager.shoesSortFieldKey) {
-      shoesSortField = ShoesSortField(rawValue: storedShoesSortFieldString)!
-    }
-    else {
+      shoesSortField = ShoesSortField(rawValue: storedShoesSortFieldString) ?? .name
+    } else {
       shoesSortField = ShoesSortField()
       userDefaults.set(shoesSortField.rawValue, forKey: SettingsManager.shoesSortFieldKey)
       userDefaults.synchronize()
     }
     
     if let storedAccentString = userDefaults.string(forKey: SettingsManager.accentKey) {
-      accent = Accent(rawValue: storedAccentString)!
-    }
-    else {
+      accent = Accent(rawValue: storedAccentString) ?? .🇺🇸
+    } else {
       accent = Accent()
       userDefaults.set(accent.rawValue, forKey: SettingsManager.accentKey)
       userDefaults.synchronize()
     }
 
     if let storedOverlayString = userDefaults.string(forKey: SettingsManager.overlayKey) {
-      overlay = Overlay(rawValue: storedOverlayString)!
-    }
-    else {
+      overlay = Overlay(rawValue: storedOverlayString) ?? .both
+    } else {
       overlay = Overlay()
       userDefaults.set(overlay.rawValue, forKey: SettingsManager.overlayKey)
       userDefaults.synchronize()
@@ -173,8 +166,7 @@ class SettingsManager {
     
     if let storedWeightString = userDefaults.string(forKey: SettingsManager.weightKey) {
       weight = (storedWeightString as NSString).doubleValue
-    }
-    else {
+    } else {
       weight = SettingsManager.weightDefault
       userDefaults.set(String(format:"%f", weight), forKey: SettingsManager.weightKey)
       userDefaults.synchronize()
@@ -182,8 +174,7 @@ class SettingsManager {
     
     if let storedBroadcastNextRunString = userDefaults.string(forKey: SettingsManager.broadcastNextRunKey) {
       broadcastNextRun = (storedBroadcastNextRunString as NSString).boolValue
-    }
-    else {
+    } else {
       broadcastNextRun = SettingsManager.broadcastNextRunDefault
       userDefaults.set("\(broadcastNextRun)", forKey: SettingsManager.broadcastNextRunKey)
       userDefaults.synchronize()
@@ -191,8 +182,7 @@ class SettingsManager {
 
     if let storedStartedViaSiriString = userDefaults.string(forKey: SettingsManager.startedViaSiriKey) {
       startedViaSiri = (storedStartedViaSiriString as NSString).boolValue
-    }
-    else {
+    } else {
       startedViaSiri = SettingsManager.startedViaSiriDefault
       userDefaults.set("\(startedViaSiri)", forKey: SettingsManager.startedViaSiriKey)
       userDefaults.synchronize()
@@ -200,8 +190,7 @@ class SettingsManager {
 
     if let storedAllowStopString = userDefaults.string(forKey: SettingsManager.allowStopKey) {
       allowStop = (storedAllowStopString as NSString).boolValue
-    }
-    else {
+    } else {
       allowStop = SettingsManager.allowStopDefault
       userDefaults.set("\(allowStop)", forKey: SettingsManager.allowStopKey)
       userDefaults.synchronize()
@@ -209,8 +198,7 @@ class SettingsManager {
     
     if let storedShowedForecastCreditString = userDefaults.string(forKey: SettingsManager.showedForecastCreditKey) {
       showedForecastCredit = (storedShowedForecastCreditString as NSString).boolValue
-    }
-    else {
+    } else {
       showedForecastCredit = SettingsManager.showedForecastCreditDefault
       userDefaults.set("\(showedForecastCredit)", forKey: SettingsManager.showedForecastCreditKey)
       userDefaults.synchronize()
@@ -218,8 +206,7 @@ class SettingsManager {
 
     if let warnedUserAboutLowRamString = userDefaults.string(forKey: SettingsManager.warnedUserAboutLowRamKey) {
       warnedUserAboutLowRam = (warnedUserAboutLowRamString as NSString).boolValue
-    }
-    else {
+    } else {
       warnedUserAboutLowRam = SettingsManager.warnedUserAboutLowRamDefault
       userDefaults.set("\(warnedUserAboutLowRam)", forKey: SettingsManager.warnedUserAboutLowRamKey)
       userDefaults.synchronize()
@@ -227,8 +214,7 @@ class SettingsManager {
 
     if let realRunInProgressString = userDefaults.string(forKey: SettingsManager.realRunInProgressKey) {
       realRunInProgress = (realRunInProgressString as NSString).boolValue
-    }
-    else {
+    } else {
       realRunInProgress = SettingsManager.realRunInProgressDefault
       userDefaults.set("\(realRunInProgress)", forKey: SettingsManager.realRunInProgressKey)
       userDefaults.synchronize()
@@ -236,8 +222,7 @@ class SettingsManager {
 
     if let storedBroadcastNameString = userDefaults.string(forKey: SettingsManager.broadcastNameKey) {
       broadcastName = storedBroadcastNameString
-    }
-    else {
+    } else {
       broadcastName = SettingsManager.broadcastNameDefault
       userDefaults.set(broadcastName, forKey: SettingsManager.broadcastNameKey)
       userDefaults.synchronize()
@@ -245,8 +230,7 @@ class SettingsManager {
     
     if let storedAudibleSplitsString = userDefaults.string(forKey: SettingsManager.audibleSplitsKey) {
       audibleSplits = (storedAudibleSplitsString as NSString).boolValue
-    }
-    else {
+    } else {
       audibleSplits = SettingsManager.audibleSplitsDefault
       userDefaults.set("\(audibleSplits)", forKey: SettingsManager.audibleSplitsKey)
       userDefaults.synchronize()
@@ -254,8 +238,7 @@ class SettingsManager {
     
     if let storedAlreadyMadeSampleRunString = userDefaults.string(forKey: SettingsManager.alreadyMadeSampleRunKey) {
       alreadyMadeSampleRun = (storedAlreadyMadeSampleRunString as NSString).boolValue
-    }
-    else {
+    } else {
       alreadyMadeSampleRun = SettingsManager.alreadyMadeSampleRunDefault
       userDefaults.set("\(alreadyMadeSampleRun)", forKey: SettingsManager.alreadyMadeSampleRunKey)
       userDefaults.synchronize()
@@ -263,8 +246,7 @@ class SettingsManager {
     
     if let storedMultiplierString = userDefaults.string(forKey: SettingsManager.multiplierKey) {
       multiplier = (storedMultiplierString as NSString).doubleValue
-    }
-    else {
+    } else {
       multiplier = SettingsManager.multiplierDefault
       userDefaults.set(String(format:"%f", multiplier), forKey: SettingsManager.multiplierKey)
       userDefaults.synchronize()
@@ -272,8 +254,7 @@ class SettingsManager {
     
     if let storedStopAfterString = userDefaults.string(forKey: SettingsManager.stopAfterKey) {
       stopAfter = (storedStopAfterString as NSString).doubleValue
-    }
-    else {
+    } else {
       stopAfter = SettingsManager.stopAfterDefault
       userDefaults.set(String(format:"%f", stopAfter), forKey: SettingsManager.stopAfterKey)
       userDefaults.synchronize()
@@ -281,8 +262,7 @@ class SettingsManager {
     
     if let storedReportEveryString = userDefaults.string(forKey: SettingsManager.reportEveryKey) {
       reportEvery = (storedReportEveryString as NSString).doubleValue
-    }
-    else {
+    } else {
       reportEvery = SettingsManager.reportEveryDefault
       userDefaults.set(String(format:"%f", reportEvery), forKey: SettingsManager.reportEveryKey)
       userDefaults.synchronize()
@@ -290,8 +270,7 @@ class SettingsManager {
     
     if let storedShowWeightString = userDefaults.string(forKey: SettingsManager.showWeightKey) {
       showWeight = (storedShowWeightString as NSString).boolValue
-    }
-    else {
+    } else {
       showWeight = SettingsManager.showWeightDefault
       userDefaults.set("\(showWeight)", forKey: SettingsManager.showWeightKey)
       userDefaults.synchronize()
@@ -299,8 +278,7 @@ class SettingsManager {
     
     if let storedHighScoreString = userDefaults.string(forKey: SettingsManager.highScoreKey) {
       highScore = (Int)((storedHighScoreString as NSString).intValue)
-    }
-    else {
+    } else {
       highScore = SettingsManager.highScoreDefault
       userDefaults.set(String(format:"%d", highScore), forKey: SettingsManager.highScoreKey)
       userDefaults.synchronize()
@@ -308,8 +286,7 @@ class SettingsManager {
 
     if let lastReviewPromptDateString = userDefaults.string(forKey: SettingsManager.lastReviewPromptDateKey) {
       lastReviewPromptDate = SettingsManager.formatter.date(from: lastReviewPromptDateString) ?? Date()
-    }
-    else {
+    } else {
       lastReviewPromptDate = SettingsManager.lastReviewPromptDateDefault
       userDefaults.set(SettingsManager.formatter.string(from: lastReviewPromptDate), forKey: SettingsManager.lastReviewPromptDateKey)
       userDefaults.synchronize()
@@ -317,8 +294,7 @@ class SettingsManager {
 
     if let promptActionCountString = userDefaults.string(forKey: SettingsManager.promptActionCountKey) {
       promptActionCount = Int((promptActionCountString as NSString).intValue)
-    }
-    else {
+    } else {
       promptActionCount = SettingsManager.promptActionCountDefault
       userDefaults.set("\(promptActionCount)", forKey: SettingsManager.promptActionCountKey)
       userDefaults.synchronize()

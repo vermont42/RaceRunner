@@ -21,8 +21,7 @@ class Run: NSManagedObject {
   func displayName() -> String {
     if customName != "" {
       return customName as String
-    }
-    else {
+    } else {
       return autoName as String
     }
   }

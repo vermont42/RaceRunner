@@ -9,37 +9,44 @@ import Foundation
 import CoreData
 
 class CDManager {
-  var context: NSManagedObjectContext!
   static let sharedCDManager = CDManager()
   
+  var context: NSManagedObjectContext
+
   init() {
-    let modelURL = Bundle.main.url(forResource: "RaceRunner", withExtension: "momd")
-    let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL!)
-    let storeURL: URL = applicationDocumentsDirectory().appendingPathComponent("RaceRunner.sqlite")
-    let coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel!)
+    let modelFilename = "RaceRunner"
+    let modelExtension = "momd"
+    guard let modelURL = Bundle.main.url(forResource: modelFilename, withExtension: modelExtension) else {
+      fatalError("modelURL was nil.")
+    }
+    guard let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL) else {
+      fatalError("managedObjectModel was nil.")
+    }
+    context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+    let storeFilename = "RaceRunner.sqlite"
+    let storeURL: URL = applicationDocumentsDirectory().appendingPathComponent(storeFilename)
+    let coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
     do {
-      try coordinator!.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: nil)
+      try coordinator?.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: nil)
     }
     catch let error as NSError {
       fatalError(error.localizedDescription)
     }
-    context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
     context.persistentStoreCoordinator = coordinator
   }
-  
-  func applicationDocumentsDirectory() -> URL {
-      return URL(fileURLWithPath: NSHomeDirectory() + "/Documents/")
-  }
-  
+
   class func saveContext () {
-    if let context = sharedCDManager.context {
-      if context.hasChanges {
-        do {
-          try context.save()
-        } catch let error as NSError {
-          fatalError(error.localizedDescription)
-        }
+    let context = sharedCDManager.context
+    if context.hasChanges {
+      do {
+        try context.save()
+      } catch let error as NSError {
+        fatalError(error.localizedDescription)
       }
     }
+  }
+
+  private func applicationDocumentsDirectory() -> URL {
+    return URL(fileURLWithPath: NSHomeDirectory() + "/Documents/")
   }
 }

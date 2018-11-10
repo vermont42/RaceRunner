@@ -1,3 +1,0 @@
-Only restore run if difference between run start time and current time is less than some reasonable value, for example one day. If greater, warn user.
-
-Correctly handle the situation where, on app launch, realRunInProgress is true, but there is no saved state, which means the app was killed before it could persist state. In this case, just set realRunInProgress and warnedUserAboutLowRam to false.

@@ -19,7 +19,7 @@ class LowMemoryHandler {
   private static let resumeButtonTitle = "Resume"
   private static let discardButtonTitle = "Discard"
   private static var resumeController: UIAlertController = UIAlertController(title: recordingInterruptedTitle, message: recordingInterruptedPrompt, preferredStyle: UIAlertControllerStyle.alert)
-  private static var completion: (() -> Void)!
+  private static var completion: (() -> Void) = { }
   
   static func handleLowMemory(_ anyObject: AnyObject) {
     if ((Date().timeIntervalSince(dateOfMostRecentHandlingOfLowMemory) > minimumSecondsBetweenHandlingLowMemory) || !hasHandledLowMemoryAtLeastOnce) && SettingsManager.getRealRunInProgress() {

@@ -36,7 +36,7 @@ class SettingsVC: ChildVC, BroadcastDelegate {
   @IBOutlet var broadcastRunsButton: UIButton!
   @IBOutlet var priceLabel: UILabel!
   @IBOutlet var restoreButton: UIButton!
-  private var products = [SKProduct]()
+  
   private static let distancePrompt = " To begin inputting, tap \"123\" on the bottom-left corner of your virtual keyboard."
   private static let bummerTitle = "😓"
   private static let noHorseMessage = "RaceRunner cannot display the animated horse during your runs because you have not purchased that feature. If you would like to buy it, tap the Running Horse button in the Buy section below."
@@ -52,7 +52,8 @@ class SettingsVC: ChildVC, BroadcastDelegate {
   private static let unlockErrorMessage = "Could not unlock in-app purchases"
   private static let broadcastNextRunTitle = "Broadcast Next Run"
   private static let stopBroadcastingTitle = "Stop Broadcasting"
-  
+  private var products = [SKProduct]()
+
   @IBAction func showMenu(_ sender: UIButton) {
     showMenu()
   }
@@ -66,13 +67,13 @@ class SettingsVC: ChildVC, BroadcastDelegate {
     updateWeightStepper()
     updateWeightLabel()
     for button in accentButtons {
-      if button.titleLabel!.text == SettingsManager.getAccent().rawValue {
+      if (button.titleLabel?.text ?? "") == SettingsManager.getAccent().rawValue {
         button.isSelected = true
         break
       }
     }
     multiplierSlider.value = Float(SettingsManager.getMultiplier())
-    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
+    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
     NotificationCenter.default.addObserver(self, selector: #selector(SettingsVC.productPurchased), name: NSNotification.Name(rawValue: IapHelperProductPurchasedNotification), object: nil)
     setUpProducts()
     let secretSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(SettingsVC.unlockIaps))
@@ -90,7 +91,147 @@ class SettingsVC: ChildVC, BroadcastDelegate {
   deinit {
     NotificationCenter.default.removeObserver(self)
   }
-  
+
+  override func segueForUnwinding(to toViewController: UIViewController, from fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
+    return UnwindPanSegue(identifier: identifier ?? "", source: fromViewController, destination: toViewController, performHandler: { () -> Void in
+    })
+  }
+
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if segue.identifier == "pan publish" {
+      (segue.destination as? BroadcastVC)?.broadcastDelegate = self
+    }
+  }
+
+  @IBAction func returnFromSegueActions(_ sender: UIStoryboardSegue) {}
+
+  @IBAction func toggleUnitType(_ sender: UISwitch) {
+    if sender.isOn {
+      SettingsManager.setUnitType(.metric)
+    } else {
+      SettingsManager.setUnitType(.imperial)
+    }
+    updateSplitsWidgets()
+    updateAutoStopWidgets()
+    updateWeightStepper()
+    updateWeightLabel()
+  }
+
+  @IBAction func toggleIconType(_ sender: UISwitch) {
+    if sender.isOn && !Products.store.isProductPurchased(Products.runningHorse) {
+      UIAlertController.showMessage(SettingsVC.noHorseMessage, title: SettingsVC.bummerTitle)
+      sender.isOn = false
+    } else {
+      if sender.isOn {
+        SettingsManager.setIconType(RunnerIcons.IconType.horse)
+      } else {
+        SettingsManager.setIconType(RunnerIcons.IconType.human)
+      }
+    }
+  }
+
+  @IBAction func toggleAutoStop(_ sender: UISwitch) {
+    if sender.isOn {
+      setAutoStop()
+    } else {
+      SettingsManager.setStopAfter(SettingsManager.never)
+      updateAutoStopWidgets()
+    }
+  }
+
+  @IBAction func toggleSplits(_ sender: UISwitch) {
+    if sender.isOn {
+      setSplits()
+    } else {
+      SettingsManager.setReportEvery(SettingsManager.never)
+    }
+    updateSplitsWidgets()
+  }
+
+  @IBAction func neverAutoStop() {
+    if autoStopToggle.isOn {
+      autoStopToggle.isOn = false
+      autoStopButton.setTitle("", for: UIControlState())
+      SettingsManager.setStopAfter(SettingsManager.never)
+    }
+  }
+
+  @IBAction func changeSplits() {
+    setSplits()
+  }
+
+  @IBAction func changeStopAfter() {
+    setAutoStop()
+  }
+
+  @IBAction func toggleAudibleSplits(_ sender: UISwitch) {
+    if sender.isOn {
+      SettingsManager.setAudibleSplits(true)
+    } else {
+      SettingsManager.setAudibleSplits(false)
+    }
+  }
+
+  @IBAction func changeAccent(_ sender: DLRadioButton) {
+    let selectedFlag = sender.selected()?.titleLabel?.text
+    if let selectedFlag = selectedFlag {
+      SettingsManager.setAccent(selectedFlag)
+    }
+  }
+
+  @IBAction func multiplierChanged(_ sender: UISlider) {
+    SettingsManager.setMultiplier(round(Double(sender.value)))
+    updateMultiplierLabel()
+  }
+
+  @IBAction func weightChanged(_ sender: UIStepper) {
+    switch SettingsManager.getUnitType() {
+    case .imperial:
+      SettingsManager.setWeight(sender.value / Converter.poundsPerKilogram)
+    case .metric:
+      SettingsManager.setWeight(sender.value)
+    }
+    updateWeightLabel()
+  }
+
+  @IBAction func toggleShowWeight(_ sender: UISwitch) {
+    if sender.isOn {
+      SettingsManager.setShowWeight(true)
+    } else {
+      SettingsManager.setShowWeight(false)
+    }
+  }
+
+  @IBAction func buyRunningHorse() {
+    if products.count == 2 {
+      Products.store.purchaseProduct(products[1])
+    }
+  }
+
+  @IBAction func buyBroadcastRuns() {
+    if products.count == 2 {
+      Products.store.purchaseProduct(products[0])
+    }
+  }
+
+  @IBAction func startOrStopBroadcasting() {
+    if !SettingsManager.getBroadcastNextRun() && !Products.store.isProductPurchased(Products.broadcastRuns) {
+      UIAlertController.showMessage(SettingsVC.noBroadcastMessage, title: SettingsVC.bummerTitle)
+      return
+    }
+    if !SettingsManager.getBroadcastNextRun() {
+      performSegue(withIdentifier: "pan publish", sender: self)
+    } else {
+      SettingsManager.setBroadcastNextRun(false)
+      updateBroadcastButton()
+      PubNubManager.runStopped()
+    }
+  }
+
+  @IBAction func restorePurchases(_ sender: UIButton) {
+    Products.store.restoreCompletedTransactions()
+  }
+
   func updateBroadcastButton() {
     broadcastNextRunButton.setTitle(SettingsManager.getBroadcastNextRun() ? SettingsVC.stopBroadcastingTitle : SettingsVC.broadcastNextRunTitle, for: UIControlState())
   }
@@ -101,27 +242,26 @@ class SettingsVC: ChildVC, BroadcastDelegate {
     if !purchasedBroadcast || !purchasedHorse {
       let alertController = UIAlertController(title: SettingsVC.promoCodeTitle, message: SettingsVC.promoCodePrompt, preferredStyle: UIAlertControllerStyle.alert)
       let unlockAction = UIAlertAction(title: SettingsVC.promoCodeUnlock, style: UIAlertActionStyle.default, handler: { action in
-        let textFields = alertController.textFields!
-        let predicate = NSPredicate(format: "promoCode = %@", textFields[0].text!.lowercased())
+        let textFields = alertController.textFields ?? []
+        let predicate = NSPredicate(format: "promoCode = %@", textFields[0].text?.lowercased() ?? "🙀")
         let query = CKQuery(recordType: "PromoCodes", predicate: predicate)
         CKContainer.default().publicCloudDatabase.perform(query, inZoneWith: nil) {
           results, error in
           if error == nil {
-            if results!.count > 0 {
+            if let results = results, !results.isEmpty {
               DispatchQueue.main.async {
                 UIAlertController.showMessage(SettingsVC.unlockedMessage, title: SettingsVC.sweetTitle)
                 Products.store.fakeIapPurchases()
               }
-            }
-            else {
+            } else {
               DispatchQueue.main.async {
                 UIAlertController.showMessage(SettingsVC.invalidPromoCodeMessage, title: SettingsVC.bummerTitle)
               }
             }
-          }
-          else {
+          } else {
             DispatchQueue.main.async {
-              UIAlertController.showMessage("\(SettingsVC.unlockErrorMessage): \(error!.localizedDescription)", title: SettingsVC.bummerTitle)
+              let errorMessage = error?.localizedDescription ?? ""
+              UIAlertController.showMessage("\(SettingsVC.unlockErrorMessage): \(errorMessage)", title: SettingsVC.bummerTitle)
             }
           }
         }
@@ -142,8 +282,7 @@ class SettingsVC: ChildVC, BroadcastDelegate {
     Products.store.requestProductsWithCompletionHandler { success, products in
       if success {
         self.products = products
-      }
-      else {
+      } else {
         print("Failed to retrieve IAP products.")
       }
     }
@@ -159,22 +298,19 @@ class SettingsVC: ChildVC, BroadcastDelegate {
       broadcastRunsButton.isHidden = true
       priceLabel.isHidden = true
       restoreButton.isHidden = true
-    }
-    else if purchasedHorse && !purchasedBroadcast{
+    } else if purchasedHorse && !purchasedBroadcast{
       buyLabel.isHidden = false
       runningHorseButton.isHidden = true
       broadcastRunsButton.isHidden = false
       priceLabel.isHidden = false
       restoreButton.isHidden = false
-    }
-    else if !purchasedHorse && purchasedBroadcast{
+    } else if !purchasedHorse && purchasedBroadcast{
       buyLabel.isHidden = false
       runningHorseButton.isHidden = false
       broadcastRunsButton.isHidden = true
       priceLabel.isHidden = false
       restoreButton.isHidden = false
-    }
-    else {// purchased neither
+    } else { // purchased neither
       buyLabel.isHidden = false
       runningHorseButton.isHidden = false
       broadcastRunsButton.isHidden = false
@@ -197,14 +333,12 @@ class SettingsVC: ChildVC, BroadcastDelegate {
   func updateToggles() {
     if SettingsManager.getUnitType() == .imperial {
       unitsToggle.isOn = false
-    }
-    else {
+    } else {
       unitsToggle.isOn = true
     }
     if SettingsManager.getIconType() == RunnerIcons.IconType.human {
       iconToggle.isOn = false
-    }
-    else {
+    } else {
       iconToggle.isOn = true
     }
     showWeightToggle.isOn = SettingsManager.getShowWeight()
@@ -233,19 +367,15 @@ class SettingsVC: ChildVC, BroadcastDelegate {
     if interval == SettingsManager.never {
       toggle.isOn = false
       buttonTitle = ""
-    }
-    else {
+    } else {
       toggle.isOn = true
       if interval < 1.0 {
         buttonTitle = String(format: "%@ %.2f %@", prefix, interval, Converter.getCurrentAbbreviatedLongUnitName())
-      }
-      else if interval == 1.0 {
+      } else if interval == 1.0 {
         buttonTitle = "\(prefix) 1 \(Converter.getCurrentAbbreviatedLongUnitName())"
-      }
-      else if interval > 1.0 && interval < 100.00 {
+      } else if interval > 1.0 && interval < 100.00 {
         buttonTitle = String(format: "%@ %.2f %@", prefix, interval, Converter.getCurrentPluralLongUnitName())
-      }
-      else { // interval >= 100
+      } else { // interval >= 100
         buttonTitle = String(format: "%@ %.1f %@", prefix, interval, Converter.getCurrentPluralLongUnitName())
       }
     }
@@ -259,63 +389,7 @@ class SettingsVC: ChildVC, BroadcastDelegate {
   func updateAutoStopWidgets() {
     updateDistanceWidgets(Converter.convertMetersToLongDistance(SettingsManager.getStopAfter()), button: autoStopButton, toggle: autoStopToggle, prefix: "After")
   }
-  
-  @IBAction func toggleUnitType(_ sender: UISwitch) {
-    if sender.isOn {
-      SettingsManager.setUnitType(.metric)
-    }
-    else {
-      SettingsManager.setUnitType(.imperial)
-    }
-    updateSplitsWidgets()
-    updateAutoStopWidgets()
-    updateWeightStepper()
-    updateWeightLabel()
-  }
-  
-  @IBAction func toggleIconType(_ sender: UISwitch) {
-    if sender.isOn && !Products.store.isProductPurchased(Products.runningHorse) {
-      UIAlertController.showMessage(SettingsVC.noHorseMessage, title: SettingsVC.bummerTitle)
-      sender.isOn = false
-    }
-    else {
-      if sender.isOn {
-        SettingsManager.setIconType(RunnerIcons.IconType.horse)
-      }
-      else {
-        SettingsManager.setIconType(RunnerIcons.IconType.human)
-      }
-    }
-  }
-  
-  @IBAction func toggleAutoStop(_ sender: UISwitch) {
-    if sender.isOn {
-      setAutoStop()
-    }
-    else {
-      SettingsManager.setStopAfter(SettingsManager.never)
-      updateAutoStopWidgets()
-    }
-  }
-  
-  @IBAction func toggleSplits(_ sender: UISwitch) {
-    if sender.isOn {
-      setSplits()
-    }
-    else {
-      SettingsManager.setReportEvery(SettingsManager.never)
-    }
-    updateSplitsWidgets()
-  }
-  
-  @IBAction func neverAutoStop() {
-    if autoStopToggle.isOn {
-      autoStopToggle.isOn = false
-      autoStopButton.setTitle("", for: UIControlState())
-      SettingsManager.setStopAfter(SettingsManager.never)
-    }
-  }
-  
+
   func setAutoStop() {
     getDistanceInterval("How many \(Converter.getCurrentPluralLongUnitName()) would you like to stop the run after?")
     { newValue in
@@ -348,11 +422,10 @@ class SettingsVC: ChildVC, BroadcastDelegate {
     let alertController = UIAlertController(title: "👟", message: fullPrompt + SettingsVC.distancePrompt, preferredStyle: UIAlertControllerStyle.alert)
     alertController.view.tintColor = UiConstants.darkColor
     let setAction = UIAlertAction(title: "Set", style: UIAlertActionStyle.default, handler: { action in
-      let textFields = alertController.textFields!
+      let textFields = alertController.textFields ?? []
       if let text = textFields[0].text, let numericValue = Double(text) , numericValue >= SettingsManager.minStopAfter && numericValue <= SettingsManager.maxStopAfter {
           closure(numericValue)
-      }
-      else {
+      } else {
           self.getDistanceInterval(prompt, invalidValue: true, closure: closure)
       }
     })
@@ -363,103 +436,11 @@ class SettingsVC: ChildVC, BroadcastDelegate {
     }
     present(alertController, animated: true, completion: nil)
   }
-  
-  @IBAction func changeSplits() {
-    setSplits()
-  }
-  
-  @IBAction func changeStopAfter() {
-    setAutoStop()
-  }
-  
-  @IBAction func toggleAudibleSplits(_ sender: UISwitch) {
-    if sender.isOn {
-      SettingsManager.setAudibleSplits(true)
-    }
-    else {
-      SettingsManager.setAudibleSplits(false)
-    }
-  }
-  
-  @IBAction func changeAccent(_ sender: DLRadioButton) {
-    let selectedFlag = sender.selected()!.titleLabel?.text
-    if let selectedFlag = selectedFlag {
-      SettingsManager.setAccent(selectedFlag)
-    }
-  }
-  
-  @IBAction func multiplierChanged(_ sender: UISlider) {
-    SettingsManager.setMultiplier(round(Double(sender.value)))
-    updateMultiplierLabel()
-  }
-  
+
   func updateMultiplierLabel() {
     multiplierLabel.text = String(format: "%.0f%%", SettingsManager.getMultiplier() * 100.0)
   }
-  
-  @IBAction func weightChanged(_ sender: UIStepper) {
-    switch SettingsManager.getUnitType() {
-    case .imperial:
-      SettingsManager.setWeight(sender.value / Converter.poundsPerKilogram)
-    case .metric:
-      SettingsManager.setWeight(sender.value)
-    }
-    updateWeightLabel()
-  }
-  
-  @IBAction func toggleShowWeight(_ sender: UISwitch) {
-    if sender.isOn {
-      SettingsManager.setShowWeight(true)
-    }
-    else {
-      SettingsManager.setShowWeight(false)
-    }
-  }
-  
-  @IBAction func buyRunningHorse() {
-    if products.count == 2 {
-      Products.store.purchaseProduct(products[1])
-    }
-  }
-  
-  @IBAction func buyBroadcastRuns() {
-    if products.count == 2 {
-      Products.store.purchaseProduct(products[0])
-    }
-  }
-  
-  @IBAction func startOrStopBroadcasting() {
-    if !SettingsManager.getBroadcastNextRun() && !Products.store.isProductPurchased(Products.broadcastRuns) {
-      UIAlertController.showMessage(SettingsVC.noBroadcastMessage, title: SettingsVC.bummerTitle)
-      return
-    }
-    if !SettingsManager.getBroadcastNextRun() {
-      performSegue(withIdentifier: "pan publish", sender: self)
-    }
-    else {
-      SettingsManager.setBroadcastNextRun(false)
-      updateBroadcastButton()
-      PubNubManager.runStopped()
-    }
-  }
-  
-  @IBAction func restorePurchases(_ sender: UIButton) {
-    Products.store.restoreCompletedTransactions()
-  }
-  
-  @IBAction func returnFromSegueActions(_ sender: UIStoryboardSegue) {}
-  
-  override func segueForUnwinding(to toViewController: UIViewController, from fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
-    return UnwindPanSegue(identifier: identifier!, source: fromViewController, destination: toViewController, performHandler: { () -> Void in
-    })
-  }
-  
-  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if segue.identifier == "pan publish" {
-      (segue.destination as! BroadcastVC).broadcastDelegate = self
-    }
-  }
-  
+
   func userWantsToBroadcast(_ userWantsToBroadcast: Bool) {
     SettingsManager.setBroadcastNextRun(userWantsToBroadcast)
     updateBroadcastButton()

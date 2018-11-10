@@ -32,7 +32,7 @@ class GameOverScene: SKScene {
   }
   
   override func didMove(to view: SKView) {
-    if (!self.contentCreated) {
+    if !self.contentCreated {
       createContent()
       contentCreated = true
     }
@@ -53,8 +53,7 @@ class GameOverScene: SKScene {
     let highScoreText: String
     if adjustedScore > oldHighScore {
       highScoreText = newHighScoreString + "\(adjustedScore)"
-    }
-    else {
+    } else {
       highScoreText = notNewHighScoreString + "\(adjustedScore)"
     }
     highScoreLabel.text = highScoreText

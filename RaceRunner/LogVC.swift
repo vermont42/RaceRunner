@@ -21,18 +21,17 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
   @IBOutlet var pickerToolbar: UIToolbar!
   @IBOutlet var showPickerButton: UIButton!
   
-  var viewControllerTitleText: String!
-  var context: NSManagedObjectContext!
-  var runs: [Run]?
+  var viewControllerTitleText = ""
+  var runs: [Run] = []
   var selectedRun = 0
   enum LogType {
     case history
     case simulate
   }
-  var logType: LogType!
+  var logType: LogType = .history
   var locFile = "Runmeter"
   private static let rowHeight: CGFloat = 92.0
-  private var oldLogSortField: Int!
+  private var oldLogSortField = 0
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -56,45 +55,70 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
       viewControllerTitle.text = "Simulate"
     }
     showPickerButton.setTitle(SettingsManager.getLogSortField().rawValue, for: UIControlState())
-    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
+    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
     fetchRuns()
-    runs?.sort { LogSortField.compare($0, run2: $1) }
+    runs.sort { LogSortField.compare($0, run2: $1) }
     RunModel.registerForImportedRunNotifications(self)
   }
-  
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-    RunModel.deregisterForImportedRunNotifications()
-  }
-  
-  func runWasImported() {
-    fetchRuns()
-    tableView.reloadData()
-  }
-  
-  private func fetchRuns() {
-    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Run")
-    let context = CDManager.sharedCDManager.context!
-    fetchRequest.entity = NSEntityDescription.entity(forEntityName: "Run", in: context)
-    let sortDescriptor = NSSortDescriptor(key: "timestamp", ascending: false)
-    fetchRequest.sortDescriptors = [sortDescriptor]
-    runs = (try? context.fetch(fetchRequest)) as? [Run]
-  }
-  
+
   override func viewDidAppear(_ animated: Bool) {
     tableView.reloadData()
     super.viewDidAppear(animated)
   }
-  
+
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    RunModel.deregisterForImportedRunNotifications()
+  }
+
+  override func segueForUnwinding(to toViewController: UIViewController, from fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
+    return UnwindPanSegue(identifier: identifier ?? "", source: fromViewController, destination: toViewController, performHandler: { () -> Void in
+    })
+  }
+
+  @IBAction func importRuns() {
+    performSegue(withIdentifier: "pan import from log", sender: self)
+  }
+
+  @IBAction func returnFromSegueActions(_ sender: UIStoryboardSegue) {}
+
+  @IBAction func reverseSort() {
+    SettingsManager.setSortType(SortType.reverseSortType(SettingsManager.getSortType()))
+    runs.sort { LogSortField.compare($0, run2: $1) }
+    tableView.reloadData()
+  }
+
+  @IBAction func showPicker() {
+    pickerToolbar.isHidden = false
+    fieldPicker.isHidden = false
+    oldLogSortField = fieldPicker.selectedRow(inComponent: 0)
+  }
+
+  @IBAction func dismissPicker(_ sender: UIBarButtonItem) {
+    pickerToolbar.isHidden = true
+    fieldPicker.isHidden = true
+    let newLogSortField = fieldPicker.selectedRow(inComponent: 0)
+    if newLogSortField != oldLogSortField {
+      SettingsManager.setLogSortField(LogSortField.sortFieldForPosition(newLogSortField))
+      showPickerButton.setTitle(SettingsManager.getLogSortField().rawValue, for: UIControlState())
+      runs.sort { LogSortField.compare($0, run2: $1) }
+      tableView.reloadData()
+    }
+  }
+
+  func runWasImported() {
+    fetchRuns()
+    tableView.reloadData()
+  }
+
   @IBAction func showMenu(_ sender: UIButton) {
     showMenu()
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    if let runs = runs {
+    if !runs.isEmpty {
       return runs.count
-    }
-    else if !SettingsManager.getAlreadyMadeSampleRun() {
+    } else if !SettingsManager.getAlreadyMadeSampleRun() {
       if let parser = GpxParser(file: locFile) {
         let parseResult = parser.parse()
         runs = [RunModel.addRun(parseResult.locations, autoName: parseResult.autoName, customName: parseResult.customName, timestamp: parseResult.locations[0].timestamp, weather: parseResult.weather, temperature: parseResult.temperature, weight: parseResult.weight)]
@@ -111,9 +135,11 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "LogCell") as? LogCell
-    cell?.displayRun(runs![(indexPath as NSIndexPath).row])
-    return cell!
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "LogCell") as? LogCell else {
+      fatalError("Could not dequeue \(LogCell.self) in LogVC.")
+    }
+    cell.displayRun(runs[(indexPath as NSIndexPath).row])
+    return cell
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -128,9 +154,9 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
 
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == UITableViewCellEditingStyle.delete {
-      CDManager.sharedCDManager.context.delete(runs![(indexPath as NSIndexPath).row])
+      CDManager.sharedCDManager.context.delete(runs[(indexPath as NSIndexPath).row])
       CDManager.saveContext()
-      runs!.remove(at: (indexPath as NSIndexPath).row)
+      runs.remove(at: (indexPath as NSIndexPath).row)
       tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
     }
   }
@@ -141,12 +167,14 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "pan details from log" {
-      let runDetailsVC: RunDetailsVC = segue.destination as! RunDetailsVC
-      runDetailsVC.run = runs![selectedRun]
+      if let runDetailsVC: RunDetailsVC = segue.destination as? RunDetailsVC {
+        runDetailsVC.run = runs[selectedRun]
+      }
     }
     else if segue.identifier == "pan run from log" {
-      let runVC: RunVC = segue.destination as! RunVC
-      runVC.runToSimulate = runs![selectedRun]
+      if let runVC: RunVC = segue.destination as? RunVC {
+        runVC.runToSimulate = runs[selectedRun]
+      }
     }
   }
   
@@ -155,7 +183,7 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
   }
   
   func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-    return LogSortField.all().count;
+    return LogSortField.all().count
   }
   
   func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -165,39 +193,13 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
   func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
     return NSAttributedString(string: LogSortField.all()[row], attributes: [NSAttributedStringKey.foregroundColor: UiConstants.intermediate3Color])
   }
-  
-  @IBAction func importRuns() {
-    performSegue(withIdentifier: "pan import from log", sender: self)
-  }
-  
-  @IBAction func returnFromSegueActions(_ sender: UIStoryboardSegue) {}
-  
-  override func segueForUnwinding(to toViewController: UIViewController, from fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
-    return UnwindPanSegue(identifier: identifier!, source: fromViewController, destination: toViewController, performHandler: { () -> Void in
-    })
-  }
-  
-  @IBAction func reverseSort() {
-    SettingsManager.setSortType(SortType.reverseSortType(SettingsManager.getSortType()))
-    runs?.sort { LogSortField.compare($0, run2: $1) }
-    tableView.reloadData()
-  }
-  
-  @IBAction func showPicker() {
-    pickerToolbar.isHidden = false
-    fieldPicker.isHidden = false
-    oldLogSortField = fieldPicker.selectedRow(inComponent: 0)
-  }
-  
-  @IBAction func dismissPicker(_ sender: UIBarButtonItem) {
-    pickerToolbar.isHidden = true
-    fieldPicker.isHidden = true
-    let newLogSortField = fieldPicker.selectedRow(inComponent: 0)
-    if newLogSortField != oldLogSortField {
-      SettingsManager.setLogSortField(LogSortField.sortFieldForPosition(newLogSortField))
-      showPickerButton.setTitle(SettingsManager.getLogSortField().rawValue, for: UIControlState())
-      runs?.sort { LogSortField.compare($0, run2: $1) }
-      tableView.reloadData()
-    }
+
+  private func fetchRuns() {
+    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Run")
+    let context = CDManager.sharedCDManager.context
+    fetchRequest.entity = NSEntityDescription.entity(forEntityName: "Run", in: context)
+    let sortDescriptor = NSSortDescriptor(key: "timestamp", ascending: false)
+    fetchRequest.sortDescriptors = [sortDescriptor]
+    runs = ((try? context.fetch(fetchRequest)) as? [Run]) ?? []
   }
 }

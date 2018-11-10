@@ -9,7 +9,6 @@
 import Foundation
 
 enum Sound: String {
-  static let applauseCount: UInt32 = 3
   case applause1 = "applause1"
   case applause2 = "applause2"
   case applause3 = "applause3"
@@ -21,4 +20,6 @@ enum Sound: String {
   case scream1 = "scream1"
   case scream2 = "scream2"
   case silence = "silence"
+
+  static let applauseCount: UInt32 = 3
 }

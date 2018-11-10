@@ -12,11 +12,15 @@ import CoreLocation
 import CoreData
 
 class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
-  var locations: [CLLocation]! = []
+  static let altFudge: Double = 0.1
+  static let minDistance = 100.0
+
+  var locations: [CLLocation] = []
   var status: Status = .preRun
   var importedRunDelegate: ImportedRunDelegate?
-  var run: Run!
+  var run: Run?
   var totalDistance = 0.0
+
   private var currentAltitude = 0.0
   private var oldSplitAltitude = 0.0
   private var currentSplitDistance = 0.0
@@ -27,9 +31,9 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   private var reportEvery = SettingsManager.never
   private var temperature: Double = 0.0
   private var weather = ""
-  private var timer: Timer!
-  private var initialLocation: CLLocation!
-  private var locationManager: LocationManager!
+  private var timer: Timer = Timer()
+  private var initialLocation = CLLocation(latitude: 0.0, longitude: 0.0)
+  private var locationManager: LocationManager?
   private var autoName = Run.noAutoName
   private var didSetAutoNameAndFirstLoc = false
   private var altGained  = 0.0
@@ -42,13 +46,12 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   private var maxAlt = 0.0
   private var curAlt = 0.0
   private var curPace = 0.0
-  private var runToSimulate: Run!
-  private var gpxFile: String!
+  private var runToSimulate: Run?
+  private var gpxFile: String?
   private var secondLength = 1.0
   private (set) var sortedAltitudes: [Double] = []
   private (set) var sortedPaces: [Double] = []
-  static let altFudge: Double = 0.1
-  static let minDistance = 100.0
+
   private static let distanceTolerance: Double = 0.05
   private static let coordinateTolerance: Double = 0.0000050
   private static let minAccuracy: CLLocationDistance = 20.0
@@ -79,7 +82,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     runModel.gpxFile = nil
     var cLLocations: [CLLocation] = []
     for uncastedLocation in run.locations {
-      let location = uncastedLocation as! Location
+      guard let location = uncastedLocation as? Location else { continue }
       cLLocations.append(CLLocation(coordinate: CLLocationCoordinate2D(latitude: location.latitude.doubleValue, longitude: location.longitude.doubleValue), altitude: location.altitude.doubleValue, horizontalAccuracy: RunModel.freezeDriedAccuracy, verticalAccuracy: RunModel.freezeDriedAccuracy, timestamp: location.timestamp as Date))
     }
     runModel.locationManager = LocationManager(locations: cLLocations)
@@ -95,11 +98,14 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   }
   
   class func finishSimulatorSetup() {
+    guard let locationManager = runModel.locationManager else {
+      fatalError("locationManager was nil in finishSimulatorSetup().")
+    }
     runModel.secondLength /= SettingsManager.getMultiplier()
-    runModel.locationManager.secondLength = runModel.secondLength
+    locationManager.secondLength = runModel.secondLength
     runModel.status = .preRun
     configureLocationManager()
-    runModel.locationManager.startUpdatingLocation()
+    locationManager.startUpdatingLocation()
   }
   
   class func initializeRunModel() {
@@ -110,19 +116,22 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
       runModel.locationManager = LocationManager()
       configureLocationManager()
     }
-    runModel.locationManager.startUpdatingLocation()
+    runModel.locationManager?.startUpdatingLocation()
   }
   
   class func configureLocationManager() {
-    runModel.locationManager.delegate = runModel
-    runModel.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-    runModel.locationManager.distanceFilter = kCLDistanceFilterNone // This is the default, but explicit is good.
-    runModel.locationManager.activityType = .fitness
-    runModel.locationManager.requestAlwaysAuthorization()
-    runModel.locationManager.distanceFilter = RunModel.distanceFilter
-    runModel.locationManager.pausesLocationUpdatesAutomatically = false
-    runModel.locationManager.allowsBackgroundLocationUpdates = true
-    runModel.locationManager.startUpdatingLocation()
+    guard let locationManager = runModel.locationManager else {
+      fatalError("locationManager was nil in configureLocationManager().")
+    }
+    locationManager.delegate = runModel
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    locationManager.distanceFilter = kCLDistanceFilterNone // This is the default, but explicit is good.
+    locationManager.activityType = .fitness
+    locationManager.requestAlwaysAuthorization()
+    locationManager.distanceFilter = RunModel.distanceFilter
+    locationManager.pausesLocationUpdatesAutomatically = false
+    locationManager.allowsBackgroundLocationUpdates = true
+    locationManager.startUpdatingLocation()
   }
   
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -140,9 +149,17 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
               self.temperature = Run.noTemperature
               self.weather = Run.noWeather
             case .success(_, let dictionary):
-              let currently = dictionary?["currently"] as! NSDictionary
-              self.temperature = Converter.convertFahrenheitToCelsius(currently["temperature"] as! Double)
-              self.weather = currently["summary"] as! String
+              if
+                let currently = dictionary?["currently"] as? NSDictionary,
+                let fahrenheit = currently["temperature"] as? Double,
+                let weather = currently["summary"] as? String
+              {
+                self.temperature = Converter.convertFahrenheitToCelsius(fahrenheit)
+                self.weather = weather
+              } else {
+                self.temperature = Run.noTemperature
+                self.weather = Run.noWeather
+              }
             }
           }
       }
@@ -154,17 +171,16 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
             let altitudeIndex = sortedAltitudes.insertionIndexOf(newLocation.altitude) { $0 < $1 }
             sortedAltitudes.insert(newLocation.altitude, at: altitudeIndex)
             let altitudeColor = UiHelpers.colorForValue(newLocation.altitude, sortedArray: sortedAltitudes, index: altitudeIndex)
-            let distanceDelta = newLocation.distance(from: self.locations.last!)
+            let distanceDelta = newLocation.distance(from: self.locations.last ?? newLocation)
             totalDistance += distanceDelta
-            let timeDelta = newLocation.timestamp.timeIntervalSince(self.locations.last!.timestamp)
+            let timeDelta = newLocation.timestamp.timeIntervalSince(self.locations.last?.timestamp ?? newLocation.timestamp)
             curPace = distanceDelta / timeDelta
             let paceIndex = sortedPaces.insertionIndexOf(curPace) { $0 < $1 }
             sortedPaces.insert(curPace, at: paceIndex)
             let paceColor = UiHelpers.colorForValue(curPace, sortedArray: sortedPaces, index: paceIndex)
             let runCoordinate = RunCoordinate(coordinate: newLocation.coordinate, altitudeColor: altitudeColor, paceColor: paceColor)
             NotificationCenter.default.post(name: .plotToCoordinate, object: nil, userInfo: ["\(RunCoordinate.self)": runCoordinate])
-          }
-          else {
+          } else {
             NotificationCenter.default.post(name: .showInitialCoordinate, object: nil, userInfo: ["\(CLLocationCoordinate2D.self)": newLocation.coordinate])
 
           }
@@ -176,17 +192,15 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
           if runToSimulate == nil && gpxFile == nil {
             CLGeocoder().reverseGeocodeLocation(newLocation, completionHandler: { (placemarks, error) in
               if error == nil {
-                if placemarks?.count > 0 {
-                  let placemark = placemarks![0]
+                if let placemarks = placemarks, !placemarks.isEmpty {
+                  let placemark = placemarks[0]
                   if let thoroughfare = placemark.thoroughfare {
                     self.autoName = thoroughfare
                   }
-                }
-                else {
+                } else {
                   self.autoName = Run.noAutoName
                 }
-              }
-              else {
+              } else {
                 self.autoName = Run.noAutoName
               }
             })
@@ -198,8 +212,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
           maxLong = newLocation.coordinate.longitude
           minLat = newLocation.coordinate.latitude
           maxLat = newLocation.coordinate.latitude
-        }
-        else {
+        } else {
           if newLocation.coordinate.latitude < minLat {
             minLat = newLocation.coordinate.latitude
           }
@@ -243,7 +256,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
       currentSplitDistance = totalDistance - lastDistance
       if shouldReportSplits && currentSplitDistance >= reportEvery {
         currentSplitDistance -= reportEvery
-        if (SettingsManager.getAudibleSplits()) {
+        if SettingsManager.getAudibleSplits() {
           Converter.announceProgress(totalSeconds, lastSeconds: lastSeconds, totalDistance: totalDistance, lastDistance: lastDistance, newAltitude: curAlt, oldAltitude: oldSplitAltitude)
         }
         lastDistance = totalDistance
@@ -260,22 +273,24 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   static func loadStateAndStart() {
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "RunInProgress")
     let context = CDManager.sharedCDManager.context
-    fetchRequest.entity = NSEntityDescription.entity(forEntityName: "RunInProgress", in: context!)
-    let runInProgress = ((try? context!.fetch(fetchRequest)) as! [RunInProgress])[0]
-    var savedLocations = [CLLocation]()
-    for location in runInProgress.tempLocations {
-      let savedLocation = CLLocation(coordinate: CLLocationCoordinate2D(latitude: (location as AnyObject).latitude.doubleValue, longitude:
-        (location as AnyObject).longitude.doubleValue), altitude: (location as AnyObject).altitude.doubleValue, horizontalAccuracy: freezeDriedAccuracy, verticalAccuracy: freezeDriedAccuracy, timestamp: (location as AnyObject).timestamp)
-      savedLocations.append(savedLocation)
+    fetchRequest.entity = NSEntityDescription.entity(forEntityName: "RunInProgress", in: context)
+    if let runInProgressArray = (try? context.fetch(fetchRequest)) as? [RunInProgress] {
+      let runInProgress = runInProgressArray[0]
+      var savedLocations = [CLLocation]()
+      for location in runInProgress.tempLocations {
+        let savedLocation = CLLocation(coordinate: CLLocationCoordinate2D(latitude: (location as AnyObject).latitude.doubleValue, longitude:
+          (location as AnyObject).longitude.doubleValue), altitude: (location as AnyObject).altitude.doubleValue, horizontalAccuracy: freezeDriedAccuracy, verticalAccuracy: freezeDriedAccuracy, timestamp: (location as AnyObject).timestamp)
+        savedLocations.append(savedLocation)
+      }
+      initializeRunModel()
+      runModel.start(locations: savedLocations, oldSplitAltitude: runInProgress.oldSplitAltitude.doubleValue, totalSeconds: Int(runInProgress.totalSeconds.int32Value), lastSeconds: Int(runInProgress.lastSeconds.int32Value), totalDistance: runInProgress.totalDistance.doubleValue, lastDistance: runInProgress.lastDistance.doubleValue, currentAltitude: runInProgress.currentAltitude.doubleValue, currentSplitDistance: runInProgress.currentSplitDistance.doubleValue, altGained: runInProgress.altGained.doubleValue, altLost: runInProgress.altLost.doubleValue, maxLong: runInProgress.maxLong.doubleValue, minLong: runInProgress.minLong.doubleValue, maxLat: runInProgress.maxLat.doubleValue, minLat: runInProgress.minLat.doubleValue, maxAlt: runInProgress.maxAlt.doubleValue, minAlt: runInProgress.minAlt.doubleValue)
+      context.delete(runInProgress)
+      CDManager.saveContext()
     }
-    initializeRunModel()
-    runModel.start(locations: savedLocations, oldSplitAltitude: runInProgress.oldSplitAltitude.doubleValue, totalSeconds: Int(runInProgress.totalSeconds.int32Value), lastSeconds: Int(runInProgress.lastSeconds.int32Value), totalDistance: runInProgress.totalDistance.doubleValue, lastDistance: runInProgress.lastDistance.doubleValue, currentAltitude: runInProgress.currentAltitude.doubleValue, currentSplitDistance: runInProgress.currentSplitDistance.doubleValue, altGained: runInProgress.altGained.doubleValue, altLost: runInProgress.altLost.doubleValue, maxLong: runInProgress.maxLong.doubleValue, minLong: runInProgress.minLong.doubleValue, maxLat: runInProgress.maxLat.doubleValue, minLat: runInProgress.minLat.doubleValue, maxAlt: runInProgress.maxAlt.doubleValue, minAlt: runInProgress.minAlt.doubleValue)
-    context!.delete(runInProgress)
-    CDManager.saveContext()
   }
 
   static func saveState() {
-    let runInProgress: RunInProgress = NSEntityDescription.insertNewObject(forEntityName: "RunInProgress", into: CDManager.sharedCDManager.context) as! RunInProgress
+    guard let runInProgress = NSEntityDescription.insertNewObject(forEntityName: "RunInProgress", into: CDManager.sharedCDManager.context) as? RunInProgress else { return }
     runInProgress.oldSplitAltitude = NSNumber(value: runModel.oldSplitAltitude)
     runInProgress.totalSeconds = NSNumber(value: runModel.totalSeconds)
     runInProgress.lastSeconds = NSNumber(value: runModel.lastSeconds)
@@ -293,7 +308,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     runInProgress.minAlt = NSNumber(value: runModel.minAlt)
     var locationArray: [Location] = []
     for location in runModel.locations {
-      let locationObject: Location = NSEntityDescription.insertNewObject(forEntityName: "Location", into: CDManager.sharedCDManager.context) as! Location
+      guard let locationObject = NSEntityDescription.insertNewObject(forEntityName: "Location", into: CDManager.sharedCDManager.context) as? Location else { continue }
       locationObject.timestamp = location.timestamp
       locationObject.latitude = NSNumber(value: location.coordinate.latitude)
       locationObject.longitude = NSNumber(value: location.coordinate.longitude)
@@ -310,8 +325,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     reportEvery = SettingsManager.getReportEvery()
     if reportEvery == SettingsManager.never {
       shouldReportSplits = false
-    }
-    else {
+    } else {
       shouldReportSplits = true
     }
 
@@ -331,7 +345,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     self.minLat = minLat
     self.maxAlt = maxAlt
     self.minAlt = minAlt
-    locationManager.startUpdatingLocation()
+    locationManager?.startUpdatingLocation()
     startTimer()
     if runToSimulate == nil && gpxFile == nil {
       SettingsManager.setRealRunInProgress(true)
@@ -355,9 +369,8 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     var newRun: Run?
     if let parser = GpxParser(url: url) {
       let parseResult = parser.parse()
-      newRun = RunModel.addRun(parseResult.locations, autoName: parseResult.autoName, customName: parseResult.customName, timestamp: parseResult.locations.last!.timestamp, weather: parseResult.weather, temperature: parseResult.temperature, weight: parseResult.weight)
-    }
-    else {
+      newRun = RunModel.addRun(parseResult.locations, autoName: parseResult.autoName, customName: parseResult.customName, timestamp: parseResult.locations.last?.timestamp ?? Date(), weather: parseResult.weather, temperature: parseResult.temperature, weight: parseResult.weight)
+    } else {
       succeeded = false
     }
     if newRun == nil {
@@ -367,13 +380,11 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     if succeeded {
       if newRun?.customName == Run.noAutoName as NSString {
         resultMessage = RunModel.importSucceededMessage + "."
-      }
-      else {
-        resultMessage = RunModel.importSucceededMessage + " " + ((newRun?.displayName())! as String) + "."
+      } else {
+        resultMessage = RunModel.importSucceededMessage + " " + ((newRun?.displayName()) ?? "") + "."
       }
       runModel.importedRunDelegate?.runWasImported()
-    }
-    else {
+    } else {
       resultMessage = RunModel.importFailedMessage
     }
     UIAlertController.showMessage(resultMessage, title: RunModel.importRunTitle)
@@ -381,7 +392,9 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   }
   
   private class func addRun(_ coordinates: [CLLocation], customName: String, autoName: String, timestamp: Date, weather: String, temperature: Double, distance: Double, maxAltitude: Double, minAltitude: Double, maxLongitude: Double, minLongitude: Double, maxLatitude: Double, minLatitude: Double, altitudeGained: Double, altitudeLost: Double, weight: Double) -> Run {
-    let newRun: Run = NSEntityDescription.insertNewObject(forEntityName: "Run", into: CDManager.sharedCDManager.context) as! Run
+    guard let newRun = NSEntityDescription.insertNewObject(forEntityName: "Run", into: CDManager.sharedCDManager.context) as? Run else {
+      fatalError("addRun() failed.")
+    }
     newRun.distance = NSNumber(value: distance)
     newRun.duration = NSNumber(value: coordinates[coordinates.count - 1].timestamp.timeIntervalSince(coordinates[0].timestamp))
     newRun.timestamp = timestamp
@@ -400,7 +413,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     newRun.weight = NSNumber(value: weight)
     var locationArray: [Location] = []
     for location in coordinates {
-      let locationObject: Location = NSEntityDescription.insertNewObject(forEntityName: "Location", into: CDManager.sharedCDManager.context) as! Location
+      guard let locationObject = NSEntityDescription.insertNewObject(forEntityName: "Location", into: CDManager.sharedCDManager.context) as? Location else { continue }
       locationObject.timestamp = location.timestamp
       locationObject.latitude = NSNumber(value: location.coordinate.latitude)
       locationObject.longitude = NSNumber(value: location.coordinate.longitude)
@@ -459,8 +472,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   class func gpsIsAvailable() -> Bool {
     if CLLocationManager.authorizationStatus() == .authorizedAlways {
       return true
-    }
-    else {
+    } else {
       return false
     }
   }
@@ -470,12 +482,12 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     SettingsManager.setWarnedUserAboutLowRam(false)
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "RunInProgress")
     let context = CDManager.sharedCDManager.context
-    fetchRequest.entity = NSEntityDescription.entity(forEntityName: "RunInProgress", in: context!)
+    fetchRequest.entity = NSEntityDescription.entity(forEntityName: "RunInProgress", in: context)
     do {
-      let runsInProgress = (try context!.fetch(fetchRequest)) as? [RunInProgress]
+      let runsInProgress = (try context.fetch(fetchRequest)) as? [RunInProgress]
       if let runsInProgress = runsInProgress {
         if runsInProgress.count > 0 {
-          context!.delete(runsInProgress[0])
+          context.delete(runsInProgress[0])
           CDManager.saveContext()
         }
       }
@@ -486,7 +498,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   func stop() {
     SettingsManager.setStartedViaSiri(false)
     timer.invalidate()
-    locationManager.stopUpdatingLocation()
+    locationManager?.stopUpdatingLocation()
     if SettingsManager.getRealRunInProgress() && SettingsManager.getBroadcastNextRun() {
       PubNubManager.runStopped()
       PubNubManager.unsubscribeFromChannel(SettingsManager.getBroadcastName())
@@ -508,36 +520,34 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
         break
       }
       var customName = ""
-      //let fetchRequest = NSFetchRequest()
       let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Run")
       let context = CDManager.sharedCDManager.context
-      fetchRequest.entity = NSEntityDescription.entity(forEntityName: "Run", in: context!)
-      let pastRuns = (try! context!.fetch(fetchRequest)) as! [Run]
-      for pastRun in pastRuns {
-        if pastRun.customName != "" {
-          if (!RunModel.matchMeasurement(pastRun.distance.doubleValue, measurement2: totalDistance, tolerance: RunModel.distanceTolerance)) ||
-              (!RunModel.matchMeasurement(pastRun.maxLatitude.doubleValue, measurement2: maxLat, tolerance: RunModel.coordinateTolerance)) ||
-              (!RunModel.matchMeasurement(pastRun.minLatitude.doubleValue, measurement2: minLat, tolerance: RunModel.coordinateTolerance)) ||
-              (!RunModel.matchMeasurement(pastRun.maxLongitude.doubleValue, measurement2: maxLong, tolerance: RunModel.coordinateTolerance)) ||
-              (!RunModel.matchMeasurement(pastRun.minLongitude.doubleValue, measurement2: minLong, tolerance: RunModel.coordinateTolerance)) {
-            continue
+      fetchRequest.entity = NSEntityDescription.entity(forEntityName: "Run", in: context)
+      if let pastRuns = (try? context.fetch(fetchRequest)) as? [Run] {
+        for pastRun in pastRuns {
+          if pastRun.customName != "" {
+            if (!RunModel.matchMeasurement(pastRun.distance.doubleValue, measurement2: totalDistance, tolerance: RunModel.distanceTolerance)) ||
+                (!RunModel.matchMeasurement(pastRun.maxLatitude.doubleValue, measurement2: maxLat, tolerance: RunModel.coordinateTolerance)) ||
+                (!RunModel.matchMeasurement(pastRun.minLatitude.doubleValue, measurement2: minLat, tolerance: RunModel.coordinateTolerance)) ||
+                (!RunModel.matchMeasurement(pastRun.maxLongitude.doubleValue, measurement2: maxLong, tolerance: RunModel.coordinateTolerance)) ||
+                (!RunModel.matchMeasurement(pastRun.minLongitude.doubleValue, measurement2: minLong, tolerance: RunModel.coordinateTolerance)) {
+              continue
+            }
+            customName = pastRun.customName as String
+            break
           }
-          customName = pastRun.customName as String
-          break
         }
       }
       run = RunModel.addRun(locations, customName: customName, autoName: autoName, timestamp: Date(), weather: weather, temperature: temperature, distance: totalDistance, maxAltitude: maxAlt, minAltitude: minAlt, maxLongitude: maxLong, minLongitude: minLong, maxLatitude: maxLat, minLatitude: minLat, altitudeGained: altGained, altitudeLost: altLost, weight: SettingsManager.getWeight())
       let result = Shoes.addMeters(totalDistance)
-      if result != Shoes.shoesAreOkay {
+      if result != Shoes.areOkay {
         DispatchQueue.main.asyncAfter(deadline: .now() + UiConstants.messageDelay) {
           UIAlertController.showMessage(result, title: Shoes.warningTitle, okTitle: Shoes.gotIt)
         }
       }
-    }
-    else {
-      // I don't consider this a magic number because the unadjusted length of a second will never change.
+    } else {
       secondLength = 1.0
-      locationManager.kill()
+      locationManager?.kill()
       locationManager = nil
     }
     totalSeconds = 0
@@ -563,14 +573,14 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     SoundManager.play(.click)
     status = .paused
     timer.invalidate()
-    locationManager.stopUpdatingLocation()
+    locationManager?.stopUpdatingLocation()
     NotificationCenter.default.post(name: .runDidPause, object: nil)
   }
   
   func resume() {
     SoundManager.play(.click)
     status = .inProgress
-    locationManager.startUpdatingLocation()
+    locationManager?.startUpdatingLocation()
     startTimer()
     NotificationCenter.default.post(name: .runDidResume, object: nil)
   }
@@ -583,8 +593,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     let diff = fabs(measurement2 - measurement1)
     if (diff / measurement2) > tolerance {
       return false
-    }
-    else {
+    } else {
       return true
     }
   }

@@ -19,9 +19,8 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
   @IBOutlet var isCurrent: UIImageView!
   @IBOutlet var currentMileageLabel: UILabel!
   @IBOutlet var maximumMileageLabel: UILabel!
-  private let imagePicker = UIImagePickerController()
   var shoes: Shoes?
-  weak var shoesDelegate: ShoesDelegate!
+  weak var shoesDelegate: ShoesDelegate?
   
   private static let imperialMileageLabel = "Current Mileage:"
   private static let imperialMaxMileageLabel = "Maximum Mileage:"
@@ -29,6 +28,8 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
   private static let metricMaxMileageLabel = "Maximum Klicks:"
   private static let editShoes = "Edit Shoes"
   private static let newShoes = "New Shoes"
+
+  private let imagePicker = UIImagePickerController()
   private var choosingThumbnail = false
   
   override func viewDidLoad() {
@@ -49,8 +50,7 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
       if SettingsManager.getUnitType() == .imperial {
         currentMileageLabel.text = ShoesEditorVC.imperialMileageLabel
         maximumMileageLabel.text = ShoesEditorVC.imperialMaxMileageLabel
-      }
-      else {
+      } else {
         currentMileageLabel.text = ShoesEditorVC.metricMileageLabel
         maximumMileageLabel.text = ShoesEditorVC.metricMaxMileageLabel
       }
@@ -60,14 +60,12 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
         maximumMileage.text = Converter.stringifyKilometers(shoes.maxKilometers.floatValue)
         if shoes.isCurrent.boolValue {
           isCurrent.image = Shoes.checked
-        }
-        else {
+        } else {
           isCurrent.image = Shoes.unchecked
         }
         thumbnail.image = UIImage(data: shoes.thumbnail as Data)
         viewControllerTitle.text = ShoesEditorVC.editShoes
-      }
-      else {
+      } else {
         name.text = Shoes.defaultName
         currentMileage.text = Converter.stringifyKilometers(Shoes.defaultKilometers)
         maximumMileage.text = Converter.stringifyKilometers(Shoes.defaultMaxKilometers)
@@ -76,7 +74,7 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
         viewControllerTitle.text = ShoesEditorVC.newShoes
         disableDoneButton()
       }
-      viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
+      viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
     }
   }
   
@@ -99,18 +97,20 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
       shoes = NSEntityDescription.insertNewObject(forEntityName: "Shoes", into: CDManager.sharedCDManager.context) as? Shoes
       isNew = true
     }
-    shoes!.name = name.text!
-    shoes!.kilometers = NSNumber(value: Converter.floatifyMileage(currentMileage.text!))
-    shoes!.maxKilometers = NSNumber(value: Converter.floatifyMileage(maximumMileage.text!))
+    guard let shoes = shoes else {
+      fatalError("shoes was nil in ShoesEditorVC.done().")
+    }
+    shoes.name = name.text ?? ""
+    shoes.kilometers = NSNumber(value: Converter.floatifyMileage(currentMileage.text!))
+    shoes.maxKilometers = NSNumber(value: Converter.floatifyMileage(maximumMileage.text ?? ""))
     if isCurrent.image!.isEqual(Shoes.checked) {
-      shoes!.isCurrent = true
+      shoes.isCurrent = true
+    } else {
+      shoes.isCurrent = false
     }
-    else {
-      shoes!.isCurrent = false
-    }
-    shoes!.thumbnail = UIImagePNGRepresentation(thumbnail.image!)!
+    shoes.thumbnail = UIImagePNGRepresentation(thumbnail.image ?? UIImage()) ?? Data()
     CDManager.saveContext()
-    shoesDelegate.receiveShoes(shoes!, isNew: isNew)
+    shoesDelegate?.receiveShoes(shoes, isNew: isNew)
     performSegue(withIdentifier: "unwind pan", sender: self)
   }
   
@@ -119,11 +119,10 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
   }
   
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-    if textField == currentMileage || textField == maximumMileage {
-      if let _ = Int(string) , textField.text!.count < Shoes.maxNumberLength + 1 {
+    if let text = textField.text, textField == currentMileage || textField == maximumMileage {
+      if let _ = Int(string), text.count < Shoes.maxNumberLength + 1 {
         return true
-      }
-      else {
+      } else {
         return false
       }
     }
@@ -131,10 +130,17 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
   }
   
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    if name.text! != "" && currentMileage.text! != "" && maximumMileage.text! != "" {
-      enableDoneButton()
-    }
+    guard
+      let nameText = name.text,
+      let currentMileageText = currentMileage.text,
+      let maximumMileageText = maximumMileage.text
     else {
+      fatalError("Text was nil.")
+    }
+
+    if nameText != "" && currentMileageText != "" && maximumMileageText != "" {
+      enableDoneButton()
+    } else {
       disableDoneButton()
     }
     textField.resignFirstResponder()
@@ -168,10 +174,12 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
   }
   
   @objc func toggleIsCurrent() {
-    if isCurrent.image!.isEqual(Shoes.checked) {
-      isCurrent.image = Shoes.unchecked
+    guard let isCurrentImage = isCurrent.image else {
+      fatalError("isCurrent image was nil.")
     }
-    else {
+    if isCurrentImage.isEqual(Shoes.checked) {
+      isCurrent.image = Shoes.unchecked
+    } else {
       isCurrent.image = Shoes.checked
     }
   }

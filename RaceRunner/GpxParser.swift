@@ -28,6 +28,14 @@ struct ParseResult {
 }
 
 class GpxParser: NSObject, XMLParserDelegate {
+  static let parseError = "An error occurred during GPX parsing."
+
+  private static let dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+  private static let accuracy: CLLocationAccuracy = 5.0
+  private static let runtastic = "runtastic"
+  private static let runtasticGarbage = ".000"
+  private static let runtasticRunName = "Runtastic Run"
+
   private var parser: XMLParser?
   private var autoName = Run.noAutoName
   private var customName = Run.noCustomName
@@ -43,8 +51,9 @@ class GpxParser: NSObject, XMLParserDelegate {
   private var curTimeString: String = ""
   private var startedTrackPoints = false
   private var isRuntastic = false
-  private static let dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-  private static let accuracy: CLLocationAccuracy = 5.0
+  private var alreadySetName = false
+  private var parsingState: ParsingState = .autoName
+
   private enum ParsingState: String {
     case trkpt = "trkpt"
     case autoName = "name"
@@ -59,18 +68,11 @@ class GpxParser: NSObject, XMLParserDelegate {
       self = .autoName
     }
   }
-  private var alreadySetName = false
-  private var parsingState: ParsingState = .autoName
-  private static let runtastic = "runtastic"
-  private static let runtasticGarbage = ".000"
-  private static let runtasticRunName = "Runtastic Run"
-  static let parseError = "An error occurred during GPX parsing."
-  
+
   convenience init?(file: String) {
     if let url = Bundle.main.url(forResource: file, withExtension: "gpx") {
       self.init(url: url)
-    }
-    else {
+    } else {
       return nil
     }
   }

@@ -17,7 +17,7 @@ class Utterer {
   static func utter(_ thingToUtter: String) {
     let utterance = AVSpeechUtterance(string: thingToUtter)
     utterance.rate = Utterer.rate
-    utterance.voice = AVSpeechSynthesisVoice(language: "en-\(SettingsManager.getAccent().languageCode())")
+    utterance.voice = AVSpeechSynthesisVoice(language: "en-\(SettingsManager.getAccent().languageCode)")
     utterance.pitchMultiplier = Utterer.pitchMultiplier
     synth.speak(utterance)
     SoundManager.play(.silence) // https://forums.developer.apple.com/thread/23160

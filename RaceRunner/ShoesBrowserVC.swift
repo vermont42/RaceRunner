@@ -11,6 +11,10 @@ import CoreData
 import MGSwipeTableCell
 
 class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, ShoesDelegate {
+  static let tapFontSize: CGFloat = 18.0
+
+  var pairs: [Shoes] = []
+
   @IBOutlet var viewControllerTitle: UILabel!
   @IBOutlet var showMenuButton: UIButton!
   @IBOutlet var reverseSortButton: UIButton!
@@ -26,15 +30,13 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
   private static let tapToAdd = "Tap + to add a pair of shoes."
   private static let delete = "Delete"
   private static let edit = "Edit"
-  private var oldShoesSortField: Int!
-  static let tapFontSize: CGFloat = 18.0
   
+  private var oldShoesSortField = 0
   private var shoesToEdit: Shoes?
-  var pairs: [Shoes] = []
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
+    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
     tableView.delegate = self
     tableView.dataSource = self
     tableView.allowsSelection = false
@@ -52,18 +54,18 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
       fetchPairs()
     }
     showPickerButton.setTitle(SettingsManager.getShoesSortField().asString(), for: UIControlState())
-    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
+    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
     pairs.sort { ShoesSortField.compare($0, shoes2: $1) }
     tableView.reloadData()
   }
   
   private func fetchPairs() {
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Shoes")
-    let context = CDManager.sharedCDManager.context!
+    let context = CDManager.sharedCDManager.context
     fetchRequest.entity = NSEntityDescription.entity(forEntityName: "Shoes", in: context)
     let sortDescriptor = NSSortDescriptor(key: "name", ascending: false)
     fetchRequest.sortDescriptors = [sortDescriptor]
-    pairs = (try? context.fetch(fetchRequest)) as! [Shoes]
+    pairs = (try? context.fetch(fetchRequest)) as? [Shoes] ?? []
   }
 
   @IBAction func showMenu(_ sender: UIButton) {
@@ -73,44 +75,44 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if pairs.count > 0 {
       return pairs.count
-    }
-    else {
+    } else {
       return 1
     }
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     if pairs.count > 0 {
-      let cell = tableView.dequeueReusableCell(withIdentifier: "ShoesCell") as? ShoesCell
+      guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShoesCell") as? ShoesCell else {
+        fatalError("ShoesCell was nil.")
+      }
       
       let deleteButton = MGSwipeButton(title: ShoesBrowserVC.delete, backgroundColor: UiConstants.intermediate1Color, callback: {
-          (sender: MGSwipeTableCell!) -> Bool in
+          (sender: MGSwipeTableCell) -> Bool in
         CDManager.sharedCDManager.context.delete(self.pairs[(indexPath as NSIndexPath).row])
         CDManager.saveContext()
         self.pairs.remove(at: (indexPath as NSIndexPath).row)
         self.tableView.reloadData()
         return true
       })
-      deleteButton.titleLabel!.font = UIFont(name: UiConstants.globalFont, size: UiConstants.cellButtonTitleSize)!
+      deleteButton.titleLabel?.font = UIFont(name: UiConstants.globalFont, size: UiConstants.cellButtonTitleSize)
       deleteButton.setTitleColor(UiConstants.darkColor, for: UIControlState())
       let editButton = MGSwipeButton(title: ShoesBrowserVC.edit, backgroundColor: UiConstants.intermediate2Color, callback: {
-          (sender: MGSwipeTableCell!) -> Bool in
+          (sender: MGSwipeTableCell) -> Bool in
         self.shoesToEdit = self.pairs[(indexPath as NSIndexPath).row]
         self.performSegue(withIdentifier: "pan new shoes", sender: self)
         return true
       })
-      editButton.titleLabel!.font = UIFont(name: UiConstants.globalFont, size: UiConstants.cellButtonTitleSize)!
+      editButton.titleLabel?.font = UIFont(name: UiConstants.globalFont, size: UiConstants.cellButtonTitleSize)
       editButton.setTitleColor(UiConstants.darkColor, for: UIControlState())
-      cell!.rightButtons = [deleteButton, editButton]
-      cell!.rightSwipeSettings.transition = MGSwipeTransition.rotate3D
-      cell?.displayShoes(pairs[(indexPath as NSIndexPath).row], shoesDelegate: self)
+      cell.rightButtons = [deleteButton, editButton]
+      cell.rightSwipeSettings.transition = MGSwipeTransition.rotate3D
+      cell.displayShoes(pairs[(indexPath as NSIndexPath).row], shoesDelegate: self)
       instructionsLabel.isHidden = false
       sortFieldButton.isHidden = false
       sortFieldLabel.isHidden = false
       reverseSortButton.isHidden = false
-      return cell!
-    }
-    else {
+      return cell
+    } else {
       let cell = UITableViewCell(style: .default, reuseIdentifier: "EmptyShoesCell")
       cell.textLabel?.textColor = UiConstants.intermediate1Color
       cell.textLabel?.font = UIFont(name: UiConstants.globalFont, size: ShoesBrowserVC.tapFontSize)
@@ -130,9 +132,9 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "pan new shoes" {
-      (segue.destination as! ShoesEditorVC).shoes = shoesToEdit
+      (segue.destination as? ShoesEditorVC)?.shoes = shoesToEdit
       shoesToEdit = nil
-      (segue.destination as! ShoesEditorVC).shoesDelegate = self
+      (segue.destination as? ShoesEditorVC)?.shoesDelegate = self
     }
   }
   
@@ -143,7 +145,7 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
   @IBAction func returnFromSegueActions(_ sender: UIStoryboardSegue) {}
 
   override func segueForUnwinding(to toViewController: UIViewController, from fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
-    return UnwindPanSegue(identifier: identifier!, source: fromViewController, destination: toViewController, performHandler: { () -> Void in
+    return UnwindPanSegue(identifier: identifier ?? "", source: fromViewController, destination: toViewController, performHandler: { () -> Void in
     })
   }
   
@@ -153,8 +155,7 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
     }
     if shoes.isCurrent.boolValue {
       makeNewIsCurrent(shoes)
-    }
-    else {
+    } else {
       tableView.reloadData()
     }
   }

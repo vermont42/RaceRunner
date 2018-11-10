@@ -15,25 +15,29 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
   var controllerLabels = ["Start Run", "Simulate", "Demo", "History", "Spectate", "Settings", "Shoes", "Help", "Game"]
   var panSegues = ["pan run", "pan log", "pan GPX run", "pan log", "pan spectate", "pan settings", "pan shoes", "pan help", "pan game"]
   var selectedMenuItem: Int = 0
-  var logTypeToShow: LogVC.LogType!
-  private var firstAppearance = true
+  var logTypeToShow: LogVC.LogType = .history
 
   private static let resumeRunLabel = "Resume Run"
   private static let startRunLabel = "Start Run"
   private static let historyLabel = "History"
   private static let simulateLabel = "Simulate"
   private static let demoLabel = "Demo"
-  
+  private static let menuFontSize: CGFloat = 42.0
   private static let rowHeight: CGFloat = 50.0
   private static let realRunMessage = "There is a real run in progress. Please tap the Resume Run button and stop the run before attempting to simulate a run."
   private static let okButtonText = "OK"
   private static let gpxFile = "iSmoothRun"
   private static let sadFaceTitle = "😢"
-  static let menuFontSize: CGFloat = 42.0
-  
+
+  private var firstAppearance = true
+
+  override var prefersStatusBarHidden: Bool {
+    return true
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
+    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
     menuTable.separatorStyle = .none
     menuTable.backgroundColor = UIColor.clear
     menuTable.scrollsToTop = false
@@ -74,25 +78,31 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    var cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
+    let cellIdentifier = "Cell"
+    var cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
     if cell == nil {
-      cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "Cell")
-      cell!.backgroundColor = UIColor.clear
+      cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: cellIdentifier)
+      guard let initializedCell = cell else {
+        fatalError("initializedCell on MenuVC screen was nil.")
+      }
+      initializedCell.backgroundColor = UIColor.clear
       if (indexPath as NSIndexPath).row % 2 == 0 {
-        cell!.textLabel?.textColor = UiConstants.intermediate2Color
+        initializedCell.textLabel?.textColor = UiConstants.intermediate2Color
+      } else {
+        initializedCell.textLabel?.textColor = UiConstants.intermediate3Color
       }
-      else {
-        cell!.textLabel?.textColor = UiConstants.intermediate3Color
-      }
-      let selectedBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: cell!.frame.size.width, height: cell!.frame.size.height))
+      let selectedBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: initializedCell.frame.size.width, height: initializedCell.frame.size.height))
       selectedBackgroundView.backgroundColor = UIColor.gray.withAlphaComponent(0.2)
-      cell!.textLabel?.textAlignment = NSTextAlignment.center
-      cell!.selectedBackgroundView = selectedBackgroundView
-      cell!.textLabel?.font = UIFont(name: UiConstants.globalFont, size: MenuVC.menuFontSize)
+      initializedCell.textLabel?.textAlignment = NSTextAlignment.center
+      initializedCell.selectedBackgroundView = selectedBackgroundView
+      initializedCell.textLabel?.font = UIFont(name: UiConstants.globalFont, size: MenuVC.menuFontSize)
     }
-    cell!.textLabel?.text = controllerLabels[(indexPath as NSIndexPath).row]
-    cell!.textLabel?.attributedText = UiHelpers.letterPressedText(controllerLabels[(indexPath as NSIndexPath).row])
-    return cell!
+    guard let initializedOrDequeuedCell = cell else {
+      fatalError("initializedOrDequeuedCell on MenuVC screen was nil.")
+    }
+    initializedOrDequeuedCell.textLabel?.text = controllerLabels[(indexPath as NSIndexPath).row]
+    initializedOrDequeuedCell.textLabel?.attributedText = UiHelpers.letterPressedText(controllerLabels[(indexPath as NSIndexPath).row])
+    return initializedOrDequeuedCell
   }
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -108,8 +118,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
     }
     if (controllerLabels[(indexPath as NSIndexPath).row] == MenuVC.simulateLabel || controllerLabels[(indexPath as NSIndexPath).row] == MenuVC.demoLabel) && SettingsManager.getRealRunInProgress() {
       UIAlertController.showMessage(MenuVC.realRunMessage, title: MenuVC.sadFaceTitle)
-    }
-    else {
+    } else {
       performSegue(withIdentifier: panSegues[(indexPath as NSIndexPath).row], sender: self)
     }
   }
@@ -134,23 +143,21 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "pan log" {
-      let logVC: LogVC = segue.destination as! LogVC
-      logVC.logType = logTypeToShow
+      if let logVC = segue.destination as? LogVC {
+        logVC.logType = logTypeToShow
+      }
     }
     else if segue.identifier == "pan GPX run" {
-      let runVC: RunVC = segue.destination as! RunVC
-      runVC.gpxFile = MenuVC.gpxFile
+      if let runVC = segue.destination as? RunVC {
+        runVC.gpxFile = MenuVC.gpxFile
+      }
     }
   }
   
   @IBAction func returnFromSegueActions(_ sender: UIStoryboardSegue) {}
   
   override func segueForUnwinding(to toViewController: UIViewController, from fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
-    return UnwindPanSegue(identifier: identifier!, source: fromViewController, destination: toViewController, performHandler: { () -> Void in
+    return UnwindPanSegue(identifier: identifier ?? "", source: fromViewController, destination: toViewController, performHandler: { () -> Void in
     })
-  }
-  
-  override var prefersStatusBarHidden: Bool {
-    return true
   }
 }

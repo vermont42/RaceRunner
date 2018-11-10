@@ -20,12 +20,7 @@ class SpectateVC: ChildVC, PubNubSubscriber {
   @IBOutlet var paceLabel: UILabel!
   @IBOutlet var timeLabel: UILabel!
   @IBOutlet var altitudeLabel: UILabel!
-  private var publisher: String = ""
-  private var previousLongitude: Double?
-  private var runnerIcons = RunnerIcons()
-  private var pin: GMSMarker = GMSMarker()
-  private var counter = 0
-  private var canStopRun = false
+
   private static let runEnded = "Run ended."
   private static let runEndedTitle = "Ended"
   private static let broadcasterTitle = "Select Runner"
@@ -49,9 +44,16 @@ class SpectateVC: ChildVC, PubNubSubscriber {
   private static let centerLongitude = -98.5833
   private static let initialZoom: Float = 2.0
 
+  private var publisher: String = ""
+  private var previousLongitude: Double?
+  private var runnerIcons = RunnerIcons()
+  private var pin: GMSMarker = GMSMarker()
+  private var counter = 0
+  private var canStopRun = false
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
+    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
     messageButton.isHidden = true
     map.camera = GMSCameraPosition.camera(withLatitude: SpectateVC.centerLatitude, longitude: SpectateVC.centerLongitude, zoom: SpectateVC.initialZoom)
   }
@@ -83,8 +85,8 @@ class SpectateVC: ChildVC, PubNubSubscriber {
   private func getBroadcasterAndSubscribe() {
     let alertController = UIAlertController(title: SpectateVC.broadcasterTitle, message: SpectateVC.broadcasterPrompt, preferredStyle: UIAlertControllerStyle.alert)
     let subscribeAction = UIAlertAction(title: SpectateVC.subscribeAlertTitle, style: UIAlertActionStyle.default, handler: { action in
-      let textFields = alertController.textFields!
-      self.publisher = textFields[0].text!.trimmingCharacters(in: CharacterSet.whitespaces)
+      let textFields = alertController.textFields ?? []
+      self.publisher = (textFields[0].text ?? "").trimmingCharacters(in: CharacterSet.whitespaces)
       if self.publisher != "" {
         self.viewControllerTitle.text = SpectateVC.spectating
         self.startStopButton.setTitle(SpectateVC.stop, for: UIControlState())
@@ -113,26 +115,29 @@ class SpectateVC: ChildVC, PubNubSubscriber {
     if let previousLongitude = previousLongitude {
       if previousLongitude > longitude {
         runnerIcons.direction = .west
-      }
-      else if previousLongitude < longitude {
+      } else if previousLongitude < longitude {
         runnerIcons.direction = .east
       }
     }
     pin.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-    pin.icon = runnerIcons.nextIcon()
+    pin.icon = runnerIcons.nextIcon
     pin.map = map
     previousLongitude = longitude
-    timeLabel.text = "Time: \(Converter.stringifySecondCount(Int(progressArray[4])!, useLongFormat: false))"
-    altitudeLabel.text = "Alt.: " + Converter.stringifyAltitude(Double(progressArray[2])!)
-    distanceLabel.text = "Dist.: \(Converter.stringifyDistance(Double(progressArray[3])!))"
-    paceLabel.text = "Pace: " + Converter.stringifyPace(Double(progressArray[3])!, seconds: Int(progressArray[4])!)
-    canStopRun = NSString(string: progressArray[5]).boolValue
+    let altitudeIndex = 2
+    let distanceIndex = 3
+    let timeIndex = 4
+    let canStopRunIndex = 5
+    timeLabel.text = "Time: \(Converter.stringifySecondCount(Int(progressArray[timeIndex]) ?? 0, useLongFormat: false))"
+    altitudeLabel.text = "Alt.: " + Converter.stringifyAltitude(Double(progressArray[altitudeIndex]) ?? 0.0)
+    distanceLabel.text = "Dist.: \(Converter.stringifyDistance(Double(progressArray[distanceIndex]) ?? 0.0))"
+    paceLabel.text = "Pace: " + Converter.stringifyPace(Double(progressArray[distanceIndex]) ?? 0.0, seconds: Int(progressArray[timeIndex]) ?? 0)
+    canStopRun = NSString(string: progressArray[canStopRunIndex]).boolValue
   }
   
   func runStopped() {
     UIAlertController.showMessage(SpectateVC.runEnded, title: SpectateVC.runEndedTitle)
     runnerIcons.direction = .stationary
-    pin.icon = runnerIcons.nextIcon()
+    pin.icon = runnerIcons.nextIcon
     unsubscribe()
     clearLabels()
   }
@@ -147,13 +152,11 @@ class SpectateVC: ChildVC, PubNubSubscriber {
   @IBAction func startStop() {
     if publisher == "" {
       getBroadcasterAndSubscribe()
-    }
-    else {
+    } else {
       let prompt: String
       if canStopRun {
         prompt = SpectateVC.stopBothPrompt
-      }
-      else {
+      } else {
         prompt = SpectateVC.stopSpectatingPrompt
       }
       let alertController = UIAlertController(title: SpectateVC.stop, message: prompt, preferredStyle: UIAlertControllerStyle.alert)

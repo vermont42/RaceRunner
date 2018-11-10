@@ -176,7 +176,7 @@ open class LocationManager {
     }
   }
 
-  open let locationManagerType: LocationManagerType
+  public let locationManagerType: LocationManagerType
   
   public init() {
     cLLocationManager = CLLocationManager()

@@ -9,6 +9,11 @@
 import Foundation
 
 class Converter {
+  static let metersInMile: Double = 1609.344
+  static let metersInKilometer: Double = 1000.0
+  static let kilometersPerMile: Float = 1.609344
+  static let poundsPerKilogram: Double = 2.2
+  
   private static let feetInMeter: Double = 3.281
   private static let fahrenheitMultiplier: Double = 9.0 / 5.0
   private static let celsiusFraction: Double = 5.0 / 9.0
@@ -25,6 +30,7 @@ class Converter {
   private static let celsiusAbbr: String = "C"
   private static let mileAbbr: String = "mi"
   private static let kilometerAbbr: String = "km"
+  private static let kilometersAbbr: String = "kms"
   private static let feetAbbr: String = "ft"
   private static let metersAbbr: String = "m"
   private static let feet: String = "feet"
@@ -33,11 +39,8 @@ class Converter {
   private static let kilometer: String = "kilometer"
   private static let miles: String = "miles"
   private static let kilometers: String = "kilometers"
-  static let metersInMile: Double = 1609.344
-  static let metersInKilometer: Double = 1000.0
-  static let kilometersPerMile: Float = 1.609344
-  static let poundsPerKilogram: Double = 2.2
-  
+  private static let min: String = "min"
+
   class func netCaloriesAsString(_ distance: Double, weight: Double) -> String {
     return String(format: "%.0f Cal", weight * distance * netCaloriesPerKiloPerMeter)
   }
@@ -62,8 +65,7 @@ class Converter {
     }
     else if altitudeDelta < 0.0 - altitudeFudge {
       progressString += ", lost \(stringifyAltitude(-altitudeDelta, unabbreviated: true)))"
-    }
-    else {
+    } else {
       progressString += ", no altitude change"
     }
     Utterer.utter(progressString)
@@ -78,15 +80,13 @@ class Converter {
     case .imperial:
       if value <= 1.0 {
         return mile
-      }
-      else {
+      } else {
         return miles
       }
     case .metric:
       if value <= 1.0 {
         return kilometer
-      }
-      else {
+      } else {
         return kilometers
       }
     }
@@ -115,8 +115,7 @@ class Converter {
     var units = ""
     if SettingsManager.getUnitType() == .metric {
       units = Converter.kilometerAbbr
-    }
-    else {
+    } else {
       units = Converter.mileAbbr
       number /= kilometersPerMile
     }
@@ -129,23 +128,22 @@ class Converter {
   
   class func floatifyMileage(_ mileage: String) -> Float {
     if SettingsManager.getUnitType() == .metric {
-      return Float(mileage)!
-    }
-    else {
-      return Float(mileage)! * Converter.kilometersPerMile
+      return Float(mileage) ?? 0.0
+    } else {
+      return (Float(mileage) ?? 0.0) * Converter.kilometersPerMile
     }
   }
   
   class func getCurrentLongUnitName() -> String {
-    return SettingsManager.getUnitType() == .imperial ? "mile" : "kilometer"
+    return SettingsManager.getUnitType() == .imperial ? mile : kilometer
   }
 
   class func getCurrentAbbreviatedLongUnitName() -> String {
-    return SettingsManager.getUnitType() == .imperial ? "mile" : "km"
+    return SettingsManager.getUnitType() == .imperial ? mile : kilometerAbbr
   }
   
   class func getCurrentPluralLongUnitName() -> String {
-    return SettingsManager.getUnitType() == .imperial ? "miles" : "kms"
+    return SettingsManager.getUnitType() == .imperial ? miles : kilometersAbbr
   }
   
   class func convertFahrenheitToCelsius(_ temperature: Double) -> Double {
@@ -159,8 +157,7 @@ class Converter {
     if SettingsManager.getUnitType() == .metric {
       unitName = kilometerAbbr
       unitDivider = metersInKilometer
-    }
-    else {
+    } else {
       unitName = mileAbbr
       unitDivider = metersInMile
     }
@@ -186,8 +183,7 @@ class Converter {
         } else {
           return NSString(format: "%d seconds", remainingSeconds) as String
         }
-      }
-      else {
+      } else {
         if hours > 0 {
           return NSString(format: "%d hr %d min %d sec", hours, minutes, remainingSeconds) as String
         } else if minutes > 0 {
@@ -196,8 +192,7 @@ class Converter {
           return NSString(format: "%d sec", remainingSeconds) as String
         }
       }
-    }
-    else {
+    } else {
       if hours > 0 {
         return NSString(format: "%d:%02d:%02d", hours, minutes, remainingSeconds) as String
       } else if minutes > 0 {
@@ -220,19 +215,16 @@ class Converter {
       if SettingsManager.getUnitType() == .metric {
         unitName = getCurrentLongUnitName()
         unitMultiplier = metersInKilometer
-      }
-      else {
+      } else {
         unitName = getCurrentLongUnitName()
         unitMultiplier = metersInMile
       }
-    }
-    else {
+    } else {
       if SettingsManager.getUnitType() == .metric {
-        unitName = "min/" + kilometerAbbr
+        unitName = min + "/" + kilometerAbbr
         unitMultiplier = metersInKilometer
-      }
-      else {
-        unitName = "min/" + mileAbbr
+      } else {
+        unitName = min + "/" + mileAbbr
         unitMultiplier = metersInMile
       }
     }
@@ -243,8 +235,7 @@ class Converter {
     }
     if forSpeaking {
       return NSString(format: "%d minutes %d seconds per %@", paceMin, paceSec, unitName) as String
-    }
-    else {
+    } else {
       return NSString(format: "%d:%02d %@", paceMin, paceSec, unitName) as String
     }
   }
@@ -256,17 +247,14 @@ class Converter {
       unitMultiplier = 1.0
       if !unabbreviated {
         unitName = metersAbbr
-      }
-      else {
+      } else {
         unitName = Converter.meters
       }
-    }
-    else {
+    } else {
       unitMultiplier = feetInMeter
       if !unabbreviated {
         unitName = feetAbbr
-      }
-      else {
+      } else {
         unitName = feet
       }
     }
@@ -284,8 +272,7 @@ class Converter {
       unitName = celsiusAbbr
       multiplier = celsiusMultiplier
       amountToAdd = celsiusAmountToAdd
-    }
-    else {
+    } else {
       unitName = fahrenheitAbbr
       multiplier = fahrenheitMultiplier
       amountToAdd = fahrenheitAmountToAdd

@@ -16,8 +16,9 @@ class ShoesCell: MGSwipeTableCell {
   @IBOutlet var maxKilometers: UILabel!
   @IBOutlet var thumbnail: UIImageView!
   @IBOutlet var isCurrentImage: UIImageView!
-  private weak var shoesDelegate: ShoesDelegate!
-  private var shoes: Shoes!
+  
+  private weak var shoesDelegate: ShoesDelegate?
+  private var shoes: Shoes?
   private static let curLabel = "Cur: "
   private static let maxLabel = "Max: "
   
@@ -34,18 +35,20 @@ class ShoesCell: MGSwipeTableCell {
   }
   
   @objc func toggleIsCurrent() {
+    guard let shoes = shoes else {
+      fatalError("shoes was nil in ShoesCell.toggleIsCurrent().")
+    }
     shoes.isCurrent = NSNumber(value: !(shoes.isCurrent.boolValue) as Bool)
     updateIsCurrentImage(shoes.isCurrent.boolValue)
     if shoes.isCurrent.boolValue {
-      shoesDelegate.makeNewIsCurrent(shoes)
+      shoesDelegate?.makeNewIsCurrent(shoes)
     }
   }
   
   private func updateIsCurrentImage(_ isCurrent: Bool) {
     if isCurrent {
       isCurrentImage.image = Shoes.checked
-    }
-    else {
+    } else {
       isCurrentImage.image = Shoes.unchecked
     }
   }

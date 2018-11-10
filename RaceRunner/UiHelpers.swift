@@ -10,49 +10,31 @@ import Foundation
 import UIKit
 
 class UiHelpers {
-  private static let headerDelimiter = "^"
-  private static let boldDelimiter = "​" // http://www.fileformat.info/info/unicode/char/200B/browsertest.htm
-  
-  class func maskedImageNamed(_ name:String, color:UIColor) -> UIImage {
-    let image = UIImage(named: name)
-    let rect:CGRect = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: image!.size.width, height: image!.size.height))
-    UIGraphicsBeginImageContextWithOptions(rect.size, false, image!.scale)
-    let c:CGContext = UIGraphicsGetCurrentContext()!
-    image?.draw(in: rect)
-    c.setFillColor(color.cgColor)
-    c.setBlendMode(CGBlendMode.sourceAtop)
-    c.fill(rect)
-    let result:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-    UIGraphicsEndImageContext()
-    return result
-  }
-  
-  class func letterPressedText(_ plainText: String) -> NSAttributedString {
-    return NSAttributedString(string: plainText, attributes: [NSAttributedStringKey.textEffect: NSAttributedString.TextEffectStyle.letterpressStyle])
-  }
-
   class func colorForValue(_ value: Double, sortedArray: [Double], index: Int) -> UIColor {
-    if (sortedArray.count < 2) {
+    let minimumCountOfValuesWorthComputingValueFor = 2
+    if (sortedArray.count < minimumCountOfValuesWorthComputingValueFor) {
       return UiConstants.intermediate2ColorDarkened
     }
-    let rRed = (UiConstants.intermediate1Color.cgColor.components?[0])! * UiConstants.darkening
-    let rGreen = (UiConstants.intermediate1Color.cgColor.components?[1])! * UiConstants.darkening
-    let rBlue = (UiConstants.intermediate1Color.cgColor.components?[2])! * UiConstants.darkening
-    let yRed = (UiConstants.intermediate2Color.cgColor.components?[0])! * UiConstants.darkening
-    let yGreen = (UiConstants.intermediate2Color.cgColor.components?[1])! * UiConstants.darkening
-    let yBlue = (UiConstants.intermediate2Color.cgColor.components?[2])! * UiConstants.darkening
-    let gRed = (UiConstants.intermediate3Color.cgColor.components?[0])! * UiConstants.darkening
-    let gGreen = (UiConstants.intermediate3Color.cgColor.components?[1])! * UiConstants.darkening
-    let gBlue = (UiConstants.intermediate3Color.cgColor.components?[2])! * UiConstants.darkening
+
+    let rRed = computeColorComponent(baseColor: UiConstants.intermediate1Color, index: 0)
+    let rGreen = computeColorComponent(baseColor: UiConstants.intermediate1Color, index: 1)
+    let rBlue = computeColorComponent(baseColor: UiConstants.intermediate1Color, index: 2)
+    let yRed = computeColorComponent(baseColor: UiConstants.intermediate2Color, index: 0)
+    let yGreen = computeColorComponent(baseColor: UiConstants.intermediate2Color, index: 1)
+    let yBlue = computeColorComponent(baseColor: UiConstants.intermediate2Color, index: 2)
+    let gRed = computeColorComponent(baseColor: UiConstants.intermediate3Color, index: 0)
+    let gGreen = computeColorComponent(baseColor: UiConstants.intermediate3Color, index: 1)
+    let gBlue = computeColorComponent(baseColor: UiConstants.intermediate3Color, index: 2)
+
     let medianValue = sortedArray[sortedArray.count / 2]
+
     if value < medianValue {
       let ratio = CGFloat(index) / (CGFloat(sortedArray.count) / 2.0)
       let red = rRed + ratio * (yRed - rRed)
       let green = rGreen + ratio * (yGreen - rGreen)
       let blue = rBlue + ratio * (yBlue - rBlue)
       return UIColor(red: red, green: green, blue: blue, alpha: 1.0)
-    }
-    else {
+    } else {
       let ratio = (CGFloat(index) - CGFloat(sortedArray.count / 2)) / CGFloat(sortedArray.count / 2)
       let red = yRed + ratio * (gRed - yRed)
       let green = yGreen + ratio * (gGreen - yGreen)
@@ -60,10 +42,19 @@ class UiHelpers {
       return UIColor(red: red, green: green, blue: blue, alpha: 1.0)
     }
   }
-  
+
+  private class func computeColorComponent(baseColor: UIColor, index: Int) -> CGFloat {
+    return ((baseColor.cgColor.components?[index]) ?? 0.0) * UiConstants.darkening
+  }
+
+  class func letterPressedText(_ plainText: String) -> NSAttributedString {
+    return NSAttributedString(string: plainText, attributes: [NSAttributedStringKey.textEffect: NSAttributedString.TextEffectStyle.letterpressStyle])
+  }
+
   class func styleText(_ text: String) -> NSAttributedString {
     let matText = NSMutableAttributedString(string: text)
-    matText.addAttributes([NSAttributedStringKey.foregroundColor: UiConstants.lightColor, NSAttributedStringKey.font: UIFont(name: UiConstants.globalFont, size: UiConstants.bodyFontSize)!], range: NSMakeRange(0, matText.length))
+    let bodyFont = UIFont(name: UiConstants.globalFont, size: UiConstants.bodyFontSize) ?? UIFont.systemFont(ofSize: UiConstants.bodyFontSize)
+    matText.addAttributes([NSAttributedStringKey.foregroundColor: UiConstants.lightColor, NSAttributedStringKey.font: bodyFont], range: NSMakeRange(0, matText.length))
     let centeredStyle = NSMutableParagraphStyle()
     centeredStyle.alignment = .center
     let headerAttributes = [NSAttributedStringKey.foregroundColor: UiConstants.intermediate1Color, NSAttributedStringKey.textEffect: NSAttributedString.TextEffectStyle.letterpressStyle] as [NSAttributedStringKey: Any]
@@ -72,8 +63,11 @@ class UiHelpers {
     var insideHeading = false
     var insideBold = false
     var startIndex = 0
+    let headerDelimiter = "^"
+    let boldDelimiter = "​" // http://www.fileformat.info/info/unicode/char/200B/browsertest.htm
+
     while i < textAsNsString.length {
-      if textAsNsString.substring(with: NSMakeRange(i, 1)) == UiHelpers.headerDelimiter {
+      if textAsNsString.substring(with: NSMakeRange(i, 1)) == headerDelimiter {
         if insideHeading {
           let headerWithDelimitersRange = NSMakeRange(startIndex, (i - startIndex) + 1)
           matText.addAttribute(NSAttributedStringKey.paragraphStyle, value: centeredStyle, range: headerWithDelimitersRange)
@@ -84,19 +78,17 @@ class UiHelpers {
           let trailingRange = NSMakeRange(i, 1)
           matText.addAttribute(NSAttributedStringKey.foregroundColor, value: UiConstants.darkColor, range: trailingRange)
           insideHeading = false
-        }
-        else {
+        } else {
           insideHeading = true
           startIndex = i
         }
-      }
-      else if textAsNsString.substring(with: NSMakeRange(i, 1)) == UiHelpers.boldDelimiter {
+      } else if textAsNsString.substring(with: NSMakeRange(i, 1)) == boldDelimiter {
         if insideBold {
           let boldRange = NSMakeRange(startIndex, i - startIndex)
-          matText.addAttribute(NSAttributedStringKey.font, value: UIFont(name: UiConstants.globalFontBold, size: UiConstants.bodyFontSize)!, range: boldRange)
+          let boldFont = UIFont(name: UiConstants.globalFontBold, size: UiConstants.bodyFontSize) ?? UIFont.systemFont(ofSize: UiConstants.bodyFontSize)
+          matText.addAttribute(NSAttributedStringKey.font, value: boldFont, range: boldRange)
           insideBold = false
-        }
-        else {
+        } else {
           insideBold = true
           startIndex = i + 1
         }
