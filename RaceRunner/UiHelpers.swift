@@ -48,16 +48,16 @@ class UiHelpers {
   }
 
   class func letterPressedText(_ plainText: String) -> NSAttributedString {
-    return NSAttributedString(string: plainText, attributes: [NSAttributedStringKey.textEffect: NSAttributedString.TextEffectStyle.letterpressStyle])
+    return NSAttributedString(string: plainText, attributes: [NSAttributedString.Key.textEffect: NSAttributedString.TextEffectStyle.letterpressStyle])
   }
 
   class func styleText(_ text: String) -> NSAttributedString {
     let matText = NSMutableAttributedString(string: text)
     let bodyFont = UIFont(name: UiConstants.globalFont, size: UiConstants.bodyFontSize) ?? UIFont.systemFont(ofSize: UiConstants.bodyFontSize)
-    matText.addAttributes([NSAttributedStringKey.foregroundColor: UiConstants.lightColor, NSAttributedStringKey.font: bodyFont], range: NSMakeRange(0, matText.length))
+    matText.addAttributes([NSAttributedString.Key.foregroundColor: UiConstants.lightColor, NSAttributedString.Key.font: bodyFont], range: NSMakeRange(0, matText.length))
     let centeredStyle = NSMutableParagraphStyle()
     centeredStyle.alignment = .center
-    let headerAttributes = [NSAttributedStringKey.foregroundColor: UiConstants.intermediate1Color, NSAttributedStringKey.textEffect: NSAttributedString.TextEffectStyle.letterpressStyle] as [NSAttributedStringKey: Any]
+    let headerAttributes = [NSAttributedString.Key.foregroundColor: UiConstants.intermediate1Color, NSAttributedString.Key.textEffect: NSAttributedString.TextEffectStyle.letterpressStyle] as [NSAttributedString.Key: Any]
     let textAsNsString = text as NSString
     var i = 0
     var insideHeading = false
@@ -70,13 +70,13 @@ class UiHelpers {
       if textAsNsString.substring(with: NSMakeRange(i, 1)) == headerDelimiter {
         if insideHeading {
           let headerWithDelimitersRange = NSMakeRange(startIndex, (i - startIndex) + 1)
-          matText.addAttribute(NSAttributedStringKey.paragraphStyle, value: centeredStyle, range: headerWithDelimitersRange)
+          matText.addAttribute(NSAttributedString.Key.paragraphStyle, value: centeredStyle, range: headerWithDelimitersRange)
           let headerRange = NSMakeRange(startIndex + 1, (i - startIndex) - 1)
           matText.addAttributes(headerAttributes, range: headerRange)
           let leadingRange = NSMakeRange(startIndex, 1)
-          matText.addAttribute(NSAttributedStringKey.foregroundColor, value: UiConstants.darkColor, range: leadingRange)
+          matText.addAttribute(NSAttributedString.Key.foregroundColor, value: UiConstants.darkColor, range: leadingRange)
           let trailingRange = NSMakeRange(i, 1)
-          matText.addAttribute(NSAttributedStringKey.foregroundColor, value: UiConstants.darkColor, range: trailingRange)
+          matText.addAttribute(NSAttributedString.Key.foregroundColor, value: UiConstants.darkColor, range: trailingRange)
           insideHeading = false
         } else {
           insideHeading = true
@@ -86,7 +86,7 @@ class UiHelpers {
         if insideBold {
           let boldRange = NSMakeRange(startIndex, i - startIndex)
           let boldFont = UIFont(name: UiConstants.globalFontBold, size: UiConstants.bodyFontSize) ?? UIFont.systemFont(ofSize: UiConstants.bodyFontSize)
-          matText.addAttribute(NSAttributedStringKey.font, value: boldFont, range: boldRange)
+          matText.addAttribute(NSAttributedString.Key.font, value: boldFont, range: boldRange)
           insideBold = false
         } else {
           insideBold = true

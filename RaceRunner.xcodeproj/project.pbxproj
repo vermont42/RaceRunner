@@ -63,6 +63,7 @@
 		E17016531D09DA3A00CF5825 /* LowMemoryHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17016521D09DA3A00CF5825 /* LowMemoryHandler.swift */; };
 		E17016551D0DB92400CF5825 /* RunInProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17016541D0DB92400CF5825 /* RunInProgress.swift */; };
 		E17B11571C67C97E0027945F /* RaceRunner.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E17B11561C67C97E0027945F /* RaceRunner.gpx */; };
+		E17B3A5B2197AC2100D08AEC /* AVAudioSessionPatch.m in Sources */ = {isa = PBXBuildFile; fileRef = E17B3A5A2197AC2100D08AEC /* AVAudioSessionPatch.m */; };
 		E1804DB61ABBA0D300625188 /* RunDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */; };
 		E1844B4F1C8CDCE800A97EAD /* Utterer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1844B4E1C8CDCE800A97EAD /* Utterer.swift */; };
 		E185F8531AE1CB19008BF394 /* RunnerIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185F8521AE1CB19008BF394 /* RunnerIcons.swift */; };
@@ -202,6 +203,9 @@
 		E17016521D09DA3A00CF5825 /* LowMemoryHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LowMemoryHandler.swift; sourceTree = "<group>"; };
 		E17016541D0DB92400CF5825 /* RunInProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunInProgress.swift; sourceTree = "<group>"; };
 		E17B11561C67C97E0027945F /* RaceRunner.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = RaceRunner.gpx; sourceTree = "<group>"; };
+		E17B3A582197ABBB00D08AEC /* AVAudioSessionPatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVAudioSessionPatch.h; sourceTree = "<group>"; };
+		E17B3A592197AC2000D08AEC /* RaceRunner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RaceRunner-Bridging-Header.h"; sourceTree = "<group>"; };
+		E17B3A5A2197AC2100D08AEC /* AVAudioSessionPatch.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVAudioSessionPatch.m; sourceTree = "<group>"; };
 		E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunDetailsVC.swift; sourceTree = "<group>"; };
 		E1844B4E1C8CDCE800A97EAD /* Utterer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utterer.swift; sourceTree = "<group>"; };
 		E185F8521AE1CB19008BF394 /* RunnerIcons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunnerIcons.swift; sourceTree = "<group>"; };
@@ -391,6 +395,8 @@
 				E11E22C01C08C76E00488399 /* Accent.swift */,
 				E1E8B9231AAB73F000D04E38 /* AppDelegate.swift */,
 				E13C763E1C1A01520046021A /* Array+insertionIndexOf.swift */,
+				E17B3A582197ABBB00D08AEC /* AVAudioSessionPatch.h */,
+				E17B3A5A2197AC2100D08AEC /* AVAudioSessionPatch.m */,
 				E14175A81C877AC1001F402C /* BroadcastDelegate.swift */,
 				E1E9E3431C8288CC00F70D79 /* BroadcastVC.swift */,
 				E1E8B9451AAB742E00D04E38 /* CDManager.swift */,
@@ -456,6 +462,7 @@
 				E1844B4E1C8CDCE800A97EAD /* Utterer.swift */,
 				E1342BBA1D04F3F200ABFCA7 /* Game */,
 				E1E8B9211AAB73F000D04E38 /* Supporting Files */,
+				E17B3A592197AC2000D08AEC /* RaceRunner-Bridging-Header.h */,
 			);
 			path = RaceRunner;
 			sourceTree = "<group>";
@@ -530,12 +537,13 @@
 					E10A245820B253250073147C = {
 						CreatedOnToolsVersion = 9.3;
 						DevelopmentTeam = V3L2PL4QC9;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
 					E1E8B91D1AAB73F000D04E38 = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = V3L2PL4QC9;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1010;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -756,6 +764,7 @@
 				E1E7F7D61C03F8E500F108B6 /* Double+roundToPlaces.swift in Sources */,
 				E1B45F071AE96EFC00AF73AB /* LocationManager.swift in Sources */,
 				E11E22C11C08C76E00488399 /* Accent.swift in Sources */,
+				E17B3A5B2197AC2100D08AEC /* AVAudioSessionPatch.m in Sources */,
 				E1CBD2D71AC4D616006F0B85 /* SettingsManager.swift in Sources */,
 				E1E8B94E1AAB742E00D04E38 /* MenuVC.swift in Sources */,
 				E18B6C811C0D1AEC005865BA /* GpxActivityItemProvider.swift in Sources */,
@@ -805,13 +814,13 @@
 				DEVELOPMENT_TEAM = V3L2PL4QC9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Siri/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = biz.joshadams.RaceRunner.Siri;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -831,12 +840,12 @@
 				DEVELOPMENT_TEAM = V3L2PL4QC9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Siri/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = biz.joshadams.RaceRunner.Siri;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -889,7 +898,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -938,7 +947,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -958,15 +967,15 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = RaceRunner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = "biz.joshadams.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "RaceRunner/RaceRunner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -983,14 +992,14 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = RaceRunner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = "biz.joshadams.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_OBJC_BRIDGING_HEADER = "RaceRunner/RaceRunner-Bridging-Header.h";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

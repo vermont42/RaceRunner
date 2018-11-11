@@ -81,7 +81,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
     let cellIdentifier = "Cell"
     var cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
     if cell == nil {
-      cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: cellIdentifier)
+      cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: cellIdentifier)
       guard let initializedCell = cell else {
         fatalError("initializedCell on MenuVC screen was nil.")
       }

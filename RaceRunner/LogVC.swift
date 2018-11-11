@@ -39,7 +39,7 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
     tableView.delegate = self
     fieldPicker.dataSource = self
     fieldPicker.delegate = self
-    tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+    tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
     pickerToolbar.isHidden = true
     fieldPicker.isHidden = true
     fieldPicker.selectRow(SettingsManager.getLogSortField().pickerPosition(), inComponent: 0, animated: false)
@@ -54,7 +54,7 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
     else if logType == LogVC.LogType.simulate {
       viewControllerTitle.text = "Simulate"
     }
-    showPickerButton.setTitle(SettingsManager.getLogSortField().rawValue, for: UIControlState())
+    showPickerButton.setTitle(SettingsManager.getLogSortField().rawValue, for: UIControl.State())
     viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
     fetchRuns()
     runs.sort { LogSortField.compare($0, run2: $1) }
@@ -100,7 +100,7 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
     let newLogSortField = fieldPicker.selectedRow(inComponent: 0)
     if newLogSortField != oldLogSortField {
       SettingsManager.setLogSortField(LogSortField.sortFieldForPosition(newLogSortField))
-      showPickerButton.setTitle(SettingsManager.getLogSortField().rawValue, for: UIControlState())
+      showPickerButton.setTitle(SettingsManager.getLogSortField().rawValue, for: UIControl.State())
       runs.sort { LogSortField.compare($0, run2: $1) }
       tableView.reloadData()
     }
@@ -152,12 +152,12 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
     }
   }
 
-  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-    if editingStyle == UITableViewCellEditingStyle.delete {
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    if editingStyle == UITableViewCell.EditingStyle.delete {
       CDManager.sharedCDManager.context.delete(runs[(indexPath as NSIndexPath).row])
       CDManager.saveContext()
       runs.remove(at: (indexPath as NSIndexPath).row)
-      tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+      tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
     }
   }
   
@@ -191,7 +191,7 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
   }
   
   func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-    return NSAttributedString(string: LogSortField.all()[row], attributes: [NSAttributedStringKey.foregroundColor: UiConstants.intermediate3Color])
+    return NSAttributedString(string: LogSortField.all()[row], attributes: [NSAttributedString.Key.foregroundColor: UiConstants.intermediate3Color])
   }
 
   private func fetchRuns() {

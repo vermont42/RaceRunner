@@ -151,7 +151,7 @@ class SettingsVC: ChildVC, BroadcastDelegate {
   @IBAction func neverAutoStop() {
     if autoStopToggle.isOn {
       autoStopToggle.isOn = false
-      autoStopButton.setTitle("", for: UIControlState())
+      autoStopButton.setTitle("", for: UIControl.State())
       SettingsManager.setStopAfter(SettingsManager.never)
     }
   }
@@ -233,15 +233,15 @@ class SettingsVC: ChildVC, BroadcastDelegate {
   }
 
   func updateBroadcastButton() {
-    broadcastNextRunButton.setTitle(SettingsManager.getBroadcastNextRun() ? SettingsVC.stopBroadcastingTitle : SettingsVC.broadcastNextRunTitle, for: UIControlState())
+    broadcastNextRunButton.setTitle(SettingsManager.getBroadcastNextRun() ? SettingsVC.stopBroadcastingTitle : SettingsVC.broadcastNextRunTitle, for: UIControl.State())
   }
   
   @objc func unlockIaps() {
     let purchasedHorse = Products.store.isProductPurchased(Products.runningHorse)
     let purchasedBroadcast = Products.store.isProductPurchased(Products.broadcastRuns)
     if !purchasedBroadcast || !purchasedHorse {
-      let alertController = UIAlertController(title: SettingsVC.promoCodeTitle, message: SettingsVC.promoCodePrompt, preferredStyle: UIAlertControllerStyle.alert)
-      let unlockAction = UIAlertAction(title: SettingsVC.promoCodeUnlock, style: UIAlertActionStyle.default, handler: { action in
+      let alertController = UIAlertController(title: SettingsVC.promoCodeTitle, message: SettingsVC.promoCodePrompt, preferredStyle: UIAlertController.Style.alert)
+      let unlockAction = UIAlertAction(title: SettingsVC.promoCodeUnlock, style: UIAlertAction.Style.default, handler: { action in
         let textFields = alertController.textFields ?? []
         let predicate = NSPredicate(format: "promoCode = %@", textFields[0].text?.lowercased() ?? "🙀")
         let query = CKQuery(recordType: "PromoCodes", predicate: predicate)
@@ -267,7 +267,7 @@ class SettingsVC: ChildVC, BroadcastDelegate {
         }
       })
       alertController.addAction(unlockAction)
-      let cancelAction = UIAlertAction(title: SettingsVC.cancel, style: UIAlertActionStyle.cancel, handler: { action in })
+      let cancelAction = UIAlertAction(title: SettingsVC.cancel, style: UIAlertAction.Style.cancel, handler: { action in })
       alertController.addAction(cancelAction)
       alertController.addTextField { textField in
         textField.placeholder = SettingsVC.promoCode
@@ -379,7 +379,7 @@ class SettingsVC: ChildVC, BroadcastDelegate {
         buttonTitle = String(format: "%@ %.1f %@", prefix, interval, Converter.getCurrentPluralLongUnitName())
       }
     }
-    button.setTitle(buttonTitle, for: UIControlState())
+    button.setTitle(buttonTitle, for: UIControl.State())
   }
   
   func updateSplitsWidgets() {
@@ -401,7 +401,7 @@ class SettingsVC: ChildVC, BroadcastDelegate {
   @IBAction func dontReportSplits() {
     if splitsToggle.isOn {
       splitsToggle.isOn = false
-      splitsButton.setTitle("", for: UIControlState())
+      splitsButton.setTitle("", for: UIControl.State())
       SettingsManager.setReportEvery(SettingsManager.never)
     }
   }
@@ -419,9 +419,9 @@ class SettingsVC: ChildVC, BroadcastDelegate {
     if invalidValue != nil && invalidValue == true {
       fullPrompt = "That is an invalid value. " + fullPrompt
     }
-    let alertController = UIAlertController(title: "👟", message: fullPrompt + SettingsVC.distancePrompt, preferredStyle: UIAlertControllerStyle.alert)
+    let alertController = UIAlertController(title: "👟", message: fullPrompt + SettingsVC.distancePrompt, preferredStyle: UIAlertController.Style.alert)
     alertController.view.tintColor = UiConstants.darkColor
-    let setAction = UIAlertAction(title: "Set", style: UIAlertActionStyle.default, handler: { action in
+    let setAction = UIAlertAction(title: "Set", style: UIAlertAction.Style.default, handler: { action in
       let textFields = alertController.textFields ?? []
       if let text = textFields[0].text, let numericValue = Double(text) , numericValue >= SettingsManager.minStopAfter && numericValue <= SettingsManager.maxStopAfter {
           closure(numericValue)

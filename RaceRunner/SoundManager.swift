@@ -18,9 +18,10 @@ class SoundManager {
   private init () {
     sounds = Dictionary()
     do {
-      try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback) // was ambient
-    } catch let error as NSError {
-      print("\(error.localizedDescription)")
+      try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+      try AVAudioSession.sharedInstance().setActive(true)
+    } catch {
+      print(error.localizedDescription)
     }
   }
   
@@ -33,18 +34,33 @@ class SoundManager {
           print("\(error.localizedDescription)")
         }
       }
-
     }
     soundManager.sounds[sound.rawValue]?.play()
   }
   
   static func enableBackgroundAudio() {
     let session = AVAudioSession.sharedInstance()
+
+    // https://forums.swift.org/t/using-methods-marked-unavailable-in-swift-4-2/14949/7
+
+//    do {
+//      try session.setCategory(convertFromAVAudioSessionCategory(AVAudioSession.Category.playback), with: AVAudioSession.CategoryOptions.mixWithOthers)
+//    }
+//    catch let error as NSError {
+//      print("\(error.localizedDescription)")
+//    }
+//  }
+
     do {
-      try session.setCategory(AVAudioSessionCategoryPlayback, with: AVAudioSessionCategoryOptions.mixWithOthers)
+      try AVAudioSessionPatch.setSession(session, category: .playback, with: .mixWithOthers)
     }
     catch let error as NSError {
       print("\(error.localizedDescription)")
     }
   }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
+	return input.rawValue
 }

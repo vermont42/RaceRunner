@@ -44,7 +44,7 @@ class RunVC: ChildVC {
     map.mapType = .terrain
     map.isHidden = true
     paceOrAltitude.isHidden = true
-    view.sendSubview(toBack: map)
+    view.sendSubviewToBack(map)
     view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(RunVC.announceCurrentPace)))
   }
   
@@ -107,18 +107,18 @@ class RunVC: ChildVC {
   @objc private func updateButtonLabels() {
     switch RunModel.runModel.status {
     case .preRun:
-      startStopButton.setTitle(RunVC.startTitle, for: UIControlState())
+      startStopButton.setTitle(RunVC.startTitle, for: UIControl.State())
       startStopButton.backgroundColor = UiConstants.intermediate3Color
       pauseResume.isHidden = true
     case .paused:
-      startStopButton.setTitle(RunVC.stopTitle, for: UIControlState())
+      startStopButton.setTitle(RunVC.stopTitle, for: UIControl.State())
       startStopButton.backgroundColor = UiConstants.intermediate1Color
-      pauseResume.setTitle(RunVC.resumeTitle, for: UIControlState())
+      pauseResume.setTitle(RunVC.resumeTitle, for: UIControl.State())
       pauseResume.isHidden = false
     case .inProgress:
-      startStopButton.setTitle(RunVC.stopTitle, for: UIControlState())
+      startStopButton.setTitle(RunVC.stopTitle, for: UIControl.State())
       startStopButton.backgroundColor = UiConstants.intermediate1Color
-      pauseResume.setTitle(RunVC.pauseTitle, for: UIControlState())
+      pauseResume.setTitle(RunVC.pauseTitle, for: UIControl.State())
       pauseResume.isHidden = false
     }
   }

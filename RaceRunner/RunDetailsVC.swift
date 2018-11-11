@@ -267,8 +267,8 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   }
 
   @IBAction func setCustomName() {
-    let alertController = UIAlertController(title: RunDetailsVC.newRunNameTitle, message: RunDetailsVC.newRunNamePrompt, preferredStyle: UIAlertControllerStyle.alert)
-    let setAction = UIAlertAction(title: RunDetailsVC.setRunNameButtonTitle, style: UIAlertActionStyle.default, handler: { action in
+    let alertController = UIAlertController(title: RunDetailsVC.newRunNameTitle, message: RunDetailsVC.newRunNamePrompt, preferredStyle: UIAlertController.Style.alert)
+    let setAction = UIAlertAction(title: RunDetailsVC.setRunNameButtonTitle, style: UIAlertAction.Style.default, handler: { action in
       if let textFields = alertController.textFields {
         let text = textFields[0].text ?? ""
         self.route.text = "\(RunDetailsVC.name): \(text)"
@@ -280,7 +280,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
       }
     })
     alertController.addAction(setAction)
-    let cancelAction = UIAlertAction(title: RunDetailsVC.cancel, style: UIAlertActionStyle.cancel, handler: { action in })
+    let cancelAction = UIAlertAction(title: RunDetailsVC.cancel, style: UIAlertAction.Style.cancel, handler: { action in })
     alertController.addAction(cancelAction)
     alertController.addTextField { textField in
       textField.placeholder = "\(RunDetailsVC.name)"

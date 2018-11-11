@@ -42,7 +42,7 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
     tableView.allowsSelection = false
     fieldPicker.dataSource = self
     fieldPicker.delegate = self
-    tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+    tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
     pickerToolbar.isHidden = true
     fieldPicker.isHidden = true
     fieldPicker.selectRow(SettingsManager.getShoesSortField().pickerPosition(), inComponent: 0, animated: false)
@@ -53,7 +53,7 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
     if pairs.count == 0 {
       fetchPairs()
     }
-    showPickerButton.setTitle(SettingsManager.getShoesSortField().asString(), for: UIControlState())
+    showPickerButton.setTitle(SettingsManager.getShoesSortField().asString(), for: UIControl.State())
     viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
     pairs.sort { ShoesSortField.compare($0, shoes2: $1) }
     tableView.reloadData()
@@ -95,7 +95,7 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
         return true
       })
       deleteButton.titleLabel?.font = UIFont(name: UiConstants.globalFont, size: UiConstants.cellButtonTitleSize)
-      deleteButton.setTitleColor(UiConstants.darkColor, for: UIControlState())
+      deleteButton.setTitleColor(UiConstants.darkColor, for: UIControl.State())
       let editButton = MGSwipeButton(title: ShoesBrowserVC.edit, backgroundColor: UiConstants.intermediate2Color, callback: {
           (sender: MGSwipeTableCell) -> Bool in
         self.shoesToEdit = self.pairs[(indexPath as NSIndexPath).row]
@@ -103,7 +103,7 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
         return true
       })
       editButton.titleLabel?.font = UIFont(name: UiConstants.globalFont, size: UiConstants.cellButtonTitleSize)
-      editButton.setTitleColor(UiConstants.darkColor, for: UIControlState())
+      editButton.setTitleColor(UiConstants.darkColor, for: UIControl.State())
       cell.rightButtons = [deleteButton, editButton]
       cell.rightSwipeSettings.transition = MGSwipeTransition.rotate3D
       cell.displayShoes(pairs[(indexPath as NSIndexPath).row], shoesDelegate: self)
@@ -169,7 +169,7 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
   }
   
   func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-    return NSAttributedString(string: ShoesSortField.sortFieldForPosition(row).asString(), attributes: [NSAttributedStringKey.foregroundColor: UiConstants.intermediate3Color])
+    return NSAttributedString(string: ShoesSortField.sortFieldForPosition(row).asString(), attributes: [NSAttributedString.Key.foregroundColor: UiConstants.intermediate3Color])
   }
   
   func makeNewIsCurrent(_ newIsCurrent: Shoes) {
@@ -206,7 +206,7 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
     let newShoesSortField = fieldPicker.selectedRow(inComponent: 0)
     if newShoesSortField != oldShoesSortField {
       SettingsManager.setShoesSortField(ShoesSortField.sortFieldForPosition(newShoesSortField))
-      showPickerButton.setTitle(SettingsManager.getShoesSortField().asString(), for: UIControlState())
+      showPickerButton.setTitle(SettingsManager.getShoesSortField().asString(), for: UIControl.State())
       pairs.sort { ShoesSortField.compare($0, shoes2: $1) }
       tableView.reloadData()
     }

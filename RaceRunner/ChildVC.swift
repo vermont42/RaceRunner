@@ -23,7 +23,7 @@ class ChildVC: UIViewController {
   
   func setupSwipeGestureRecognizer() {
     let swipeGestureRecognizer: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(ChildVC.showMenu))
-    swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirection.right
+    swipeGestureRecognizer.direction = UISwipeGestureRecognizer.Direction.right
     self.view.addGestureRecognizer(swipeGestureRecognizer)
   }
   

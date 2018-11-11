@@ -23,12 +23,12 @@ class GpxActivityItemProvider: UIActivityItemProvider {
     return NSString(string: error)
   }
   
-  override func activityViewController(_ activityViewController: UIActivityViewController, dataTypeIdentifierForActivityType activityType: UIActivityType?) -> String {
+  override func activityViewController(_ activityViewController: UIActivityViewController, dataTypeIdentifierForActivityType activityType: UIActivity.ActivityType?) -> String {
     let dataTypeIdentifier = "com.topografix.gpx"
     return dataTypeIdentifier
   }
   
-  override func activityViewController(_ activityViewController: UIActivityViewController, subjectForActivityType activityType: UIActivityType?) -> String {
+  override func activityViewController(_ activityViewController: UIActivityViewController, subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
     let subject = "run recorded by Runmeter"
     return subject
   }

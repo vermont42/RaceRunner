@@ -26,7 +26,7 @@ class GraphVC: ChildVC {
   override func viewDidLoad() {
     super.viewDidLoad()
     viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
-    overlays[SettingsManager.getOverlay().radioButtonPosition].sendActions(for: UIControlEvents.touchUpInside)    
+    overlays[SettingsManager.getOverlay().radioButtonPosition].sendActions(for: UIControl.Event.touchUpInside)    
   }
   
   override func viewWillAppear(_ animated: Bool) {

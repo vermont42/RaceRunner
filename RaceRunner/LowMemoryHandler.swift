@@ -18,7 +18,7 @@ class LowMemoryHandler {
   private static let recordingInterruptedPrompt = "You iPhone forced RaceRunner to stop recording your run because of a low-RAM situation. Before quitting, RaceRunner saved the state of your run in progress. Would you like to resume this run or discard the saved state?"
   private static let resumeButtonTitle = "Resume"
   private static let discardButtonTitle = "Discard"
-  private static var resumeController: UIAlertController = UIAlertController(title: recordingInterruptedTitle, message: recordingInterruptedPrompt, preferredStyle: UIAlertControllerStyle.alert)
+  private static var resumeController: UIAlertController = UIAlertController(title: recordingInterruptedTitle, message: recordingInterruptedPrompt, preferredStyle: UIAlertController.Style.alert)
   private static var completion: (() -> Void) = { }
   
   static func handleLowMemory(_ anyObject: AnyObject) {
@@ -45,13 +45,13 @@ class LowMemoryHandler {
       return
     }
     if SettingsManager.getRealRunInProgress() {
-      let resumeAction = UIAlertAction(title: resumeButtonTitle, style: UIAlertActionStyle.default, handler: { action in
+      let resumeAction = UIAlertAction(title: resumeButtonTitle, style: UIAlertAction.Style.default, handler: { action in
         RunModel.loadStateAndStart()
         PersistentMapState.initMapState()
         LowMemoryHandler.completion()
       })
       resumeController.addAction(resumeAction)
-      let discardAction = UIAlertAction(title: discardButtonTitle, style: UIAlertActionStyle.cancel, handler: { action in
+      let discardAction = UIAlertAction(title: discardButtonTitle, style: UIAlertAction.Style.cancel, handler: { action in
         RunModel.deleteSavedRun()
       })
       resumeController.addAction(discardAction)

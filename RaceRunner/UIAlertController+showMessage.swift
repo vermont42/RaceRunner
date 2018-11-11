@@ -14,8 +14,8 @@ extension UIAlertController {
   
   class func showMessage(_ message: String, title: String, okTitle: String = UIAlertController.okTitle(), handler: ((UIAlertAction) -> Void)? = nil) {
     if let topController = UIApplication.topViewController() {
-      let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-      let okAction = UIAlertAction(title: okTitle, style: UIAlertActionStyle.default, handler: handler)
+      let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+      let okAction = UIAlertAction(title: okTitle, style: UIAlertAction.Style.default, handler: handler)
       alertController.addAction(okAction)
       alertController.view.tintColor = UiConstants.intermediate1Color
       topController.present(alertController, animated: true, completion: nil)

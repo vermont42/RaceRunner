@@ -68,7 +68,7 @@ class SpectateVC: ChildVC, PubNubSubscriber {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     clearLabels()
-    startStopButton.setTitle(SpectateVC.start, for: UIControlState())
+    startStopButton.setTitle(SpectateVC.start, for: UIControl.State())
   }
   
   private func clearLabels() {
@@ -76,27 +76,27 @@ class SpectateVC: ChildVC, PubNubSubscriber {
     timeLabel.text = ""
     paceLabel.text = ""
     altitudeLabel.text = ""
-    startStopButton.setTitle(SpectateVC.start, for: UIControlState())
+    startStopButton.setTitle(SpectateVC.start, for: UIControl.State())
     startStopButton.backgroundColor = UiConstants.intermediate3Color
     messageButton.isHidden = true
     viewControllerTitle.text = SpectateVC.spectate
   }
   
   private func getBroadcasterAndSubscribe() {
-    let alertController = UIAlertController(title: SpectateVC.broadcasterTitle, message: SpectateVC.broadcasterPrompt, preferredStyle: UIAlertControllerStyle.alert)
-    let subscribeAction = UIAlertAction(title: SpectateVC.subscribeAlertTitle, style: UIAlertActionStyle.default, handler: { action in
+    let alertController = UIAlertController(title: SpectateVC.broadcasterTitle, message: SpectateVC.broadcasterPrompt, preferredStyle: UIAlertController.Style.alert)
+    let subscribeAction = UIAlertAction(title: SpectateVC.subscribeAlertTitle, style: UIAlertAction.Style.default, handler: { action in
       let textFields = alertController.textFields ?? []
       self.publisher = (textFields[0].text ?? "").trimmingCharacters(in: CharacterSet.whitespaces)
       if self.publisher != "" {
         self.viewControllerTitle.text = SpectateVC.spectating
-        self.startStopButton.setTitle(SpectateVC.stop, for: UIControlState())
+        self.startStopButton.setTitle(SpectateVC.stop, for: UIControl.State())
         self.startStopButton.backgroundColor = UiConstants.intermediate1Color
         self.messageButton.isHidden = false
         PubNubManager.subscribeToChannel(self, publisher: self.publisher)
       }
     })
     alertController.addAction(subscribeAction)
-    let cancelAction = UIAlertAction(title: SpectateVC.cancel, style: UIAlertActionStyle.cancel, handler: nil)
+    let cancelAction = UIAlertAction(title: SpectateVC.cancel, style: UIAlertAction.Style.cancel, handler: nil)
     alertController.addAction(cancelAction)
     alertController.addTextField { textField in
       textField.placeholder = SpectateVC.runner
@@ -159,19 +159,19 @@ class SpectateVC: ChildVC, PubNubSubscriber {
       } else {
         prompt = SpectateVC.stopSpectatingPrompt
       }
-      let alertController = UIAlertController(title: SpectateVC.stop, message: prompt, preferredStyle: UIAlertControllerStyle.alert)
-      let stopSpectatingAction = UIAlertAction(title: SpectateVC.stopSpectatingButtonTitle, style: UIAlertActionStyle.default, handler: { action in
+      let alertController = UIAlertController(title: SpectateVC.stop, message: prompt, preferredStyle: UIAlertController.Style.alert)
+      let stopSpectatingAction = UIAlertAction(title: SpectateVC.stopSpectatingButtonTitle, style: UIAlertAction.Style.default, handler: { action in
         self.stopSpectating()
       })
       alertController.addAction(stopSpectatingAction)
       if canStopRun {
-        let stopRunAction = UIAlertAction(title: SpectateVC.stopRunButtonTitle, style: UIAlertActionStyle.default, handler: { action in
+        let stopRunAction = UIAlertAction(title: SpectateVC.stopRunButtonTitle, style: UIAlertAction.Style.default, handler: { action in
           self.stopRun()
           self.stopSpectating()
         })
         alertController.addAction(stopRunAction)
       }
-      let cancelAction = UIAlertAction(title: SpectateVC.cancel, style: UIAlertActionStyle.cancel, handler: { action in })
+      let cancelAction = UIAlertAction(title: SpectateVC.cancel, style: UIAlertAction.Style.cancel, handler: { action in })
       alertController.addAction(cancelAction)
       alertController.view.tintColor = UiConstants.intermediate1Color
       present(alertController, animated: true, completion: nil)
@@ -179,15 +179,15 @@ class SpectateVC: ChildVC, PubNubSubscriber {
   }
   
   @IBAction func sendMessage() {
-    let alertController = UIAlertController(title: SpectateVC.sendMessageTitle, message: SpectateVC.sendMessagePrompt, preferredStyle: UIAlertControllerStyle.alert)
-    let sendAction = UIAlertAction(title: SpectateVC.sendAlertTitle, style: UIAlertActionStyle.default, handler: { action in
+    let alertController = UIAlertController(title: SpectateVC.sendMessageTitle, message: SpectateVC.sendMessagePrompt, preferredStyle: UIAlertController.Style.alert)
+    let sendAction = UIAlertAction(title: SpectateVC.sendAlertTitle, style: UIAlertAction.Style.default, handler: { action in
       let message = alertController.textFields![0].text!
       if message != "" {
         PubNubManager.publishMessage(message, publisher: self.publisher)
       }
     })
     alertController.addAction(sendAction)
-    let cancelAction = UIAlertAction(title: SpectateVC.cancel, style: UIAlertActionStyle.cancel, handler: nil)
+    let cancelAction = UIAlertAction(title: SpectateVC.cancel, style: UIAlertAction.Style.cancel, handler: nil)
     alertController.addAction(cancelAction)
     alertController.addTextField { textField in
       textField.placeholder = SpectateVC.message

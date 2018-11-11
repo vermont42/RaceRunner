@@ -108,7 +108,7 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
     } else {
       shoes.isCurrent = false
     }
-    shoes.thumbnail = UIImagePNGRepresentation(thumbnail.image ?? UIImage()) ?? Data()
+    shoes.thumbnail = (thumbnail.image ?? UIImage()).pngData() ?? Data()
     CDManager.saveContext()
     shoesDelegate?.receiveShoes(shoes, isNew: isNew)
     performSegue(withIdentifier: "unwind pan", sender: self)
@@ -157,9 +157,12 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
     doneButton.isEnabled = true
   }
   
-  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
     dismiss(animated: true, completion: { self.choosingThumbnail = false })
-    if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+    if let pickedImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage {
       thumbnail.image = pickedImage
     }
   }
@@ -183,4 +186,14 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
       isCurrent.image = Shoes.checked
     }
   }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }
