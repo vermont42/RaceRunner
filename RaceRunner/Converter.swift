@@ -22,7 +22,6 @@ class Converter {
   private static let celsiusAmountToAdd: Double = 0.0
   private static let altitudeFudge: Double = 5.0
   private static let secondsPerMinute: Int = 60
-  private static let minutesPerHour: Int = 60
   private static let secondsPerHour: Int = 3600
   private static let netCaloriesPerKiloPerMeter = 0.00086139598517
   private static let totalCaloriesPerKiloPerMeter = 0.00102547141092

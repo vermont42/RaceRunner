@@ -63,7 +63,6 @@ open class GpxLocationManager {
 
   static let dateFudge: TimeInterval = 1.0
   
-  private static let dateFormat = "yyyy-MM-dd HH:mm:ss"
   private static let initWithNoArgumentsMessage = "Attempted to initialize GpxLocationManager with no arguments."
   private static let gpxParseErrorMessage = "Parsing of GPX file failed."
   

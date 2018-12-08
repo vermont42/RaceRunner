@@ -10,9 +10,6 @@ import UIKit
 import SpriteKit
 
 class GameVC: ChildVC {
-  private static let lowMemoryTitle = "Ended Game"
-  private static let lowMemoryMessage = "RaceRunner had to end your game because of a RAM shortage on your iPhone. Apologies."
-
   override var shouldAutorotate: Bool {
     return true
   }

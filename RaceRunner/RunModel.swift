@@ -60,7 +60,6 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   private static let importSucceededMessage = "Successfully imported run"
   private static let importFailedMessage = "Run import failed."
   private static let importRunTitle = "Import Run"
-  private static let ok = "OK"
   
   enum Status {
     case preRun

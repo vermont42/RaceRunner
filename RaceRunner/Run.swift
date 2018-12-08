@@ -16,7 +16,6 @@ class Run: NSManagedObject {
   static let noAutoName = "Unnamed Route"
   static let noCustomName = ""
   static let noWeight: Double = -99.0
-  static let noWeightText = "not recorded"
 
   func displayName() -> String {
     if customName != "" {

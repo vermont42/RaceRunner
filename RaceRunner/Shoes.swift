@@ -15,7 +15,6 @@ class Shoes: NSManagedObject {
   static let defaultMaxKilometers: Float = 644.0
   static let defaultThumbnail = UIImage.named("shoe")
   static let defaultName = ""
-  static let defaultIsCurrent = true
   static let maxNumberLength: Int = 3
   static let checked = UIImage.named("checked")
   static let unchecked = UIImage.named("unchecked")

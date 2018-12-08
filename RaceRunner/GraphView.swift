@@ -18,10 +18,8 @@ class GraphView: UIView {
   
   private static let minAltRange = 5.0
   private static let minSpeedRange = 0.1
-  private static let altitudePoints = 50
   private static let stride: CGFloat = 3.0
   private static let chartOffset: CGFloat = 37.0
-  private static let speedOffset: CGFloat = 2.0
   private static let lineWidth: CGFloat = 4.0
   private static let dashedLineWidth: CGFloat = 1.0
   private static let speedAlpha: CGFloat = 0.70

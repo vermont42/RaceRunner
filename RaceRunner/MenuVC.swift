@@ -14,7 +14,6 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
   
   var controllerLabels = ["Start Run", "Simulate", "Demo", "History", "Spectate", "Settings", "Shoes", "Help", "Game"]
   var panSegues = ["pan run", "pan log", "pan GPX run", "pan log", "pan spectate", "pan settings", "pan shoes", "pan help", "pan game"]
-  var selectedMenuItem: Int = 0
   var logTypeToShow: LogVC.LogType = .history
 
   private static let resumeRunLabel = "Resume Run"
@@ -25,7 +24,6 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
   private static let menuFontSize: CGFloat = 42.0
   private static let rowHeight: CGFloat = 50.0
   private static let realRunMessage = "There is a real run in progress. Please tap the Resume Run button and stop the run before attempting to simulate a run."
-  private static let okButtonText = "OK"
   private static let gpxFile = "iSmoothRun"
   private static let sadFaceTitle = "😢"
 
