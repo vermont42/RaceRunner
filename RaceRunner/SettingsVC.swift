@@ -85,6 +85,7 @@ class SettingsVC: ChildVC, BroadcastDelegate {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    AWSAnalyticsService.shared.recordVisitation(viewController: "\(SettingsVC.self)")
     updateBroadcastButton()
   }
   

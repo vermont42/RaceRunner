@@ -46,6 +46,7 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    AWSAnalyticsService.shared.recordVisitation(viewController: "\(ShoesEditorVC.self)")
     if !choosingThumbnail {
       if SettingsManager.getUnitType() == .imperial {
         currentMileageLabel.text = ShoesEditorVC.imperialMileageLabel

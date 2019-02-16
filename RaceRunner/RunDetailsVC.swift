@@ -76,6 +76,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    AWSAnalyticsService.shared.recordVisitation(viewController: "\(RunDetailsVC.self)")
     if !SettingsManager.getShowedForecastCredit() {
       UIAlertController.showMessage(RunDetailsVC.forecastMessage, title: RunDetailsVC.forecastTitle, okTitle: RunDetailsVC.forecastOkay)
       SettingsManager.setShowedForecastCredit(true)

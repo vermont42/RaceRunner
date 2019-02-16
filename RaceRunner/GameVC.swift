@@ -30,6 +30,11 @@ class GameVC: ChildVC {
     NotificationCenter.default.addObserver(self, selector: #selector(GameVC.handleApplicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
   }
 
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    AWSAnalyticsService.shared.recordVisitation(viewController: "\(GameVC.self)")
+  }
+  
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     pauseGame()

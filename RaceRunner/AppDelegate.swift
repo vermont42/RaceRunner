@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    _ = AWSAnalyticsService.shared
     Config.checkKeys()
     GMSServices.provideAPIKey(Config.googleMapsKey)
     SoundManager.enableBackgroundAudio()

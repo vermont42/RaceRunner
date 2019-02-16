@@ -45,6 +45,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    AWSAnalyticsService.shared.recordVisitation(viewController: "\(MenuVC.self)")
     NotificationCenter.default.addObserver(self, selector: #selector(updateRunButton), name: .runDidStart, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(updateRunButton), name: .runDidStop, object: nil)
     updateRunButton()

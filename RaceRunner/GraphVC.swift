@@ -31,6 +31,7 @@ class GraphVC: ChildVC {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    AWSAnalyticsService.shared.recordVisitation(viewController: "\(GraphVC.self)")
     graphView.run = run
     graphView.smoothSpeeds = smoothSpeeds
     graphView.maxSmoothSpeed = maxSmoothSpeed

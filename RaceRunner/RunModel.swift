@@ -354,6 +354,9 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     if SettingsManager.getBroadcastNextRun() && SettingsManager.getRealRunInProgress() {
       PubNubManager.subscribeToChannel(self, publisher: SettingsManager.getBroadcastName())
     }
+    if SettingsManager.getRealRunInProgress() {
+      AWSAnalyticsService.shared.recordRunStart()
+    }
   }
   
   func start(isViaSiri: Bool = false) {
@@ -495,6 +498,9 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   }
   
   func stop() {
+    if SettingsManager.getRealRunInProgress() {
+      AWSAnalyticsService.shared.recordRunStop()
+    }
     SettingsManager.setStartedViaSiri(false)
     timer.invalidate()
     locationManager?.stopUpdatingLocation()
@@ -574,6 +580,9 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     timer.invalidate()
     locationManager?.stopUpdatingLocation()
     NotificationCenter.default.post(name: .runDidPause, object: nil)
+    if SettingsManager.getRealRunInProgress() {
+      AWSAnalyticsService.shared.recordRunPause()
+    }
   }
   
   func resume() {
@@ -582,6 +591,9 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     locationManager?.startUpdatingLocation()
     startTimer()
     NotificationCenter.default.post(name: .runDidResume, object: nil)
+    if SettingsManager.getRealRunInProgress() {
+      AWSAnalyticsService.shared.recordRunResume()
+    }
   }
   
   func startTimer() {

@@ -50,6 +50,7 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    AWSAnalyticsService.shared.recordVisitation(viewController: "\(ShoesBrowserVC.self)")
     if pairs.count == 0 {
       fetchPairs()
     }

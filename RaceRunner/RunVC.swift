@@ -50,6 +50,7 @@ class RunVC: ChildVC {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    AWSAnalyticsService.shared.recordVisitation(viewController: "\(RunVC.self)")
     NotificationCenter.default.addObserver(self, selector: #selector(runDidStart), name: .runDidStart, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(runDidStop), name: .runDidStop, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(runDidPause), name: .runDidPause, object: nil)

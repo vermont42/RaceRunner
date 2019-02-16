@@ -8,4 +8,5 @@ target "RaceRunner" do
   pod 'COBezierTableView'
   pod 'MGSwipeTableCell'
   pod 'MarqueeLabel/Swift'
+  pod 'AWSPinpoint'
 end

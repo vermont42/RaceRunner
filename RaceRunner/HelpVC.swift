@@ -24,6 +24,7 @@ class HelpVC: ChildVC {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    AWSAnalyticsService.shared.recordVisitation(viewController: "\(HelpVC.self)")
     updateHelpText()
   }
 

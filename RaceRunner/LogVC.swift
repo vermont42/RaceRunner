@@ -47,6 +47,7 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    AWSAnalyticsService.shared.recordVisitation(viewController: "\(LogVC.self)")
     self.viewControllerTitle.text = viewControllerTitleText
     if logType == LogVC.LogType.history {
       viewControllerTitle.text = "History"

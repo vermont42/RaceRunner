@@ -28,6 +28,7 @@ class ImportVC: ChildVC {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    AWSAnalyticsService.shared.recordVisitation(viewController: "\(ImportVC.self)")
     instructionsField.scrollRangeToVisible(NSMakeRange(0, 0))    
   }
   

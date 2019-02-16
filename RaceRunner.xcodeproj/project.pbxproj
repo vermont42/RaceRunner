@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		038984C322189E1E00DF27CF /* AWSAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038984C222189E1E00DF27CF /* AWSAnalyticsService.swift */; };
+		038984C522189E7800DF27CF /* DeviceUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038984C422189E7800DF27CF /* DeviceUtility.swift */; };
+		038984C72218A04E00DF27CF /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 038984C62218A04E00DF27CF /* awsconfiguration.json */; };
 		780ADDCF5F549BC94E7E819D /* Pods_RaceRunner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3684E5DECEABCEB4FF305C39 /* Pods_RaceRunner.framework */; };
 		E10356451C02A1CB006E8FEC /* applause2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E10356441C02A1CB006E8FEC /* applause2.mp3 */; };
 		E10356471C02A1EB006E8FEC /* applause3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E10356461C02A1EB006E8FEC /* applause3.mp3 */; };
@@ -140,6 +143,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		038984C222189E1E00DF27CF /* AWSAnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSAnalyticsService.swift; sourceTree = "<group>"; };
+		038984C422189E7800DF27CF /* DeviceUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUtility.swift; sourceTree = "<group>"; };
+		038984C62218A04E00DF27CF /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = SOURCE_ROOT; };
 		3684E5DECEABCEB4FF305C39 /* Pods_RaceRunner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RaceRunner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E91D4B24A52C1C5D97BD0CF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BAE29B09F03FADB483809E0 /* SuggestedColors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SuggestedColors.plist; sourceTree = "<group>"; };
@@ -397,6 +403,8 @@
 				E13C763E1C1A01520046021A /* Array+insertionIndexOf.swift */,
 				E17B3A582197ABBB00D08AEC /* AVAudioSessionPatch.h */,
 				E17B3A5A2197AC2100D08AEC /* AVAudioSessionPatch.m */,
+				038984C222189E1E00DF27CF /* AWSAnalyticsService.swift */,
+				038984C62218A04E00DF27CF /* awsconfiguration.json */,
 				E14175A81C877AC1001F402C /* BroadcastDelegate.swift */,
 				E1E9E3431C8288CC00F70D79 /* BroadcastVC.swift */,
 				E1E8B9451AAB742E00D04E38 /* CDManager.swift */,
@@ -404,6 +412,7 @@
 				E11E22C21C08CDC000488399 /* Config.swift */,
 				E1FCB00D1AB8F43100B1D803 /* Converter.swift */,
 				E13B39921ABA705E007F61ED /* DarkSky.swift */,
+				038984C422189E7800DF27CF /* DeviceUtility.swift */,
 				E1E7F7D51C03F8E500F108B6 /* Double+roundToPlaces.swift */,
 				E18B6C801C0D1AEC005865BA /* GpxActivityItemProvider.swift */,
 				E15681F81C52F007008E077C /* GpxExporter.swift */,
@@ -591,6 +600,7 @@
 			files = (
 				E1342BC81D04FA3B00ABFCA7 /* Bullet.sks in Resources */,
 				E1863B141CD66A6C00B55CD3 /* silence.mp3 in Resources */,
+				038984C72218A04E00DF27CF /* awsconfiguration.json in Resources */,
 				E1DBA6D41C1FBA9200DE3E4F /* WeatherRun.gpx in Resources */,
 				E10356471C02A1EB006E8FEC /* applause3.mp3 in Resources */,
 				E1342BBF1D04F94000ABFCA7 /* scream1.mp3 in Resources */,
@@ -644,7 +654,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-RaceRunner/Pods-RaceRunner-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-RaceRunner/Pods-RaceRunner-resources.sh",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -653,7 +663,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RaceRunner/Pods-RaceRunner-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RaceRunner/Pods-RaceRunner-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E3805A546D750C7E6281FAE7 /* [CP] Embed Pods Frameworks */ = {
@@ -662,7 +672,9 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-RaceRunner/Pods-RaceRunner-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-RaceRunner/Pods-RaceRunner-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSPinpoint/AWSPinpoint.framework",
 				"${BUILT_PRODUCTS_DIR}/COBezierTableView/COBezierTableView.framework",
 				"${BUILT_PRODUCTS_DIR}/DLRadioButton/DLRadioButton.framework",
 				"${BUILT_PRODUCTS_DIR}/MGSwipeTableCell/MGSwipeTableCell.framework",
@@ -671,6 +683,8 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSPinpoint.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/COBezierTableView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DLRadioButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MGSwipeTableCell.framework",
@@ -679,7 +693,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RaceRunner/Pods-RaceRunner-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RaceRunner/Pods-RaceRunner-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -710,6 +724,7 @@
 				E13B39931ABA705E007F61ED /* DarkSky.swift in Sources */,
 				E1FCB00E1AB8F43100B1D803 /* Converter.swift in Sources */,
 				E1D521681ABA93CD00B46300 /* Location.swift in Sources */,
+				038984C322189E1E00DF27CF /* AWSAnalyticsService.swift in Sources */,
 				E1DA7D6D1B9B8BA2006BC362 /* GpxParser.swift in Sources */,
 				E185F8531AE1CB19008BF394 /* RunnerIcons.swift in Sources */,
 				E159C2541AAB8304007C6EA1 /* RaceRunner.xcdatamodeld in Sources */,
@@ -720,6 +735,7 @@
 				E1C2ED501AB63BE200A29728 /* LogCell.swift in Sources */,
 				E1E8B9561AAB742E00D04E38 /* SettingsVC.swift in Sources */,
 				E11E22BF1C08C71200488399 /* UnitType.swift in Sources */,
+				038984C522189E7800DF27CF /* DeviceUtility.swift in Sources */,
 				E1A41B4E1BF7D83100E31943 /* PubNubManager.swift in Sources */,
 				E1844B4F1C8CDCE800A97EAD /* Utterer.swift in Sources */,
 				E17016551D0DB92400CF5825 /* RunInProgress.swift in Sources */,

@@ -67,6 +67,7 @@ class SpectateVC: ChildVC, PubNubSubscriber {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    AWSAnalyticsService.shared.recordVisitation(viewController: "\(SpectateVC.self)")
     clearLabels()
     startStopButton.setTitle(SpectateVC.start, for: UIControl.State())
   }
