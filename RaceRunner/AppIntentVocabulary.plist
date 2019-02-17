@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IntentPhrases</key>
+	<array>
+		<dict>
+			<key>IntentName</key>
+			<string>INStartWorkoutIntent</string>
+			<key>IntentExamples</key>
+			<array>
+				<string>start run</string>
+				<string>begin run</string>
+			</array>
+		</dict>
+		<dict>
+			<key>IntentName</key>
+			<string>INPauseWorkoutIntent</string>
+			<key>IntentExamples</key>
+			<array>
+				<string>pause run</string>
+			</array>
+		</dict>
+		<dict>
+			<key>IntentName</key>
+			<string>INResumeWorkoutIntent</string>
+			<key>IntentExamples</key>
+			<array>
+				<string>resume run</string>
+			</array>
+		</dict>
+		<dict>
+			<key>IntentName</key>
+			<string>INEndWorkoutIntent</string>
+			<key>IntentExamples</key>
+			<array>
+				<string>end run</string>
+				<string>finish run</string>
+				<string>stop run</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>
