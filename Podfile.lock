@@ -9,7 +9,7 @@ PODS:
   - GoogleMaps/Base (3.0.3)
   - GoogleMaps/Maps (3.0.3):
     - GoogleMaps/Base
-  - MarqueeLabel/Swift (3.2.1)
+  - MarqueeLabel (4.0.0)
   - MGSwipeTableCell (1.6.8)
   - PubNub (4.8.7):
     - PubNub/Core (= 4.8.7)
@@ -20,7 +20,7 @@ DEPENDENCIES:
   - COBezierTableView
   - DLRadioButton
   - GoogleMaps
-  - MarqueeLabel/Swift
+  - MarqueeLabel
   - MGSwipeTableCell
   - PubNub
 
@@ -41,10 +41,10 @@ SPEC CHECKSUMS:
   COBezierTableView: a32f9286ade2393c414ff83113d37450257ddea2
   DLRadioButton: d7c4e225ed0e8013cef7be61455230c7557ad7c1
   GoogleMaps: fd5c9fa58871781b9fb94d4936f19c69fe60ce32
-  MarqueeLabel: 2daf039bf916937c8a4c9adfc13577cc5e51b4ce
+  MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4
   MGSwipeTableCell: dc4eca3212ed38a563b27d6aa7b3c01ce656c1e2
   PubNub: c767e96befde348b990b2fed1e9e76048e7c0abd
 
-PODFILE CHECKSUM: 51a72eda94ac82915828d5a83fd1ae59f883b513
+PODFILE CHECKSUM: fed5fbf2055fe8b076b174577ca52d3bafe21a52
 
 COCOAPODS: 1.6.0

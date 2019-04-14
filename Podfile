@@ -7,6 +7,6 @@ target "RaceRunner" do
   pod 'DLRadioButton'
   pod 'COBezierTableView'
   pod 'MGSwipeTableCell'
-  pod 'MarqueeLabel/Swift'
+  pod 'MarqueeLabel'
   pod 'AWSPinpoint'
 end
