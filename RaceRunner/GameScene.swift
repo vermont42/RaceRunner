@@ -511,7 +511,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   func processContactsForUpdate(_ currentTime: CFTimeInterval) {
     for contact in contactQueue {
       handleContact(contact)
-      if let index = contactQueue.index(of: contact) {
+      if let index = contactQueue.firstIndex(of: contact) {
         contactQueue.remove(at: index)
       }
     }

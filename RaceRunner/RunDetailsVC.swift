@@ -225,7 +225,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
         let secondLocCL = CLLocation(latitude: secondLoc.latitude.doubleValue, longitude: secondLoc.longitude.doubleValue)
         var coords = [firstLocCL.coordinate, secondLocCL.coordinate]
         let value = smoothValues[i - 1]
-        var index = sortedValues.index(of: value)
+        var index = sortedValues.firstIndex(of: value)
         if index == nil {
           index = 0
         }
