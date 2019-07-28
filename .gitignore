@@ -5,6 +5,10 @@ Config.swift
 amplify/
 awsconfiguration.json
 .amplifyrc
+build/
+dist/
+node_modules/
+aws-exports.js
 
 # Xcode
 #
