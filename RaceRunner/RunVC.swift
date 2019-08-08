@@ -39,6 +39,7 @@ class RunVC: ChildVC {
   private static let resumeTitle = " Resume "
 
   private var totalDistance: Double = 0.0
+  private var didReceiveLocationUpdate = false
 
   override func viewDidLoad() {
     map.mapType = .terrain
@@ -94,7 +95,9 @@ class RunVC: ChildVC {
       if runToSimulate == nil && gpxFile == nil && !SettingsManager.getStartedViaSiri() {
         addPolylineAndPin()
       }
-      map.isHidden = false
+      if didReceiveLocationUpdate {
+        map.isHidden = false
+      }
       paceOrAltitude.isHidden = false
       if PersistentMapState.currentCoordinate != nil {
         map.camera = GMSCameraPosition.camera(withLatitude: PersistentMapState.currentCoordinate?.latitude ?? 0.0, longitude: PersistentMapState.currentCoordinate?.longitude ?? 0.0, zoom: UiConstants.cameraZoom)
@@ -162,6 +165,7 @@ class RunVC: ChildVC {
     guard let runCoordinate = notification.userInfo?["\(RunCoordinate.self)"] as? RunCoordinate else {
       return
     }
+    didReceiveLocationUpdate = true
     if PersistentMapState.currentCoordinate != nil {
       if PersistentMapState.currentCoordinate?.longitude ?? 0.0 > runCoordinate.coordinate.longitude {
         PersistentMapState.runnerIcons.direction = .west
@@ -194,6 +198,7 @@ class RunVC: ChildVC {
     } else {
       showInitialCoordinate(runCoordinate.coordinate)
     }
+    map.isHidden = false
   }
   
   @objc func receiveProgress(_ notification: NSNotification) {
@@ -232,6 +237,7 @@ class RunVC: ChildVC {
       }
     case .inProgress, .paused:
       RunModel.runModel.stop()
+      map.isHidden = true
     }
   }
 
@@ -319,7 +325,6 @@ class RunVC: ChildVC {
   }
 
   @objc func runDidStart() {
-    map.isHidden = false
     paceOrAltitude.isHidden = false
     updateButtonLabels()
     showLabels()

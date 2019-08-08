@@ -1,13 +1,13 @@
 PODS:
-  - AWSCore (2.10.0)
-  - AWSPinpoint (2.10.0):
-    - AWSCore (= 2.10.0)
+  - AWSCore (2.10.2)
+  - AWSPinpoint (2.10.2):
+    - AWSCore (= 2.10.2)
   - COBezierTableView (1.1.1)
   - DLRadioButton (1.4.12)
-  - GoogleMaps (3.2.0):
-    - GoogleMaps/Maps (= 3.2.0)
-  - GoogleMaps/Base (3.2.0)
-  - GoogleMaps/Maps (3.2.0):
+  - GoogleMaps (3.3.0):
+    - GoogleMaps/Maps (= 3.3.0)
+  - GoogleMaps/Base (3.3.0)
+  - GoogleMaps/Maps (3.3.0):
     - GoogleMaps/Base
   - MarqueeLabel (4.0.0)
   - MGSwipeTableCell (1.6.8)
@@ -36,11 +36,11 @@ SPEC REPOS:
     - PubNub
 
 SPEC CHECKSUMS:
-  AWSCore: d5667976d58ee878961b98744cb38b6066785895
-  AWSPinpoint: 9de88dcc6e6b2ca095cecc85d63fb22e4c567fd0
+  AWSCore: 2e91f89187d1238be35ce8c57aac98c42def640f
+  AWSPinpoint: 749b271d9c75ac04b27fad75d6ae09d56f8b0c04
   COBezierTableView: a32f9286ade2393c414ff83113d37450257ddea2
   DLRadioButton: d7c4e225ed0e8013cef7be61455230c7557ad7c1
-  GoogleMaps: 5046d7edfe381c1a0b20fdaf293915a375c3122b
+  GoogleMaps: cfee83da305b9aaeccf92c24ac79df11c3003492
   MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4
   MGSwipeTableCell: dc4eca3212ed38a563b27d6aa7b3c01ce656c1e2
   PubNub: 0e00678cf094c4e5e3849f14dd3139bc569cc1e9
