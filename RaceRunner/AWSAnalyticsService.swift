@@ -44,7 +44,8 @@ class AWSAnalyticsService: NSObject {
   
   func recordVisitation(viewController: String) {
     let visited = "visited"
-    recordEvent(visited, parameters: ["viewController": "\(viewController)"], metrics: nil)
+    let viewControllerKey = "viewController"
+    recordEvent(visited, parameters: [viewControllerKey: "\(viewController)"], metrics: nil)
   }
   
   func recordRunStart() {
@@ -65,6 +66,12 @@ class AWSAnalyticsService: NSObject {
   func recordRunStop() {
     let runStop = "runStop"
     recordEvent(runStop)
+  }
+
+  func recordEnteredForeground() {
+    let enteredForeground = "enteredForeground"
+    let modelKey = "model"
+    recordEvent(enteredForeground, parameters: [modelKey: "\(UIDevice.current.modelName)"])
   }
   
   private func recordCustomProfileDemographics() {

@@ -39,4 +39,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, handle intent: INIntent, completionHandler: @escaping (INIntentResponse) -> Void) {
     completionHandler(IntentHandler.handle(intent: intent))
   }
+
+  func applicationWillEnterForeground(_ application: UIApplication) {
+    AWSAnalyticsService.shared.recordEnteredForeground()
+  }
 }
