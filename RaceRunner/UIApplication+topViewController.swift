@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIApplication {
-  class func topViewController(_ base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+  class func topViewController(_ base: UIViewController? = UIApplication.shared.compatibilityWindow?.rootViewController) -> UIViewController? {
     if let nav = base as? UINavigationController {
       return topViewController(nav.visibleViewController)
     }
@@ -22,5 +22,16 @@ extension UIApplication {
       return topViewController(presented)
     }
     return base
+  }
+}
+
+extension UIApplication { // https://stackoverflow.com/a/57169802/8248798
+  var compatibilityWindow: UIWindow? {
+    return UIApplication.shared.connectedScenes
+    .filter({$0.activationState == .foregroundActive})
+    .map({$0 as? UIWindowScene})
+    .compactMap({$0})
+    .first?.windows
+    .filter({$0.isKeyWindow}).first
   }
 }

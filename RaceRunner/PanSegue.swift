@@ -19,7 +19,7 @@ class PanSegue: UIStoryboardSegue {
     // The following line, if uncommented, may induce motion sickness.
     // secondVCView.transform = CGAffineTransformRotate(secondVCView.transform, CGFloat(M_PI))
 
-    let window = UIApplication.shared.keyWindow
+    let window = UIApplication.shared.compatibilityWindow
 
     if
       let viewWillAppear = class_getInstanceMethod(destination.classForCoder, #selector(UIViewController.viewWillAppear)),

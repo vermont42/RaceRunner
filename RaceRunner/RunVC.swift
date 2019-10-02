@@ -174,7 +174,7 @@ class RunVC: ChildVC {
         PersistentMapState.runnerIcons.direction = .east
         PersistentMapState.latestDirection = .east
       }
-      var coords: [CLLocationCoordinate2D] = [PersistentMapState.currentCoordinate ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), runCoordinate.coordinate]
+      let coords: [CLLocationCoordinate2D] = [PersistentMapState.currentCoordinate ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), runCoordinate.coordinate]
       map.camera = GMSCameraPosition.camera(withLatitude: runCoordinate.coordinate.latitude, longitude: runCoordinate.coordinate.longitude, zoom: UiConstants.cameraZoom)
       PersistentMapState.path.add(coords[1])
       PersistentMapState.polyline.path = PersistentMapState.path
