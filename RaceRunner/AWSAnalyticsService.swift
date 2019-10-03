@@ -68,12 +68,12 @@ class AWSAnalyticsService: NSObject {
     recordEvent(runStop)
   }
 
-  func recordEnteredForeground() {
-    let enteredForeground = "enteredForeground"
+  func recordBecameActive() {
+    let becameActive = "becameActive"
     let modelKey = "model"
-    recordEvent(enteredForeground, parameters: [modelKey: "\(UIDevice.current.modelName)"])
+    recordEvent(becameActive, parameters: [modelKey: "\(UIDevice.current.modelName)"])
   }
-  
+
   private func recordCustomProfileDemographics() {
     let profile: AWSPinpointEndpointProfile = (pinpoint.targetingClient.currentEndpointProfile())
     profile.demographic?.model = UIDevice.current.modelName

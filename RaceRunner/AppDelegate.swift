@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     completionHandler(IntentHandler.handle(intent: intent))
   }
 
-  func applicationWillEnterForeground(_ application: UIApplication) {
-    AWSAnalyticsService.shared.recordEnteredForeground()
+  func applicationDidBecomeActive(_ application: UIApplication) {
+    AWSAnalyticsService.shared.recordBecameActive()
   }
 }
