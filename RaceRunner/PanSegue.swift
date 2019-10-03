@@ -33,6 +33,7 @@ class PanSegue: UIStoryboardSegue {
           firstVCView.frame = firstVCView.frame.offsetBy(dx: -screenWidth, dy: 0)
           secondVCView.frame = secondVCView.frame.offsetBy(dx: -screenWidth, dy: 0)
         }, completion: { Bool -> Void in
+          self.destination.modalPresentationStyle = .fullScreen
           self.source.present(self.destination, animated: false, completion: nil)
       })
     }
