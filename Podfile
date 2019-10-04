@@ -2,7 +2,7 @@ platform :ios, '13.0'
 use_frameworks!
 
 target "RaceRunner" do
-  pod 'GoogleMaps'
+  pod 'GoogleMaps' # fix build warning with https://stackoverflow.com/a/49570905/8248798
   pod 'PubNub'
   pod 'DLRadioButton'
   pod 'COBezierTableView'
