@@ -10,7 +10,7 @@ import Foundation
 import PubNub
 import CoreLocation
 
-class PubNubManager: NSObject, PNObjectEventListener {
+class PubNubManager: NSObject, PNEventsListener { //PNObjectEventListener {
   static let sharedNub = PubNubManager()
   static let publicChannel = "foo"
   static let stopped = "stopped"
