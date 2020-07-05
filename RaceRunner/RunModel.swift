@@ -12,7 +12,7 @@ import CoreLocation
 import CoreData
 
 class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
-  static let altFudge: Double = 0.1
+  static let altFudge: Double = 0.5
   static let minDistance = 100.0
 
   var locations: [CLLocation] = []
@@ -462,9 +462,10 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
       }
       if currentCoordinate.altitude > curAlt + RunModel.altFudge {
         altGained += currentCoordinate.altitude - curAlt
-      }
-      if currentCoordinate.altitude < curAlt - RunModel.altFudge {
+        curAlt = coordinates[i].altitude
+      } else if currentCoordinate.altitude < curAlt - RunModel.altFudge {
         altLost += curAlt - currentCoordinate.altitude
+        curAlt = coordinates[i].altitude
       }
       curAlt = coordinates[i].altitude
     }
