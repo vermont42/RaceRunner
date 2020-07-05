@@ -214,6 +214,7 @@ class RunVC: ChildVC {
     altLostLabel.text = "-: " + Converter.stringifyAltitude(progressUpdate.altLost)
     let stopAfter = SettingsManager.getStopAfter()
     if (stopAfter != SettingsManager.never) && (totalDistance >= stopAfter) {
+      SettingsManager.setStopAfter(SettingsManager.never)
       RunModel.runModel.stop()
     }
   }
