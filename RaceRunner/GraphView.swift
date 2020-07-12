@@ -11,12 +11,15 @@ import CoreGraphics
 
 // Watch video about Coco and Lucky, the cat and cockatiel.
 class GraphView: UIView {
-  var run: Run?
   var smoothSpeeds: [Double] = []
   var smoothAltitudes: [Double] = []
   var maxSmoothSpeed: Double = 0.0
   var minSmoothSpeed: Double = 0.0
-  
+  var timeSpan: Double?
+  var distance: Double?
+  var maxAltitude: Double?
+  var minAltitude: Double?
+
   private static let minAltRange = 5.0
   private static let minSpeedRange = 0.1
   private static let stride: CGFloat = 1.0
@@ -45,7 +48,12 @@ class GraphView: UIView {
   
   override func draw(_ rect: CGRect) {
     super.draw(rect)    
-    guard let run = run else {
+    guard
+      let timeSpan = timeSpan,
+      let distance = distance,
+      let maxAltitude = maxAltitude,
+      let minAltitude = minAltitude
+    else {
       return
     }
     let orientation: Orientation
@@ -71,7 +79,7 @@ class GraphView: UIView {
       UiConstants.darkColor.setStroke()
       yAxisPath.lineWidth = GraphView.lineWidth
       yAxisPath.stroke()
-      drawGraph(color: UiConstants.intermediate3Color, maxVal: run.maxAltitude.doubleValue, minVal: run.minAltitude.doubleValue, minRange: GraphView.minAltRange, getVal: { (x: Int) -> Double in
+      drawGraph(color: UiConstants.intermediate3Color, maxVal: maxAltitude, minVal: minAltitude, minRange: GraphView.minAltRange, getVal: { (x: Int) -> Double in
         return smoothAltitudes[self.xToIndex(x)]
       })
     }
@@ -91,23 +99,8 @@ class GraphView: UIView {
     ticPath.lineWidth = GraphView.lineWidth
     let chunkWidth = chartWidth / CGFloat((xTics + 1))
 
-    let startDate: Date
-    if let startLocation = run.locations[0] as? Location {
-      startDate = startLocation.timestamp
-    } else {
-      startDate = Date()
-    }
-    let endDate: Date
-    if let endLocation = run.locations.lastObject as? Location {
-      endDate = endLocation.timestamp
-    } else {
-      endDate = Date()
-    }
-    let timeSpan = endDate.timeIntervalSince(startDate)
-
     let timeChunk = Int(timeSpan) / (xTics + 1)
-    let distanceSpan = run.distance.doubleValue
-    let distanceChunk = distanceSpan / Double(xTics + 1)
+    let distanceChunk = distance / Double(xTics + 1)
     for x in 0 ... xTics {
       if x != xTics {
         UiConstants.darkColor.setStroke()
@@ -136,7 +129,7 @@ class GraphView: UIView {
 
     let yTics = orientation == .landscape ? GraphView.shortTics : GraphView.longTics
     let chunkHeight = chartHeight / CGFloat((yTics + 1))
-    let altChunkSpan = (run.maxAltitude.doubleValue - run.minAltitude.doubleValue) / Double(yTics + 1)
+    let altChunkSpan = (maxAltitude - minAltitude) / Double(yTics + 1)
     let paceChunkSpan = (maxSmoothSpeed - minSmoothSpeed) / Double(yTics)
     for y in 0 ..< yTics + 1 {
       if overlay == .both || overlay == .altitude {
@@ -146,7 +139,7 @@ class GraphView: UIView {
         ticPath.stroke()
         let labelX = GraphView.chartOffset - GraphView.altLabelXOffset
         let labelY = GraphView.chartOffset + (CGFloat(y) * chunkHeight) - GraphView.labelYOffset
-        let label = Converter.stringifyAltitude(run.maxAltitude.doubleValue - ((Double(y) * altChunkSpan)), unabbreviated: true, includeUnit: false)
+        let label = Converter.stringifyAltitude(maxAltitude - ((Double(y) * altChunkSpan)), unabbreviated: true, includeUnit: false)
         label.draw(at: CGPoint(x: labelX, y: labelY), withAttributes: [NSAttributedString.Key.foregroundColor: UiConstants.intermediate3Color])
       }
 

@@ -32,7 +32,10 @@ class GraphVC: ChildVC {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     AWSAnalyticsService.shared.recordVisitation(viewController: "\(GraphVC.self)")
+    configureGraphView()
+  }
 
+  private func configureGraphView() {
     guard let run = run else {
       return
     }
@@ -80,7 +83,23 @@ class GraphVC: ChildVC {
     graphView.maxSmoothSpeed = maxSmoothSpeed
     graphView.minSmoothSpeed = minSmoothSpeed
 
-    graphView.run = run
+    let startDate: Date
+    if let startLocation = run.locations[0] as? Location {
+      startDate = startLocation.timestamp
+    } else {
+      startDate = Date()
+    }
+    let endDate: Date
+    if let endLocation = run.locations.lastObject as? Location {
+      endDate = endLocation.timestamp
+    } else {
+      endDate = Date()
+    }
+    graphView.timeSpan = endDate.timeIntervalSince(startDate)
+
+    graphView.distance = run.distance.doubleValue
+    graphView.minAltitude = run.minAltitude.doubleValue
+    graphView.maxAltitude = run.maxAltitude.doubleValue
 
     graphView.setNeedsDisplay()
   }
