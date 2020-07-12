@@ -13,6 +13,7 @@ import CoreGraphics
 class GraphView: UIView {
   var run: Run?
   var smoothSpeeds: [Double] = []
+  var smoothAltitudes: [Double] = []
   var maxSmoothSpeed: Double = 0.0
   var minSmoothSpeed: Double = 0.0
   
@@ -44,134 +45,131 @@ class GraphView: UIView {
   
   override func draw(_ rect: CGRect) {
     super.draw(rect)    
-    if let run = run {
-      let orientation: Orientation
-      let chartHeight = bounds.size.height - 2 * GraphView.chartOffset
-      let chartWidth = bounds.size.width - 2 * GraphView.chartOffset
-      if chartHeight > chartWidth {
-        orientation = .portrait
-      } else {
-        orientation = .landscape
-      }
-      let xAxisPath = UIBezierPath()
-      xAxisPath.move(to: CGPoint(x: GraphView.chartOffset, y: chartHeight + GraphView.chartOffset))
-      xAxisPath.addLine(to: CGPoint(x: GraphView.chartOffset + chartWidth, y: chartHeight + GraphView.chartOffset))
+    guard let run = run else {
+      return
+    }
+    let orientation: Orientation
+    let chartHeight = bounds.size.height - 2 * GraphView.chartOffset
+    let chartWidth = bounds.size.width - 2 * GraphView.chartOffset
+    if chartHeight > chartWidth {
+      orientation = .portrait
+    } else {
+      orientation = .landscape
+    }
+    let xAxisPath = UIBezierPath()
+    xAxisPath.move(to: CGPoint(x: GraphView.chartOffset, y: chartHeight + GraphView.chartOffset))
+    xAxisPath.addLine(to: CGPoint(x: GraphView.chartOffset + chartWidth, y: chartHeight + GraphView.chartOffset))
+    UiConstants.darkColor.setStroke()
+    xAxisPath.lineWidth = GraphView.lineWidth
+    xAxisPath.stroke()
+
+    let overlay = SettingsManager.getOverlay()
+    if overlay == .both || overlay == .altitude {
+      let yAxisPath = UIBezierPath()
+      yAxisPath.move(to: CGPoint(x: GraphView.chartOffset, y: GraphView.chartOffset))
+      yAxisPath.addLine(to: CGPoint(x: GraphView.chartOffset, y: chartHeight + GraphView.chartOffset))
       UiConstants.darkColor.setStroke()
-      xAxisPath.lineWidth = GraphView.lineWidth
-      xAxisPath.stroke()
+      yAxisPath.lineWidth = GraphView.lineWidth
+      yAxisPath.stroke()
+      drawGraph(color: UiConstants.intermediate3Color, maxVal: run.maxAltitude.doubleValue, minVal: run.minAltitude.doubleValue, minRange: GraphView.minAltRange, getVal: { (x: Int) -> Double in
+        return smoothAltitudes[self.xToIndex(x)]
+      })
+    }
+    if overlay == .both || overlay == .pace {
+      let yAxisPath = UIBezierPath()
+      yAxisPath.move(to: CGPoint(x: GraphView.chartOffset + chartWidth, y: GraphView.chartOffset))
+      yAxisPath.addLine(to: CGPoint(x: GraphView.chartOffset + chartWidth, y: chartHeight + GraphView.chartOffset))
+      UiConstants.darkColor.setStroke()
+      yAxisPath.lineWidth = GraphView.lineWidth
+      yAxisPath.stroke()
+      drawGraph(color: UiConstants.intermediate1Color.withAlphaComponent(GraphView.speedAlpha), maxVal: maxSmoothSpeed, minVal: minSmoothSpeed, minRange: GraphView.minSpeedRange, getVal: { (x: Int) -> Double in
+        return self.smoothSpeeds[self.xToIndex(x)]
+      })
+    }
+    let xTics = orientation == .landscape ? GraphView.longTics : GraphView.shortTics
+    let ticPath = UIBezierPath()
+    ticPath.lineWidth = GraphView.lineWidth
+    let chunkWidth = chartWidth / CGFloat((xTics + 1))
 
-      let overlay = SettingsManager.getOverlay()
-      if overlay == .both || overlay == .altitude {
-        let yAxisPath = UIBezierPath()
-        yAxisPath.move(to: CGPoint(x: GraphView.chartOffset, y: GraphView.chartOffset))
-        yAxisPath.addLine(to: CGPoint(x: GraphView.chartOffset, y: chartHeight + GraphView.chartOffset))
+    let startDate: Date
+    if let startLocation = run.locations[0] as? Location {
+      startDate = startLocation.timestamp
+    } else {
+      startDate = Date()
+    }
+    let endDate: Date
+    if let endLocation = run.locations.lastObject as? Location {
+      endDate = endLocation.timestamp
+    } else {
+      endDate = Date()
+    }
+    let timeSpan = endDate.timeIntervalSince(startDate)
+
+    let timeChunk = Int(timeSpan) / (xTics + 1)
+    let distanceSpan = run.distance.doubleValue
+    let distanceChunk = distanceSpan / Double(xTics + 1)
+    for x in 0 ... xTics {
+      if x != xTics {
         UiConstants.darkColor.setStroke()
-        yAxisPath.lineWidth = GraphView.lineWidth
-        yAxisPath.stroke()
-        drawGraph(color: UiConstants.intermediate3Color, maxVal: run.maxAltitude.doubleValue, minVal: run.minAltitude.doubleValue, minRange: GraphView.minAltRange, getVal: { (x: Int) -> Double in
-          if let location = run.locations[self.xToIndex(x)] as? Location {
-            return location.altitude.doubleValue
-          } else {
-            return 0.0
-          }
-        })
-      }
-      if overlay == .both || overlay == .pace {
-        let yAxisPath = UIBezierPath()
-        yAxisPath.move(to: CGPoint(x: GraphView.chartOffset + chartWidth, y: GraphView.chartOffset))
-        yAxisPath.addLine(to: CGPoint(x: GraphView.chartOffset + chartWidth, y: chartHeight + GraphView.chartOffset))
-        UiConstants.darkColor.setStroke()
-        yAxisPath.lineWidth = GraphView.lineWidth
-        yAxisPath.stroke()
-        drawGraph(color: UiConstants.intermediate1Color.withAlphaComponent(GraphView.speedAlpha), maxVal: maxSmoothSpeed, minVal: minSmoothSpeed, minRange: GraphView.minSpeedRange, getVal: { (x: Int) -> Double in
-          return self.smoothSpeeds[self.xToIndex(x)]
-        })
-      }
-      let xTics = orientation == .landscape ? GraphView.longTics : GraphView.shortTics
-      let ticPath = UIBezierPath()
-      ticPath.lineWidth = GraphView.lineWidth
-      let chunkWidth = chartWidth / CGFloat((xTics + 1))
-
-      let startDate: Date
-      if let startLocation = run.locations[0] as? Location {
-        startDate = startLocation.timestamp
-      } else {
-        startDate = Date()
-      }
-      let endDate: Date
-      if let endLocation = run.locations.lastObject as? Location {
-        endDate = endLocation.timestamp
-      } else {
-        endDate = Date()
-      }
-      let timeSpan = endDate.timeIntervalSince(startDate)
-      
-      let timeChunk = Int(timeSpan) / (xTics + 1)
-      let distanceSpan = run.distance.doubleValue
-      let distanceChunk = distanceSpan / Double(xTics + 1)
-      for x in 0 ... xTics {
-        if x != xTics {
-          UiConstants.darkColor.setStroke()
-          ticPath.move(to: CGPoint(x: chunkWidth + GraphView.chartOffset + (CGFloat(x) * chunkWidth), y: GraphView.chartOffset + chartHeight))
-          ticPath.addLine(to: CGPoint(x: chunkWidth + GraphView.chartOffset + (CGFloat(x) * chunkWidth), y: GraphView.chartOffset + chartHeight + GraphView.ticLength))
-          ticPath.stroke()
-          let dashedPath = UIBezierPath()
-          UiConstants.lightColor.withAlphaComponent(GraphView.dashAlpha).setStroke()
-          dashedPath.lineWidth = GraphView.dashedLineWidth
-          let dashes = [GraphView.firstDashLength, GraphView.secondDashLength]
-          dashedPath.setLineDash(dashes, count: dashes.count, phase: 0)
-          dashedPath.move(to: CGPoint(x: chunkWidth + GraphView.chartOffset + (CGFloat(x) * chunkWidth), y: GraphView.chartOffset + chartHeight))
-          dashedPath.addLine(to: CGPoint(x: chunkWidth + GraphView.chartOffset + (CGFloat(x) * chunkWidth), y: GraphView.chartOffset))
-          dashedPath.stroke()
-        }
-        let time = Converter.stringifySecondCount((x * timeChunk) + timeChunk, useLongFormat: false)
-        time.draw(at: CGPoint(x: chunkWidth + GraphView.chartOffset + (CGFloat(x) * chunkWidth) - GraphView.timeLabelXOffset, y: GraphView.chartOffset + chartHeight + GraphView.timeLabelYOffset), withAttributes: [NSAttributedString.Key.foregroundColor: UiConstants.lightColor])
-        let distance = Converter.stringifyDistance((Double(x) * distanceChunk) + distanceChunk, format: "%.1f", omitUnits: true)
-        distance.draw(at: CGPoint(x: chunkWidth + GraphView.chartOffset + (CGFloat(x) * chunkWidth) - GraphView.distLabelXOffset, y: GraphView.chartOffset + chartHeight + GraphView.distLabelYOffset), withAttributes: [NSAttributedString.Key.foregroundColor: UiConstants.lightColor])
-      }
-
-      let timeLabel = "Time"
-      timeLabel.draw(at: CGPoint(x: GraphView.chartOffset - GraphView.timeLabelXOffset, y: GraphView.chartOffset + chartHeight + GraphView.timeLabelYOffset), withAttributes: [NSAttributedString.Key.foregroundColor: UiConstants.lightColor])
-      let distLabel = " Dist."
-      distLabel.draw(at: CGPoint(x: GraphView.chartOffset - GraphView.timeLabelXOffset, y: GraphView.chartOffset + chartHeight + GraphView.distLabelYOffset), withAttributes: [NSAttributedString.Key.foregroundColor: UiConstants.lightColor])
-
-      let yTics = orientation == .landscape ? GraphView.shortTics : GraphView.longTics
-      let chunkHeight = chartHeight / CGFloat((yTics + 1))
-      let altChunkSpan = (run.maxAltitude.doubleValue - run.minAltitude.doubleValue) / Double(yTics + 1)
-      let paceChunkSpan = (maxSmoothSpeed - minSmoothSpeed) / Double(yTics)
-      for y in 0 ..< yTics + 1 {
-        if overlay == .both || overlay == .altitude {
-          UiConstants.darkColor.setStroke()
-          ticPath.move(to: CGPoint(x: GraphView.chartOffset, y: GraphView.chartOffset + (CGFloat(y) * chunkHeight)))
-          ticPath.addLine(to: CGPoint(x: GraphView.chartOffset - GraphView.ticLength, y: GraphView.chartOffset + (CGFloat(y) * chunkHeight)))
-          ticPath.stroke()
-          let labelX = GraphView.chartOffset - GraphView.altLabelXOffset
-          let labelY = GraphView.chartOffset + (CGFloat(y) * chunkHeight) - GraphView.labelYOffset
-          let label = Converter.stringifyAltitude(run.maxAltitude.doubleValue - ((Double(y) * altChunkSpan)), unabbreviated: true, includeUnit: false)
-          label.draw(at: CGPoint(x: labelX, y: labelY), withAttributes: [NSAttributedString.Key.foregroundColor: UiConstants.intermediate3Color])
-        }
-
-        if overlay == .both || overlay == .pace {
-          UiConstants.darkColor.setStroke()
-          ticPath.move(to: CGPoint(x: GraphView.chartOffset + chartWidth, y: GraphView.chartOffset + (CGFloat(y) * chunkHeight)))
-          ticPath.addLine(to: CGPoint(x: GraphView.chartOffset + chartWidth + GraphView.ticLength, y: GraphView.chartOffset + (CGFloat(y) * chunkHeight)))
-          ticPath.stroke()
-          let labelX = GraphView.chartOffset + chartWidth + GraphView.paceLabelXOffset
-          let labelY = GraphView.chartOffset + (CGFloat(y) * chunkHeight) - GraphView.labelYOffset
-          let pace = maxSmoothSpeed - (Double(y) * paceChunkSpan)
-          let label = Converter.stringifyPace(pace, seconds: 1, forSpeaking: false, includeUnit: false)
-          label.draw(at: CGPoint(x: labelX, y: labelY), withAttributes: [NSAttributedString.Key.foregroundColor: UiConstants.intermediate1Color])
-        }
-        
+        ticPath.move(to: CGPoint(x: chunkWidth + GraphView.chartOffset + (CGFloat(x) * chunkWidth), y: GraphView.chartOffset + chartHeight))
+        ticPath.addLine(to: CGPoint(x: chunkWidth + GraphView.chartOffset + (CGFloat(x) * chunkWidth), y: GraphView.chartOffset + chartHeight + GraphView.ticLength))
+        ticPath.stroke()
         let dashedPath = UIBezierPath()
         UiConstants.lightColor.withAlphaComponent(GraphView.dashAlpha).setStroke()
         dashedPath.lineWidth = GraphView.dashedLineWidth
         let dashes = [GraphView.firstDashLength, GraphView.secondDashLength]
         dashedPath.setLineDash(dashes, count: dashes.count, phase: 0)
-        dashedPath.move(to: CGPoint(x: GraphView.chartOffset, y: GraphView.chartOffset + (CGFloat(y) * chunkHeight)))
-        dashedPath.addLine(to: CGPoint(x: GraphView.chartOffset + chartWidth, y: GraphView.chartOffset + (CGFloat(y) * chunkHeight)))
+        dashedPath.move(to: CGPoint(x: chunkWidth + GraphView.chartOffset + (CGFloat(x) * chunkWidth), y: GraphView.chartOffset + chartHeight))
+        dashedPath.addLine(to: CGPoint(x: chunkWidth + GraphView.chartOffset + (CGFloat(x) * chunkWidth), y: GraphView.chartOffset))
         dashedPath.stroke()
       }
+      let time = Converter.stringifySecondCount((x * timeChunk) + timeChunk, useLongFormat: false)
+      time.draw(at: CGPoint(x: chunkWidth + GraphView.chartOffset + (CGFloat(x) * chunkWidth) - GraphView.timeLabelXOffset, y: GraphView.chartOffset + chartHeight + GraphView.timeLabelYOffset), withAttributes: [NSAttributedString.Key.foregroundColor: UiConstants.lightColor])
+      let distance = Converter.stringifyDistance((Double(x) * distanceChunk) + distanceChunk, format: "%.1f", omitUnits: true)
+      distance.draw(at: CGPoint(x: chunkWidth + GraphView.chartOffset + (CGFloat(x) * chunkWidth) - GraphView.distLabelXOffset, y: GraphView.chartOffset + chartHeight + GraphView.distLabelYOffset), withAttributes: [NSAttributedString.Key.foregroundColor: UiConstants.lightColor])
+    }
+
+    let timeLabel = "Time"
+    timeLabel.draw(at: CGPoint(x: GraphView.chartOffset - GraphView.timeLabelXOffset, y: GraphView.chartOffset + chartHeight + GraphView.timeLabelYOffset), withAttributes: [NSAttributedString.Key.foregroundColor: UiConstants.lightColor])
+    let distLabel = " Dist."
+    distLabel.draw(at: CGPoint(x: GraphView.chartOffset - GraphView.timeLabelXOffset, y: GraphView.chartOffset + chartHeight + GraphView.distLabelYOffset), withAttributes: [NSAttributedString.Key.foregroundColor: UiConstants.lightColor])
+
+    let yTics = orientation == .landscape ? GraphView.shortTics : GraphView.longTics
+    let chunkHeight = chartHeight / CGFloat((yTics + 1))
+    let altChunkSpan = (run.maxAltitude.doubleValue - run.minAltitude.doubleValue) / Double(yTics + 1)
+    let paceChunkSpan = (maxSmoothSpeed - minSmoothSpeed) / Double(yTics)
+    for y in 0 ..< yTics + 1 {
+      if overlay == .both || overlay == .altitude {
+        UiConstants.darkColor.setStroke()
+        ticPath.move(to: CGPoint(x: GraphView.chartOffset, y: GraphView.chartOffset + (CGFloat(y) * chunkHeight)))
+        ticPath.addLine(to: CGPoint(x: GraphView.chartOffset - GraphView.ticLength, y: GraphView.chartOffset + (CGFloat(y) * chunkHeight)))
+        ticPath.stroke()
+        let labelX = GraphView.chartOffset - GraphView.altLabelXOffset
+        let labelY = GraphView.chartOffset + (CGFloat(y) * chunkHeight) - GraphView.labelYOffset
+        let label = Converter.stringifyAltitude(run.maxAltitude.doubleValue - ((Double(y) * altChunkSpan)), unabbreviated: true, includeUnit: false)
+        label.draw(at: CGPoint(x: labelX, y: labelY), withAttributes: [NSAttributedString.Key.foregroundColor: UiConstants.intermediate3Color])
+      }
+
+      if overlay == .both || overlay == .pace {
+        UiConstants.darkColor.setStroke()
+        ticPath.move(to: CGPoint(x: GraphView.chartOffset + chartWidth, y: GraphView.chartOffset + (CGFloat(y) * chunkHeight)))
+        ticPath.addLine(to: CGPoint(x: GraphView.chartOffset + chartWidth + GraphView.ticLength, y: GraphView.chartOffset + (CGFloat(y) * chunkHeight)))
+        ticPath.stroke()
+        let labelX = GraphView.chartOffset + chartWidth + GraphView.paceLabelXOffset
+        let labelY = GraphView.chartOffset + (CGFloat(y) * chunkHeight) - GraphView.labelYOffset
+        let pace = maxSmoothSpeed - (Double(y) * paceChunkSpan)
+        let label = Converter.stringifyPace(pace, seconds: 1, forSpeaking: false, includeUnit: false)
+        label.draw(at: CGPoint(x: labelX, y: labelY), withAttributes: [NSAttributedString.Key.foregroundColor: UiConstants.intermediate1Color])
+      }
+
+      let dashedPath = UIBezierPath()
+      UiConstants.lightColor.withAlphaComponent(GraphView.dashAlpha).setStroke()
+      dashedPath.lineWidth = GraphView.dashedLineWidth
+      let dashes = [GraphView.firstDashLength, GraphView.secondDashLength]
+      dashedPath.setLineDash(dashes, count: dashes.count, phase: 0)
+      dashedPath.move(to: CGPoint(x: GraphView.chartOffset, y: GraphView.chartOffset + (CGFloat(y) * chunkHeight)))
+      dashedPath.addLine(to: CGPoint(x: GraphView.chartOffset + chartWidth, y: GraphView.chartOffset + (CGFloat(y) * chunkHeight)))
+      dashedPath.stroke()
     }
   }
   
