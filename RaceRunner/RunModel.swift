@@ -479,25 +479,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
       return false
     }
   }
-  
-  static func deleteSavedRun() {
-    SettingsManager.setRealRunInProgress(false)
-    SettingsManager.setWarnedUserAboutLowRam(false)
-    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "RunInProgress")
-    let context = CDManager.sharedCDManager.context
-    fetchRequest.entity = NSEntityDescription.entity(forEntityName: "RunInProgress", in: context)
-    do {
-      let runsInProgress = (try context.fetch(fetchRequest)) as? [RunInProgress]
-      if let runsInProgress = runsInProgress {
-        if runsInProgress.count > 0 {
-          context.delete(runsInProgress[0])
-          CDManager.saveContext()
-        }
-      }
-    }
-    catch _ as NSError {}
-  }
-  
+
   func stop() {
     if SettingsManager.getRealRunInProgress() {
       AWSAnalyticsService.shared.recordRunStop()
@@ -509,9 +491,6 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
       PubNubManager.runStopped()
       PubNubManager.unsubscribeFromChannel(SettingsManager.getBroadcastName())
       SettingsManager.setBroadcastNextRun(false)
-    }
-    if runToSimulate == nil && gpxFile == nil {
-      RunModel.deleteSavedRun()
     }
     if runToSimulate == nil && gpxFile == nil && totalDistance > RunModel.minDistance {
       let randomApplause = arc4random_uniform(Sound.applauseCount) + 1

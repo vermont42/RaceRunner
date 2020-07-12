@@ -27,8 +27,6 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
   private static let gpxFile = "iSmoothRun"
   private static let sadFaceTitle = "😢"
 
-  private var firstAppearance = true
-
   override var prefersStatusBarHidden: Bool {
     return true
   }
@@ -50,28 +48,12 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
     NotificationCenter.default.addObserver(self, selector: #selector(updateRunButton), name: .runDidStop, object: nil)
     updateRunButton()
   }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    if firstAppearance && !SettingsManager.getStartedViaSiri() {
-      firstAppearance = false
-      if SettingsManager.getRealRunInProgress() {
-        LowMemoryHandler.askWhetherToResumeRun(self, completion: {
-          self.updateRunButton()
-        })
-      }
-    }
-  }
 
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     NotificationCenter.default.removeObserver(self)
   }
 
-  override func didReceiveMemoryWarning() {
-    LowMemoryHandler.handleLowMemory(self)
-  }
-    
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return controllerLabels.count
   }

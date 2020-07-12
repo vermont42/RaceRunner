@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     Config.checkKeys()
     GMSServices.provideAPIKey(Config.googleMapsKey)
     SoundManager.enableBackgroundAudio()
-    LowMemoryHandler.appStarted()
     return true
   }
     

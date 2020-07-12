@@ -18,7 +18,7 @@ class ChildVC: UIViewController {
   }
   
   override func didReceiveMemoryWarning() {
-    LowMemoryHandler.handleLowMemory(self)
+    LowMemoryHandler.handleLowMemory()
   }
   
   func setupSwipeGestureRecognizer() {

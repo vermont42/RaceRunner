@@ -57,10 +57,6 @@ class SettingsManager {
   private static let audibleSplitsKey = "audibleSplits"
   private static let audibleSplitsDefault = true
 
-  private var warnedUserAboutLowRam: Bool
-  private static let warnedUserAboutLowRamKey = "warnedUserAboutLowRam"
-  private static let warnedUserAboutLowRamDefault = false
-  
   private var realRunInProgress: Bool
   private static let realRunInProgressKey = "realRunInProgress"
   private static let realRunInProgressDefault = false
@@ -201,14 +197,6 @@ class SettingsManager {
     } else {
       showedForecastCredit = SettingsManager.showedForecastCreditDefault
       userDefaults.set("\(showedForecastCredit)", forKey: SettingsManager.showedForecastCreditKey)
-      userDefaults.synchronize()
-    }
-
-    if let warnedUserAboutLowRamString = userDefaults.string(forKey: SettingsManager.warnedUserAboutLowRamKey) {
-      warnedUserAboutLowRam = (warnedUserAboutLowRamString as NSString).boolValue
-    } else {
-      warnedUserAboutLowRam = SettingsManager.warnedUserAboutLowRamDefault
-      userDefaults.set("\(warnedUserAboutLowRam)", forKey: SettingsManager.warnedUserAboutLowRamKey)
       userDefaults.synchronize()
     }
 
@@ -449,18 +437,6 @@ class SettingsManager {
     }
   }
 
-  class func getWarnedUserAboutLowRam() -> Bool {
-    return settingsManager.warnedUserAboutLowRam
-  }
-  
-  class func setWarnedUserAboutLowRam(_ warnedUserAboutLowRam: Bool) {
-    if warnedUserAboutLowRam != settingsManager.warnedUserAboutLowRam {
-      settingsManager.warnedUserAboutLowRam = warnedUserAboutLowRam
-      settingsManager.userDefaults.set("\(warnedUserAboutLowRam)", forKey: SettingsManager.warnedUserAboutLowRamKey)
-      settingsManager.userDefaults.synchronize()
-    }
-  }
-  
   class func getShowedForecastCredit() -> Bool {
     return settingsManager.showedForecastCredit
   }
