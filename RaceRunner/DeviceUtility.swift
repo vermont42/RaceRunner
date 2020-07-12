@@ -18,6 +18,7 @@ public extension UIDevice {
       return identifier + String(UnicodeScalar(UInt8(value)))
     }
 
+    // https://everyi.com/by-identifier/ipod-iphone-ipad-specs-by-model-identifier.html
     switch identifier {
     case "iPod5,1":                                 return "iPod Touch 5"
     case "iPod7,1":                                 return "iPod Touch 6"
@@ -61,7 +62,7 @@ public extension UIDevice {
     case "iPad7,3", "iPad7,4", "iPad7,5":           return "iPad Pro 10.5 Inch"
     case "iPad7,11":                                return "iPad 10.2 Inch"
     case "iPad8,1", "iPad8,2", "iPad8,3", "iPad8,4", "iPad8,5", "iPad8,6", "iPad8,7", "iPad8,8": return "iPad Pro 12.9 Inch 3rd Gen."
-    case "iPad8,12":                                return "iPad Pro 12.9 Inch 4th Gen."
+    case "iPad8,11", "iPad8,12":                    return "iPad Pro 12.9 Inch 4th Gen."
     case "iPad11,1", "iPad11,2":                    return "iPad Mini 5th Gen."
     case "iPad11,3", "iPad11,4":                    return "iPad Air 3rd Gen."
     case "AppleTV5,3":                              return "Apple TV"
