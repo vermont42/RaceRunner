@@ -12,6 +12,8 @@ struct LowMemoryHandler {
   private static let lowMemoryWarning = "iOS issued RaceRunner a low memory warning. Run recording may be interrupted."
 
   static func handleLowMemory() {
-    Utterer.utter(lowMemoryWarning)
+    if SettingsManager.getRealRunInProgress() {
+      Utterer.utter(lowMemoryWarning)
+    }
   }
 }
