@@ -265,10 +265,6 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     }
   }
 
-  internal func announceCurrentPace() {
-    Converter.announceCurrentPace(curPace)
-  }
-  
   static func loadStateAndStart() {
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "RunInProgress")
     let context = CDManager.sharedCDManager.context

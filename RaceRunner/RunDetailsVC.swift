@@ -61,14 +61,6 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    guard let run = run else {
-      fatalError(nilMessage + "viewDidLoad()")
-    }
-    if run.locations.count > 0 {
-      configureView()
-    } else {
-      fatalError(RunDetailsVC.noLocationsError)
-    }
     map.mapType = .terrain
     map.delegate = self
     polyline.strokeWidth = UiConstants.polylineWidth
@@ -81,17 +73,41 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
       UIAlertController.showMessage(RunDetailsVC.forecastMessage, title: RunDetailsVC.forecastTitle, okTitle: RunDetailsVC.forecastOkay)
       SettingsManager.setShowedForecastCredit(true)
     }
+
+    configureView()
   }
-  
-  func configureView() {
+
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    configureMap()
+  }
+
+  private func configureMap() {
+    guard let run = run else {
+      fatalError(nilMessage + "viewDidLoad()")
+    }
+
+    guard run.locations.count > 0 else {
+      fatalError(RunDetailsVC.noLocationsError)
+    }
+
+    var northeast = CLLocationCoordinate2D(latitude: run.maxLatitude.doubleValue, longitude: run.maxLongitude.doubleValue)
+    var southwest = CLLocationCoordinate2D(latitude: run.minLatitude.doubleValue, longitude: run.minLongitude.doubleValue)
+    let cushion: Double = 0.0013
+    northeast.latitude += cushion
+    southwest.latitude -= cushion
+    northeast.longitude += cushion
+    southwest.longitude -= cushion
+
+    let bounds = GMSCoordinateBounds(coordinate: northeast, coordinate: southwest)
+    map.camera = map.camera(for: bounds, insets: UIEdgeInsets())!
+  }
+
+  private func configureView() {
     guard let run = run else {
       fatalError(nilMessage + "configureView()")
     }
-    var northeast = CLLocationCoordinate2D(latitude: run.maxLatitude.doubleValue, longitude: run.maxLongitude.doubleValue)
-    var southwest = CLLocationCoordinate2D(latitude: run.minLatitude.doubleValue, longitude: run.minLongitude.doubleValue)
-    northeast.longitude += UiConstants.longitudeCushion
-    southwest.longitude -= UiConstants.longitudeCushion
-    map.animate(with: GMSCameraUpdate.fit(GMSCoordinateBounds(coordinate: northeast, coordinate: southwest)))
+
     let dateFormatter = DateFormatter()
     dateFormatter.dateStyle = DateFormatter.Style.short
     dateFormatter.timeStyle = DateFormatter.Style.short
@@ -122,7 +138,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     updateCalories()
   }
   
-  func updateCalories() {
+  private func updateCalories() {
     guard let run = run else {
       fatalError(nilMessage + "updateCalories()")
     }
@@ -135,7 +151,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     }
   }
   
-  func addOverlays() {
+  private func addOverlays() {
     guard let run = run else {
       fatalError(nilMessage + "addOverlays()")
     }

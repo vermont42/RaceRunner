@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     Config.checkKeys()
     GMSServices.provideAPIKey(Config.googleMapsKey)
     SoundManager.enableBackgroundAudio()
+    SettingsManager.setRealRunInProgress(false)
     return true
   }
     
@@ -29,7 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func applicationWillTerminate(_ application: UIApplication) {
     CDManager.saveContext()
-    SettingsManager.setRealRunInProgress(false)
     Utterer.utter("Terminating RaceRunner.")
   }
 

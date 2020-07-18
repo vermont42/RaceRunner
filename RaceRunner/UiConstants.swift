@@ -24,7 +24,6 @@ class UiConstants {
   static let panDuration: TimeInterval = 0.4
   static let polylineWidth: CGFloat = 8.0
   static let cameraZoom: Float = 16.0
-  static let longitudeCushion: Double = 0.00851970939493185
   static let messageDelay: Double = 2.0
   static let notDoneAlpha: CGFloat = 0.50
 }

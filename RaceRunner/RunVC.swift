@@ -46,7 +46,6 @@ class RunVC: ChildVC {
     map.isHidden = true
     paceOrAltitude.isHidden = true
     view.sendSubviewToBack(map)
-    view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(RunVC.announceCurrentPace)))
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -133,10 +132,6 @@ class RunVC: ChildVC {
       RunModel.runModel.stop()
     }
     NotificationCenter.default.removeObserver(self)
-  }
-
-  @objc func announceCurrentPace() {
-    RunModel.runModel.announceCurrentPace()
   }
 
   func addPolylineAndPin() {

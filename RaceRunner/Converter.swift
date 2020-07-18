@@ -70,10 +70,6 @@ class Converter {
     Utterer.utter(progressString)
   }
 
-  class func announceCurrentPace(_ pace: Double) {
-    Utterer.utter(stringifyPace(pace, seconds: 1, forSpeaking: true))
-  }
-  
   class func pluralizedCurrentLongUnit(_ value: Double) -> String {
     switch SettingsManager.getUnitType() {
     case .imperial:
