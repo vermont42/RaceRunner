@@ -20,7 +20,9 @@ struct ReviewPrompter {
     let lastReviewPromptDate = SettingsManager.getLastReviewPromptDate()
     let now = Date()
     if actionCount % promptModulo == 0 && now.timeIntervalSince(lastReviewPromptDate) >= promptInterval {
+      #if RELEASE
       SKStoreReviewController.requestReview()
+      #endif
       SettingsManager.setLastReviewPromptDate(now)
     }
   }

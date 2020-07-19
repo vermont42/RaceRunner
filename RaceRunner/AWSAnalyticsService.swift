@@ -34,8 +34,10 @@ class AWSAnalyticsService: NSObject {
         event.addMetric(NSNumber(value: value), forKey: key)
       }
     }
+    #if RELEASE
     pinpoint.analyticsClient.record(event)
     pinpoint.analyticsClient.submitEvents()
+    #endif
   }
   
   func recordEvent(_ eventName: String) {
@@ -84,9 +86,11 @@ class AWSAnalyticsService: NSObject {
   }
 
   private func recordCustomProfileDemographics() {
+    #if RELEASE
     let profile: AWSPinpointEndpointProfile = (pinpoint.targetingClient.currentEndpointProfile())
     profile.demographic?.model = UIDevice.current.modelName
     profile.demographic?.platformVersion = UIDevice.current.systemVersion
     pinpoint.targetingClient.update(profile)
+    #endif
   }
 }
