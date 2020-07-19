@@ -1,7 +1,7 @@
 ![RaceRunner](RaceRunner/logo.png "Logo by Moze")
 
 [![Twitter](https://img.shields.io/badge/twitter-@vermont42-blue.svg?style=flat)](http://twitter.com/vermont42)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
+[![license](https://img.shields.io/badge/license-GPL-blue)]()
 [![cat](https://img.shields.io/badge/cat-friendly-blue.svg)](https://twitter.com/vermont42/status/784504585243078656)
 
 RaceRunner
