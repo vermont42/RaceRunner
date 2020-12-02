@@ -50,8 +50,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   let scoreString = "Score: %04u"
   let runnerMass: CGFloat = 0.02
   let hudFontSize: CGFloat = 25.0
-  let scoreOffset: CGFloat = 40.0
-  let healthOffset: CGFloat = 80.0
+  let scoreOffset: CGFloat = 60.0
+  let healthOffset: CGFloat = 100.0
   let distancePerMove: CGFloat = 10.0
   let minRunnerAcceleration: Double = 0.2
   let runnerForce: CGFloat = 40.0
