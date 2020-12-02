@@ -210,8 +210,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   func adjustScoreBy(_ points: Int) {
     score += points
     
-    if let score = childNode(withName: scoreHudName) as? SKLabelNode {
-      score.text = String(format: scoreString, score)
+    if let scoreNode = childNode(withName: scoreHudName) as? SKLabelNode {
+      scoreNode.text = String(format: scoreString, score)
     }
   }
   
