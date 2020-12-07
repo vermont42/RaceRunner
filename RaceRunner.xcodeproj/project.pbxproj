@@ -22,7 +22,7 @@
 		E10B704E1C45C09200C70283 /* LogSortField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B704D1C45C09200C70283 /* LogSortField.swift */; };
 		E10B70501C45C9BF00C70283 /* SortType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10B704F1C45C9BF00C70283 /* SortType.swift */; };
 		E1103F231C00DADF00E18D2E /* click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1103F201C00DADF00E18D2E /* click.mp3 */; };
-		E1103F241C00DADF00E18D2E /* gun.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1103F211C00DADF00E18D2E /* gun.mp3 */; };
+		E1103F241C00DADF00E18D2E /* gun1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1103F211C00DADF00E18D2E /* gun1.mp3 */; };
 		E1103F251C00DADF00E18D2E /* applause1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E1103F221C00DADF00E18D2E /* applause1.mp3 */; };
 		E11655AC1AEAFB5200633C16 /* RunModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11655AB1AEAFB5200633C16 /* RunModel.swift */; };
 		E11E22BF1C08C71200488399 /* UnitType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E22BE1C08C71200488399 /* UnitType.swift */; };
@@ -166,7 +166,7 @@
 		E10B704D1C45C09200C70283 /* LogSortField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogSortField.swift; sourceTree = "<group>"; };
 		E10B704F1C45C9BF00C70283 /* SortType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortType.swift; sourceTree = "<group>"; };
 		E1103F201C00DADF00E18D2E /* click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = click.mp3; sourceTree = "<group>"; };
-		E1103F211C00DADF00E18D2E /* gun.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gun.mp3; sourceTree = "<group>"; };
+		E1103F211C00DADF00E18D2E /* gun1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gun1.mp3; sourceTree = "<group>"; };
 		E1103F221C00DADF00E18D2E /* applause1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = applause1.mp3; sourceTree = "<group>"; };
 		E11655AB1AEAFB5200633C16 /* RunModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunModel.swift; sourceTree = "<group>"; };
 		E11E22BE1C08C71200488399 /* UnitType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitType.swift; sourceTree = "<group>"; };
@@ -326,7 +326,7 @@
 				E10356461C02A1EB006E8FEC /* applause3.mp3 */,
 				E10356441C02A1CB006E8FEC /* applause2.mp3 */,
 				E1103F201C00DADF00E18D2E /* click.mp3 */,
-				E1103F211C00DADF00E18D2E /* gun.mp3 */,
+				E1103F211C00DADF00E18D2E /* gun1.mp3 */,
 				E1342BBD1D04F94000ABFCA7 /* gun2.mp3 */,
 				E1342BBE1D04F94000ABFCA7 /* neigh.mp3 */,
 				E1342BBB1D04F94000ABFCA7 /* scream1.mp3 */,
@@ -623,7 +623,7 @@
 				E12847731C1763320053ED96 /* sadTrombone.mp3 in Resources */,
 				E1DBA6DA1C1FC0AB00DE3E4F /* Strava.gpx in Resources */,
 				E1E8B92E1AAB73F000D04E38 /* LaunchScreen.xib in Resources */,
-				E1103F241C00DADF00E18D2E /* gun.mp3 in Resources */,
+				E1103F241C00DADF00E18D2E /* gun1.mp3 in Resources */,
 				E1342BC21D04F94000ABFCA7 /* neigh.mp3 in Resources */,
 				E10356451C02A1CB006E8FEC /* applause2.mp3 in Resources */,
 				E1DBA6D81C1FBF0300DE3E4F /* WahooFitness.gpx in Resources */,

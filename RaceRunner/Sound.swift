@@ -13,13 +13,25 @@ enum Sound: String {
   case applause2 = "applause2"
   case applause3 = "applause3"
   case click = "click"
-  case gun = "gun"
+  case gun1 = "gun1"
   case gun2 = "gun2"
   case neigh = "neigh"
   case sadTrombone = "sadTrombone"
-  case scream = "scream"
+  case scream1 = "scream1"
+  case scream2 = "scream2"
+  case scream3 = "scream3"
   case silence = "silence"
 
-  static let applauseCount: UInt32 = 3
-  static let screamCount = 3
+  static var randomScream: Sound {
+    return randomSound(base: "scream", count: 3, defaultSound: .scream1)
+  }
+
+  static var randomApplause: Sound {
+    return randomSound(base: "applause", count: 3, defaultSound: .applause1)
+  }
+
+  private static func randomSound(base: String, count: Int, defaultSound: Sound) -> Sound {
+    let randomIndex = Int.random(in: 1 ... count)
+    return Sound(rawValue: base + "\(randomIndex)") ?? defaultSound
+  }
 }

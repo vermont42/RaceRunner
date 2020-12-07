@@ -356,7 +356,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   }
   
   func start(isViaSiri: Bool = false) {
-    SoundManager.play(.gun)
+    SoundManager.play(.gun1)
     SettingsManager.setStartedViaSiri(isViaSiri)
     NotificationCenter.default.post(name: .runDidStart, object: nil)
     start(locations: [], oldSplitAltitude: 0.0, totalSeconds: 0, lastSeconds: 0, totalDistance: 0.0, lastDistance: 0.0, currentAltitude: 0.0, currentSplitDistance: 0.0, altGained: 0.0, altLost: 0.0, maxLong: 0.0, minLong: 0.0, maxLat: 0.0, minLat: 0.0, maxAlt: 0.0, minAlt: 0.0)
@@ -489,17 +489,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
       SettingsManager.setBroadcastNextRun(false)
     }
     if runToSimulate == nil && gpxFile == nil && totalDistance > RunModel.minDistance {
-      let randomApplause = arc4random_uniform(Sound.applauseCount) + 1
-      switch randomApplause {
-      case 1:
-        SoundManager.play(.applause1)
-      case 2:
-        SoundManager.play(.applause2)
-      case 3:
-        SoundManager.play(.applause3)
-      default:
-        break
-      }
+      SoundManager.play(Sound.randomApplause)
       var customName = ""
       let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Run")
       let context = CDManager.sharedCDManager.context
