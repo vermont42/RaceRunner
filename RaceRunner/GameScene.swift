@@ -445,7 +445,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     let nodeNames = [contact.bodyA.node?.name ?? "🔥", contact.bodyB.node?.name ?? "❄️"]
     if nodeNames.contains(runnerName) && nodeNames.contains(invaderFiredBulletName) {
-      run(SKAction.playSoundFileNamed(Sound.scream1.rawValue, waitForCompletion: false))
+      run(SKAction.playSoundFileNamed(randomScream, waitForCompletion: false))
       adjustrunnerHealthBy(healthAdjustment)
       if runnerHealth <= 0.0 {
         contact.bodyA.node?.removeFromParent()
@@ -466,7 +466,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       if nodeNames.contains(InvaderType.horse.rawValue) {
         scream = Sound.neigh.rawValue
       } else {
-        scream = Sound.scream2.rawValue
+        scream = randomScream
       }
       run(SKAction.playSoundFileNamed(scream, waitForCompletion: false))
       contact.bodyA.node?.removeFromParent()
@@ -515,5 +515,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         contactQueue.remove(at: index)
       }
     }
+  }
+
+  private var randomScream: String {
+    let randomScreamIndex = Int.random(in: 1 ... Sound.screamCount)
+    return Sound.scream.rawValue + "\(randomScreamIndex)"
   }
 }

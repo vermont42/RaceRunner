@@ -17,9 +17,9 @@ enum Sound: String {
   case gun2 = "gun2"
   case neigh = "neigh"
   case sadTrombone = "sadTrombone"
-  case scream1 = "scream1"
-  case scream2 = "scream2"
+  case scream = "scream"
   case silence = "silence"
 
   static let applauseCount: UInt32 = 3
+  static let screamCount = 3
 }

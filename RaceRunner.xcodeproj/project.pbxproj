@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0368AB82257E7E6E00052A45 /* scream3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0368AB81257E7E6E00052A45 /* scream3.mp3 */; };
 		038984C322189E1E00DF27CF /* AWSAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038984C222189E1E00DF27CF /* AWSAnalyticsService.swift */; };
 		038984C522189E7800DF27CF /* DeviceUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038984C422189E7800DF27CF /* DeviceUtility.swift */; };
 		038984C72218A04E00DF27CF /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 038984C62218A04E00DF27CF /* awsconfiguration.json */; };
@@ -144,6 +145,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0368AB81257E7E6E00052A45 /* scream3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = scream3.mp3; sourceTree = "<group>"; };
 		038984C222189E1E00DF27CF /* AWSAnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSAnalyticsService.swift; sourceTree = "<group>"; };
 		038984C422189E7800DF27CF /* DeviceUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUtility.swift; sourceTree = "<group>"; };
 		038984C62218A04E00DF27CF /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = SOURCE_ROOT; };
@@ -329,6 +331,7 @@
 				E1342BBE1D04F94000ABFCA7 /* neigh.mp3 */,
 				E1342BBB1D04F94000ABFCA7 /* scream1.mp3 */,
 				E1342BBC1D04F94000ABFCA7 /* scream2.mp3 */,
+				0368AB81257E7E6E00052A45 /* scream3.mp3 */,
 				E12847721C1763320053ED96 /* sadTrombone.mp3 */,
 				E1863B131CD66A6C00B55CD3 /* silence.mp3 */,
 			);
@@ -554,7 +557,6 @@
 					};
 					E1E8B91D1AAB73F000D04E38 = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = V3L2PL4QC9;
 						LastSwiftMigration = 1020;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -604,6 +606,7 @@
 				E1342BC81D04FA3B00ABFCA7 /* Bullet.sks in Resources */,
 				E1863B141CD66A6C00B55CD3 /* silence.mp3 in Resources */,
 				038984C72218A04E00DF27CF /* awsconfiguration.json in Resources */,
+				0368AB82257E7E6E00052A45 /* scream3.mp3 in Resources */,
 				E1DBA6D41C1FBA9200DE3E4F /* WeatherRun.gpx in Resources */,
 				E10356471C02A1EB006E8FEC /* applause3.mp3 in Resources */,
 				E1342BBF1D04F94000ABFCA7 /* scream1.mp3 in Resources */,
@@ -830,15 +833,15 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3.1;
+				CURRENT_PROJECT_VERSION = 3.2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = V3L2PL4QC9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Siri/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 3.1;
-				PRODUCT_BUNDLE_IDENTIFIER = biz.joshadams.RaceRunner.Siri;
+				MARKETING_VERSION = 3.2;
+				PRODUCT_BUNDLE_IDENTIFIER = biz.joshadams.RaceRunner.Siri2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -859,14 +862,14 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3.1;
+				CURRENT_PROJECT_VERSION = 3.2;
 				DEVELOPMENT_TEAM = V3L2PL4QC9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Siri/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 3.1;
-				PRODUCT_BUNDLE_IDENTIFIER = biz.joshadams.RaceRunner.Siri;
+				MARKETING_VERSION = 3.2;
+				PRODUCT_BUNDLE_IDENTIFIER = biz.joshadams.RaceRunner.Siri2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -991,12 +994,12 @@
 				CODE_SIGN_ENTITLEMENTS = RaceRunner/RaceRunner.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 3.1;
+				CURRENT_PROJECT_VERSION = 3.2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = RaceRunner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = "biz.joshadams.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1016,18 +1019,21 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = RaceRunner/RaceRunner.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 3.1;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3.2;
+				DEVELOPMENT_TEAM = V3L2PL4QC9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = RaceRunner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = "biz.joshadams.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "RaceRunner/RaceRunner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
