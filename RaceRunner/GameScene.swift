@@ -460,7 +460,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
           }
         }
       }
-      
     } else if (nodeNames.contains(InvaderType.horse.rawValue) || nodeNames.contains(InvaderType.runner.rawValue)) && nodeNames.contains(runnerFiredBulletName) {
       let scream: String
       if nodeNames.contains(InvaderType.horse.rawValue) {
