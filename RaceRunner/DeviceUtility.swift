@@ -10,6 +10,12 @@ import UIKit
 
 public extension UIDevice {
   var modelName: String {
+    if #available(iOS 14.0, *) {
+      if ProcessInfo.processInfo.isiOSAppOnMac {
+        return "iOS on Mac"
+      }
+    }
+
     var systemInfo = utsname()
     uname(&systemInfo)
     let machineMirror = Mirror(reflecting: systemInfo.machine)
@@ -46,6 +52,10 @@ public extension UIDevice {
     case "iPhone12,3":                              return "iPhone 11 Pro"
     case "iPhone12,5":                              return "iPhone 11 Pro Max"
     case "iPhone12,8":                              return "iPhone SE 2nd Gen."
+    case "iPhone13,1":                              return "iPhone 12 Mini"
+    case "iPhone13,2":                              return "iPhone 12"
+    case "iPhone13,3":                              return "iPhone 12 Pro"
+    case "iPhone13,4":                              return "iPhone 12 Pro Max"
     case "iPad2,1", "iPad2,2", "iPad2,3", "iPad2,4":return "iPad 2"
     case "iPad3,1", "iPad3,2", "iPad3,3":           return "iPad 3"
     case "iPad3,4", "iPad3,5", "iPad3,6":           return "iPad 4"
