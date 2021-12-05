@@ -246,6 +246,7 @@ class SettingsVC: ChildVC, BroadcastDelegate {
         let textFields = alertController.textFields ?? []
         let predicate = NSPredicate(format: "promoCode = %@", textFields[0].text?.lowercased() ?? "🙀")
         let query = CKQuery(recordType: "PromoCodes", predicate: predicate)
+        // Looks like using async/await fixes this warning. https://stackoverflow.com/q/67943790
         CKContainer.default().publicCloudDatabase.perform(query, inZoneWith: nil) {
           results, error in
           if error == nil {

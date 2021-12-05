@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol BroadcastDelegate: class {
+protocol BroadcastDelegate: AnyObject {
   func userWantsToBroadcast(_ userWantsToBroadcast: Bool)
 }

@@ -25,7 +25,7 @@ DEPENDENCIES:
   - PubNub
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - AWSCore
     - AWSPinpoint
     - COBezierTableView
@@ -45,6 +45,6 @@ SPEC CHECKSUMS:
   MGSwipeTableCell: b804e4e450dee439c42250be90bd50458bf67fce
   PubNub: 306896876c3089884067609ff25d628a547d2942
 
-PODFILE CHECKSUM: 60c522faa4237266a166cfac83947aeae08c8066
+PODFILE CHECKSUM: 7168c5bf490482f86528acfaefc7fe44e8bddf91
 
 COCOAPODS: 1.11.2

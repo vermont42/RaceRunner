@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-protocol ShoesDelegate: class {
+protocol ShoesDelegate: AnyObject {
   func receiveShoes(_ shoes: Shoes, isNew: Bool)
   func makeNewIsCurrent(_ newIsCurrent: Shoes)
 }

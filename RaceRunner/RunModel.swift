@@ -469,7 +469,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   }
   
   class func gpsIsAvailable() -> Bool {
-    if CLLocationManager.authorizationStatus() == .authorizedAlways {
+    if CLLocationManager().authorizationStatus == .authorizedAlways {
       return true
     } else {
       return false
