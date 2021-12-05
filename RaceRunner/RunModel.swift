@@ -480,6 +480,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     if SettingsManager.getRealRunInProgress() {
       AWSAnalyticsService.shared.recordRunStop()
     }
+    SettingsManager.setRealRunInProgress(false)
     SettingsManager.setStartedViaSiri(false)
     timer.invalidate()
     locationManager?.stopUpdatingLocation()
@@ -544,7 +545,6 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     SoundManager.play(.click)
     status = .paused
     timer.invalidate()
-    locationManager?.stopUpdatingLocation()
     NotificationCenter.default.post(name: .runDidPause, object: nil)
     if SettingsManager.getRealRunInProgress() {
       AWSAnalyticsService.shared.recordRunPause()
@@ -554,7 +554,6 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   func resume() {
     SoundManager.play(.click)
     status = .inProgress
-    locationManager?.startUpdatingLocation()
     startTimer()
     NotificationCenter.default.post(name: .runDidResume, object: nil)
     if SettingsManager.getRealRunInProgress() {
