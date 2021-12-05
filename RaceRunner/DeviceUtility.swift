@@ -10,21 +10,25 @@ import UIKit
 
 public extension UIDevice {
   var modelName: String {
-    if #available(iOS 14.0, *) {
-      if ProcessInfo.processInfo.isiOSAppOnMac {
-        return "iOS on Mac"
-      }
+    if ProcessInfo.processInfo.isiOSAppOnMac {
+      return "iOS on Mac"
     }
 
     var systemInfo = utsname()
     uname(&systemInfo)
     let machineMirror = Mirror(reflecting: systemInfo.machine)
     let identifier = machineMirror.children.reduce("") { identifier, element in
-      guard let value = element.value as? Int8, value != 0 else { return identifier }
+      guard
+        let value = element.value as? Int8,
+        value != 0
+      else {
+        return identifier
+      }
       return identifier + String(UnicodeScalar(UInt8(value)))
     }
 
     // https://everyi.com/by-identifier/ipod-iphone-ipad-specs-by-model-identifier.html
+    // swiftlint:disable switch_case_on_newline
     switch identifier {
     case "iPod5,1":                                 return "iPod Touch 5"
     case "iPod7,1":                                 return "iPod Touch 6"
@@ -56,6 +60,11 @@ public extension UIDevice {
     case "iPhone13,2":                              return "iPhone 12"
     case "iPhone13,3":                              return "iPhone 12 Pro"
     case "iPhone13,4":                              return "iPhone 12 Pro Max"
+    case "iPhone14,2":                              return "iPhone 13 Pro"
+    case "iPhone14,3":                              return "iPhone 13 Pro Max"
+    case "iPhone14,4":                              return "iPhone 13 Mini"
+    case "iPhone14,5":                              return "iPhone 13"
+
     case "iPad2,1", "iPad2,2", "iPad2,3", "iPad2,4":return "iPad 2"
     case "iPad3,1", "iPad3,2", "iPad3,3":           return "iPad 3"
     case "iPad3,4", "iPad3,5", "iPad3,6":           return "iPad 4"
@@ -75,6 +84,7 @@ public extension UIDevice {
     case "iPad8,11", "iPad8,12":                    return "iPad Pro 12.9 Inch 4th Gen."
     case "iPad11,1", "iPad11,2":                    return "iPad Mini 5th Gen."
     case "iPad11,3", "iPad11,4":                    return "iPad Air 3rd Gen."
+
     case "AppleTV5,3":                              return "Apple TV"
     case "AppleTV6,2":                              return "Apple TV 4K"
     case "AudioAccessory1,1":                       return "HomePod"
