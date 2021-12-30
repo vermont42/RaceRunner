@@ -25,13 +25,15 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   private var oldSplitAltitude = 0.0
   private var currentSplitDistance = 0.0
   private var totalSeconds = 0
+  private var pausedSeconds = 0
   private var shouldReportSplits = false
   private var lastDistance = 0.0
   private var lastSeconds = 0
   private var reportEvery = SettingsManager.never
   private var temperature: Double = 0.0
   private var weather = ""
-  private var timer: Timer = Timer()
+  private var mainTimer = Timer()
+  private var pauseTimer = Timer()
   private var initialLocation = CLLocation(latitude: 0.0, longitude: 0.0)
   private var locationManager: LocationManager?
   private var autoName = Run.noAutoName
@@ -51,6 +53,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   private var secondLength = 1.0
   private (set) var sortedAltitudes: [Double] = []
   private (set) var sortedPaces: [Double] = []
+  private var hasReceivedLocationUpdate = false
 
   private static let distanceTolerance: Double = 0.05
   private static let coordinateTolerance: Double = 0.0000050
@@ -162,7 +165,13 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
             }
           }
       }
+
     case .inProgress:
+      if !hasReceivedLocationUpdate {
+        startMainTimer()
+        hasReceivedLocationUpdate = true
+      }
+
       for location in locations {
         let newLocation: CLLocation = location
         if abs(newLocation.horizontalAccuracy) < RunModel.minAccuracy {
@@ -181,7 +190,6 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
             NotificationCenter.default.post(name: .plotToCoordinate, object: nil, userInfo: ["\(RunCoordinate.self)": runCoordinate])
           } else {
             NotificationCenter.default.post(name: .showInitialCoordinate, object: nil, userInfo: ["\(CLLocationCoordinate2D.self)": newLocation.coordinate])
-
           }
           self.locations.append(newLocation)
         }
@@ -239,6 +247,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
         }
         curAlt = newLocation.altitude
       }
+
     case .paused:
       break
     }
@@ -262,6 +271,8 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
         lastSeconds = totalSeconds
         oldSplitAltitude = curAlt
       }
+    } else if status == .paused {
+      pausedSeconds += 1
     }
   }
 
@@ -328,6 +339,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     self.oldSplitAltitude = oldSplitAltitude
     self.totalSeconds = totalSeconds
     self.lastSeconds = lastSeconds
+    pausedSeconds = 0
     self.totalDistance = totalDistance
     self.lastDistance = lastDistance
     self.currentAltitude = currentAltitude
@@ -341,7 +353,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     self.maxAlt = maxAlt
     self.minAlt = minAlt
     locationManager?.startUpdatingLocation()
-    startTimer()
+    hasReceivedLocationUpdate = false
     if runToSimulate == nil && gpxFile == nil {
       SettingsManager.setRealRunInProgress(true)
     } else {
@@ -389,12 +401,12 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     return succeeded
   }
   
-  private class func addRun(_ coordinates: [CLLocation], customName: String, autoName: String, timestamp: Date, weather: String, temperature: Double, distance: Double, maxAltitude: Double, minAltitude: Double, maxLongitude: Double, minLongitude: Double, maxLatitude: Double, minLatitude: Double, altitudeGained: Double, altitudeLost: Double, weight: Double) -> Run {
+  private class func addRun(_ coordinates: [CLLocation], customName: String, autoName: String, timestamp: Date, weather: String, temperature: Double, distance: Double, maxAltitude: Double, minAltitude: Double, maxLongitude: Double, minLongitude: Double, maxLatitude: Double, minLatitude: Double, altitudeGained: Double, altitudeLost: Double, weight: Double, pausedSeconds: Int = 0) -> Run {
     guard let newRun = NSEntityDescription.insertNewObject(forEntityName: "Run", into: CDManager.sharedCDManager.context) as? Run else {
       fatalError("addRun() failed.")
     }
     newRun.distance = NSNumber(value: distance)
-    newRun.duration = NSNumber(value: coordinates[coordinates.count - 1].timestamp.timeIntervalSince(coordinates[0].timestamp))
+    newRun.duration = NSNumber(value: coordinates[coordinates.count - 1].timestamp.timeIntervalSince(coordinates[0].timestamp) - Double(pausedSeconds))
     newRun.timestamp = timestamp
     newRun.weather = weather as NSString
     newRun.temperature = NSNumber(value: temperature)
@@ -482,7 +494,8 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
     }
     SettingsManager.setRealRunInProgress(false)
     SettingsManager.setStartedViaSiri(false)
-    timer.invalidate()
+    mainTimer.invalidate()
+    pauseTimer.invalidate()
     locationManager?.stopUpdatingLocation()
     if SettingsManager.getRealRunInProgress() && SettingsManager.getBroadcastNextRun() {
       PubNubManager.runStopped()
@@ -510,7 +523,7 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
           }
         }
       }
-      run = RunModel.addRun(locations, customName: customName, autoName: autoName, timestamp: Date(), weather: weather, temperature: temperature, distance: totalDistance, maxAltitude: maxAlt, minAltitude: minAlt, maxLongitude: maxLong, minLongitude: minLong, maxLatitude: maxLat, minLatitude: minLat, altitudeGained: altGained, altitudeLost: altLost, weight: SettingsManager.getWeight())
+      run = RunModel.addRun(locations, customName: customName, autoName: autoName, timestamp: Date(), weather: weather, temperature: temperature, distance: totalDistance, maxAltitude: maxAlt, minAltitude: minAlt, maxLongitude: maxLong, minLongitude: minLong, maxLatitude: maxLat, minLatitude: minLat, altitudeGained: altGained, altitudeLost: altLost, weight: SettingsManager.getWeight(), pausedSeconds: pausedSeconds)
       let result = Shoes.addMeters(totalDistance)
       if result != Shoes.areOkay {
         DispatchQueue.main.asyncAfter(deadline: .now() + UiConstants.messageDelay) {
@@ -544,7 +557,8 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   func pause() {
     SoundManager.play(.click)
     status = .paused
-    timer.invalidate()
+    mainTimer.invalidate()
+    startPauseTimer()
     NotificationCenter.default.post(name: .runDidPause, object: nil)
     if SettingsManager.getRealRunInProgress() {
       AWSAnalyticsService.shared.recordRunPause()
@@ -554,17 +568,22 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   func resume() {
     SoundManager.play(.click)
     status = .inProgress
-    startTimer()
+    pauseTimer.invalidate()
+    startMainTimer()
     NotificationCenter.default.post(name: .runDidResume, object: nil)
     if SettingsManager.getRealRunInProgress() {
       AWSAnalyticsService.shared.recordRunResume()
     }
   }
   
-  func startTimer() {
-    timer = Timer.scheduledTimer(timeInterval: secondLength, target: self, selector: #selector(RunModel.eachSecond), userInfo: nil, repeats: true)
+  func startMainTimer() {
+    mainTimer = Timer.scheduledTimer(timeInterval: secondLength, target: self, selector: #selector(RunModel.eachSecond), userInfo: nil, repeats: true)
   }
-  
+
+  func startPauseTimer() {
+    pauseTimer = Timer.scheduledTimer(timeInterval: secondLength, target: self, selector: #selector(RunModel.eachSecond), userInfo: nil, repeats: true)
+  }
+
   class func matchMeasurement(_ measurement1: Double, measurement2: Double, tolerance: Double) -> Bool {
     let diff = fabs(measurement2 - measurement1)
     if (diff / measurement2) > tolerance {
