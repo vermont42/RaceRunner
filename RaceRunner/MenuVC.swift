@@ -2,7 +2,7 @@
 //  MenuVC.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 3/1/15.
+//  Created by Josh Adams on 3/1/15.
 //  Copyright (c) 2015 Josh Adams. All rights reserved.
 //
 
@@ -11,7 +11,7 @@ import UIKit
 class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
   @IBOutlet var menuTable: UITableView!
   @IBOutlet var viewControllerTitle: UILabel!
-  
+
   var controllerLabels = ["Start Run", "Simulate", "Demo", "History", "Spectate", "Settings", "Shoes", "Help", "Game"]
   var panSegues = ["pan run", "pan log", "pan GPX run", "pan log", "pan spectate", "pan settings", "pan shoes", "pan help", "pan game"]
   var logTypeToShow: LogVC.LogType = .history
@@ -40,7 +40,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
     menuTable.delegate = self
     menuTable.dataSource = self
   }
-  
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     AWSAnalyticsService.shared.recordVisitation(viewController: "\(MenuVC.self)")
@@ -68,15 +68,15 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
       }
       initializedCell.backgroundColor = UIColor.clear
       if (indexPath as NSIndexPath).row % 2 == 0 {
-        initializedCell.textLabel?.textColor = UiConstants.intermediate2Color
+        initializedCell.textLabel?.textColor = UIConstants.intermediate2Color
       } else {
-        initializedCell.textLabel?.textColor = UiConstants.intermediate3Color
+        initializedCell.textLabel?.textColor = UIConstants.intermediate3Color
       }
       let selectedBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: initializedCell.frame.size.width, height: initializedCell.frame.size.height))
       selectedBackgroundView.backgroundColor = UIColor.gray.withAlphaComponent(0.2)
       initializedCell.textLabel?.textAlignment = NSTextAlignment.center
       initializedCell.selectedBackgroundView = selectedBackgroundView
-      initializedCell.textLabel?.font = UIFont(name: UiConstants.globalFont, size: MenuVC.menuFontSize)
+      initializedCell.textLabel?.font = UIFont(name: UIConstants.globalFont, size: MenuVC.menuFontSize)
     }
     guard let initializedOrDequeuedCell = cell else {
       fatalError("initializedOrDequeuedCell on MenuVC screen was nil.")
@@ -89,12 +89,11 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return MenuVC.rowHeight
   }
-  
+
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     if controllerLabels[(indexPath as NSIndexPath).row] == MenuVC.historyLabel {
       logTypeToShow = .history
-    }
-    else if controllerLabels[(indexPath as NSIndexPath).row] == MenuVC.simulateLabel || controllerLabels[(indexPath as NSIndexPath).row] == MenuVC.demoLabel {
+    } else if controllerLabels[(indexPath as NSIndexPath).row] == MenuVC.simulateLabel || controllerLabels[(indexPath as NSIndexPath).row] == MenuVC.demoLabel {
       logTypeToShow = .simulate
     }
     if (controllerLabels[(indexPath as NSIndexPath).row] == MenuVC.simulateLabel || controllerLabels[(indexPath as NSIndexPath).row] == MenuVC.demoLabel) && SettingsManager.getRealRunInProgress() {
@@ -109,12 +108,11 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
     let shimmerReducer: CGFloat = 10.0
     viewControllerTitle.alpha = 1.0 + sin(scrollView.contentOffset.y / shimmerDivisor) / shimmerReducer
   }
-  
+
   @objc private func updateRunButton() {
     if RunModel.runModel.status == .preRun && controllerLabels[0] == MenuVC.resumeRunLabel {
       controllerLabels[0] = MenuVC.startRunLabel
-    }
-    else if RunModel.runModel.status != .preRun && controllerLabels[0] == MenuVC.startRunLabel {
+    } else if RunModel.runModel.status != .preRun && controllerLabels[0] == MenuVC.startRunLabel {
       controllerLabels[0] = MenuVC.resumeRunLabel
     }
     DispatchQueue.main.async {
@@ -127,16 +125,15 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
       if let logVC = segue.destination as? LogVC {
         logVC.logType = logTypeToShow
       }
-    }
-    else if segue.identifier == "pan GPX run" {
+    } else if segue.identifier == "pan GPX run" {
       if let runVC = segue.destination as? RunVC {
         runVC.gpxFile = MenuVC.gpxFile
       }
     }
   }
-  
+
   @IBAction func returnFromSegueActions(_ sender: UIStoryboardSegue) {}
-  
+
   override func segueForUnwinding(to toViewController: UIViewController, from fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
     return UnwindPanSegue(identifier: identifier ?? "", source: fromViewController, destination: toViewController, performHandler: { () -> Void in
     })

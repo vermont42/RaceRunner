@@ -2,12 +2,12 @@
 //  GpxParser.swift
 //  GpxLocationManager
 //
-//  Created by Joshua Adams on 5/2/15.
+//  Created by Josh Adams on 5/2/15.
 //  Copyright (c) 2015 Josh Adams. All rights reserved.
 //
 
-import Foundation
 import CoreLocation
+import Foundation
 
 struct ParseResult {
   let autoName: String
@@ -16,7 +16,7 @@ struct ParseResult {
   let weather: String
   let temperature: Double
   let weight: Double
-  
+
   init(autoName: String, customName: String, locations: [CLLocation], weather: String, temperature: Double, weight: Double) {
     self.autoName = autoName
     self.customName = customName
@@ -76,7 +76,7 @@ class GpxParser: NSObject, XMLParserDelegate {
       return nil
     }
   }
-  
+
   init?(url: URL) {
     super.init()
     parser = XMLParser(contentsOf: url)
@@ -86,12 +86,12 @@ class GpxParser: NSObject, XMLParserDelegate {
     parser?.delegate = self
     dateFormatter.dateFormat = GpxParser.dateFormat
   }
-  
+
   func parse() -> ParseResult {
     parser?.parse()
     return ParseResult(autoName: autoName, customName: customName, locations: locations, weather: weather, temperature: temperature, weight: weight)
   }
-  
+
   func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String: String]) {
     switch elementName {
     case ParsingState.trkpt.rawValue:
@@ -126,10 +126,9 @@ class GpxParser: NSObject, XMLParserDelegate {
       parsingState = .weight
     default:
       parsingState = .other
-      break
     }
   }
-  
+
   func parser(_ parser: XMLParser, foundCharacters string: String) {
     if !startedTrackPoints {
       if string == GpxParser.runtastic {
@@ -140,7 +139,7 @@ class GpxParser: NSObject, XMLParserDelegate {
       buffer = buffer + string
     }
   }
-  
+
   func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
     switch elementName {
     case ParsingState.trkpt.rawValue:

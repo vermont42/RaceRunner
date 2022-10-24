@@ -2,13 +2,13 @@
 //  PubNubManager.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 11/14/15.
+//  Created by Josh Adams on 11/14/15.
 //  Copyright © 2015 Josh Adams. All rights reserved.
 //
 
+import CoreLocation
 import Foundation
 import PubNub
-import CoreLocation
 
 class PubNubManager: NSObject, PNEventsListener { //PNObjectEventListener {
   static let sharedNub = PubNubManager()
@@ -21,7 +21,7 @@ class PubNubManager: NSObject, PNEventsListener { //PNObjectEventListener {
   private var pubNubPublisher: PubNubPublisher?
 
   override init() {
-    pubNub = PubNub.clientWithConfiguration(PNConfiguration(publishKey: Config.pubNubPublishKey, subscribeKey: Config.pubNubSubscribeKey))
+    pubNub = PubNub.clientWithConfiguration(PNConfiguration(publishKey: Config.pubNubPublishKey, subscribeKey: Config.pubNubSubscribeKey, uuid: "\(UUID())"))
     super.init()
     pubNub?.addListener(self)
   }
@@ -40,7 +40,7 @@ class PubNubManager: NSObject, PNEventsListener { //PNObjectEventListener {
       }
     })
   }
-  
+
   class func publishRunStoppage(_ publisher: String) {
     sharedNub.pubNub?.publish(PubNubManager.stopRun, toChannel: publisher, storeInHistory: false, compressed: false, withCompletion: nil)
   }
@@ -48,23 +48,23 @@ class PubNubManager: NSObject, PNEventsListener { //PNObjectEventListener {
   class func publishMessage(_ message: String, publisher: String) {
     sharedNub.pubNub?.publish(PubNubManager.messageLabel + message, toChannel: publisher, storeInHistory: false, compressed: false, withCompletion: nil)
   }
-  
+
   class func runStopped() {
     sharedNub.pubNub?.publish(PubNubManager.stopped, toChannel: PubNubManager.publicChannel, storeInHistory: false, compressed: false, withCompletion: nil)
   }
-  
+
   class func subscribeToChannel(_ pubNubSubscriber: PubNubSubscriber, publisher: String) {
     sharedNub.pubNubSubscriber = pubNubSubscriber
     sharedNub.pubNub?.subscribeToChannels([publisher], withPresence: true)
   }
-  
+
   class func subscribeToChannel(_ pubNubPublisher: PubNubPublisher, publisher: String) {
     sharedNub.pubNubPublisher = pubNubPublisher
     sharedNub.pubNub?.subscribeToChannels([publisher], withPresence: true)
   }
-  
+
   class func unsubscribeFromChannel(_ publisher: String) {
-    if let _ = sharedNub.pubNubSubscriber {
+    if sharedNub.pubNubSubscriber != nil {
       sharedNub.pubNub?.unsubscribeFromChannels([publisher], withPresence: true)
       sharedNub.pubNubSubscriber = nil
     }
@@ -79,11 +79,9 @@ class PubNubManager: NSObject, PNEventsListener { //PNObjectEventListener {
     }
     if messageString == PubNubManager.stopped {
       pubNubSubscriber?.runStopped()
-    }
-    else if messageString == PubNubManager.stopRun {
+    } else if messageString == PubNubManager.stopRun {
       pubNubPublisher?.stopRun()
-    }
-    else if (messageString as NSString).substring(to: PubNubManager.messageLabel.count) == PubNubManager.messageLabel {
+    } else if (messageString as NSString).substring(to: PubNubManager.messageLabel.count) == PubNubManager.messageLabel {
       pubNubPublisher?.receiveMessage((messageString as NSString).substring(from: PubNubManager.messageLabel.count))
     } else {
       pubNubSubscriber?.receiveProgress(messageString)

@@ -2,11 +2,10 @@
 //  RunnerIcons.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 4/17/15.
+//  Created by Josh Adams on 4/17/15.
 //  Copyright (c) 2015 Josh Adams. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class RunnerIcons {
@@ -74,8 +73,7 @@ class RunnerIcons {
     case .stationary:
       if iconType == IconType.human {
         return stationaryRunnerIcon
-      }
-      else {
+      } else {
         return stationaryHorseIcon
       }
     case .west:
@@ -87,20 +85,17 @@ class RunnerIcons {
         westIcon = westRunnerIcons[currentIndex]
         if currentIndex == westRunnerIcons.count - 1 {
           currentIndex = 0
-        }
-        else {
+        } else {
           currentIndex += 1
         }
-      }
-      else {
+      } else {
         if currentIndex > westHorseIcons.count - 1 {
           currentIndex = westHorseIcons.count - 1
         }
         westIcon = westHorseIcons[currentIndex]
         if currentIndex == westHorseIcons.count - 1 {
           currentIndex = 0
-        }
-        else {
+        } else {
           currentIndex += 1
         }
       }
@@ -114,20 +109,17 @@ class RunnerIcons {
         eastIcon = eastRunnerIcons[currentIndex]
         if currentIndex == eastRunnerIcons.count - 1 {
           currentIndex = 0
-        }
-        else {
+        } else {
           currentIndex += 1
         }
-      }
-      else {
+      } else {
         if currentIndex > eastHorseIcons.count - 1 {
           currentIndex = eastHorseIcons.count - 1
         }
         eastIcon = eastHorseIcons[currentIndex]
         if currentIndex == eastHorseIcons.count - 1 {
           currentIndex = 0
-        }
-        else {
+        } else {
           currentIndex += 1
         }
       }

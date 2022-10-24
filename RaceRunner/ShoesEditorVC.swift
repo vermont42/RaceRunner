@@ -2,12 +2,12 @@
 //  ShoesEditorVC.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 1/15/16.
+//  Created by Josh Adams on 1/15/16.
 //  Copyright © 2016 Josh Adams. All rights reserved.
 //
 
-import UIKit
 import CoreData
+import UIKit
 
 class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   @IBOutlet var viewControllerTitle: UILabel!
@@ -21,7 +21,7 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
   @IBOutlet var maximumMileageLabel: UILabel!
   var shoes: Shoes?
   weak var shoesDelegate: ShoesDelegate?
-  
+
   private static let imperialMileageLabel = "Current Mileage:"
   private static let imperialMaxMileageLabel = "Maximum Mileage:"
   private static let metricMileageLabel = "Current Klicks:"
@@ -31,7 +31,7 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
 
   private let imagePicker = UIImagePickerController()
   private var choosingThumbnail = false
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
     name.delegate = self
@@ -43,7 +43,7 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
     isCurrent.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ShoesEditorVC.toggleIsCurrent)))
     isCurrent.isUserInteractionEnabled = true
   }
-  
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     AWSAnalyticsService.shared.recordVisitation(viewController: "\(ShoesEditorVC.self)")
@@ -78,20 +78,21 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
       viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
     }
   }
-  
+
   override func didReceiveMemoryWarning() {
+    super.didReceiveMemoryWarning()
     LowMemoryHandler.handleLowMemory()
   }
-  
+
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     view.endEditing(true)
     super.touchesBegan(touches, with: event)
   }
-  
+
   @IBAction func cancel() {
     performSegue(withIdentifier: "unwind pan", sender: self)
   }
-  
+
   @IBAction func done() {
     var isNew = false
     if shoes == nil {
@@ -114,14 +115,17 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
     shoesDelegate?.receiveShoes(shoes, isNew: isNew)
     performSegue(withIdentifier: "unwind pan", sender: self)
   }
-  
+
   override var prefersStatusBarHidden: Bool {
     return true
   }
-  
+
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
     if let text = textField.text, textField == currentMileage || textField == maximumMileage {
-      if let _ = Int(string), text.count < Shoes.maxNumberLength + 1 {
+      if
+        Int(string) != nil,
+        text.count < Shoes.maxNumberLength + 1
+      {
         return true
       } else {
         return false
@@ -129,7 +133,7 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
     }
     return true
   }
-  
+
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     guard
       let nameText = name.text,
@@ -147,17 +151,17 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
     textField.resignFirstResponder()
     return true
   }
-      
+
   func disableDoneButton() {
-    doneButton.alpha = UiConstants.notDoneAlpha
+    doneButton.alpha = UIConstants.notDoneAlpha
     doneButton.isEnabled = false
   }
-  
+
   func enableDoneButton() {
     doneButton.alpha = 1.0
     doneButton.isEnabled = true
   }
-  
+
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
     // Local variable inserted by Swift 4.2 migrator.
     let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
@@ -167,16 +171,16 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
       thumbnail.image = pickedImage
     }
   }
-  
+
   func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
     dismiss(animated: true, completion: { self.choosingThumbnail = false })
   }
-      
+
   @IBAction func chooseThumbnail() {
     choosingThumbnail = true
     present(imagePicker, animated: true, completion: nil)
   }
-  
+
   @objc func toggleIsCurrent() {
     guard let isCurrentImage = isCurrent.image else {
       fatalError("isCurrent image was nil.")
@@ -190,7 +194,7 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
 
   // Helper function inserted by Swift 4.2 migrator.
   private func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
-    return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+    return Dictionary(uniqueKeysWithValues: input.map { key, value in (key.rawValue, value) })
   }
 
   // Helper function inserted by Swift 4.2 migrator.

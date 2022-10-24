@@ -2,13 +2,13 @@
 //  RunVC.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 3/1/15.
+//  Created by Josh Adams on 3/1/15.
 //  Copyright (c) 2015 Josh Adams. All rights reserved.
 //
 
-import UIKit
 import CoreData
 import GoogleMaps
+import UIKit
 
 class RunVC: ChildVC {
   @IBOutlet var viewControllerTitle: UILabel!
@@ -42,12 +42,13 @@ class RunVC: ChildVC {
   private var didReceiveLocationUpdate = false
 
   override func viewDidLoad() {
+    super.viewDidLoad()
     map.mapType = .terrain
     map.isHidden = true
     paceOrAltitude.isHidden = true
     view.sendSubviewToBack(map)
   }
-  
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     AWSAnalyticsService.shared.recordVisitation(viewController: "\(RunVC.self)")
@@ -82,7 +83,7 @@ class RunVC: ChildVC {
     switch RunModel.runModel.status {
     case .preRun:
       hideLabels()
-      startStopButton.backgroundColor = UiConstants.intermediate3Color
+      startStopButton.backgroundColor = UIConstants.intermediate3Color
       startStopButton.isHidden = false
       pauseResume.isHidden = true
       PersistentMapState.initMapState()
@@ -90,7 +91,7 @@ class RunVC: ChildVC {
       showLabels()
       pauseResume.isHidden = false
       startStopButton.isHidden = false
-      startStopButton.backgroundColor = UiConstants.intermediate1Color
+      startStopButton.backgroundColor = UIConstants.intermediate1Color
       if runToSimulate == nil && gpxFile == nil && !SettingsManager.getStartedViaSiri() {
         addPolylineAndPin()
       }
@@ -99,7 +100,7 @@ class RunVC: ChildVC {
       }
       paceOrAltitude.isHidden = false
       if PersistentMapState.currentCoordinate != nil {
-        map.camera = GMSCameraPosition.camera(withLatitude: PersistentMapState.currentCoordinate?.latitude ?? 0.0, longitude: PersistentMapState.currentCoordinate?.longitude ?? 0.0, zoom: UiConstants.cameraZoom)
+        map.camera = GMSCameraPosition.camera(withLatitude: PersistentMapState.currentCoordinate?.latitude ?? 0.0, longitude: PersistentMapState.currentCoordinate?.longitude ?? 0.0, zoom: UIConstants.cameraZoom)
       } else if let last = RunModel.runModel.locations.last {
         showInitialCoordinate(last.coordinate)
       }
@@ -111,24 +112,24 @@ class RunVC: ChildVC {
     switch RunModel.runModel.status {
     case .preRun:
       startStopButton.setTitle(RunVC.startTitle, for: UIControl.State())
-      startStopButton.backgroundColor = UiConstants.intermediate3Color
+      startStopButton.backgroundColor = UIConstants.intermediate3Color
       pauseResume.isHidden = true
     case .paused:
       startStopButton.setTitle(RunVC.stopTitle, for: UIControl.State())
-      startStopButton.backgroundColor = UiConstants.intermediate1Color
+      startStopButton.backgroundColor = UIConstants.intermediate1Color
       pauseResume.setTitle(RunVC.resumeTitle, for: UIControl.State())
       pauseResume.isHidden = false
     case .inProgress:
       startStopButton.setTitle(RunVC.stopTitle, for: UIControl.State())
-      startStopButton.backgroundColor = UiConstants.intermediate1Color
+      startStopButton.backgroundColor = UIConstants.intermediate1Color
       pauseResume.setTitle(RunVC.pauseTitle, for: UIControl.State())
       pauseResume.isHidden = false
     }
   }
-  
+
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    if (runToSimulate != nil || gpxFile != nil) && (RunModel.runModel.status != .preRun)  {
+    if (runToSimulate != nil || gpxFile != nil) && (RunModel.runModel.status != .preRun) {
       RunModel.runModel.stop()
     }
     NotificationCenter.default.removeObserver(self)
@@ -149,13 +150,13 @@ class RunVC: ChildVC {
   }
 
   func showInitialCoordinate(_ coordinate: CLLocationCoordinate2D) {
-    map.camera = GMSCameraPosition.camera(withLatitude: coordinate.latitude, longitude: coordinate.longitude, zoom: UiConstants.cameraZoom)
+    map.camera = GMSCameraPosition.camera(withLatitude: coordinate.latitude, longitude: coordinate.longitude, zoom: UIConstants.cameraZoom)
     PersistentMapState.currentCoordinate = coordinate
     PersistentMapState.pin.position = coordinate
     PersistentMapState.pin.icon = PersistentMapState.runnerIcons.nextIcon
     PersistentMapState.pin.map = map
   }
-  
+
   @objc func plotToCoordinate(_ notification: NSNotification) {
     guard let runCoordinate = notification.userInfo?["\(RunCoordinate.self)"] as? RunCoordinate else {
       return
@@ -170,7 +171,7 @@ class RunVC: ChildVC {
         PersistentMapState.latestDirection = .east
       }
       let coords: [CLLocationCoordinate2D] = [PersistentMapState.currentCoordinate ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), runCoordinate.coordinate]
-      map.camera = GMSCameraPosition.camera(withLatitude: runCoordinate.coordinate.latitude, longitude: runCoordinate.coordinate.longitude, zoom: UiConstants.cameraZoom)
+      map.camera = GMSCameraPosition.camera(withLatitude: runCoordinate.coordinate.latitude, longitude: runCoordinate.coordinate.longitude, zoom: UIConstants.cameraZoom)
       PersistentMapState.path.add(coords[1])
       PersistentMapState.polyline.path = PersistentMapState.path
       let altitudeGradient = GMSStrokeStyle.gradient(from: PersistentMapState.latestAltitudeStrokeColor, to: runCoordinate.altitudeColor)
@@ -195,7 +196,7 @@ class RunVC: ChildVC {
     }
     map.isHidden = false
   }
-  
+
   @objc func receiveProgress(_ notification: NSNotification) {
     guard let progressUpdate = notification.userInfo?["\(ProgressUpdate.self)"] as? ProgressUpdate else {
       return
@@ -213,21 +214,21 @@ class RunVC: ChildVC {
       RunModel.runModel.stop()
     }
   }
-  
+
   @IBAction func showMenu(_ sender: UIButton) {
     if runToSimulate != nil || gpxFile != nil {
       RunModel.runModel.stop()
     }
     showMenu()
   }
-  
+
   @IBAction func startOrStop() {
     switch RunModel.runModel.status {
     case .preRun:
       if runToSimulate != nil || gpxFile != nil || RunModel.gpsIsAvailable() {
         RunModel.runModel.start()
       } else {
-        UIAlertController.showMessage(RunVC.noGpsMessage, title: RunVC.sadFaceTitle, okTitle: RunVC.bummerButtonTitle, handler: { action in
+        UIAlertController.showMessage(RunVC.noGpsMessage, title: RunVC.sadFaceTitle, okTitle: RunVC.bummerButtonTitle, handler: { _ in
           SoundManager.play(.sadTrombone)
         })
       }
@@ -252,7 +253,7 @@ class RunVC: ChildVC {
   @IBAction func returnFromSegueActions(_ sender: UIStoryboardSegue) {
     PersistentMapState.pin.map = map
   }
-  
+
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "pan details from run" {
       if let runDetailsVC = segue.destination as? RunDetailsVC {
@@ -262,12 +263,12 @@ class RunVC: ChildVC {
       }
     }
   }
-  
+
   override func segueForUnwinding(to toViewController: UIViewController, from fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
     return UnwindPanSegue(identifier: identifier ?? "", source: fromViewController, destination: toViewController, performHandler: { () -> Void in
     })
   }
-  
+
   @IBAction func changeOverlay(_ sender: UISegmentedControl) {
     if paceOrAltitude.selectedSegmentIndex == 0 {
       PersistentMapState.polyline.spans = PersistentMapState.altitudeSpans
@@ -277,7 +278,7 @@ class RunVC: ChildVC {
     PersistentMapState.polyline.map = nil
     PersistentMapState.polyline.map = map
   }
-  
+
   func hideLabels() {
     distanceLabel.isHidden = true
     timeLabel.isHidden = true
@@ -286,7 +287,7 @@ class RunVC: ChildVC {
     altGainedLabel.isHidden = true
     altLostLabel.isHidden = true
   }
-  
+
   func showLabels() {
     distanceLabel.isHidden = false
     timeLabel.isHidden = false
@@ -295,7 +296,7 @@ class RunVC: ChildVC {
     altGainedLabel.isHidden = false
     altLostLabel.isHidden = false
   }
-  
+
   @objc func runDidStop() {
     updateButtonLabels()
     hideLabels()
@@ -308,7 +309,7 @@ class RunVC: ChildVC {
         performSegue(withIdentifier: "pan details from run", sender: self)
       } else {
         totalDistance = 0.0
-        UIAlertController.showMessage(RunVC.didNotSaveMessage, title: RunVC.sadFaceTitle, okTitle: RunVC.bummerButtonTitle, handler: { action in
+        UIAlertController.showMessage(RunVC.didNotSaveMessage, title: RunVC.sadFaceTitle, okTitle: RunVC.bummerButtonTitle, handler: { _ in
           SoundManager.play(.sadTrombone)
           self.showMenu()
         })

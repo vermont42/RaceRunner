@@ -2,17 +2,16 @@
 //  Config.swift
 //  RaceRunner
 //
-//  Created by Josh Adams on 11/27/15.
+//  Created by Joshua Adams on 11/27/15.
 //  Copyright © 2015 Josh Adams. All rights reserved.
 //
 
 import Foundation
 
 enum Config {
-  static let googleMapsKey = ""
-  static let pubNubPublishKey = ""
-  static let pubNubSubscribeKey = ""
-  static let openWeatherKey = ""
+  static let googleMapsKey = "AIzaSyCYphUv_GzYX-OIWqn77u6Cpa51e1rJ2Rs"
+  static let pubNubPublishKey = "pub-c-0d826075-d0b1-4788-a7b6-40cdffc0414d"
+  static let pubNubSubscribeKey = "sub-c-8da5fcec-8aee-11e5-a04a-0619f8945a4f"
 
   static func checkKeys() {
     if Config.googleMapsKey == "" {
@@ -25,10 +24,6 @@ enum Config {
     }
     if Config.pubNubSubscribeKey == "" {
       let pubNubSubscribeError = "PubNub Subscribe API key missing from Config.swift."
-      fatalError(pubNubSubscribeError)
-    }
-    if Config.openWeatherKey == "" {
-      let pubNubSubscribeError = "Open Weather API key missing from Config.swift."
       fatalError(pubNubSubscribeError)
     }
   }

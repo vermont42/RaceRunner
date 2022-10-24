@@ -2,12 +2,12 @@
 //  ShoesDelegate.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 1/15/16.
+//  Created by Josh Adams on 1/15/16.
 //  Copyright © 2016 Josh Adams. All rights reserved.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 protocol ShoesDelegate: AnyObject {
   func receiveShoes(_ shoes: Shoes, isNew: Bool)

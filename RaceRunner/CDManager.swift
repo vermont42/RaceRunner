@@ -2,15 +2,15 @@
 //  CDManager.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 2/22/15.
+//  Created by Josh Adams on 2/22/15.
 //  Copyright (c) 2015 Josh Adams. All rights reserved.
 
-import Foundation
 import CoreData
+import Foundation
 
 class CDManager {
   static let sharedCDManager = CDManager()
-  
+
   var context: NSManagedObjectContext
 
   init() {
@@ -28,8 +28,7 @@ class CDManager {
     let coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
     do {
       try coordinator?.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: nil)
-    }
-    catch let error as NSError {
+    } catch let error as NSError {
       fatalError(error.localizedDescription)
     }
     context.persistentStoreCoordinator = coordinator

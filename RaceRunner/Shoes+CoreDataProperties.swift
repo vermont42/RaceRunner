@@ -2,15 +2,15 @@
 //  Shoes+CoreDataProperties.swift
 //  
 //
-//  Created by Joshua Adams on 1/14/16.
+//  Created by Josh Adams on 1/14/16.
 //
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
 //  to delete and recreate this implementation file for your updated model.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 extension Shoes {
   @NSManaged var name: String

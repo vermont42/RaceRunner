@@ -2,7 +2,7 @@
 //  LogCell.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 3/15/15.
+//  Created by Josh Adams on 3/15/15.
 //  Copyright (c) 2015 Josh Adams. All rights reserved.
 //
 
@@ -14,7 +14,7 @@ class LogCell: UITableViewCell {
   @IBOutlet var dateTime: UILabel!
   @IBOutlet var duration: UILabel!
   @IBOutlet var route: UILabel!
-  
+
   func displayRun(_ run: Run) {
     let dateFormatter = DateFormatter()
     dateFormatter.dateStyle = DateFormatter.Style.short

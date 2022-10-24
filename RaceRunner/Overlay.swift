@@ -2,7 +2,7 @@
 //  Overlay.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 1/27/16.
+//  Created by Josh Adams on 1/27/16.
 //  Copyright © 2016 Josh Adams. All rights reserved.
 //
 
@@ -12,11 +12,11 @@ enum Overlay: String {
   case both = "Both"
   case pace = "Pace"
   case altitude = "Altitude"
-  
+
   init() {
     self = .both
   }
-  
+
   var radioButtonPosition: Int {
     switch self {
     case .both:
@@ -27,14 +27,14 @@ enum Overlay: String {
       return 2
     }
   }
-  
-  static func stringToOVerlay(_ overlay: String) -> Overlay {
-    switch overlay {
-    case "Both":
+
+  static func positionToOverlay(_ position: Int) -> Overlay {
+    switch position {
+    case 0:
       return .both
-    case "Pace":
+    case 1:
       return .pace
-    case "Altitude":
+    case 2:
       return .altitude
     default:
       return .both

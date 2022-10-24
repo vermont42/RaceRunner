@@ -1,5 +1,5 @@
 //
-//  UIImage+named.swift
+//  UIImageExtension.swift
 //  RaceRunner
 //
 //  Created by Josh Adams on 11/4/18.

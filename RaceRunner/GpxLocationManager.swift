@@ -2,24 +2,24 @@
 //  GpxLocationManager.swift
 //  GpxLocationManager
 //
-//  Created by Joshua Adams on 4/18/15.
+//  Created by Josh Adams on 4/18/15.
 //  Copyright (c) 2015 Josh Adams. All rights reserved.
 //
 
-import Foundation
 import CoreLocation
+import Foundation
 
 open class GpxLocationManager {
   open var pausesLocationUpdatesAutomatically: Bool = true
-  open var distanceFilter: CLLocationDistance =  kCLDistanceFilterNone
+  open var distanceFilter: CLLocationDistance = kCLDistanceFilterNone
   open var desiredAccuracy: CLLocationAccuracy = kCLLocationAccuracyBest
   open var activityType: CLActivityType = .other
   open var headingFilter: CLLocationDegrees = 1
   open var headingOrientation: CLDeviceOrientation = .portrait
-  open var monitoredRegions: Set<NSObject>! { get { return Set<NSObject>() } }
-  open var maximumRegionMonitoringDistance: CLLocationDistance { get { return -1 } }
-  open var rangedRegions: Set<NSObject>! { get { return Set<NSObject>() } }
-  open var heading: CLHeading! { get { return nil } }
+  open var monitoredRegions: Set<NSObject>! { return Set<NSObject>() }
+  open var maximumRegionMonitoringDistance: CLLocationDistance { return -1 }
+  open var rangedRegions: Set<NSObject>! { return Set<NSObject>() }
+  open var heading: CLHeading! { return nil }
   open var allowsBackgroundLocationUpdates = true
   open var secondLength = 1.0
 
@@ -30,13 +30,14 @@ open class GpxLocationManager {
   open func startUpdatingHeading() {}
   open func stopUpdatingHeading() {}
   open func dismissHeadingCalibrationDisplay() {}
-  open func startMonitoringForRegion(_ region:CLRegion) {}
+  open func startMonitoringForRegion(_ region: CLRegion) {}
   open func stopMonitoringForRegion(_ region: CLRegion) {}
   open func startRangingBeaconsInRegion(_ region: CLBeaconRegion) {}
   open func stopRangingBeaconsInRegion(_ region: CLBeaconRegion) {}
   open func requestStateForRegion(_ region: CLRegion) {}
   open func startMonitoringVisits() {}
   open func stopMonitoringVisits() {}
+  // swiftlint:disable function_default_parameter_at_end
   open func allowDeferredLocationUpdatesUntilTraveled(_ distance: CLLocationDistance = 0, timeout: TimeInterval) {}
   open func disallowDeferredLocationUpdates() {}
 
@@ -48,7 +49,7 @@ open class GpxLocationManager {
   open class func isMonitoringAvailableForClass(_ regionClass: AnyClass! = nil) -> Bool { return true }
   open class func isRangingAvailable() -> Bool { return true }
 
-  open var location: CLLocation! { get { return locations[lastLocation] } }
+  open var location: CLLocation! { return locations[lastLocation] }
   open weak var delegate: CLLocationManagerDelegate!
   open var shouldKill = false
 
@@ -62,10 +63,10 @@ open class GpxLocationManager {
   private var dummyCLLocationManager: CLLocationManager!
 
   static let dateFudge: TimeInterval = 1.0
-  
+
   private static let initWithNoArgumentsMessage = "Attempted to initialize GpxLocationManager with no arguments."
   private static let gpxParseErrorMessage = "Parsing of GPX file failed."
-  
+
   open func startUpdatingLocation() {
     if !hasStarted {
       hasStarted = true
@@ -108,19 +109,19 @@ open class GpxLocationManager {
       self.isPaused = false
     }
   }
-  
+
   open func stopUpdatingLocation() {
     self.isPaused = true
   }
-  
+
   open func kill() {
     shouldKill = true
   }
-  
+
   public init() {
     fatalError(GpxLocationManager.initWithNoArgumentsMessage)
   }
-  
+
   public init(gpxFile: String) {
     if let parser = GpxParser(file: gpxFile) {
       self.locations = parser.parse().locations
@@ -128,11 +129,11 @@ open class GpxLocationManager {
       fatalError(GpxLocationManager.gpxParseErrorMessage)
     }
   }
-  
+
   public init(locations: [CLLocation]) {
     self.locations = locations
   }
-  
+
   private func makeLoc(_ latitude: NSString, longitude: NSString, altitude: NSString, timestamp: NSString) -> CLLocation {
     return CLLocation(coordinate: CLLocationCoordinate2D(latitude: latitude.doubleValue, longitude: longitude.doubleValue), altitude: altitude.doubleValue, horizontalAccuracy: 5.0, verticalAccuracy: 5.0, timestamp: dateFormatter.date(from: timestamp as String)!)
   }

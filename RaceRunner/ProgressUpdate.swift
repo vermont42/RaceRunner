@@ -2,7 +2,7 @@
 //  ProgressUpdate.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 6/24/18.
+//  Created by Josh Adams on 6/24/18.
 //  Copyright © 2018 Josh Adams. All rights reserved.
 //
 

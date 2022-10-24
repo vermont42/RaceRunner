@@ -2,11 +2,10 @@
 //  GpxActivityItemProvider.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 11/30/15.
+//  Created by Josh Adams on 11/30/15.
 //  Copyright © 2015 Josh Adams. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class GpxActivityItemProvider: UIActivityItemProvider {
@@ -22,12 +21,12 @@ class GpxActivityItemProvider: UIActivityItemProvider {
     let error = "error"
     return NSString(string: error)
   }
-  
+
   override func activityViewController(_ activityViewController: UIActivityViewController, dataTypeIdentifierForActivityType activityType: UIActivity.ActivityType?) -> String {
     let dataTypeIdentifier = "com.topografix.gpx"
     return dataTypeIdentifier
   }
-  
+
   override func activityViewController(_ activityViewController: UIActivityViewController, subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
     let subject = "run recorded by Runmeter"
     return subject

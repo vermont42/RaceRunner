@@ -2,13 +2,13 @@
 //  LogVC.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 3/1/15.
+//  Created by Josh Adams on 3/1/15.
 //  Copyright (c) 2015 Josh Adams. All rights reserved.
 //
 
-import UIKit
 import CoreData
 import MapKit
+import UIKit
 
 class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource, ImportedRunDelegate {
   @IBOutlet var tableView: UITableView!
@@ -20,7 +20,7 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
   @IBOutlet var fieldPicker: UIPickerView!
   @IBOutlet var pickerToolbar: UIToolbar!
   @IBOutlet var showPickerButton: UIButton!
-  
+
   var viewControllerTitleText = ""
   var runs: [Run] = []
   var selectedRun = 0
@@ -32,7 +32,7 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
   var locFile = "Runmeter"
   private static let rowHeight: CGFloat = 92.0
   private var oldLogSortField = 0
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.dataSource = self
@@ -44,15 +44,14 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
     fieldPicker.isHidden = true
     fieldPicker.selectRow(SettingsManager.getLogSortField().pickerPosition(), inComponent: 0, animated: false)
   }
-  
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     AWSAnalyticsService.shared.recordVisitation(viewController: "\(LogVC.self)")
     self.viewControllerTitle.text = viewControllerTitleText
     if logType == LogVC.LogType.history {
       viewControllerTitle.text = "History"
-    }
-    else if logType == LogVC.LogType.simulate {
+    } else if logType == LogVC.LogType.simulate {
       viewControllerTitle.text = "Simulate"
     }
     showPickerButton.setTitle(SettingsManager.getLogSortField().rawValue, for: UIControl.State())
@@ -115,7 +114,7 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
   @IBAction func showMenu(_ sender: UIButton) {
     showMenu()
   }
-  
+
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if !runs.isEmpty {
       return runs.count
@@ -124,17 +123,15 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
         let parseResult = parser.parse()
         runs = [RunModel.addRun(parseResult.locations, autoName: parseResult.autoName, customName: parseResult.customName, timestamp: parseResult.locations[0].timestamp, weather: parseResult.weather, temperature: parseResult.temperature, weight: parseResult.weight)]
         SettingsManager.setAlreadyMadeSampleRun(true)
-      }
-      else {
+      } else {
         fatalError(GpxParser.parseError)
       }
       return 1
-    }
-    else {
+    } else {
       return 0
     }
   }
-  
+
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "LogCell") as? LogCell else {
       fatalError("Could not dequeue \(LogCell.self) in LogVC.")
@@ -142,13 +139,12 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
     cell.displayRun(runs[(indexPath as NSIndexPath).row])
     return cell
   }
-  
+
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     selectedRun = (indexPath as NSIndexPath).row
     if logType == .history {
       performSegue(withIdentifier: "pan details from log", sender: self)
-    }
-    else if logType == .simulate {
+    } else if logType == .simulate {
       performSegue(withIdentifier: "pan run from log", sender: self)
     }
   }
@@ -161,38 +157,37 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
       tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
     }
   }
-  
+
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return LogVC.rowHeight
   }
-  
+
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "pan details from log" {
       if let runDetailsVC: RunDetailsVC = segue.destination as? RunDetailsVC {
         runDetailsVC.run = runs[selectedRun]
       }
-    }
-    else if segue.identifier == "pan run from log" {
+    } else if segue.identifier == "pan run from log" {
       if let runVC: RunVC = segue.destination as? RunVC {
         runVC.runToSimulate = runs[selectedRun]
       }
     }
   }
-  
+
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1
   }
-  
+
   func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
     return LogSortField.all().count
   }
-  
+
   func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
     return LogSortField.all()[row]
   }
-  
+
   func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-    return NSAttributedString(string: LogSortField.all()[row], attributes: [NSAttributedString.Key.foregroundColor: UiConstants.intermediate3Color])
+    return NSAttributedString(string: LogSortField.all()[row], attributes: [NSAttributedString.Key.foregroundColor: UIConstants.intermediate3Color])
   }
 
   private func fetchRuns() {

@@ -2,7 +2,7 @@
 //  ShoesSortField.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 1/12/16.
+//  Created by Josh Adams on 1/12/16.
 //  Copyright © 2016 Josh Adams. All rights reserved.
 //
 
@@ -12,15 +12,15 @@ enum ShoesSortField: String {
   case name = "Name"
   case kilometers = "Kilometers"
   case maxKilometers = "MaxKilometers"
-  
+
   init() {
     self = .name
   }
-  
+
   static func all() -> [String] {
     return [ShoesSortField.name.asString(), ShoesSortField.kilometers.asString(), ShoesSortField.maxKilometers.asString()]
   }
-  
+
   static func sortFieldForPosition(_ position: Int) -> ShoesSortField {
     switch position {
     case 0:
@@ -33,7 +33,7 @@ enum ShoesSortField: String {
       return .name
     }
   }
-  
+
   func asString() -> String {
     switch self {
     case .name:
@@ -52,7 +52,7 @@ enum ShoesSortField: String {
       }
     }
   }
-  
+
   func pickerPosition() -> Int {
     switch self {
     case .name:
@@ -63,7 +63,7 @@ enum ShoesSortField: String {
       return 2
     }
   }
-  
+
   static func compare(_ shoes1: Shoes, shoes2: Shoes) -> Bool {
     let sortType = SettingsManager.getSortType()
     let sortField = SettingsManager.getShoesSortField()
@@ -82,13 +82,13 @@ enum ShoesSortField: String {
     case .kilometers:
       var result = shoes1.kilometers.floatValue < shoes2.kilometers.floatValue
       if ordering == .orderedDescending {
-        result = !result
+        result.toggle()
       }
       return result
     case .maxKilometers:
       var result = shoes1.maxKilometers.floatValue < shoes2.maxKilometers.floatValue
       if ordering == .orderedDescending {
-        result = !result
+        result.toggle()
       }
       return result
     }

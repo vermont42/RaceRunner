@@ -1,8 +1,8 @@
 //
-//  UIApplication+topViewController.swift
+//  UIApplicationExtension.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 1/12/16.
+//  Created by Josh Adams on 1/12/16.
 //  Copyright © 2016 Josh Adams. All rights reserved.
 //
 
@@ -28,10 +28,10 @@ extension UIApplication {
 extension UIApplication { // https://stackoverflow.com/a/57169802/8248798
   var compatibilityWindow: UIWindow? {
     return UIApplication.shared.connectedScenes
-    .filter({$0.activationState == .foregroundActive})
-    .map({$0 as? UIWindowScene})
-    .compactMap({$0})
+    .filter({ $0.activationState == .foregroundActive })
+    .map({ $0 as? UIWindowScene })
+    .compactMap({ $0 })
     .first?.windows
-    .filter({$0.isKeyWindow}).first
+    .filter({ $0.isKeyWindow }).first
   }
 }

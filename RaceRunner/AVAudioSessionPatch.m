@@ -2,12 +2,12 @@
 //  AVAudioSessionPatch.m
 //  RaceRunner
 //
-//  Created by Joshua Adams on 11/10/18.
+//  Created by Josh Adams on 11/10/18.
 //  Copyright © 2018 Josh Adams. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "AVAudioSessionPatch.h"
+#import <Foundation/Foundation.h>
 
 @implementation AVAudioSessionPatch
 

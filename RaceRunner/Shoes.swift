@@ -2,11 +2,10 @@
 //  Shoes.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 1/14/16.
+//  Created by Josh Adams on 1/14/16.
 //  Copyright © 2016 Josh Adams. All rights reserved.
 //
 
-import Foundation
 import CoreData
 import UIKit
 
@@ -22,7 +21,7 @@ class Shoes: NSManagedObject {
   static let warningTitle = "Warning"
   static let gotIt = "Got It"
   static let areOkay = "shoes are okay"
-  
+
   class func addMeters(_ meters: Double) -> String {
     //let fetchRequest = NSFetchRequest()
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Shoes")
@@ -31,15 +30,13 @@ class Shoes: NSManagedObject {
     let sortDescriptor = NSSortDescriptor(key: "name", ascending: false)
     fetchRequest.sortDescriptors = [sortDescriptor]
     let pairs = (try? context.fetch(fetchRequest)) as? [Shoes] ?? []
-    for shoes in pairs {
-      if shoes.isCurrent.boolValue {
-        let currentKilometers = shoes.kilometers.doubleValue
-        let newKilometers = currentKilometers + (meters / Converter.metersInKilometer)
-        shoes.kilometers = NSNumber(value: newKilometers)
-        CDManager.saveContext()
-        if newKilometers > shoes.maxKilometers.doubleValue {
-          return NSString(format: Shoes.shoesWarning as NSString, shoes.name, Converter.stringifyKilometers(Float(newKilometers), includeUnits: true), Converter.stringifyKilometers(shoes.maxKilometers.floatValue, includeUnits: true)) as String
-        }
+    for shoes in pairs where shoes.isCurrent.boolValue {
+      let currentKilometers = shoes.kilometers.doubleValue
+      let newKilometers = currentKilometers + (meters / Converter.metersInKilometer)
+      shoes.kilometers = NSNumber(value: newKilometers)
+      CDManager.saveContext()
+      if newKilometers > shoes.maxKilometers.doubleValue {
+        return NSString(format: Shoes.shoesWarning as NSString, shoes.name, Converter.stringifyKilometers(Float(newKilometers), includeUnits: true), Converter.stringifyKilometers(shoes.maxKilometers.floatValue, includeUnits: true)) as String
       }
     }
     return Shoes.areOkay

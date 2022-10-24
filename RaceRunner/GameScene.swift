@@ -5,8 +5,8 @@
 //  Based on Tutorial by Riccardo D'Antoni
 //
 
-import SpriteKit
 import CoreMotion
+import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
   static let invaderWidth: CGFloat = 24.0 // must be static to be used in enum
@@ -35,10 +35,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   let runnerSize = CGSize(width: 30, height: 16)
   let scoreHudName = "scoreHud"
   let healthHudName = "healthHud"
-  let motionManager: CMMotionManager = CMMotionManager()
+  let motionManager = CMMotionManager()
   let runnerFiredBulletName = "runnerFiredBullet"
   let invaderFiredBulletName = "invaderFiredBullet"
-  let bulletSize = CGSize(width:4, height: 8)
+  let bulletSize = CGSize(width: 4, height: 8)
   let invaderCategory: UInt32 = 0x1 << 0
   let runnerFiredBulletCategory: UInt32 = 0x1 << 1
   let runnerCategory: UInt32 = 0x1 << 2
@@ -67,12 +67,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   enum InvaderType: String {
     case horse = "Horse"
     case runner = "Runner"
-    
+
     static var size: CGSize {
       return CGSize(width: GameScene.invaderWidth, height: GameScene.invaderHeight)
     }
   }
-  
+
   enum InvaderMovementDirection {
     case right
     case left
@@ -80,7 +80,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     case downThenLeft
     case none
   }
-  
+
   enum BulletType {
     case runnerFired
     case invaderFired
@@ -105,7 +105,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  
+
   override func didMove(to view: SKView) {
     if !contentCreated {
       createContent()
@@ -115,19 +115,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     startTime = Date()
     physicsWorld.contactDelegate = self
   }
-  
+
   func createContent() {
     setupInvaders()
     physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
     physicsBody?.categoryBitMask = sceneEdgeCategory
     setupRunner()
     setupHud()
-    backgroundColor = UiConstants.lightColor
+    backgroundColor = UIConstants.lightColor
   }
-  
+
   func makeInvaderOfType(_ invaderType: InvaderType, direction: InvaderMovementDirection) -> SKNode {
     let texture: SKTexture
-    switch(invaderType) {
+    switch invaderType {
     case .horse:
       texture = westHorses[0]
     case .runner:
@@ -136,14 +136,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let invader = SKSpriteNode(texture: texture)
     invader.name = invaderType.rawValue
     invader.physicsBody = SKPhysicsBody(rectangleOf: invader.frame.size)
-    guard let body = invader.physicsBody else { return invader }
+    guard let body = invader.physicsBody else {
+      return invader
+    }
     body.isDynamic = false
     body.categoryBitMask = invaderCategory
     body.contactTestBitMask = 0x0
     body.collisionBitMask = 0x0
     return invader
   }
-  
+
   func setupInvaders() {
     let baseOrigin = CGPoint(x: size.width / invaderOriginWidthDivisor, y: size.height / invaderOriginHeightDivisor)
     for row in 0 ..< invaderRowCount {
@@ -163,18 +165,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       }
     }
   }
-  
+
   func setupRunner() {
     let runner = makeRunner()
     runner.position = CGPoint(x: size.width / 2.0, y: runnerSize.height / 2.0)
     addChild(runner)
   }
-  
+
   func makeRunner() -> SKNode {
     let runner = SKSpriteNode(imageNamed: runnerName)
     runner.name = runnerName
     runner.physicsBody = SKPhysicsBody(rectangleOf: runner.frame.size)
-    guard let body = runner.physicsBody else { return runner }
+    guard let body = runner.physicsBody else {
+      return runner
+    }
     body.isDynamic = true
     body.affectedByGravity = false
     body.mass = runnerMass
@@ -183,45 +187,45 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     body.collisionBitMask = sceneEdgeCategory
     return runner
   }
-  
+
   func setupHud() {
-    let scoreLabel = SKLabelNode(fontNamed: UiConstants.globalFont)
+    let scoreLabel = SKLabelNode(fontNamed: UIConstants.globalFont)
     scoreLabel.name = scoreHudName
     scoreLabel.fontSize = hudFontSize
-    scoreLabel.fontColor = UiConstants.intermediate3Color
+    scoreLabel.fontColor = UIConstants.intermediate3Color
     scoreLabel.text = String(format: scoreString, 0)
     scoreLabel.position = CGPoint(
       x: frame.size.width / 2,
-      y: size.height - (scoreOffset + scoreLabel.frame.size.height/2)
+      y: size.height - (scoreOffset + scoreLabel.frame.size.height / 2)
     )
     addChild(scoreLabel)
-    let healthLabel = SKLabelNode(fontNamed: UiConstants.globalFont)
+    let healthLabel = SKLabelNode(fontNamed: UIConstants.globalFont)
     healthLabel.name = healthHudName
     healthLabel.fontSize = 25
-    healthLabel.fontColor = UiConstants.intermediate1Color
+    healthLabel.fontColor = UIConstants.intermediate1Color
     healthLabel.text = String(format: healthString, runnerHealth * 100.0)
     healthLabel.position = CGPoint(
       x: frame.size.width / 2,
-      y: size.height - (healthOffset + healthLabel.frame.size.height/2)
+      y: size.height - (healthOffset + healthLabel.frame.size.height / 2)
     )
     addChild(healthLabel)
   }
-  
+
   func adjustScoreBy(_ points: Int) {
     score += points
-    
+
     if let scoreNode = childNode(withName: scoreHudName) as? SKLabelNode {
       scoreNode.text = String(format: scoreString, score)
     }
   }
-  
+
   func adjustrunnerHealthBy(_ healthAdjustment: Float) {
     runnerHealth = max(runnerHealth + healthAdjustment, 0)
     if let health = childNode(withName: healthHudName) as? SKLabelNode {
       health.text = String(format: healthString, runnerHealth * 100)
     }
   }
-  
+
   override func update(_ currentTime: TimeInterval) {
     if isGameOver() {
       endGame()
@@ -232,20 +236,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     moveInvadersForUpdate(currentTime)
     fireInvaderBulletsForUpdate(currentTime)
   }
-  
+
   func moveInvadersForUpdate(_ currentTime: CFTimeInterval) {
     if currentTime - timeOfLastMove < timePerMove {
       return
     }
     determineInvaderMovementDirection()
-    enumerateChildNodes(withName: InvaderType.horse.rawValue) { node, stop in
+    enumerateChildNodes(withName: InvaderType.horse.rawValue) { node, _ in
       self.updateInvader(node, invaderType: .horse, currentTime: currentTime)
     }
-    enumerateChildNodes(withName: InvaderType.runner.rawValue) { node, stop in
+    enumerateChildNodes(withName: InvaderType.runner.rawValue) { node, _ in
       self.updateInvader(node, invaderType: .runner, currentTime: currentTime)
     }
   }
-  
+
   func updateInvader(_ invader: SKNode, invaderType: InvaderType, currentTime: CFTimeInterval) {
     let textures: [SKTexture]
     if invaderMovementDirection == .left || invaderMovementDirection == .downThenLeft {
@@ -282,7 +286,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     timePerMove = newTimePerMove
   }
-  
+
   func processUserMotionForUpdate(_ currentTime: CFTimeInterval) {
     if let runner = childNode(withName: runnerName) as? SKSpriteNode {
       if let data = motionManager.accelerometerData {
@@ -292,15 +296,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       }
     }
   }
-  
+
   func makeBulletOfType(_ bulletType: BulletType) -> SKNode {
     var bullet: SKNode
     switch bulletType {
     case .runnerFired:
-      bullet = SKSpriteNode(color: UiConstants.intermediate1Color, size: bulletSize)
+      bullet = SKSpriteNode(color: UIConstants.intermediate1Color, size: bulletSize)
       bullet.name = runnerFiredBulletName
       bullet.physicsBody = SKPhysicsBody(rectangleOf: bullet.frame.size)
-      guard let body = bullet.physicsBody else { return bullet }
+      guard let body = bullet.physicsBody else {
+        return bullet
+      }
       body.isDynamic = true
       body.affectedByGravity = false
       body.categoryBitMask = runnerFiredBulletCategory
@@ -314,10 +320,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bullet.addChild(trail)
       }
     case .invaderFired:
-      bullet = SKSpriteNode(color: UiConstants.intermediate3Color, size: bulletSize)
+      bullet = SKSpriteNode(color: UIConstants.intermediate3Color, size: bulletSize)
       bullet.name = invaderFiredBulletName
       bullet.physicsBody = SKPhysicsBody(rectangleOf: bullet.frame.size)
-      guard let body = bullet.physicsBody else { return bullet }
+      guard let body = bullet.physicsBody else {
+        return bullet
+      }
       body.isDynamic = true
       body.affectedByGravity = false
       body.categoryBitMask = invaderFiredBulletCategory
@@ -326,7 +334,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     return bullet
   }
-  
+
   func determineInvaderMovementDirection() {
     var proposedMovementDirection: InvaderMovementDirection = invaderMovementDirection
     for invader in enumerateAllInvaders() {
@@ -335,20 +343,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if invader.frame.maxX >= (invader.scene?.size.width ?? 0.0) - 1.0 {
           proposedMovementDirection = .downThenLeft
           adjustInvaderMovementToTimePerMove(timePerMove * timePerMoveScalingFactor)
-          break
         }
       case .left:
         if invader.frame.minX <= 1.0 {
           proposedMovementDirection = .downThenRight
           adjustInvaderMovementToTimePerMove(timePerMove * timePerMoveScalingFactor)
-          break
         }
       case .downThenLeft:
         proposedMovementDirection = .left
-        break
       case .downThenRight:
         proposedMovementDirection = .right
-        break
       case .none:
         break
       }
@@ -357,7 +361,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       invaderMovementDirection = proposedMovementDirection
     }
   }
-  
+
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     if let touch = touches.first {
       if touch.tapCount == 1 {
@@ -365,18 +369,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       }
     }
   }
-  
+
   func fireBullet(_ bullet: SKNode, toDestination destination: CGPoint, withDuration duration: CFTimeInterval, andSoundFileName soundName: String) {
     let bulletAction = SKAction.sequence([
       SKAction.move(to: destination, duration: duration),
       SKAction.wait(forDuration: bulletRemovalDelay), SKAction.removeFromParent()
       ])
-    
+
     let soundAction = SKAction.playSoundFileNamed(soundName, waitForCompletion: true)
     bullet.run(SKAction.group([bulletAction, soundAction]))
     addChild(bullet)
   }
-  
+
   func fireRunnerBullets() {
     let existingBullet = childNode(withName: runnerFiredBulletName)
     if existingBullet == nil {
@@ -394,7 +398,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       }
     }
   }
-  
+
   func processUserTapsForUpdate(_ currentTime: CFTimeInterval) {
     for tapCount in tapQueue {
       if tapCount == 1 {
@@ -403,26 +407,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       tapQueue.remove(at: 0)
     }
   }
-  
+
   func enumerateAllInvaders() -> [SKNode] {
     var allInvaders: [SKNode] = []
-    enumerateChildNodes(withName: InvaderType.horse.rawValue) {
-      node, stop in
+    enumerateChildNodes(withName: InvaderType.horse.rawValue) { node, _ in
       allInvaders.append(node)
     }
-    enumerateChildNodes(withName: InvaderType.runner.rawValue) {
-      node, stop in
+    enumerateChildNodes(withName: InvaderType.runner.rawValue) { node, _ in
       allInvaders.append(node)
     }
     return allInvaders
   }
-  
+
   func fireInvaderBulletsForUpdate(_ currentTime: CFTimeInterval) {
     let existingBullet = childNode(withName: invaderFiredBulletName)
     if existingBullet == nil {
       let allInvaders = enumerateAllInvaders()
-      if allInvaders.count > 0 {
-        let allInvadersIndex = Int(arc4random_uniform(UInt32(allInvaders.count)))
+      if !allInvaders.isEmpty {
+        let allInvadersIndex = Int.random(in: 0 ..< allInvaders.count)
         let invader = allInvaders[allInvadersIndex]
         let bullet = makeBulletOfType(.invaderFired)
         bullet.position = CGPoint(
@@ -434,11 +436,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       }
     }
   }
-  
+
   func didBegin(_ contact: SKPhysicsContact) {
     contactQueue.append(contact)
   }
-  
+
   func handleContact(_ contact: SKPhysicsContact) {
     if contact.bodyA.node?.parent == nil || contact.bodyB.node?.parent == nil {
       return
@@ -473,7 +475,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       adjustScoreBy(pointsPerHit)
     }
   }
-  
+
   func isGameOver() -> Bool {
     var invader = childNode(withName: InvaderType.horse.rawValue)
     if invader == nil {
@@ -481,7 +483,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     var invaderTooLow = false
     enumerateChildNodes(withName: InvaderType.runner.rawValue) { node, stop in
-      if Float(node.frame.minY) <= self.minInvaderBottomHeight   {
+      if Float(node.frame.minY) <= self.minInvaderBottomHeight {
         invaderTooLow = true
         stop.pointee = true
       }
@@ -489,7 +491,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let runner = childNode(withName: runnerName)
     return invader == nil || invaderTooLow || runner == nil
   }
-  
+
   func endGame() {
     if !gameEnding {
       gameEnding = true
@@ -502,11 +504,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       if adjustedScore > oldHighScore {
         SettingsManager.setHighScore(adjustedScore)
       }
-      let gameOverScene: GameOverScene = GameOverScene(size: size, adjustedScore: adjustedScore, oldHighScore: oldHighScore)
+      let gameOverScene = GameOverScene(size: size, adjustedScore: adjustedScore, oldHighScore: oldHighScore)
       view?.presentScene(gameOverScene, transition: SKTransition.doorsOpenHorizontal(withDuration: transitionDuration))
     }
   }
-  
+
   func processContactsForUpdate(_ currentTime: CFTimeInterval) {
     for contact in contactQueue {
       handleContact(contact)

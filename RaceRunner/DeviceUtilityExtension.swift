@@ -1,8 +1,8 @@
 //
-//  DeviceUtility.swift
+//  DeviceUtilityExtension.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 2/16/19.
+//  Created by Josh Adams on 2/16/19.
 //  Copyright © 2019 Josh Adams. All rights reserved.
 //
 
@@ -64,6 +64,11 @@ public extension UIDevice {
     case "iPhone14,3":                              return "iPhone 13 Pro Max"
     case "iPhone14,4":                              return "iPhone 13 Mini"
     case "iPhone14,5":                              return "iPhone 13"
+    case "iPhone14,6":                              return "iPhone SE 3rd Gen."
+    case "iPhone14,7":                              return "iPhone 14"
+    case "iPhone14,8":                              return "iPhone 14 Plus"
+    case "iPhone15,2":                              return "iPhone 14 Pro"
+    case "iPhone15,3":                              return "iPhone 14 Pro Max"
 
     case "iPad2,1", "iPad2,2", "iPad2,3", "iPad2,4":return "iPad 2"
     case "iPad3,1", "iPad3,2", "iPad3,3":           return "iPad 3"
@@ -85,6 +90,8 @@ public extension UIDevice {
     case "iPad8,11", "iPad8,12":                    return "iPad Pro 12.9 Inch 4th Gen."
     case "iPad11,1", "iPad11,2":                    return "iPad Mini 5th Gen."
     case "iPad11,3", "iPad11,4":                    return "iPad Air 3rd Gen."
+    case "iPad13,4", "iPad13,5", "iPad13,6", "iPad13,7": return "iPad Pro 11Inch 3rd Gen."
+    case "iPad13,8", "iPad13,9", "iPad13,10", "iPad13,11": return "iPad Pro 12 Inch 5th Gen."
 
     case "AppleTV5,3":                              return "Apple TV"
     case "AppleTV6,2":                              return "Apple TV 4K"

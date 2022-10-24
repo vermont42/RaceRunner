@@ -2,7 +2,7 @@
 //  GpxExporter.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 1/22/16.
+//  Created by Josh Adams on 1/22/16.
 //  Copyright © 2016 Josh Adams. All rights reserved.
 //
 
@@ -41,7 +41,7 @@ class GpxExporter: NSObject, MFMailComposeViewControllerDelegate {
   private static let weather = ("<weather>", "</weather>\n")
   private static let temperature = ("<temperature>", "</temperature>\n")
   private static let weight = ("<weight>", "</weight>\n")
-  
+
   class func export(_ run: Run) {
     if MFMailComposeViewController.canSendMail() {
       var contents = GpxExporter.prelude
@@ -84,7 +84,7 @@ class GpxExporter: NSObject, MFMailComposeViewControllerDelegate {
       UIAlertController.showMessage(GpxExporter.mailFailureMessage, title: failureTitle)
     }
   }
-  
+
   func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
     UIApplication.topViewController()?.dismiss(animated: true, completion: nil)
   }

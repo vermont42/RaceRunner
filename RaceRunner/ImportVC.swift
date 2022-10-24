@@ -2,7 +2,7 @@
 //  ImportVC.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 12/14/15.
+//  Created by Josh Adams on 12/14/15.
 //  Copyright © 2015 Josh Adams. All rights reserved.
 //
 
@@ -17,21 +17,21 @@ class ImportVC: ChildVC {
   override var prefersStatusBarHidden: Bool {
     return true
   }
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
     viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
     instructionsField.text = ImportVC.importInstructions
-    instructionsField.textColor = UiConstants.lightColor
+    instructionsField.textColor = UIConstants.lightColor
     instructionsField.attributedText = UiHelpers.styleText(instructionsField.text)
   }
-  
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     AWSAnalyticsService.shared.recordVisitation(viewController: "\(ImportVC.self)")
-    instructionsField.scrollRangeToVisible(NSMakeRange(0, 0))    
+    instructionsField.scrollRangeToVisible(NSMakeRange(0, 0))
   }
-  
+
   @IBAction func back() {
     self.performSegue(withIdentifier: "unwind pan", sender: self)
   }

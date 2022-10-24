@@ -1,8 +1,8 @@
 //
-//  Array+insertionIndexOf.swift
+//  ArrayExtension.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 12/10/15.
+//  Created by Josh Adams on 12/10/15.
 //  Copyright © 2015 Josh Adams. All rights reserved.
 //
 
@@ -11,7 +11,7 @@ extension Array {
     var lo = 0
     var hi = self.count - 1
     while lo <= hi {
-      let mid = (lo + hi)/2
+      let mid = (lo + hi) / 2
       if isOrderedBefore(self[mid], elem) {
         lo = mid + 1
       } else if isOrderedBefore(elem, self[mid]) {

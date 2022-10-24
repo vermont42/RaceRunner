@@ -1,8 +1,8 @@
 //
-//  Double+roundToPlaces.swift
+//  DoubleExtension.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 11/23/15.
+//  Created by Josh Adams on 11/23/15.
 //  Copyright © 2015 Josh Adams. All rights reserved.
 //
 

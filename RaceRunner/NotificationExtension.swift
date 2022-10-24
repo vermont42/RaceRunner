@@ -1,8 +1,8 @@
 //
-//  Notification+Names.swift
+//  NotificationExtension.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 6/18/18.
+//  Created by Josh Adams on 6/18/18.
 //  Copyright © 2018 Josh Adams. All rights reserved.
 //
 

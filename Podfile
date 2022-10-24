@@ -1,16 +1,14 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-platform :ios, '15.0'
+platform :ios, '16.0'
 use_frameworks!
 
 target "RaceRunner" do
-  pod 'GoogleMaps' # fix build warning with https://stackoverflow.com/a/49570905/8248798
-  pod 'PubNub'
-  pod 'DLRadioButton'
-  pod 'COBezierTableView'
-  pod 'MGSwipeTableCell'
-  pod 'MarqueeLabel'
   pod 'AWSPinpoint'
+  pod 'COBezierTableView'
+  pod 'GoogleMaps' # fix build warning with https://stackoverflow.com/a/49570905/8248798
+  pod 'MarqueeLabel'
+  pod 'PubNub'
 end
 
 post_install do |installer|

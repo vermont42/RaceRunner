@@ -2,7 +2,7 @@
 //  IntentHandler.swift
 //  Siri
 //
-//  Created by Joshua Adams on 5/20/18.
+//  Created by Josh Adams on 5/20/18.
 //  Copyright © 2018 Josh Adams. All rights reserved.
 //
 

@@ -6,8 +6,8 @@
 //  Copyright (c) 2016 Josh Adams. All rights reserved.
 //
 
-import UIKit
 import SpriteKit
+import UIKit
 
 class GameVC: ChildVC {
   override var shouldAutorotate: Bool {
@@ -34,7 +34,7 @@ class GameVC: ChildVC {
     super.viewWillAppear(animated)
     AWSAnalyticsService.shared.recordVisitation(viewController: "\(GameVC.self)")
   }
-  
+
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     pauseGame()
@@ -44,16 +44,16 @@ class GameVC: ChildVC {
   @IBAction func showMenu(_ sender: UIButton) {
     showMenu()
   }
-  
+
   @objc func handleApplicationWillResignActive (_ note: Notification) {
     pauseGame()
   }
-  
+
   @objc func handleApplicationDidBecomeActive (_ note: Notification) {
     let skView = view as! SKView
     skView.isPaused = false
   }
-  
+
   private func pauseGame() {
     let skView = view as! SKView
     skView.isPaused = true

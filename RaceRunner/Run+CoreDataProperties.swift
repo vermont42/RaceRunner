@@ -2,12 +2,12 @@
 //  Run+CoreDataProperties.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 1/14/16.
+//  Created by Josh Adams on 1/14/16.
 //  Copyright © 2016 Josh Adams. All rights reserved.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 extension Run {
   @NSManaged var distance: NSNumber

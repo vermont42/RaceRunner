@@ -6,8 +6,8 @@
 //  Copyright © 2015 Josh Adams. All rights reserved.
 //
 
-import Foundation
 import AVFoundation
+import Foundation
 
 class SoundManager {
   private static let soundManager = SoundManager()
@@ -16,7 +16,7 @@ class SoundManager {
   private var sounds: [String: AVAudioPlayer] = [:]
 
   private init () {}
-  
+
   static func play(_ sound: Sound) {
     if soundManager.sounds[sound.rawValue] == nil {
       if let audioUrl = Bundle.main.url(forResource: sound.rawValue, withExtension: soundExtension) {
@@ -27,18 +27,17 @@ class SoundManager {
         }
       }
     }
-    
+
     soundManager.sounds[sound.rawValue]?.play()
   }
-  
+
   static func enableBackgroundAudio() {
     let session = AVAudioSession.sharedInstance()
-    
+
     do {
       try session.setCategory(.playback, mode: .default, options: .mixWithOthers)
       try session.setActive(true)
-    }
-    catch let error as NSError {
+    } catch let error as NSError {
       print("\(error.localizedDescription)")
     }
   }

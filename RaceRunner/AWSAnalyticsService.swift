@@ -2,17 +2,17 @@
 //  AWSAnalyticsService.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 2/16/19.
+//  Created by Josh Adams on 2/16/19.
 //  Copyright © 2019 Josh Adams. All rights reserved.
 //
 
-import Foundation
 import AWSPinpoint
+import Foundation
 
 class AWSAnalyticsService: NSObject {
   var pinpoint: AWSPinpoint
   static let shared = AWSAnalyticsService()
-  
+
   override init() {
     let config = AWSPinpointConfiguration.defaultPinpointConfiguration(launchOptions: nil)
     pinpoint = AWSPinpoint(configuration: config)
@@ -21,7 +21,7 @@ class AWSAnalyticsService: NSObject {
     //    AWSDDLog.sharedInstance.logLevel = .verbose
     //    AWSDDLog.add(AWSDDTTYLogger.sharedInstance)
   }
-  
+
   func recordEvent(_ eventName: String, parameters: [String: String]? = nil, metrics: [String: Double]? = nil) {
     let event = pinpoint.analyticsClient.createEvent(withEventType: eventName)
     if let parameters = parameters {
@@ -39,17 +39,17 @@ class AWSAnalyticsService: NSObject {
     pinpoint.analyticsClient.submitEvents()
     #endif
   }
-  
+
   func recordEvent(_ eventName: String) {
     recordEvent(eventName, parameters: nil, metrics: nil)
   }
-  
+
   func recordVisitation(viewController: String) {
     let visited = "visited"
     let viewControllerKey = "viewController"
     recordEvent(visited, parameters: [viewControllerKey: "\(viewController)"], metrics: nil)
   }
-  
+
   func recordRunStart() {
     let runStart = "runStart"
     recordEvent(runStart)
@@ -78,8 +78,8 @@ class AWSAnalyticsService: NSObject {
     let NONE = "NONE"
 
     let modelName = UIDevice.current.modelName
-    let language = NSLocale.current.languageCode ?? none
-    let region = NSLocale.current.regionCode ?? NONE
+    let language = NSLocale.current.language.languageCode?.identifier ?? none
+    let region = NSLocale.current.language.region?.identifier ?? NONE
     let locale = language + region
 
     recordEvent(becameActive, parameters: [modelKey: modelName, localeKey: locale], metrics: nil)

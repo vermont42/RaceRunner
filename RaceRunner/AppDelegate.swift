@@ -2,19 +2,19 @@
 //  AppDelegate.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 3/7/15.
+//  Created by Josh Adams on 3/7/15.
 //  Copyright (c) 2015 Josh Adams. All rights reserved.
 //
 
-import UIKit
-import GoogleMaps
 import AVFoundation
+import GoogleMaps
 import Intents
+import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
-  
+
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     _ = AWSAnalyticsService.shared
     Config.checkKeys()
@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     SettingsManager.setRealRunInProgress(false)
     return true
   }
-    
+
   func applicationWillResignActive(_ application: UIApplication) {
     CDManager.saveContext()
   }

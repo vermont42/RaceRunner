@@ -2,23 +2,22 @@
 //  IntentHandler.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 5/23/18.
+//  Created by Josh Adams on 5/23/18.
 //  Copyright © 2018 Josh Adams. All rights reserved.
 //
 
 import Foundation
 import Intents
 
-struct IntentHandler {
+enum IntentHandler {
   static func handle(intent: INIntent) -> INIntentResponse {
     let response: INIntentResponse
     SoundManager.enableBackgroundAudio()
 
-    if let _ = intent as? INStartWorkoutIntent {
+    if (intent as? INStartWorkoutIntent) != nil {
       if !RunModel.gpsIsAvailable() {
         response = INStartWorkoutIntentResponse(code: .failure, userActivity: nil)
-      }
-      else if RunModel.runModel.status == .inProgress || RunModel.runModel.status == .paused {
+      } else if RunModel.runModel.status == .inProgress || RunModel.runModel.status == .paused {
         response = INStartWorkoutIntentResponse(code: .failureOngoingWorkout, userActivity: nil)
       } else {
         RunModel.initializeRunModel()
@@ -26,8 +25,7 @@ struct IntentHandler {
         PersistentMapState.initMapState()
         response = INStartWorkoutIntentResponse(code: .success, userActivity: nil)
       }
-    }
-    else if let _ = intent as? INPauseWorkoutIntent {
+    } else if (intent as? INPauseWorkoutIntent) != nil {
       switch RunModel.runModel.status {
       case .preRun, .paused:
         response = INPauseWorkoutIntentResponse(code: .failure, userActivity: nil)
@@ -35,8 +33,7 @@ struct IntentHandler {
         RunModel.runModel.pause()
         response = INPauseWorkoutIntentResponse(code: .success, userActivity: nil)
       }
-    }
-    else if let _ = intent as? INResumeWorkoutIntent {
+    } else if (intent as? INResumeWorkoutIntent) != nil {
       switch RunModel.runModel.status {
       case .preRun, .inProgress:
         response = INResumeWorkoutIntentResponse(code: .failure, userActivity: nil)
@@ -44,8 +41,7 @@ struct IntentHandler {
         RunModel.runModel.resume()
         response = INResumeWorkoutIntentResponse(code: .success, userActivity: nil)
       }
-    }
-    else if let _ = intent as? INEndWorkoutIntent {
+    } else if (intent as? INEndWorkoutIntent) != nil {
       switch RunModel.runModel.status {
       case .preRun:
         response = INPauseWorkoutIntentResponse(code: .failure, userActivity: nil)

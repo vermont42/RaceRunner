@@ -2,13 +2,13 @@
 //  RunDetailsVC.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 3/8/15.
+//  Created by Josh Adams on 3/8/15.
 //  Copyright (c) 2015 Josh Adams. All rights reserved.
 //
 
-import UIKit
 import GoogleMaps
 import MarqueeLabel
+import UIKit
 
 class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, GMSMapViewDelegate {
   @IBOutlet var map: GMSMapView!
@@ -38,10 +38,10 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   private static let noLocationsError = "Attempted to display details of run with zero locations."
   private static let cancel = "Cancel"
   private static let name = "Name"
-  private static let forecastMessage = "Weather data powered by Forecast. http://forecast.io/"
-  private static let forecastTitle = "Credit"
-  private static let forecastOkay = "Got It"
-  
+  private static let weatherMessage = "Weather data powered by Open Weather. openweathermap.org"
+  private static let weatherTitle = "Credit"
+  private static let weatherOkay = "Got It"
+
   private let nilMessage = "run was nil in \(RunDetailsVC.self)."
   private var paceSpans: [GMSStyleSpan] = []
   private var altitudeSpans: [GMSStyleSpan] = []
@@ -49,29 +49,29 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   private var maxSmoothSpeed = 0.0
   private var minSmoothSpeed = Double(LONG_MAX)
   private var addedOverlays: Bool = false
-  private var latestStrokeColor = UiConstants.intermediate2ColorDarkened
+  private var latestStrokeColor = UIConstants.intermediate2ColorDarkened
   private var path = GMSMutablePath()
   private var polyline = GMSPolyline()
 
-  func mapView(_ mapView:GMSMapView,idleAt position:GMSCameraPosition) {
+  func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
     if !addedOverlays {
       addOverlays()
     }
   }
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
     map.mapType = .terrain
     map.delegate = self
-    polyline.strokeWidth = UiConstants.polylineWidth
+    polyline.strokeWidth = UIConstants.polylineWidth
   }
-  
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     AWSAnalyticsService.shared.recordVisitation(viewController: "\(RunDetailsVC.self)")
-    if !SettingsManager.getShowedForecastCredit() {
-      UIAlertController.showMessage(RunDetailsVC.forecastMessage, title: RunDetailsVC.forecastTitle, okTitle: RunDetailsVC.forecastOkay)
-      SettingsManager.setShowedForecastCredit(true)
+    if !SettingsManager.getShowedWeatherCredit() {
+      UIAlertController.showMessage(RunDetailsVC.weatherMessage, title: RunDetailsVC.weatherTitle, okTitle: RunDetailsVC.weatherOkay)
+      SettingsManager.setShowedWeatherCredit(true)
     }
 
     configureView()
@@ -87,6 +87,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
       fatalError(nilMessage + "viewDidLoad()")
     }
 
+    // swiftlint:disable empty_count
     guard run.locations.count > 0 else {
       fatalError(RunDetailsVC.noLocationsError)
     }
@@ -137,7 +138,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     }
     updateCalories()
   }
-  
+
   private func updateCalories() {
     guard let run = run else {
       fatalError(nilMessage + "updateCalories()")
@@ -145,12 +146,11 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     let weight = run.weight.doubleValue != Run.noWeight ? run.weight.doubleValue : HumanWeight.defaultWeight
     if netOrTotalCals.selectedSegmentIndex == 0 { // total
       self.calories.text = Converter.totalCaloriesAsString(run.distance.doubleValue, weight: weight)
-    }
-    else { // net
+    } else { // net
       self.calories.text = Converter.netCaloriesAsString(run.distance.doubleValue, weight: weight)
     }
   }
-  
+
   private func addOverlays() {
     guard let run = run else {
       fatalError(nilMessage + "addOverlays()")
@@ -171,7 +171,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
       polyline.map = map
     }
   }
-  
+
   private func makeSpans(areSpeeds: Bool) {
     guard let run = run else {
       fatalError(nilMessage + "makeSpans()")
@@ -201,7 +201,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
       var lowerBound = i - idealSmoothReachSize / 2
       var upperBound = i + idealSmoothReachSize / 2
       if lowerBound < 0 {
-        lowerBound = 0;
+        lowerBound = 0
       }
       if upperBound > (rawValues.count - 1) {
         upperBound = rawValues.count - 1
@@ -232,7 +232,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
     if areSpeeds {
       smoothSpeeds = smoothValues
     }
-    
+
     var sortedValues = smoothValues
     sortedValues.sort { $0 < $1 }
     for i in 1 ..< run.locations.count {
@@ -259,14 +259,14 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
       }
     }
   }
-  
+
   @IBAction func returnFromSegueActions(_ sender: UIStoryboardSegue) {}
-  
+
   override func segueForUnwinding(to toViewController: UIViewController, from fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
     return UnwindPanSegue(identifier: identifier ?? "", source: fromViewController, destination: toViewController, performHandler: { () -> Void in
     })
   }
-  
+
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "pan graphs from details" {
       if let graphVC = segue.destination as? GraphVC {
@@ -285,7 +285,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
 
   @IBAction func setCustomName() {
     let alertController = UIAlertController(title: RunDetailsVC.newRunNameTitle, message: RunDetailsVC.newRunNamePrompt, preferredStyle: UIAlertController.Style.alert)
-    let setAction = UIAlertAction(title: RunDetailsVC.setRunNameButtonTitle, style: UIAlertAction.Style.default, handler: { action in
+    let setAction = UIAlertAction(title: RunDetailsVC.setRunNameButtonTitle, style: UIAlertAction.Style.default, handler: { _ in
       if let textFields = alertController.textFields {
         let text = textFields[0].text ?? ""
         self.route.text = "\(RunDetailsVC.name): \(text)"
@@ -297,39 +297,39 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
       }
     })
     alertController.addAction(setAction)
-    let cancelAction = UIAlertAction(title: RunDetailsVC.cancel, style: UIAlertAction.Style.cancel, handler: { action in })
+    let cancelAction = UIAlertAction(title: RunDetailsVC.cancel, style: UIAlertAction.Style.cancel, handler: { _ in })
     alertController.addAction(cancelAction)
     alertController.addTextField { textField in
       textField.placeholder = "\(RunDetailsVC.name)"
     }
-    alertController.view.tintColor = UiConstants.intermediate1Color
+    alertController.view.tintColor = UIConstants.intermediate1Color
     present(alertController, animated: true, completion: nil)
-    alertController.view.tintColor = UiConstants.intermediate1Color    
+    alertController.view.tintColor = UIConstants.intermediate1Color
   }
-  
+
   @IBAction func changeOverlay(_ sender: UISegmentedControl) {
     addOverlays()
   }
-  
+
   @IBAction func changeCalorieType(_ sender: UISegmentedControl) {
     updateCalories()
   }
-  
+
   @IBAction func back(_ sender: UIButton) {
     performSegue(withIdentifier: "unwind pan log", sender: self)
   }
-  
+
   @IBAction func export() {
     guard let run = run else {
       fatalError(nilMessage + "export()")
     }
     GpxExporter.export(run)
   }
-  
+
   @IBAction func graph() {
     performSegue(withIdentifier: "pan graphs from details", sender: self)
   }
-  
+
   override var prefersStatusBarHidden: Bool {
     return true
   }

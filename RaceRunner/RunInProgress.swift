@@ -2,12 +2,12 @@
 //  RunInProgress.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 6/12/16.
+//  Created by Josh Adams on 6/12/16.
 //  Copyright © 2016 Josh Adams. All rights reserved.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 class RunInProgress: NSManagedObject {
   @NSManaged var oldSplitAltitude: NSNumber

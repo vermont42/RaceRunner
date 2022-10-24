@@ -2,7 +2,7 @@
 //  PanSegue.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 3/1/15.
+//  Created by Josh Adams on 3/1/15.
 //  Copyright (c) 2015 Josh Adams. All rights reserved.
 //
 //  This code is adapted from http://www.appcoda.com/custom-segue-animations/ .
@@ -29,13 +29,17 @@ class PanSegue: UIStoryboardSegue {
       window?.insertSubview(secondVCView, aboveSubview: firstVCView)
       // Unswizzle.
       method_exchangeImplementations(noop, viewWillAppear)
-      UIView.animate(withDuration: UiConstants.panDuration, animations: { () -> Void in
+      UIView.animate(
+        withDuration: UIConstants.panDuration,
+        animations: { () -> Void in
           firstVCView.frame = firstVCView.frame.offsetBy(dx: -screenWidth, dy: 0)
           secondVCView.frame = secondVCView.frame.offsetBy(dx: -screenWidth, dy: 0)
-        }, completion: { Bool -> Void in
+        },
+        completion: { _ in
           self.destination.modalPresentationStyle = .fullScreen
           self.source.present(self.destination, animated: false, completion: nil)
-      })
+        }
+      )
     }
   }
 }

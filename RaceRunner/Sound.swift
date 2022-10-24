@@ -9,18 +9,18 @@
 import Foundation
 
 enum Sound: String {
-  case applause1 = "applause1"
-  case applause2 = "applause2"
-  case applause3 = "applause3"
-  case click = "click"
-  case gun1 = "gun1"
-  case gun2 = "gun2"
-  case neigh = "neigh"
-  case sadTrombone = "sadTrombone"
-  case scream1 = "scream1"
-  case scream2 = "scream2"
-  case scream3 = "scream3"
-  case silence = "silence"
+  case applause1
+  case applause2
+  case applause3
+  case click
+  case gun1
+  case gun2
+  case neigh
+  case sadTrombone
+  case scream1
+  case scream2
+  case scream3
+  case silence
 
   static var randomScream: Sound {
     return randomSound(base: "scream", count: 3, defaultSound: .scream1)

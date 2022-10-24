@@ -2,7 +2,7 @@
 //  LogSortField.swift
 //  RaceRunner
 //
-//  Created by Joshua Adams on 1/12/16.
+//  Created by Josh Adams on 1/12/16.
 //  Copyright © 2016 Josh Adams. All rights reserved.
 //
 
@@ -14,7 +14,7 @@ enum LogSortField: String {
   case pace = "Pace"
   case distance = "Distance"
   case duration = "Duration"
-  
+
   init() {
     self = .date
   }
@@ -41,28 +41,28 @@ enum LogSortField: String {
       let pace2 = run2.duration.doubleValue / run2.distance.doubleValue
       var result = pace1 < pace2
       if ordering == .orderedDescending {
-        result = !result
+        result.toggle()
       }
       return result
     case .distance:
       var result = run1.distance.doubleValue < run2.distance.doubleValue
       if ordering == .orderedDescending {
-        result = !result
+        result.toggle()
       }
       return result
     case .duration:
       var result = run1.duration.int32Value < run2.duration.int32Value
       if ordering == .orderedDescending {
-        result = !result
+        result.toggle()
       }
       return result
     }
   }
-  
+
   static func all() -> [String] {
     return [LogSortField.date.asString(), LogSortField.name.asString(), LogSortField.pace.asString(), LogSortField.distance.asString(), LogSortField.duration.asString()]
   }
-  
+
   static func sortFieldForPosition(_ position: Int) -> LogSortField {
     switch position {
     case 0:
@@ -79,7 +79,7 @@ enum LogSortField: String {
       return .date
     }
   }
-  
+
   // This method exists in case I internationalize at some point.
   func asString() -> String {
     switch self {
@@ -95,7 +95,7 @@ enum LogSortField: String {
       return self.rawValue
     }
   }
-  
+
   func pickerPosition() -> Int {
     switch self {
     case .date:

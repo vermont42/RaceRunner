@@ -2,33 +2,31 @@
 //  LocationManager.swift
 //  GpxLocationManager
 //
-//  Created by Joshua Adams on 4/23/15.
+//  Created by Josh Adams on 4/23/15.
 //  Copyright (c) 2015 Josh Adams. All rights reserved.
 //
 
-import Foundation
 import CoreLocation
+import Foundation
 
 open class LocationManager {
   private var gpxLocationManager: GpxLocationManager!
   private var cLLocationManager: CLLocationManager!
-  
+
   public enum LocationManagerType {
     case gpx
     case coreLocation
-    
+
     init() {
       self = .coreLocation
     }
   }
   open var location: CLLocation! {
-    get {
-      switch locationManagerType {
-      case .gpx:
-        return gpxLocationManager.location
-      case .coreLocation:
-        return cLLocationManager.location
-      }
+    switch locationManagerType {
+    case .gpx:
+      return gpxLocationManager.location
+    case .coreLocation:
+      return cLLocationManager.location
     }
   }
   open weak var delegate: CLLocationManagerDelegate! {
@@ -162,11 +160,10 @@ open class LocationManager {
         gpxLocationManager.allowsBackgroundLocationUpdates = newValue
       case .coreLocation:
         cLLocationManager.allowsBackgroundLocationUpdates = newValue
-        break
       }
     }
   }
-  
+
   open func kill() {
     switch locationManagerType {
     case .gpx:
@@ -177,22 +174,22 @@ open class LocationManager {
   }
 
   public let locationManagerType: LocationManagerType
-  
+
   public init() {
     cLLocationManager = CLLocationManager()
     locationManagerType = .coreLocation
   }
-  
+
   public init(gpxFile: String) {
     gpxLocationManager = GpxLocationManager(gpxFile: gpxFile)
     locationManagerType = .gpx
   }
-  
+
   public init(locations: [CLLocation]) {
     gpxLocationManager = GpxLocationManager(locations: locations)
     locationManagerType = .gpx
   }
-  
+
   open func stopUpdatingLocation() {
     switch locationManagerType {
     case .gpx:
@@ -201,7 +198,7 @@ open class LocationManager {
       cLLocationManager.stopUpdatingLocation()
     }
   }
-  
+
   open func startUpdatingLocation() {
     switch locationManagerType {
     case .gpx:
