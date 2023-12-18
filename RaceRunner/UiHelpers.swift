@@ -43,11 +43,11 @@ enum UiHelpers {
   }
 
   private static func computeColorComponent(baseColor: UIColor, index: Int) -> CGFloat {
-    return ((baseColor.cgColor.components?[index]) ?? 0.0) * UIConstants.darkening
+    ((baseColor.cgColor.components?[index]) ?? 0.0) * UIConstants.darkening
   }
 
   static func letterPressedText(_ plainText: String) -> NSAttributedString {
-    return NSAttributedString(string: plainText, attributes: [NSAttributedString.Key.textEffect: NSAttributedString.TextEffectStyle.letterpressStyle])
+    NSAttributedString(string: plainText, attributes: [NSAttributedString.Key.textEffect: NSAttributedString.TextEffectStyle.letterpressStyle])
   }
 
   static func styleText(_ text: String) -> NSAttributedString {

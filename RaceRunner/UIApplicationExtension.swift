@@ -27,7 +27,7 @@ extension UIApplication {
 
 extension UIApplication { // https://stackoverflow.com/a/57169802/8248798
   var compatibilityWindow: UIWindow? {
-    return UIApplication.shared.connectedScenes
+    UIApplication.shared.connectedScenes
     .filter({ $0.activationState == .foregroundActive })
     .map({ $0 as? UIWindowScene })
     .compactMap({ $0 })

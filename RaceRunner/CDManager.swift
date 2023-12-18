@@ -46,6 +46,6 @@ class CDManager {
   }
 
   private func applicationDocumentsDirectory() -> URL {
-    return URL(fileURLWithPath: NSHomeDirectory() + "/Documents/")
+    URL(fileURLWithPath: NSHomeDirectory() + "/Documents/")
   }
 }

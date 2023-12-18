@@ -16,15 +16,6 @@ struct ParseResult {
   let weather: String
   let temperature: Double
   let weight: Double
-
-  init(autoName: String, customName: String, locations: [CLLocation], weather: String, temperature: Double, weight: Double) {
-    self.autoName = autoName
-    self.customName = customName
-    self.locations = locations
-    self.weather = weather
-    self.temperature = temperature
-    self.weight = weight
-  }
 }
 
 class GpxParser: NSObject, XMLParserDelegate {

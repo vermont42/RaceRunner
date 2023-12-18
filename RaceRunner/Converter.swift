@@ -41,11 +41,11 @@ enum Converter {
   private static let min: String = "min"
 
   static func netCaloriesAsString(_ distance: Double, weight: Double) -> String {
-    return String(format: "%.0f Cal", weight * distance * netCaloriesPerKiloPerMeter)
+    String(format: "%.0f Cal", weight * distance * netCaloriesPerKiloPerMeter)
   }
 
   static func totalCaloriesAsString(_ distance: Double, weight: Double) -> String {
-    return String(format: "%.0f Cal", weight * distance * totalCaloriesPerKiloPerMeter)
+    String(format: "%.0f Cal", weight * distance * totalCaloriesPerKiloPerMeter)
   }
 
   static func announceProgress(_ totalSeconds: Int, lastSeconds: Int, totalDistance: Double, lastDistance: Double, newAltitude: Double, oldAltitude: Double) {
@@ -129,19 +129,19 @@ enum Converter {
   }
 
   static func getCurrentLongUnitName() -> String {
-    return SettingsManager.getUnitType() == .imperial ? mile : kilometer
+    SettingsManager.getUnitType() == .imperial ? mile : kilometer
   }
 
   static func getCurrentAbbreviatedLongUnitName() -> String {
-    return SettingsManager.getUnitType() == .imperial ? mile : kilometerAbbr
+    SettingsManager.getUnitType() == .imperial ? mile : kilometerAbbr
   }
 
   static func getCurrentPluralLongUnitName() -> String {
-    return SettingsManager.getUnitType() == .imperial ? miles : kilometersAbbr
+    SettingsManager.getUnitType() == .imperial ? miles : kilometersAbbr
   }
 
   static func convertFahrenheitToCelsius(_ temperature: Double) -> Double {
-    return celsiusFraction * (temperature - fahrenheitAmountToAdd)
+    celsiusFraction * (temperature - fahrenheitAmountToAdd)
   }
 
   static func stringifyDistance(_ meters: Double, format: NSString = "%.2f", omitUnits: Bool = false) -> String {

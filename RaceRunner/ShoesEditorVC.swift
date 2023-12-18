@@ -117,7 +117,7 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
   }
 
   override var prefersStatusBarHidden: Bool {
-    return true
+    true
   }
 
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -194,11 +194,11 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
 
   // Helper function inserted by Swift 4.2 migrator.
   private func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
-    return Dictionary(uniqueKeysWithValues: input.map { key, value in (key.rawValue, value) })
+    Dictionary(uniqueKeysWithValues: input.map { key, value in (key.rawValue, value) })
   }
 
   // Helper function inserted by Swift 4.2 migrator.
   private func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
-    return input.rawValue
+    input.rawValue
   }
 }

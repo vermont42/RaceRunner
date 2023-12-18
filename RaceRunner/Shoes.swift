@@ -23,7 +23,7 @@ class Shoes: NSManagedObject {
   static let areOkay = "shoes are okay"
 
   class func addMeters(_ meters: Double) -> String {
-    //let fetchRequest = NSFetchRequest()
+    // let fetchRequest = NSFetchRequest()
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Shoes")
     let context = CDManager.sharedCDManager.context
     fetchRequest.entity = NSEntityDescription.entity(forEntityName: "Shoes", in: context)

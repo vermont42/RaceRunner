@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03176D652B30AEB7005746F2 /* BezierTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03176D642B30AEB7005746F2 /* BezierTableView.swift */; };
+		03176D672B30AF0A005746F2 /* UIView+Bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03176D662B30AF0A005746F2 /* UIView+Bezier.swift */; };
 		031B603A29033C08008BA894 /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031B603929033C08008BA894 /* UITableViewCellExtension.swift */; };
 		0368AB82257E7E6E00052A45 /* scream3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0368AB81257E7E6E00052A45 /* scream3.mp3 */; };
 		038984C322189E1E00DF27CF /* AWSAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038984C222189E1E00DF27CF /* AWSAnalyticsService.swift */; };
@@ -143,6 +145,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		03176D642B30AEB7005746F2 /* BezierTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierTableView.swift; sourceTree = "<group>"; };
+		03176D662B30AF0A005746F2 /* UIView+Bezier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Bezier.swift"; sourceTree = "<group>"; };
 		031B603929033C08008BA894 /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
 		035787392903064100ACA2B9 /* SiriRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SiriRelease.entitlements; sourceTree = "<group>"; };
 		0368AB81257E7E6E00052A45 /* scream3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = scream3.mp3; sourceTree = "<group>"; };
@@ -288,6 +292,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03176D632B30AE77005746F2 /* BezierTableView */ = {
+			isa = PBXGroup;
+			children = (
+				03176D642B30AEB7005746F2 /* BezierTableView.swift */,
+				03176D662B30AF0A005746F2 /* UIView+Bezier.swift */,
+			);
+			name = BezierTableView;
+			sourceTree = "<group>";
+		};
 		03FD6AA0290723E200747E40 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -525,6 +538,7 @@
 			isa = PBXGroup;
 			children = (
 				03FD6AA0290723E200747E40 /* Assets */,
+				03176D632B30AE77005746F2 /* BezierTableView */,
 				03FD6AA2290725FB00747E40 /* Controllers */,
 				03FD6AA42907278D00747E40 /* Extensions */,
 				E1342BBA1D04F3F200ABFCA7 /* Game */,
@@ -743,7 +757,6 @@
 				"${PODS_ROOT}/Target Support Files/Pods-RaceRunner/Pods-RaceRunner-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
 				"${BUILT_PRODUCTS_DIR}/AWSPinpoint/AWSPinpoint.framework",
-				"${BUILT_PRODUCTS_DIR}/COBezierTableView/COBezierTableView.framework",
 				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/PubNub/PubNub.framework",
 			);
@@ -751,7 +764,6 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSPinpoint.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/COBezierTableView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PubNub.framework",
 			);
@@ -776,6 +788,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E161FF2D1CC8529200C92485 /* Sound.swift in Sources */,
+				03176D672B30AF0A005746F2 /* UIView+Bezier.swift in Sources */,
 				E1973E1F20D7F22900043736 /* NotificationExtension.swift in Sources */,
 				E1973E2120D7F4B600043736 /* RunCoordinate.swift in Sources */,
 				E1E8195820B6409000AC1574 /* IntentHandler.swift in Sources */,
@@ -804,6 +817,7 @@
 				E1342BC91D04FA3B00ABFCA7 /* GameOverScene.swift in Sources */,
 				E10B704A1C455C4F00C70283 /* UIApplicationExtension.swift in Sources */,
 				E11655AC1AEAFB5200633C16 /* RunModel.swift in Sources */,
+				03176D652B30AEB7005746F2 /* BezierTableView.swift in Sources */,
 				E1648E101C4864E8002A3ED4 /* ShoesBrowserVC.swift in Sources */,
 				E1E8B9541AAB742E00D04E38 /* LogVC.swift in Sources */,
 				E1D529CD1C1C80A500E92AD8 /* PersistentMapState.swift in Sources */,
@@ -888,18 +902,19 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4.1;
+				CURRENT_PROJECT_VERSION = 4.2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = V3L2PL4QC9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Siri/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.1;
+				MARKETING_VERSION = 4.2;
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = biz.joshadams.RaceRunner.Siri2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -922,17 +937,17 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4.1;
+				CURRENT_PROJECT_VERSION = 4.2;
 				DEVELOPMENT_TEAM = V3L2PL4QC9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Siri/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.1;
+				MARKETING_VERSION = 4.2;
 				PRODUCT_BUNDLE_IDENTIFIER = biz.joshadams.RaceRunner.Siri2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -991,7 +1006,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "";
@@ -1043,7 +1058,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D RELEASE";
 				SDKROOT = iphoneos;
@@ -1062,15 +1077,15 @@
 				CODE_SIGN_ENTITLEMENTS = RaceRunner/RaceRunner.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 4.1;
+				CURRENT_PROJECT_VERSION = 4.2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = RaceRunner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.1;
+				MARKETING_VERSION = 4.2;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = "biz.joshadams.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1094,16 +1109,16 @@
 				CODE_SIGN_ENTITLEMENTS = RaceRunner/RaceRunnerRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4.1;
+				CURRENT_PROJECT_VERSION = 4.2;
 				DEVELOPMENT_TEAM = V3L2PL4QC9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = RaceRunner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.1;
+				MARKETING_VERSION = 4.2;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = biz.joshadams.RaceRunner;
 				PRODUCT_NAME = "$(TARGET_NAME)";

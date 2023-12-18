@@ -10,16 +10,16 @@ import CoreLocation
 import Foundation
 
 open class GpxLocationManager {
-  open var pausesLocationUpdatesAutomatically: Bool = true
+  open var pausesLocationUpdatesAutomatically = true
   open var distanceFilter: CLLocationDistance = kCLDistanceFilterNone
   open var desiredAccuracy: CLLocationAccuracy = kCLLocationAccuracyBest
   open var activityType: CLActivityType = .other
   open var headingFilter: CLLocationDegrees = 1
   open var headingOrientation: CLDeviceOrientation = .portrait
-  open var monitoredRegions: Set<NSObject>! { return Set<NSObject>() }
-  open var maximumRegionMonitoringDistance: CLLocationDistance { return -1 }
-  open var rangedRegions: Set<NSObject>! { return Set<NSObject>() }
-  open var heading: CLHeading! { return nil }
+  open var monitoredRegions: Set<NSObject>! { Set<NSObject>() }
+  open var maximumRegionMonitoringDistance: CLLocationDistance { -1 }
+  open var rangedRegions: Set<NSObject>! { Set<NSObject>() }
+  open var heading: CLHeading! { nil }
   open var allowsBackgroundLocationUpdates = true
   open var secondLength = 1.0
 
@@ -41,15 +41,15 @@ open class GpxLocationManager {
   open func allowDeferredLocationUpdatesUntilTraveled(_ distance: CLLocationDistance = 0, timeout: TimeInterval) {}
   open func disallowDeferredLocationUpdates() {}
 
-  open class func authorizationStatus() -> CLAuthorizationStatus { return CLAuthorizationStatus.authorizedAlways }
-  open class func locationServicesEnabled() -> Bool { return true }
-  open class func deferredLocationUpdatesAvailable() -> Bool { return true }
-  open class func significantLocationChangeMonitoringAvailable() -> Bool { return true }
-  open class func headingAvailable() -> Bool { return true }
-  open class func isMonitoringAvailableForClass(_ regionClass: AnyClass! = nil) -> Bool { return true }
-  open class func isRangingAvailable() -> Bool { return true }
+  open class func authorizationStatus() -> CLAuthorizationStatus { CLAuthorizationStatus.authorizedAlways }
+  open class func locationServicesEnabled() -> Bool { true }
+  open class func deferredLocationUpdatesAvailable() -> Bool { true }
+  open class func significantLocationChangeMonitoringAvailable() -> Bool { true }
+  open class func headingAvailable() -> Bool { true }
+  open class func isMonitoringAvailableForClass(_ regionClass: AnyClass! = nil) -> Bool { true }
+  open class func isRangingAvailable() -> Bool { true }
 
-  open var location: CLLocation! { return locations[lastLocation] }
+  open var location: CLLocation! { locations[lastLocation] }
   open weak var delegate: CLLocationManagerDelegate!
   open var shouldKill = false
 
@@ -135,6 +135,6 @@ open class GpxLocationManager {
   }
 
   private func makeLoc(_ latitude: NSString, longitude: NSString, altitude: NSString, timestamp: NSString) -> CLLocation {
-    return CLLocation(coordinate: CLLocationCoordinate2D(latitude: latitude.doubleValue, longitude: longitude.doubleValue), altitude: altitude.doubleValue, horizontalAccuracy: 5.0, verticalAccuracy: 5.0, timestamp: dateFormatter.date(from: timestamp as String)!)
+    CLLocation(coordinate: CLLocationCoordinate2D(latitude: latitude.doubleValue, longitude: longitude.doubleValue), altitude: altitude.doubleValue, horizontalAccuracy: 5.0, verticalAccuracy: 5.0, timestamp: dateFormatter.date(from: timestamp as String)!)
   }
 }

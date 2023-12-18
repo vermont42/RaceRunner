@@ -10,7 +10,7 @@ import CoreLocation
 import Foundation
 import PubNub
 
-class PubNubManager: NSObject, PNEventsListener { //PNObjectEventListener {
+class PubNubManager: NSObject, PNEventsListener { // PNObjectEventListener {
   static let sharedNub = PubNubManager()
   static let publicChannel = "foo"
   static let stopped = "stopped"
@@ -21,7 +21,14 @@ class PubNubManager: NSObject, PNEventsListener { //PNObjectEventListener {
   private var pubNubPublisher: PubNubPublisher?
 
   override init() {
-    pubNub = PubNub.clientWithConfiguration(PNConfiguration(publishKey: Config.pubNubPublishKey, subscribeKey: Config.pubNubSubscribeKey, uuid: "\(UUID())"))
+    // pubNub = PubNub.clientWithConfiguration(PNConfiguration(publishKey: Config.pubNubPublishKey, subscribeKey: Config.pubNubSubscribeKey, uuid: "\(UUID())"))
+    pubNub = PubNub.clientWithConfiguration(
+      PNConfiguration(
+        publishKey: Config.pubNubPublishKey,
+        subscribeKey: Config.pubNubSubscribeKey,
+        userID: "\(UUID())"
+      )
+    )
     super.init()
     pubNub?.addListener(self)
   }
@@ -30,7 +37,7 @@ class PubNubManager: NSObject, PNEventsListener { //PNObjectEventListener {
     let message = "\(location.coordinate.latitude) \(location.coordinate.longitude) \(location.altitude) \(distance) \(seconds) \(SettingsManager.getAllowStop())"
     sharedNub.pubNub?.publish(message, toChannel: publisher, storeInHistory: false, compressed: false, withCompletion: { (status) -> Void in
       if !status.isError {
-          //print("Successfully published.")
+          // print("Successfully published.")
       } else {
           // Handle message publish error. Check 'category' property
           // to find out possible reason because of which request did fail.

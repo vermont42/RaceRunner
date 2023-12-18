@@ -16,7 +16,7 @@ enum HumanWeight {
   static let defaultWeight = 68.0
 
   static func weightAsString() -> String {
-    return weightAsString(SettingsManager.getWeight(), unitType: SettingsManager.getUnitType())
+    weightAsString(SettingsManager.getWeight(), unitType: SettingsManager.getUnitType())
   }
 
   static func weightAsString(_ weight: Double, unitType: UnitType) -> String {

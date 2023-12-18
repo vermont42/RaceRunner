@@ -42,7 +42,7 @@ class BroadcastVC: UIViewController, UITextFieldDelegate {
   }
 
   override var prefersStatusBarHidden: Bool {
-    return true
+    true
   }
 
   @IBAction func toggleStop() {

@@ -48,7 +48,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   private var smoothSpeeds: [Double]?
   private var maxSmoothSpeed = 0.0
   private var minSmoothSpeed = Double(LONG_MAX)
-  private var addedOverlays: Bool = false
+  private var addedOverlays = false
   private var latestStrokeColor = UIConstants.intermediate2ColorDarkened
   private var path = GMSMutablePath()
   private var polyline = GMSPolyline()
@@ -263,7 +263,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   @IBAction func returnFromSegueActions(_ sender: UIStoryboardSegue) {}
 
   override func segueForUnwinding(to toViewController: UIViewController, from fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
-    return UnwindPanSegue(identifier: identifier ?? "", source: fromViewController, destination: toViewController, performHandler: { () -> Void in
+    UnwindPanSegue(identifier: identifier ?? "", source: fromViewController, destination: toViewController, performHandler: { () -> Void in
     })
   }
 
@@ -331,6 +331,6 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
   }
 
   override var prefersStatusBarHidden: Bool {
-    return true
+    true
   }
 }

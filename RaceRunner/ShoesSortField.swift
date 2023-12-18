@@ -18,7 +18,7 @@ enum ShoesSortField: String {
   }
 
   static func all() -> [String] {
-    return [ShoesSortField.name.asString(), ShoesSortField.kilometers.asString(), ShoesSortField.maxKilometers.asString()]
+    [ShoesSortField.name.asString(), ShoesSortField.kilometers.asString(), ShoesSortField.maxKilometers.asString()]
   }
 
   static func sortFieldForPosition(_ position: Int) -> ShoesSortField {

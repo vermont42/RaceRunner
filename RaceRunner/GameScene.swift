@@ -12,7 +12,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   static let invaderWidth: CGFloat = 24.0 // must be static to be used in enum
   static let invaderHeight: CGFloat = 16.0 // must be static to be used in enum
 
-  var gameEnding: Bool = false
+  var gameEnding = false
   var contentCreated = false
   var invaderMovementDirection: InvaderMovementDirection = .right
   var timeOfLastMove: CFTimeInterval = 0.0
@@ -69,7 +69,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     case runner = "Runner"
 
     static var size: CGSize {
-      return CGSize(width: GameScene.invaderWidth, height: GameScene.invaderHeight)
+      CGSize(width: GameScene.invaderWidth, height: GameScene.invaderHeight)
     }
   }
 

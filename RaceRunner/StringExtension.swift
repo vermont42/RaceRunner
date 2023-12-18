@@ -8,6 +8,6 @@
 
 extension String {
   var stringByRemovingWhitespace: String {
-    return components(separatedBy: .whitespaces).joined(separator: "")
+    components(separatedBy: .whitespaces).joined(separator: "")
   }
 }

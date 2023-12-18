@@ -28,7 +28,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
   private static let sadFaceTitle = "😢"
 
   override var prefersStatusBarHidden: Bool {
-    return true
+    true
   }
 
   override func viewDidLoad() {
@@ -55,7 +55,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return controllerLabels.count
+    controllerLabels.count
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -87,7 +87,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
   }
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return MenuVC.rowHeight
+    MenuVC.rowHeight
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -135,7 +135,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
   @IBAction func returnFromSegueActions(_ sender: UIStoryboardSegue) {}
 
   override func segueForUnwinding(to toViewController: UIViewController, from fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
-    return UnwindPanSegue(identifier: identifier ?? "", source: fromViewController, destination: toViewController, performHandler: { () -> Void in
+    UnwindPanSegue(identifier: identifier ?? "", source: fromViewController, destination: toViewController, performHandler: { () -> Void in
     })
   }
 }

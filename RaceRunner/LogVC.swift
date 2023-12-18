@@ -72,7 +72,7 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
   }
 
   override func segueForUnwinding(to toViewController: UIViewController, from fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
-    return UnwindPanSegue(identifier: identifier ?? "", source: fromViewController, destination: toViewController, performHandler: { () -> Void in
+    UnwindPanSegue(identifier: identifier ?? "", source: fromViewController, destination: toViewController, performHandler: { () -> Void in
     })
   }
 
@@ -159,7 +159,7 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
   }
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return LogVC.rowHeight
+    LogVC.rowHeight
   }
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -175,19 +175,19 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
   }
 
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
-    return 1
+    1
   }
 
   func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-    return LogSortField.all().count
+    LogSortField.all().count
   }
 
   func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-    return LogSortField.all()[row]
+    LogSortField.all()[row]
   }
 
   func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-    return NSAttributedString(string: LogSortField.all()[row], attributes: [NSAttributedString.Key.foregroundColor: UIConstants.intermediate3Color])
+    NSAttributedString(string: LogSortField.all()[row], attributes: [NSAttributedString.Key.foregroundColor: UIConstants.intermediate3Color])
   }
 
   private func fetchRuns() {

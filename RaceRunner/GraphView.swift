@@ -80,7 +80,7 @@ class GraphView: UIView {
       yAxisPath.lineWidth = GraphView.lineWidth
       yAxisPath.stroke()
       drawGraph(color: UIConstants.intermediate3Color, maxVal: maxAltitude, minVal: minAltitude, minRange: GraphView.minAltRange, getVal: { (x: Int) -> Double in
-        return smoothAltitudes[self.xToIndex(x)]
+        smoothAltitudes[self.xToIndex(x)]
       })
     }
     if overlay == .both || overlay == .pace {
@@ -91,7 +91,7 @@ class GraphView: UIView {
       yAxisPath.lineWidth = GraphView.lineWidth
       yAxisPath.stroke()
       drawGraph(color: UIConstants.intermediate1Color.withAlphaComponent(GraphView.speedAlpha), maxVal: maxSmoothSpeed, minVal: minSmoothSpeed, minRange: GraphView.minSpeedRange, getVal: { (x: Int) -> Double in
-        return self.smoothSpeeds[self.xToIndex(x)]
+        self.smoothSpeeds[self.xToIndex(x)]
       })
     }
     let xTics = orientation == .landscape ? GraphView.longTics : GraphView.shortTics
@@ -167,7 +167,7 @@ class GraphView: UIView {
   }
 
   private func xToIndex(_ x: Int) -> Int {
-    return Int(CGFloat(smoothSpeeds.count) * (CGFloat(x) / (self.bounds.size.width - 2 * GraphView.chartOffset)))
+    Int(CGFloat(smoothSpeeds.count) * (CGFloat(x) / (self.bounds.size.width - 2 * GraphView.chartOffset)))
   }
 
   private func drawGraph(color: UIColor, maxVal: Double, minVal: Double, minRange: Double, getVal: (_ x: Int) -> Double) {

@@ -290,7 +290,7 @@ class SettingsManager {
   }
 
   class func getUnitType() -> UnitType {
-    return settingsManager.unitType
+    settingsManager.unitType
   }
 
   class func setUnitType(_ unitType: UnitType) {
@@ -302,7 +302,7 @@ class SettingsManager {
   }
 
   class func getSortType() -> SortType {
-    return settingsManager.sortType
+    settingsManager.sortType
   }
 
   class func setSortType(_ sortType: SortType) {
@@ -314,7 +314,7 @@ class SettingsManager {
   }
 
   class func getIconType() -> RunnerIcons.IconType {
-    return settingsManager.iconType
+    settingsManager.iconType
   }
 
   class func setIconType(_ iconType: RunnerIcons.IconType) {
@@ -326,7 +326,7 @@ class SettingsManager {
   }
 
   class func getLogSortField() -> LogSortField {
-    return settingsManager.logSortField
+    settingsManager.logSortField
   }
 
   class func setLogSortField(_ logSortField: LogSortField) {
@@ -338,7 +338,7 @@ class SettingsManager {
   }
 
   class func getShoesSortField() -> ShoesSortField {
-    return settingsManager.shoesSortField
+    settingsManager.shoesSortField
   }
 
   class func setShoesSortField(_ shoesSortField: ShoesSortField) {
@@ -350,7 +350,7 @@ class SettingsManager {
   }
 
   class func getWeight() -> Double {
-    return settingsManager.weight
+    settingsManager.weight
   }
 
   class func setWeight(_ weight: Double) {
@@ -362,7 +362,7 @@ class SettingsManager {
   }
 
   class func getHighScore() -> Int {
-    return settingsManager.highScore
+    settingsManager.highScore
   }
 
   class func setHighScore(_ highScore: Int) {
@@ -374,7 +374,7 @@ class SettingsManager {
   }
 
   class func getAccent() -> Accent {
-    return settingsManager.accent
+    settingsManager.accent
   }
 
   class func setAccent(_ accent: Accent) {
@@ -386,7 +386,7 @@ class SettingsManager {
   }
 
   class func getOverlay() -> Overlay {
-    return settingsManager.overlay
+    settingsManager.overlay
   }
 
   class func setOverlay(_ overlay: Overlay) {
@@ -402,7 +402,7 @@ class SettingsManager {
   }
 
   class func getAlreadyMadeSampleRun() -> Bool {
-    return settingsManager.alreadyMadeSampleRun
+    settingsManager.alreadyMadeSampleRun
   }
 
   class func setAlreadyMadeSampleRun(_ alreadyMadeSampleRun: Bool) {
@@ -414,7 +414,7 @@ class SettingsManager {
   }
 
   class func getRealRunInProgress() -> Bool {
-    return settingsManager.realRunInProgress
+    settingsManager.realRunInProgress
   }
 
   class func setRealRunInProgress(_ realRunInProgress: Bool) {
@@ -426,7 +426,7 @@ class SettingsManager {
   }
 
   class func getStartedViaSiri() -> Bool {
-    return settingsManager.startedViaSiri
+    settingsManager.startedViaSiri
   }
 
   class func setStartedViaSiri(_ startedViaSiri: Bool) {
@@ -438,7 +438,7 @@ class SettingsManager {
   }
 
   class func getShowedWeatherCredit() -> Bool {
-    return settingsManager.showedWeatherCredit
+    settingsManager.showedWeatherCredit
   }
 
   class func setShowedWeatherCredit(_ showedWeatherCredit: Bool) {
@@ -450,7 +450,7 @@ class SettingsManager {
   }
 
   class func getBroadcastNextRun() -> Bool {
-    return settingsManager.broadcastNextRun
+    settingsManager.broadcastNextRun
   }
 
   class func setBroadcastNextRun(_ broadcastNextRun: Bool) {
@@ -462,7 +462,7 @@ class SettingsManager {
   }
 
   class func getAllowStop() -> Bool {
-    return settingsManager.allowStop
+    settingsManager.allowStop
   }
 
   class func setAllowStop(_ allowStop: Bool) {
@@ -474,7 +474,7 @@ class SettingsManager {
   }
 
   class func getBroadcastName() -> String {
-    return settingsManager.broadcastName
+    settingsManager.broadcastName
   }
 
   class func setBroadcastName(_ broadcastName: String) {
@@ -486,7 +486,7 @@ class SettingsManager {
   }
 
   class func getAudibleSplits() -> Bool {
-    return settingsManager.audibleSplits
+    settingsManager.audibleSplits
   }
 
   class func setAudibleSplits(_ audibleSplits: Bool) {
@@ -498,7 +498,7 @@ class SettingsManager {
   }
 
   class func getMultiplier() -> Double {
-    return settingsManager.multiplier
+    settingsManager.multiplier
   }
 
   class func setMultiplier(_ multiplier: Double) {
@@ -510,7 +510,7 @@ class SettingsManager {
   }
 
   class func getReportEvery() -> Double {
-    return settingsManager.reportEvery
+    settingsManager.reportEvery
   }
 
   class func setReportEvery(_ reportEvery: Double) {
@@ -522,7 +522,7 @@ class SettingsManager {
   }
 
   class func getStopAfter() -> Double {
-    return settingsManager.stopAfter
+    settingsManager.stopAfter
   }
 
   class func setStopAfter(_ stopAfter: Double) {
@@ -534,7 +534,7 @@ class SettingsManager {
   }
 
   class func getShowWeight() -> Bool {
-    return settingsManager.showWeight
+    settingsManager.showWeight
   }
 
   class func setShowWeight(_ showWeight: Bool) {
@@ -546,7 +546,7 @@ class SettingsManager {
   }
 
   class func getLastReviewPromptDate() -> Date {
-    return settingsManager.lastReviewPromptDate
+    settingsManager.lastReviewPromptDate
   }
 
   class func setLastReviewPromptDate(_ lastReviewPromptDate: Date) {
@@ -558,7 +558,7 @@ class SettingsManager {
   }
 
   class func getPromptActionCount() -> Int {
-    return settingsManager.promptActionCount
+    settingsManager.promptActionCount
   }
 
   class func setPromptActionCount(_ promptActionCount: Int) {

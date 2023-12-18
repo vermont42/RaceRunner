@@ -1,22 +1,20 @@
 PODS:
-  - AWSCore (2.28.0)
-  - AWSPinpoint (2.28.0):
-    - AWSCore (= 2.28.0)
-  - COBezierTableView (1.1.1)
+  - AWSCore (2.33.5)
+  - AWSPinpoint (2.33.5):
+    - AWSCore (= 2.33.5)
   - GoogleMaps (7.1.0):
     - GoogleMaps/Maps (= 7.1.0)
   - GoogleMaps/Base (7.1.0)
   - GoogleMaps/Maps (7.1.0):
     - GoogleMaps/Base
-  - MarqueeLabel (4.3.0)
-  - PubNub (5.1.1):
-    - PubNub/Core (= 5.1.1)
-  - PubNub/Core (5.1.1)
+  - MarqueeLabel (4.4.0)
+  - PubNub (5.2.1):
+    - PubNub/Core (= 5.2.1)
+  - PubNub/Core (5.2.1)
 
 DEPENDENCIES:
   - AWSPinpoint
-  - COBezierTableView
-  - GoogleMaps
+  - GoogleMaps (= 7.1.0)
   - MarqueeLabel
   - PubNub
 
@@ -24,19 +22,17 @@ SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - AWSCore
     - AWSPinpoint
-    - COBezierTableView
     - GoogleMaps
     - MarqueeLabel
     - PubNub
 
 SPEC CHECKSUMS:
-  AWSCore: 0ebe9ba8a459893cdf268ce0bae61875efd0182b
-  AWSPinpoint: f3e51482ba9dab1c6657b377d6a7f39edcb8f64f
-  COBezierTableView: a32f9286ade2393c414ff83113d37450257ddea2
+  AWSCore: 6d8aa46c210e37f15c10509437a9c8570f7290bd
+  AWSPinpoint: 86e99df82096f9ee5eca59711f6628abc92aa415
   GoogleMaps: bc56ffb0324e345a2d91bac1a64a920f9c8f1b20
-  MarqueeLabel: 02f5ac8fd6877c94564556cb93fa86c70c08baeb
-  PubNub: a0a0674675fba8a6e2640cf68d20c4f335ae9dee
+  MarqueeLabel: d2388949ac58d587303178d56a792ba8a001b037
+  PubNub: 296489858a323a9b89124506ac4ed28cd01276b3
 
-PODFILE CHECKSUM: 9987bdcf50eccdbdaab0132702425561b50fcdd8
+PODFILE CHECKSUM: d802d99242c1a28c6e69cf88a51ca84fe7215cc1
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.14.3

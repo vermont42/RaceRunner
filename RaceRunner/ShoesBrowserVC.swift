@@ -107,7 +107,7 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
   }
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return ShoesBrowserVC.rowHeight
+    ShoesBrowserVC.rowHeight
   }
 
   func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -165,7 +165,7 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
   @IBAction func returnFromSegueActions(_ sender: UIStoryboardSegue) {}
 
   override func segueForUnwinding(to toViewController: UIViewController, from fromViewController: UIViewController, identifier: String?) -> UIStoryboardSegue {
-    return UnwindPanSegue(identifier: identifier ?? "", source: fromViewController, destination: toViewController, performHandler: { () -> Void in
+    UnwindPanSegue(identifier: identifier ?? "", source: fromViewController, destination: toViewController, performHandler: { () -> Void in
     })
   }
 
@@ -181,15 +181,15 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
   }
 
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
-    return 1
+    1
   }
 
   func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-    return ShoesSortField.all().count
+    ShoesSortField.all().count
   }
 
   func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-    return NSAttributedString(string: ShoesSortField.sortFieldForPosition(row).asString(), attributes: [NSAttributedString.Key.foregroundColor: UIConstants.intermediate3Color])
+    NSAttributedString(string: ShoesSortField.sortFieldForPosition(row).asString(), attributes: [NSAttributedString.Key.foregroundColor: UIConstants.intermediate3Color])
   }
 
   func makeNewIsCurrent(_ newIsCurrent: Shoes) {
@@ -203,7 +203,7 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
   }
 
   override var prefersStatusBarHidden: Bool {
-    return true
+    true
   }
 
   @IBAction func reverseSort() {

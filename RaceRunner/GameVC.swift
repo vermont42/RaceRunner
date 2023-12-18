@@ -11,11 +11,11 @@ import UIKit
 
 class GameVC: ChildVC {
   override var shouldAutorotate: Bool {
-    return true
+    true
   }
 
   override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-    return UIInterfaceOrientationMask.portrait
+    UIInterfaceOrientationMask.portrait
   }
 
   override func viewDidLoad() {

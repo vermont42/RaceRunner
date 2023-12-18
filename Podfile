@@ -1,12 +1,13 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-platform :ios, '16.0'
+platform :ios, '17.0'
 use_frameworks!
 
 target "RaceRunner" do
   pod 'AWSPinpoint'
-  pod 'COBezierTableView'
-  pod 'GoogleMaps' # fix build warning with https://stackoverflow.com/a/49570905/8248798
+  # version 8.3.1, the latest as of 12/18/23, causes Auto Layout bug on screens that use Google Map
+  # consider filing issue: https://github.com/googlemaps/ios-maps-sdk
+  pod 'GoogleMaps', '7.1.0'
   pod 'MarqueeLabel'
   pod 'PubNub'
 end

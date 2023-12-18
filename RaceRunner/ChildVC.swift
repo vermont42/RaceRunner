@@ -10,7 +10,7 @@ import UIKit
 
 class ChildVC: UIViewController {
   override var prefersStatusBarHidden: Bool {
-    return true
+    true
   }
 
   override func viewDidLoad() {

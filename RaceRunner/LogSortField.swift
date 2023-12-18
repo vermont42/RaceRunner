@@ -60,7 +60,7 @@ enum LogSortField: String {
   }
 
   static func all() -> [String] {
-    return [LogSortField.date.asString(), LogSortField.name.asString(), LogSortField.pace.asString(), LogSortField.distance.asString(), LogSortField.duration.asString()]
+    [LogSortField.date.asString(), LogSortField.name.asString(), LogSortField.pace.asString(), LogSortField.distance.asString(), LogSortField.duration.asString()]
   }
 
   static func sortFieldForPosition(_ position: Int) -> LogSortField {
