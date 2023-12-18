@@ -21,7 +21,13 @@ enum ReviewPrompter {
     let now = Date()
     if actionCount % promptModulo == 0 && now.timeIntervalSince(lastReviewPromptDate) >= promptInterval {
       #if RELEASE
-      SKStoreReviewController.requestReview()
+      if let scene = UIApplication.shared.connectedScenes.first(
+        where: { $0.activationState == .foregroundActive }
+      ) as? UIWindowScene {
+        DispatchQueue.main.async {
+          SKStoreReviewController.requestReview(in: scene)
+        }
+      }
       #endif
       SettingsManager.setLastReviewPromptDate(now)
     }
