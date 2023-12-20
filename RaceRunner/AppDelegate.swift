@@ -9,6 +9,7 @@
 import AVFoundation
 import GoogleMaps
 import Intents
+import PubNub
 import UIKit
 
 @UIApplicationMain

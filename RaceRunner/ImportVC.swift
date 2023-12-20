@@ -20,10 +20,10 @@ class ImportVC: ChildVC {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
+    viewControllerTitle.attributedText = UIHelpers.letterPressedText(viewControllerTitle.text ?? "")
     instructionsField.text = ImportVC.importInstructions
     instructionsField.textColor = UIConstants.lightColor
-    instructionsField.attributedText = UiHelpers.styleText(instructionsField.text)
+    instructionsField.attributedText = UIHelpers.styleText(instructionsField.text)
   }
 
   override func viewWillAppear(_ animated: Bool) {

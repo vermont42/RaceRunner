@@ -55,7 +55,7 @@ class LogVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPickerViewDe
       viewControllerTitle.text = "Simulate"
     }
     showPickerButton.setTitle(SettingsManager.getLogSortField().rawValue, for: UIControl.State())
-    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
+    viewControllerTitle.attributedText = UIHelpers.letterPressedText(viewControllerTitle.text ?? "")
     fetchRuns()
     runs.sort { LogSortField.compare($0, run2: $1) }
     RunModel.registerForImportedRunNotifications(self)

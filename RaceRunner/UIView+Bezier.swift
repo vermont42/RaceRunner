@@ -24,37 +24,6 @@ extension UIView {
     }
   }
 
-  func bezierStaticPoint(_ index: Int) -> CGPoint {
-    switch index {
-    case 0:
-      return BezierPoints.p1
-    case 1:
-      return BezierPoints.p2
-    case 2:
-      return BezierPoints.p3
-    case 3:
-      return BezierPoints.p4
-    default:
-      return CGPoint.zero
-    }
-  }
-
-  func setBezierStaticPoint(_ point: CGPoint, forIndex index: Int) {
-    switch index {
-    case 0:
-      BezierPoints.p1 = point
-    case 1:
-      BezierPoints.p2 = point
-    case 2:
-      BezierPoints.p3 = point
-    case 3:
-      BezierPoints.p4 = point
-    default:
-      BezierPoints.p4 = CGPoint.zero
-    }
-  }
-
-  // simple linear interpolation between two points
   func bezierInterpolation(_ t: CGFloat, a: CGFloat, b: CGFloat, c: CGFloat, d: CGFloat) -> CGFloat {
     let t2: CGFloat = t * t
     let t3: CGFloat = t2 * t
@@ -70,9 +39,5 @@ extension UIView {
 
   func bezierYFor(_ t: CGFloat) -> CGFloat {
     bezierInterpolation(t, a: BezierPoints.p1.y, b: BezierPoints.p2.y, c: BezierPoints.p3.y, d: BezierPoints.p4.y)
-  }
-
-  func bezierPointFor(_ t: CGFloat) -> CGPoint {
-    CGPoint(x: bezierXFor(t), y: bezierYFor(t))
   }
 }

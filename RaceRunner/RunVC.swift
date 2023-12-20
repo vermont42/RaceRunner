@@ -78,7 +78,7 @@ class RunVC: ChildVC {
       RunModel.initializeRunModel()
       viewControllerTitle.text = "Run"
     }
-    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
+    viewControllerTitle.attributedText = UIHelpers.letterPressedText(viewControllerTitle.text ?? "")
 
     switch RunModel.runModel.status {
     case .preRun:

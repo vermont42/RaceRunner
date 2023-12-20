@@ -7,10 +7,10 @@
 //
 
 import CoreLocation
-import Foundation
 import PubNub
+import UIKit
 
-class PubNubManager: NSObject, PNEventsListener { // PNObjectEventListener {
+class PubNubManager: BaseSubscriptionListener /*: PNEventsListener */ { // PNObjectEventListener {
   static let sharedNub = PubNubManager()
   static let publicChannel = "foo"
   static let stopped = "stopped"
@@ -19,79 +19,82 @@ class PubNubManager: NSObject, PNEventsListener { // PNObjectEventListener {
   private let pubNub: PubNub?
   private var pubNubSubscriber: PubNubSubscriber?
   private var pubNubPublisher: PubNubPublisher?
+  private let listener = SubscriptionListener()
 
-  override init() {
-    // pubNub = PubNub.clientWithConfiguration(PNConfiguration(publishKey: Config.pubNubPublishKey, subscribeKey: Config.pubNubSubscribeKey, uuid: "\(UUID())"))
-    pubNub = PubNub.clientWithConfiguration(
-      PNConfiguration(
-        publishKey: Config.pubNubPublishKey,
-        subscribeKey: Config.pubNubSubscribeKey,
-        userID: "\(UUID())"
-      )
+  init() {
+    let config = PubNubConfiguration(
+      publishKey: Config.pubNubPublishKey,
+      subscribeKey: Config.pubNubSubscribeKey,
+      userId: UIDevice.current.identifierForVendor?.uuidString ?? "defaultId"
     )
+    pubNub = PubNub(configuration: config)
+    listener.didReceiveSubscription = { event in
+      PubNubManager.handleEvent(event)
+    }
+    pubNub?.add(listener)
     super.init()
-    pubNub?.addListener(self)
   }
 
   class func publishLocation(_ location: CLLocation, distance: Double, seconds: Int, publisher: String) {
     let message = "\(location.coordinate.latitude) \(location.coordinate.longitude) \(location.altitude) \(distance) \(seconds) \(SettingsManager.getAllowStop())"
-    sharedNub.pubNub?.publish(message, toChannel: publisher, storeInHistory: false, compressed: false, withCompletion: { (status) -> Void in
-      if !status.isError {
-          // print("Successfully published.")
-      } else {
-          // Handle message publish error. Check 'category' property
-          // to find out possible reason because of which request did fail.
-          // Review 'errorData' property (which has PNErrorData data type) of status
-          // object to get additional information about issue.
-          // Request can be resent using: status.retry()
-      }
-    })
+
+    sharedNub.pubNub?.publish(channel: publisher, message: message) { _ in
+      // For debugging, change the parameter from _ to result and uncomment the following.
+//      switch result {
+//      case .success:
+//        print("Publish succeeded.")
+//      case .failure(let error):
+//        print("Publish failed with error: \(error)")
+//      }
+    }
   }
 
   class func publishRunStoppage(_ publisher: String) {
-    sharedNub.pubNub?.publish(PubNubManager.stopRun, toChannel: publisher, storeInHistory: false, compressed: false, withCompletion: nil)
+    sharedNub.pubNub?.publish(channel: publisher, message: PubNubManager.stopRun, completion: nil)
   }
 
   class func publishMessage(_ message: String, publisher: String) {
-    sharedNub.pubNub?.publish(PubNubManager.messageLabel + message, toChannel: publisher, storeInHistory: false, compressed: false, withCompletion: nil)
+    sharedNub.pubNub?.publish(channel: publisher, message: PubNubManager.messageLabel + message, completion: nil)
   }
 
   class func runStopped() {
-    sharedNub.pubNub?.publish(PubNubManager.stopped, toChannel: PubNubManager.publicChannel, storeInHistory: false, compressed: false, withCompletion: nil)
+    sharedNub.pubNub?.publish(channel: PubNubManager.publicChannel, message: PubNubManager.stopped, completion: nil)
   }
 
   class func subscribeToChannel(_ pubNubSubscriber: PubNubSubscriber, publisher: String) {
     sharedNub.pubNubSubscriber = pubNubSubscriber
-    sharedNub.pubNub?.subscribeToChannels([publisher], withPresence: true)
+    sharedNub.pubNub?.subscribe(to: [publisher])
   }
 
   class func subscribeToChannel(_ pubNubPublisher: PubNubPublisher, publisher: String) {
     sharedNub.pubNubPublisher = pubNubPublisher
-    sharedNub.pubNub?.subscribeToChannels([publisher], withPresence: true)
+    sharedNub.pubNub?.subscribe(to: [publisher])
+  }
+
+  private class func handleEvent(_ event: SubscriptionEvent) {
+    switch event {
+    case let .messageReceived(message):
+      var cleanPayload = "\(message.payload)"
+      cleanPayload = cleanPayload.replacingOccurrences(of: "\"", with: "")
+
+      if cleanPayload == PubNubManager.stopped {
+        sharedNub.pubNubSubscriber?.runStopped()
+      } else if cleanPayload == PubNubManager.stopRun {
+        sharedNub.pubNubPublisher?.stopRun()
+      } else if cleanPayload.hasPrefix(PubNubManager.messageLabel) {
+        sharedNub.pubNubPublisher?.receiveMessage(String(cleanPayload.dropFirst(PubNubManager.messageLabel.count)))
+      } else {
+        sharedNub.pubNubSubscriber?.receiveProgress(cleanPayload)
+      }
+    default:
+      break
+    }
   }
 
   class func unsubscribeFromChannel(_ publisher: String) {
     if sharedNub.pubNubSubscriber != nil {
-      sharedNub.pubNub?.unsubscribeFromChannels([publisher], withPresence: true)
+      sharedNub.pubNub?.unsubscribe(from: [publisher])
       sharedNub.pubNubSubscriber = nil
-    }
-  }
-
-  func client(_ client: PubNub, didReceiveMessage message: PNMessageResult) {
-    let messageString: String
-    if let messageData = message.data.message {
-      messageString = "\(messageData)"
-    } else {
-      messageString = ""
-    }
-    if messageString == PubNubManager.stopped {
-      pubNubSubscriber?.runStopped()
-    } else if messageString == PubNubManager.stopRun {
-      pubNubPublisher?.stopRun()
-    } else if (messageString as NSString).substring(to: PubNubManager.messageLabel.count) == PubNubManager.messageLabel {
-      pubNubPublisher?.receiveMessage((messageString as NSString).substring(from: PubNubManager.messageLabel.count))
-    } else {
-      pubNubSubscriber?.receiveProgress(messageString)
     }
   }
 }

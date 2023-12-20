@@ -140,10 +140,6 @@ enum Converter {
     SettingsManager.getUnitType() == .imperial ? miles : kilometersAbbr
   }
 
-  static func convertFahrenheitToCelsius(_ temperature: Double) -> Double {
-    celsiusFraction * (temperature - fahrenheitAmountToAdd)
-  }
-
   static func stringifyDistance(_ meters: Double, format: NSString = "%.2f", omitUnits: Bool = false) -> String {
     var distance: NSString
     var unitDivider: Double

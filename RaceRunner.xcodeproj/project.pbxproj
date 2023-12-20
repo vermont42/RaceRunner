@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03176A572B32400B002BF517 /* PubNub in Frameworks */ = {isa = PBXBuildFile; productRef = 03176A562B32400B002BF517 /* PubNub */; };
+		03176A592B324027002BF517 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 03176A582B324027002BF517 /* GoogleMaps */; };
+		03176A5B2B32407E002BF517 /* MarqueeLabel in Frameworks */ = {isa = PBXBuildFile; productRef = 03176A5A2B32407E002BF517 /* MarqueeLabel */; };
+		03176A5D2B32409F002BF517 /* PubNubMembership in Frameworks */ = {isa = PBXBuildFile; productRef = 03176A5C2B32409F002BF517 /* PubNubMembership */; };
+		03176A5F2B32409F002BF517 /* PubNubSpace in Frameworks */ = {isa = PBXBuildFile; productRef = 03176A5E2B32409F002BF517 /* PubNubSpace */; };
+		03176A612B32409F002BF517 /* PubNubUser in Frameworks */ = {isa = PBXBuildFile; productRef = 03176A602B32409F002BF517 /* PubNubUser */; };
 		03176D652B30AEB7005746F2 /* BezierTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03176D642B30AEB7005746F2 /* BezierTableView.swift */; };
 		03176D672B30AF0A005746F2 /* UIView+Bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03176D662B30AF0A005746F2 /* UIView+Bezier.swift */; };
 		031B603A29033C08008BA894 /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031B603929033C08008BA894 /* UITableViewCellExtension.swift */; };
@@ -16,7 +22,8 @@
 		038984C72218A04E00DF27CF /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 038984C62218A04E00DF27CF /* awsconfiguration.json */; };
 		038984C92219C32100DF27CF /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 038984C82219C32100DF27CF /* AppIntentVocabulary.plist */; };
 		03A511C229006CFA0094A3BB /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A511C129006CFA0094A3BB /* Weather.swift */; };
-		780ADDCF5F549BC94E7E819D /* Pods_RaceRunner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3684E5DECEABCEB4FF305C39 /* Pods_RaceRunner.framework */; };
+		03E3D7682B323E280055C4D7 /* AWSCore in Frameworks */ = {isa = PBXBuildFile; productRef = 03E3D7672B323E280055C4D7 /* AWSCore */; };
+		03E3D76A2B323E280055C4D7 /* AWSPinpoint in Frameworks */ = {isa = PBXBuildFile; productRef = 03E3D7692B323E280055C4D7 /* AWSPinpoint */; };
 		E10356451C02A1CB006E8FEC /* applause2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E10356441C02A1CB006E8FEC /* applause2.mp3 */; };
 		E10356471C02A1EB006E8FEC /* applause3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E10356461C02A1EB006E8FEC /* applause3.mp3 */; };
 		E10A245C20B253250073147C /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10A245B20B253250073147C /* IntentHandler.swift */; };
@@ -48,7 +55,7 @@
 		E137AC9E1C87BEB600A3148D /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E137AC9D1C87BEB600A3148D /* StringExtension.swift */; };
 		E138E8CE1BA0A0FB00BA20E5 /* iSmoothRun.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */; };
 		E13B48B51B911BDA001C997A /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B48B41B911BDA001C997A /* UIConstants.swift */; };
-		E13B48B71B921A9F001C997A /* UiHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B48B61B921A9F001C997A /* UiHelpers.swift */; };
+		E13B48B71B921A9F001C997A /* UIHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B48B61B921A9F001C997A /* UIHelpers.swift */; };
 		E13C763F1C1A01520046021A /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13C763E1C1A01520046021A /* ArrayExtension.swift */; };
 		E13E30571BFD28F1009CDE60 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13E30561BFD28F1009CDE60 /* SoundManager.swift */; };
 		E14175A91C877AC1001F402C /* BroadcastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14175A81C877AC1001F402C /* BroadcastDelegate.swift */; };
@@ -156,11 +163,7 @@
 		038984C82219C32100DF27CF /* AppIntentVocabulary.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AppIntentVocabulary.plist; sourceTree = "<group>"; };
 		03A511C129006CFA0094A3BB /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		03B5976529008E5600ABEDB5 /* RaceRunnerRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RaceRunnerRelease.entitlements; sourceTree = "<group>"; };
-		3684E5DECEABCEB4FF305C39 /* Pods_RaceRunner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RaceRunner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3E91D4B24A52C1C5D97BD0CF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BAE29B09F03FADB483809E0 /* SuggestedColors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SuggestedColors.plist; sourceTree = "<group>"; };
-		A41757580ADFC544CF71E348 /* Pods-RaceRunner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RaceRunner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RaceRunner/Pods-RaceRunner.debug.xcconfig"; sourceTree = "<group>"; };
-		CA4036EE9B1AE5C8327853A4 /* Pods-RaceRunner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RaceRunner.release.xcconfig"; path = "Pods/Target Support Files/Pods-RaceRunner/Pods-RaceRunner.release.xcconfig"; sourceTree = "<group>"; };
 		E10356441C02A1CB006E8FEC /* applause2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = applause2.mp3; sourceTree = "<group>"; };
 		E10356461C02A1EB006E8FEC /* applause3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = applause3.mp3; sourceTree = "<group>"; };
 		E10A245920B253250073147C /* Siri.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Siri.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -194,7 +197,7 @@
 		E137AC9D1C87BEB600A3148D /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		E138E8CD1BA0A0FB00BA20E5 /* iSmoothRun.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = iSmoothRun.gpx; sourceTree = "<group>"; };
 		E13B48B41B911BDA001C997A /* UIConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
-		E13B48B61B921A9F001C997A /* UiHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UiHelpers.swift; sourceTree = "<group>"; };
+		E13B48B61B921A9F001C997A /* UIHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIHelpers.swift; sourceTree = "<group>"; };
 		E13C763E1C1A01520046021A /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		E13E30561BFD28F1009CDE60 /* SoundManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		E14175A81C877AC1001F402C /* BroadcastDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BroadcastDelegate.swift; sourceTree = "<group>"; };
@@ -283,9 +286,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03176A5D2B32409F002BF517 /* PubNubMembership in Frameworks */,
+				03176A572B32400B002BF517 /* PubNub in Frameworks */,
+				03E3D7682B323E280055C4D7 /* AWSCore in Frameworks */,
+				03176A592B324027002BF517 /* GoogleMaps in Frameworks */,
+				03176A5F2B32409F002BF517 /* PubNubSpace in Frameworks */,
+				03176A5B2B32407E002BF517 /* MarqueeLabel in Frameworks */,
 				E143C0B020E003E80010C9A1 /* CloudKit.framework in Frameworks */,
+				03176A612B32409F002BF517 /* PubNubUser in Frameworks */,
 				E1D5A01C1AC5170F008A3806 /* AVFoundation.framework in Frameworks */,
-				780ADDCF5F549BC94E7E819D /* Pods_RaceRunner.framework in Frameworks */,
+				03E3D76A2B323E280055C4D7 /* AWSPinpoint in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,7 +424,7 @@
 				E1648E171C497997002A3ED4 /* ShoesDelegate.swift */,
 				E13E30561BFD28F1009CDE60 /* SoundManager.swift */,
 				E13B48B41B911BDA001C997A /* UIConstants.swift */,
-				E13B48B61B921A9F001C997A /* UiHelpers.swift */,
+				E13B48B61B921A9F001C997A /* UIHelpers.swift */,
 				E1E8B94D1AAB742E00D04E38 /* UnwindPanSegue.swift */,
 				E1844B4E1C8CDCE800A97EAD /* Utterer.swift */,
 				03A511C129006CFA0094A3BB /* Weather.swift */,
@@ -427,20 +437,9 @@
 			children = (
 				E143C0AF20E003E80010C9A1 /* CloudKit.framework */,
 				E1D5A01B1AC5170E008A3806 /* AVFoundation.framework */,
-				3E91D4B24A52C1C5D97BD0CF /* Pods.framework */,
-				3684E5DECEABCEB4FF305C39 /* Pods_RaceRunner.framework */,
 				E10A246320B253250073147C /* IntentsUI.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		92816E23800A661738028C95 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				A41757580ADFC544CF71E348 /* Pods-RaceRunner.debug.xcconfig */,
-				CA4036EE9B1AE5C8327853A4 /* Pods-RaceRunner.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		E10A245A20B253250073147C /* Siri */ = {
@@ -521,7 +520,6 @@
 				E10A245A20B253250073147C /* Siri */,
 				E1E8B91F1AAB73F000D04E38 /* Products */,
 				4BF0F840305CCC95E1CE5907 /* Frameworks */,
-				92816E23800A661738028C95 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -574,12 +572,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E1E8B93D1AAB73F000D04E38 /* Build configuration list for PBXNativeTarget "RaceRunner" */;
 			buildPhases = (
-				5713F7B4BE2F4E0669449729 /* [CP] Check Pods Manifest.lock */,
 				E1E8B91A1AAB73F000D04E38 /* Sources */,
 				E1E8B91B1AAB73F000D04E38 /* Frameworks */,
 				E1E8B91C1AAB73F000D04E38 /* Resources */,
-				E3805A546D750C7E6281FAE7 /* [CP] Embed Pods Frameworks */,
-				D9E8A38E5F0F54E229FCC39E /* [CP] Copy Pods Resources */,
 				E10A247820B253250073147C /* Embed Foundation Extensions */,
 				036D4A1B2905E64C005907BA /* Run SwiftLint */,
 			);
@@ -589,6 +584,16 @@
 				E10A247020B253250073147C /* PBXTargetDependency */,
 			);
 			name = RaceRunner;
+			packageProductDependencies = (
+				03E3D7672B323E280055C4D7 /* AWSCore */,
+				03E3D7692B323E280055C4D7 /* AWSPinpoint */,
+				03176A562B32400B002BF517 /* PubNub */,
+				03176A582B324027002BF517 /* GoogleMaps */,
+				03176A5A2B32407E002BF517 /* MarqueeLabel */,
+				03176A5C2B32409F002BF517 /* PubNubMembership */,
+				03176A5E2B32409F002BF517 /* PubNubSpace */,
+				03176A602B32409F002BF517 /* PubNubUser */,
+			);
 			productName = RaceRunner;
 			productReference = E1E8B91E1AAB73F000D04E38 /* RaceRunner.app */;
 			productType = "com.apple.product-type.application";
@@ -599,9 +604,10 @@
 		E1E8B9161AAB73F000D04E38 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0930;
-				LastUpgradeCheck = 1410;
+				LastUpgradeCheck = 1510;
 				ORGANIZATIONNAME = "Josh Adams";
 				TargetAttributes = {
 					E10A245820B253250073147C = {
@@ -637,6 +643,12 @@
 				Base,
 			);
 			mainGroup = E1E8B9151AAB73F000D04E38;
+			packageReferences = (
+				03E3D7602B3201BC0055C4D7 /* XCRemoteSwiftPackageReference "MarqueeLabel" */,
+				03E3D7642B323A360055C4D7 /* XCRemoteSwiftPackageReference "GoogleMaps-SPM" */,
+				03E3D7652B323C9A0055C4D7 /* XCRemoteSwiftPackageReference "swift" */,
+				03E3D7662B323E280055C4D7 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */,
+			);
 			productRefGroup = E1E8B91F1AAB73F000D04E38 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -712,66 +724,6 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"Warning: SwiftLint not installed. Download from https://github.com/realm/SwiftLint.\"\nfi\n";
 		};
-		5713F7B4BE2F4E0669449729 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-RaceRunner-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D9E8A38E5F0F54E229FCC39E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RaceRunner/Pods-RaceRunner-resources.sh",
-				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RaceRunner/Pods-RaceRunner-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E3805A546D750C7E6281FAE7 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RaceRunner/Pods-RaceRunner-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSPinpoint/AWSPinpoint.framework",
-				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
-				"${BUILT_PRODUCTS_DIR}/PubNub/PubNub.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSPinpoint.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PubNub.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RaceRunner/Pods-RaceRunner-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -795,7 +747,7 @@
 				E13C763F1C1A01520046021A /* ArrayExtension.swift in Sources */,
 				E13B48B51B911BDA001C997A /* UIConstants.swift in Sources */,
 				E15195F81C0BD41A00BD52FB /* HumanWeight.swift in Sources */,
-				E13B48B71B921A9F001C997A /* UiHelpers.swift in Sources */,
+				E13B48B71B921A9F001C997A /* UIHelpers.swift in Sources */,
 				E137AC9E1C87BEB600A3148D /* StringExtension.swift in Sources */,
 				E1FCB00E1AB8F43100B1D803 /* Converter.swift in Sources */,
 				E1D521681ABA93CD00B46300 /* Location.swift in Sources */,
@@ -1070,7 +1022,6 @@
 		};
 		E1E8B93E1AAB73F000D04E38 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A41757580ADFC544CF71E348 /* Pods-RaceRunner.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1102,7 +1053,6 @@
 		};
 		E1E8B93F1AAB73F000D04E38 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA4036EE9B1AE5C8327853A4 /* Pods-RaceRunner.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1164,6 +1114,84 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		03E3D7602B3201BC0055C4D7 /* XCRemoteSwiftPackageReference "MarqueeLabel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cbpowell/MarqueeLabel";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 4.4.0;
+			};
+		};
+		03E3D7642B323A360055C4D7 /* XCRemoteSwiftPackageReference "GoogleMaps-SPM" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gomore/GoogleMaps-SPM";
+			requirement = {
+				kind = exactVersion;
+				version = 7.2.0;
+			};
+		};
+		03E3D7652B323C9A0055C4D7 /* XCRemoteSwiftPackageReference "swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pubnub/swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.2.3;
+			};
+		};
+		03E3D7662B323E280055C4D7 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/aws-amplify/aws-sdk-ios-spm";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.33.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		03176A562B32400B002BF517 /* PubNub */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03E3D7652B323C9A0055C4D7 /* XCRemoteSwiftPackageReference "swift" */;
+			productName = PubNub;
+		};
+		03176A582B324027002BF517 /* GoogleMaps */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03E3D7642B323A360055C4D7 /* XCRemoteSwiftPackageReference "GoogleMaps-SPM" */;
+			productName = GoogleMaps;
+		};
+		03176A5A2B32407E002BF517 /* MarqueeLabel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03E3D7602B3201BC0055C4D7 /* XCRemoteSwiftPackageReference "MarqueeLabel" */;
+			productName = MarqueeLabel;
+		};
+		03176A5C2B32409F002BF517 /* PubNubMembership */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03E3D7652B323C9A0055C4D7 /* XCRemoteSwiftPackageReference "swift" */;
+			productName = PubNubMembership;
+		};
+		03176A5E2B32409F002BF517 /* PubNubSpace */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03E3D7652B323C9A0055C4D7 /* XCRemoteSwiftPackageReference "swift" */;
+			productName = PubNubSpace;
+		};
+		03176A602B32409F002BF517 /* PubNubUser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03E3D7652B323C9A0055C4D7 /* XCRemoteSwiftPackageReference "swift" */;
+			productName = PubNubUser;
+		};
+		03E3D7672B323E280055C4D7 /* AWSCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03E3D7662B323E280055C4D7 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */;
+			productName = AWSCore;
+		};
+		03E3D7692B323E280055C4D7 /* AWSPinpoint */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03E3D7662B323E280055C4D7 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */;
+			productName = AWSPinpoint;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		E159C2521AAB8304007C6EA1 /* RaceRunner.xcdatamodeld */ = {

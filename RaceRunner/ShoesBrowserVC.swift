@@ -35,7 +35,7 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
+    viewControllerTitle.attributedText = UIHelpers.letterPressedText(viewControllerTitle.text ?? "")
     tableView.delegate = self
     tableView.dataSource = self
     tableView.allowsSelection = false
@@ -54,7 +54,7 @@ class ShoesBrowserVC: ChildVC, UITableViewDataSource, UITableViewDelegate, UIPic
       fetchPairs()
     }
     showPickerButton.setTitle(SettingsManager.getShoesSortField().asString(), for: UIControl.State())
-    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
+    viewControllerTitle.attributedText = UIHelpers.letterPressedText(viewControllerTitle.text ?? "")
     pairs.sort { ShoesSortField.compare($0, shoes2: $1) }
     tableView.reloadData()
   }

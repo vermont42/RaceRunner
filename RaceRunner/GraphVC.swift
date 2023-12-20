@@ -25,7 +25,7 @@ class GraphVC: ChildVC {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
+    viewControllerTitle.attributedText = UIHelpers.letterPressedText(viewControllerTitle.text ?? "")
     overlayControl.selectedSegmentIndex = SettingsManager.getOverlay().radioButtonPosition
   }
 

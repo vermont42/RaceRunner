@@ -53,7 +53,7 @@ class SpectateVC: ChildVC, PubNubSubscriber {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
+    viewControllerTitle.attributedText = UIHelpers.letterPressedText(viewControllerTitle.text ?? "")
     messageButton.isHidden = true
     map.camera = GMSCameraPosition.camera(withLatitude: SpectateVC.centerLatitude, longitude: SpectateVC.centerLongitude, zoom: SpectateVC.initialZoom)
   }

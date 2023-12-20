@@ -33,7 +33,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
+    viewControllerTitle.attributedText = UIHelpers.letterPressedText(viewControllerTitle.text ?? "")
     menuTable.separatorStyle = .none
     menuTable.backgroundColor = UIColor.clear
     menuTable.scrollsToTop = false
@@ -82,7 +82,7 @@ class MenuVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISc
       fatalError("initializedOrDequeuedCell on MenuVC screen was nil.")
     }
     initializedOrDequeuedCell.textLabel?.text = controllerLabels[(indexPath as NSIndexPath).row]
-    initializedOrDequeuedCell.textLabel?.attributedText = UiHelpers.letterPressedText(controllerLabels[(indexPath as NSIndexPath).row])
+    initializedOrDequeuedCell.textLabel?.attributedText = UIHelpers.letterPressedText(controllerLabels[(indexPath as NSIndexPath).row])
     return initializedOrDequeuedCell
   }
 

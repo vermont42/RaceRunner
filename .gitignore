@@ -10,6 +10,8 @@ node_modules/
 aws-exports.js
 
 # Xcode
+RaceRunner.xcodeproj/project.xcworkspace/xcshareddata/
+RaceRunner.xcodeproj/xcuserdata/
 build/
 *.pbxuser
 !default.pbxuser

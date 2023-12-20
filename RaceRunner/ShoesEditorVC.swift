@@ -75,7 +75,7 @@ class ShoesEditorVC: UIViewController, UITextFieldDelegate, UIImagePickerControl
         viewControllerTitle.text = ShoesEditorVC.newShoes
         disableDoneButton()
       }
-      viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
+      viewControllerTitle.attributedText = UIHelpers.letterPressedText(viewControllerTitle.text ?? "")
     }
   }
 

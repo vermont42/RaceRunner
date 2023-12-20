@@ -25,7 +25,7 @@ class BroadcastVC: UIViewController, UITextFieldDelegate {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     AWSAnalyticsService.shared.recordVisitation(viewController: "\(BroadcastVC.self)")
-    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text!)
+    viewControllerTitle.attributedText = UIHelpers.letterPressedText(viewControllerTitle.text!)
     stopToggle.isOn = SettingsManager.getAllowStop()
     nameField.text = SettingsManager.getBroadcastName()
     setupDoneButton()

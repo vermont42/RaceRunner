@@ -47,7 +47,7 @@ class SettingsVC: ChildVC, BroadcastDelegate {
     updateWeightLabel()
     updateAccentControl()
     multiplierSlider.value = Float(SettingsManager.getMultiplier())
-    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
+    viewControllerTitle.attributedText = UIHelpers.letterPressedText(viewControllerTitle.text ?? "")
     SettingsManager.setBroadcastNextRun(false)
   }
 

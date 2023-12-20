@@ -19,7 +19,7 @@ class HelpVC: ChildVC {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    viewControllerTitle.attributedText = UiHelpers.letterPressedText(viewControllerTitle.text ?? "")
+    viewControllerTitle.attributedText = UIHelpers.letterPressedText(viewControllerTitle.text ?? "")
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -45,7 +45,7 @@ class HelpVC: ChildVC {
       self.helpView.alpha = 1.0
       self.helpView.font = UIFont(name: UIConstants.globalFont, size: UIConstants.bodyFontSize)
       if HelpVC.attributedHelpArray[index].length == 0 {
-        self.helpView.attributedText = UiHelpers.styleText(self.helpView.text)
+        self.helpView.attributedText = UIHelpers.styleText(self.helpView.text)
         HelpVC.attributedHelpArray[index] = self.helpView.attributedText
       } else {
          self.helpView.attributedText = HelpVC.attributedHelpArray[index]

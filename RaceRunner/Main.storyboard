@@ -323,9 +323,9 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fo1-8g-iqa">
-                                                <rect key="frame" x="16" y="38.5" width="113" height="36"/>
+                                                <rect key="frame" x="16" y="38.5" width="155" height="36"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
-                                                <state key="normal" title="Broadcast Run">
+                                                <state key="normal" title="Broadcast Next Run">
                                                     <color key="titleColor" red="0.83921568629999999" green="0.82745098039999998" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>

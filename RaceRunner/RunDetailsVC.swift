@@ -248,7 +248,7 @@ class RunDetailsVC: UIViewController, UIAlertViewDelegate, UITextFieldDelegate, 
         if !addedOverlays {
           path.add(coords[1])
         }
-        let color = UiHelpers.colorForValue(value, sortedArray: sortedValues, index: index ?? 0)
+        let color = UIHelpers.colorForValue(value, sortedArray: sortedValues, index: index ?? 0)
         let gradient = GMSStrokeStyle.gradient(from: latestStrokeColor, to: color)
         latestStrokeColor = color
         if areSpeeds {

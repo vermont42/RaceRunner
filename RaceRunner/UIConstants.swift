@@ -19,7 +19,6 @@ enum UIConstants {
   static let globalFont = "AvenirNext-Demibold"
   static let globalFontBold = "AvenirNext-Heavy"
   static let bodyFontSize: CGFloat = 18.0
-  static let cellButtonTitleSize: CGFloat = 17.0
   static let panDuration: TimeInterval = 0.4
   static let polylineWidth: CGFloat = 8.0
   static let cameraZoom: Float = 16.0

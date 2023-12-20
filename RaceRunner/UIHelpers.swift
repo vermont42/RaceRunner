@@ -1,5 +1,5 @@
 //
-//  UiHelpers.swift
+//  UIHelpers.swift
 //  RaceRunner
 //
 //  Created by Josh Adams on 8/29/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum UiHelpers {
+enum UIHelpers {
   static func colorForValue(_ value: Double, sortedArray: [Double], index: Int) -> UIColor {
     let minimumCountOfValuesWorthComputingValueFor = 2
     if sortedArray.count < minimumCountOfValuesWorthComputingValueFor {
