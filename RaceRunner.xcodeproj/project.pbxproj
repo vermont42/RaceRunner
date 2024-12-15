@@ -21,6 +21,7 @@
 		038984C522189E7800DF27CF /* DeviceUtilityExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038984C422189E7800DF27CF /* DeviceUtilityExtension.swift */; };
 		038984C72218A04E00DF27CF /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 038984C62218A04E00DF27CF /* awsconfiguration.json */; };
 		038984C92219C32100DF27CF /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 038984C82219C32100DF27CF /* AppIntentVocabulary.plist */; };
+		038A31EF2CFBEC680069E5D8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 038A31EE2CFBEC680069E5D8 /* PrivacyInfo.xcprivacy */; };
 		03A511C229006CFA0094A3BB /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A511C129006CFA0094A3BB /* Weather.swift */; };
 		03E3D7682B323E280055C4D7 /* AWSCore in Frameworks */ = {isa = PBXBuildFile; productRef = 03E3D7672B323E280055C4D7 /* AWSCore */; };
 		03E3D76A2B323E280055C4D7 /* AWSPinpoint in Frameworks */ = {isa = PBXBuildFile; productRef = 03E3D7692B323E280055C4D7 /* AWSPinpoint */; };
@@ -76,7 +77,6 @@
 		E1648E181C497997002A3ED4 /* ShoesDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1648E171C497997002A3ED4 /* ShoesDelegate.swift */; };
 		E16F35761B8EBC4100C88426 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16F35751B8EBC4100C88426 /* UIViewControllerExtension.swift */; };
 		E17016531D09DA3A00CF5825 /* LowMemoryHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17016521D09DA3A00CF5825 /* LowMemoryHandler.swift */; };
-		E17016551D0DB92400CF5825 /* RunInProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17016541D0DB92400CF5825 /* RunInProgress.swift */; };
 		E17B11571C67C97E0027945F /* RaceRunner.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E17B11561C67C97E0027945F /* RaceRunner.gpx */; };
 		E17B3A5B2197AC2100D08AEC /* AVAudioSessionPatch.m in Sources */ = {isa = PBXBuildFile; fileRef = E17B3A5A2197AC2100D08AEC /* AVAudioSessionPatch.m */; };
 		E1804DB61ABBA0D300625188 /* RunDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1804DB51ABBA0D300625188 /* RunDetailsVC.swift */; };
@@ -161,6 +161,7 @@
 		038984C422189E7800DF27CF /* DeviceUtilityExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUtilityExtension.swift; sourceTree = "<group>"; };
 		038984C62218A04E00DF27CF /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = awsconfiguration.json; path = RaceRunner/awsconfiguration.json; sourceTree = SOURCE_ROOT; };
 		038984C82219C32100DF27CF /* AppIntentVocabulary.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AppIntentVocabulary.plist; sourceTree = "<group>"; };
+		038A31EE2CFBEC680069E5D8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		03A511C129006CFA0094A3BB /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		03B5976529008E5600ABEDB5 /* RaceRunnerRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RaceRunnerRelease.entitlements; sourceTree = "<group>"; };
 		6BAE29B09F03FADB483809E0 /* SuggestedColors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SuggestedColors.plist; sourceTree = "<group>"; };
@@ -219,7 +220,6 @@
 		E1648E171C497997002A3ED4 /* ShoesDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoesDelegate.swift; sourceTree = "<group>"; };
 		E16F35751B8EBC4100C88426 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		E17016521D09DA3A00CF5825 /* LowMemoryHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LowMemoryHandler.swift; sourceTree = "<group>"; };
-		E17016541D0DB92400CF5825 /* RunInProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunInProgress.swift; sourceTree = "<group>"; };
 		E17B11561C67C97E0027945F /* RaceRunner.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = RaceRunner.gpx; sourceTree = "<group>"; };
 		E17B3A582197ABBB00D08AEC /* AVAudioSessionPatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVAudioSessionPatch.h; sourceTree = "<group>"; };
 		E17B3A592197AC2000D08AEC /* RaceRunner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RaceRunner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -318,6 +318,7 @@
 				E1E8B92A1AAB73F000D04E38 /* Images.xcassets */,
 				E1E8B92C1AAB73F000D04E38 /* LaunchScreen.xib */,
 				E1B93F812002B8D800D4A3D7 /* Main.storyboard */,
+				038A31EE2CFBEC680069E5D8 /* PrivacyInfo.xcprivacy */,
 				E1103F261C00DB0D00E18D2E /* Sounds */,
 				6BAE29B09F03FADB483809E0 /* SuggestedColors.plist */,
 			);
@@ -508,7 +509,6 @@
 				E159C2521AAB8304007C6EA1 /* RaceRunner.xcdatamodeld */,
 				E1D521671ABA93CD00B46300 /* Run.swift */,
 				E1648E091C4861EA002A3ED4 /* Run+CoreDataProperties.swift */,
-				E17016541D0DB92400CF5825 /* RunInProgress.swift */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -607,7 +607,7 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0930;
-				LastUpgradeCheck = 1510;
+				LastUpgradeCheck = 1610;
 				ORGANIZATIONNAME = "Josh Adams";
 				TargetAttributes = {
 					E10A245820B253250073147C = {
@@ -673,6 +673,7 @@
 			files = (
 				E1342BC81D04FA3B00ABFCA7 /* Bullet.sks in Resources */,
 				E1863B141CD66A6C00B55CD3 /* silence.mp3 in Resources */,
+				038A31EF2CFBEC680069E5D8 /* PrivacyInfo.xcprivacy in Resources */,
 				038984C72218A04E00DF27CF /* awsconfiguration.json in Resources */,
 				0368AB82257E7E6E00052A45 /* scream3.mp3 in Resources */,
 				E1DBA6D41C1FBA9200DE3E4F /* WeatherRun.gpx in Resources */,
@@ -765,7 +766,6 @@
 				038984C522189E7800DF27CF /* DeviceUtilityExtension.swift in Sources */,
 				E1A41B4E1BF7D83100E31943 /* PubNubManager.swift in Sources */,
 				E1844B4F1C8CDCE800A97EAD /* Utterer.swift in Sources */,
-				E17016551D0DB92400CF5825 /* RunInProgress.swift in Sources */,
 				E1342BC91D04FA3B00ABFCA7 /* GameOverScene.swift in Sources */,
 				E10B704A1C455C4F00C70283 /* UIApplicationExtension.swift in Sources */,
 				E11655AC1AEAFB5200633C16 /* RunModel.swift in Sources */,
@@ -854,7 +854,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4.2;
+				CURRENT_PROJECT_VERSION = 4.3;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = V3L2PL4QC9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -865,7 +865,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.2;
+				MARKETING_VERSION = 4.3;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = biz.joshadams.RaceRunner.Siri2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -889,7 +889,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4.2;
+				CURRENT_PROJECT_VERSION = 4.3;
 				DEVELOPMENT_TEAM = V3L2PL4QC9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Siri/Info.plist;
@@ -899,7 +899,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.2;
+				MARKETING_VERSION = 4.3;
 				PRODUCT_BUNDLE_IDENTIFIER = biz.joshadams.RaceRunner.Siri2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -943,6 +943,7 @@
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1002,6 +1003,7 @@
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1028,7 +1030,7 @@
 				CODE_SIGN_ENTITLEMENTS = RaceRunner/RaceRunner.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 4.2;
+				CURRENT_PROJECT_VERSION = 4.3;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = RaceRunner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -1036,7 +1038,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.2;
+				MARKETING_VERSION = 4.3;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = "biz.joshadams.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1059,7 +1061,7 @@
 				CODE_SIGN_ENTITLEMENTS = RaceRunner/RaceRunnerRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4.2;
+				CURRENT_PROJECT_VERSION = 4.3;
 				DEVELOPMENT_TEAM = V3L2PL4QC9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = RaceRunner/Info.plist;
@@ -1068,7 +1070,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.2;
+				MARKETING_VERSION = 4.3;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = biz.joshadams.RaceRunner;
 				PRODUCT_NAME = "$(TARGET_NAME)";

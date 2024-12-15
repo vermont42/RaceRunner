@@ -29,7 +29,6 @@ class SettingsVC: ChildVC, BroadcastDelegate {
   @IBOutlet var accentControl: UISegmentedControl!
 
   private static let distancePrompt = " To begin inputting, tap \"123\" on the bottom-left corner of your virtual keyboard."
-  private static let bummerTitle = "😓"
   private static let broadcastNextRunTitle = "Broadcast Next Run"
   private static let stopBroadcastingTitle = "Stop Broadcasting"
 

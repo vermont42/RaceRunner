@@ -73,6 +73,10 @@ public extension UIDevice {
     case "iPhone15,5":                              return "iPhone 15 Plus"
     case "iPhone16,1":                              return "iPhone 15 Pro"
     case "iPhone16,2":                              return "iPhone 15 Pro Max"
+    case "iPhone17,1":                              return "iPhone 16 Pro"
+    case "iPhone17,2":                              return "iPhone 16 Pro Max"
+    case "iPhone17,3":                              return "iPhone 16"
+    case "iPhone17,4":                              return "iPhone 16 Plus"
 
     // swiftlint:disable colon
     case "iPad2,1", "iPad2,2", "iPad2,3", "iPad2,4":return "iPad 2"
@@ -103,7 +107,10 @@ public extension UIDevice {
     case "iPad14,1", "iPad14,2":                    return "iPad Mini 6th Gen."
     case "iPad14,3", "iPad14,4":                    return "iPad Pro 11 inch 4th Gen"
     case "iPad14,5", "iPad14,6":                    return "iPad Pro 12.9 inch 6th Gen"
-
+    case "iPad14,8", "iPad14,9":                    return "iPad Air 6th Gen"
+    case "iPad14,10", "iPad14,11":                  return "iPad Air 7th Gen"
+    case "iPad16,3", "iPad16,4":                    return "iPad Pro 11 inch 5th Gen"
+    case "iPad16,5", "iPad16,6":                    return "iPad Pro 12.9 inch 7th Gen"
     case "AppleTV5,3":                              return "Apple TV"
     case "AppleTV6,2":                              return "Apple TV 4K"
     case "AudioAccessory1,1":                       return "HomePod"

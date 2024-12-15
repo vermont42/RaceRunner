@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GpxActivityItemProvider: UIActivityItemProvider {
+class GpxActivityItemProvider: UIActivityItemProvider, @unchecked Sendable {
   override var item: Any {
     // The following approach would be appropriate for a gpx file in the main bundle.
     let runmeter = "Runmeter"

@@ -54,7 +54,7 @@ enum Converter {
     if roundedDistance.last! == "0" {
       roundedDistance = String(roundedDistance[..<roundedDistance.index(before: roundedDistance.endIndex)])
     }
-    var progressString = "total distance \(roundedDistance) \(pluralizedCurrentLongUnit(totalLongDistance)), total time \(stringifySecondCount(totalSeconds, useLongFormat: true)), split pace"
+    var progressString = "total distance \(roundedDistance) \(pluralizedCurrentLongUnit(totalLongDistance)), total time \(stringifySecondCount(totalSeconds, useLongFormat: true)), split pace "
     let distanceDelta = totalDistance - lastDistance
     let secondsDelta = totalSeconds - lastSeconds
     progressString += stringifyPace(distanceDelta, seconds: secondsDelta, forSpeaking: true)
@@ -65,6 +65,14 @@ enum Converter {
       progressString += ", lost \(stringifyAltitude(-altitudeDelta, unabbreviated: true)))"
     } else {
       progressString += ", no altitude change"
+    }
+
+    let stopAfter = SettingsManager.getStopAfter()
+    if SettingsManager.getRealRunInProgress() && stopAfter != SettingsManager.never {
+      let fractionOfRunCompleted = totalDistance / stopAfter
+      let expectedSeconds = Int(Double(totalSeconds) / fractionOfRunCompleted)
+      let expectedTime = Converter.stringifySecondCount(expectedSeconds, useLongFormat: true, useLongUnits: true)
+      progressString += ", expected time " + expectedTime
     }
     Utterer.utter(progressString)
   }
@@ -166,12 +174,16 @@ enum Converter {
     remainingSeconds -= minutes * secondsPerMinute
     if useLongFormat {
       if useLongUnits {
+        let pluralizedHours = hours > 1 ? "hours" : "hour"
+        let pluralizedMinutes = minutes > 1 ? "minutes" : "minute"
+        let pluralizedSeconds = remainingSeconds > 1 ? "seconds" : "second"
+
         if hours > 0 {
-          return NSString(format: "%d hour %d minutes %d seconds", hours, minutes, remainingSeconds) as String
+          return "\(hours) \(pluralizedHours) \(minutes) \(pluralizedMinutes) \(remainingSeconds) \(pluralizedSeconds)"
         } else if minutes > 0 {
-          return NSString(format: "%d minutes %d seconds", minutes, remainingSeconds) as String
+          return "\(minutes) \(pluralizedMinutes) \(remainingSeconds) \(pluralizedSeconds)"
         } else {
-          return NSString(format: "%d seconds", remainingSeconds) as String
+          return "\(remainingSeconds) \(pluralizedSeconds)"
         }
       } else {
         if hours > 0 {

@@ -51,8 +51,8 @@ class RunModel: NSObject, CLLocationManagerDelegate, PubNubPublisher {
   private var runToSimulate: Run?
   private var gpxFile: String?
   private var secondLength = 1.0
-  private (set) var sortedAltitudes: [Double] = []
-  private (set) var sortedPaces: [Double] = []
+  private(set) var sortedAltitudes: [Double] = []
+  private(set) var sortedPaces: [Double] = []
   private var hasReceivedLocationUpdate = false
 
   private static let distanceTolerance: Double = 0.05
